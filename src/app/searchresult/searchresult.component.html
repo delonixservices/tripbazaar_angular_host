@@ -1,0 +1,274 @@
+<div class="container">
+	<div class="pt-2 pl-2 pr-2 mt-1 mb-1 bg-dark" *ngIf="allHotel.search">
+		<div class="row">
+			<div class="col-md-8 text-center text-light">
+				<strong>{{allHotel.region.city}}, {{allHotel.region.country}}</strong>
+				<p class="small">{{allHotel.search.check_in_date}} - {{allHotel.search.check_out_date}} (1 NIGHT) | {{allHotel.search.room_count}} ROOMS | {{allHotel.search.adult_count}} ADULTS | {{allHotel.search.child_count}} CHILD(S)</p>
+			</div>
+			<div class="col-md-2 mt-2 text-right text-success"><strong>Hotels (<span id="total_movies">{{filteredHotels.length}}</span>)</strong></div>
+
+			<div class="col-md-2 text-right">
+				<button type="button" data-toggle="modal" data-target="#exampleModal" class="btn-outline-danger btn btn-sm"><i class="fa fa-search"></i> Modify Search</button>
+			</div>
+			<!-- Modify Search -->
+			<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Modify Search</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+
+						<div class="modal-body">
+							<form>
+
+								<div class="row location">
+									<div class="col-md-4 pr-0">
+										<div class="form-group">
+											<ng-select name="destination" class="form-control suggestions" [items]="suggestions | async"
+					        						   [hideSelected]="true"
+									                   [loading]="suggestionsLoading"
+									                   [typeahead]="suggestionsInput"
+									                   [(ngModel)]="selectedArea"
+									                   bindLabel="displayName"
+												       placeholder="Search here">
+									        </ng-select>
+											<!-- <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text" class="form-control typeahead destination tt-hint" tabindex="-1" readonly="" autocomplete="off" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);" dir="ltr"><input type="text" class="form-control typeahead destination tt-input" tabindex="1" placeholder="Destination" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span> -->
+										</div>
+									</div>
+
+
+									<div class="col-md-4 pl-0 pr-0">
+										<div class="form-group">
+											<input type="date" class="form-control from-dt " name="checkInDate" [(ngModel)]="checkInDate" tabindex="3" placeholder="Date From">
+										</div>
+									</div>
+
+									<div class="col-md-4 pl-0  ">
+										<div class="form-group">
+											<input type="date" class="form-control last-dt" name="checkOutDate" [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO">
+										</div>
+									</div>
+
+									<div class="col-md-10 ml-auto passenger-modi">
+										<div class="col-md-9 mb-2" *ngFor="let room of roomdetail; let i = index" [attr.data-index]="i">
+											<p class="text-red"><b>Room {{room.room}}</b></p>
+											<div class="clearfix"></div>
+											<div class="range-data">
+												<div id="total-adult-hotel" class="value">{{room.adult_count}}</div> Adults
+												<br><span class="text-muted small">+12 YRS</span> </div>
+											<div class="range">
+												<input type="range" class="adults "  name="adults"  [(ngModel)]="room.adult_count" tabindex="5" min="1" max="9" value="1" id="adult-hotel">
+											</div>
+
+											<div class="clearfix"></div>
+
+											<div class="range-data">
+												<div id="total-child-hotel" class="value">{{room.child_count}}</div> Child
+												<br> <span class="text-muted small">Below 12 YRS</span> </div>
+											<div class="range">
+												<input type="range" class="child " min="0" [(ngModel)]="room.child_count" (change)="checkChildren(i)" name="child" tabindex="6" max="4" value="0" id="child-hotel">
+
+											</div>
+
+											<div class="clearfix"></div>
+											<div class="row child-age " id="child-age-select">
+												<div class="col" *ngFor="let child of room.children">
+													<div class="small text-center">Child {{child.child}} Age</div>
+													<select class="form-control" name="children[]" [(ngModel)]="child.age">
+														<!-- <option value="0">0</option> -->
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+														<option value="6">6</option>
+														<option value="7">7</option>
+														<option value="8">8</option>
+														<option value="9">9</option>
+														<option value="10">10</option>
+														<option value="11">11</option>
+														<option value="12">12</option>
+													</select>
+												</div>
+											</div>
+											<div class="border mb-2 mt-2"></div>
+										</div>
+
+
+										<div class="row">
+											<div class="col-md-4 mt-2 ml-2">
+												<a class="btn btn-danger  text-light addroom ml-2 "  (click)="addRoomInSearch()">Add Rooms</a>
+											</div>
+											<div class="col-md-5 mt-2 mr-2 text-right">
+												<a *ngIf="roomdetail.length> 1" class="btn btn-outline-secondary removeroom mr-2" (click)="removeRoomFromSearch()"><span class="small">Remove Rooms</span></a>
+
+											</div>
+										</div>
+										<div class="col mt-2 text-right">
+											<button type="submit" tabindex="12" class="btn btn-danger" (click)="search()">Search Again </button>
+										</div>
+									</div>
+
+								</div>
+
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- Modify Search -->
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="sidebar col-md-3">
+			<div class="filter-data">
+					<div class="filter-body" id="rates_criteria">
+							<h4 class="headers">Search</h4>
+							<input class="form-control" type="text">
+						</div>
+				<div class="filter-body" id="rates_criteria">
+					<h4 class="headers">Rates</h4>
+					<span id="rates_range_label" class="slider-label">0 - 100000</span>
+					<div id="rates_slider" class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
+						<div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;"></div>
+						<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 0%;"></a>
+						<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 100%;"></a>
+					</div>
+					<input type="hidden" id="range_filter" value="0-100000" fjs-criteria="field=rates.packages.room_rate,type=range">
+				</div>
+
+				<div class="filter-body" id="room_type_criteria">
+					<h4 class="headers">Room Types</h4>
+					<div class="checkbox" *ngFor="let type of RootTypeFilters">
+						<label class="checkcontainer">
+							<input type="checkbox" [(ngModel)]="type.selected" value="All" id="all_options_room_type" (click)="SearchFilter()">
+							<span class="checkmark"></span><span> {{type.name}}</span>
+						</label>
+					</div>
+				</div>
+
+				<div class="filter-body" id="refundable_criteria">
+					<h4 class="headers">Refundable</h4>
+					<div class="checkbox" *ngFor="let refund of Refundable">
+						<label class="checkcontainer">
+							<input type="checkbox" value="All" [(ngModel)]="refund.selected" id="all_options_refundable_criteria" (change)="SearchFilter()">
+							<span class="checkmark"></span><span> {{refund.name}}</span>
+						</label>
+					</div>
+				</div>
+
+
+				<div class="filter-body" id="food_served_criteria">
+					<h4 class="headers">Food Serverd</h4>
+					<div class="checkbox" *ngFor="let food of FoodServerd">
+						<label class="checkcontainer">
+							<input type="checkbox" value="All" [(ngModel)]="food.selected" id="all_options_food_served_criteria" (ngModelChange)="SearchFood()">
+							<span class="checkmark"></span> <span> {{food.name}}</span>
+						</label>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-9">
+			<div class="movies content" id="movies" fjs-items="template=#hotel-template" *ngFor="let hotel of filteredHotels; let i = index">
+				<div class="flightdetail fjs_item" id="fjs_1" style="display: table;">
+					<div class="row">
+						<div class="col-md-5">
+							<div class="row">
+								<div id="carouselExampleIndicators{{i}}" class="carousel slide" data-ride="carousel">
+									<div class="carousel-inner">
+										<div class="carousel-item " *ngFor="let item of [].constructor(hotel.imageDetails.count); let i = index " [ngClass]="{'active' : i == 0}">
+											<img src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}" class="img-fluid" alt="First slide" style="    height: 255px;width: 100%;">
+										</div>
+									</div>
+									<a class="carousel-control-prev" href="#carouselExampleIndicators{{i}}" role="button" data-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="carousel-control-next" href="#carouselExampleIndicators{{i}}" role="button" data-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-7">
+							<div class="hotel-details">
+								<div class="row">
+									<div class="col-7 br">
+										<h4>{{hotel.name}}</h4>
+										<div class="mb-2"><i class="fa fa-map-marker"></i> {{hotel.location.address}}</div>
+										<p><i class="fa fa-bed"></i> {{hotel.rates.packages[0].room_details.description}} </p>
+
+										<p class="facility">
+											<i class="fa fa-wifi" title="WIFI" *ngIf="hotel.amenities.dataPorts"></i>
+											<i class="fa fa-tv" title="TV" *ngIf="hotel.amenities.tVInRoom"></i>
+											<i class="fa fa-snowflake-o" title="AC" *ngIf="hotel.amenities.airConditioning"></i>
+											<i class="fa fa-bath" title="Private Washroom"></i>
+											<i class="fa fa-car" title="Free parking"></i>
+											<i class="fa fa-cutlery" title="Food"></i>
+											<i class="fa fa-coffee" title="Breakfast"></i>
+											<i class="fa fa-glass" title="Bar" *ngIf="hotel.amenities.miniBarInRoom"></i>
+										</p>
+										<hr>
+										<div class="text-success"><i class="fa fa-check-circle-o" title="Free Cancellation"></i> Free Cancellation</div>
+									
+									</div>
+
+									<div class="col-5 text-right ">
+										<div class="rating text-success">
+											<i class="fa fa-tripadvisor"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+										<div class="text-right">
+											<span class="small">{{hotel.moreRatings.tripAdvisor.rating}} / 5  Excellent  | {{hotel.moreRatings.tripAdvisor.reviewCount}} Reviews</span>
+										</div>
+
+										<hr>
+										<h4 class="text-right price">
+
+									<span class="small" *ngIf="hotel.rates.packages[0].indicative_market_rates"> <s *ngIf="hotel.rates.packages[0].guest_discount_percentage"> {{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].chargeable_rate)+ hotel.rates.packages[0].chargeable_rate | number: '1.0-2'}}</s></span>
+
+									<span class="badge badge-success text-light small" *ngIf="hotel.rates.packages[0].guest_discount_percentage"> {{hotel.rates.packages[0].guest_discount_percentage}} % </span> <br> 
+
+									{{hotel.rates.packages[0].chargeable_rate_currency}}.  <span >{{hotel.rates.packages[0].chargeable_rate}}</span></h4>
+										<hr>
+										<div class="btn btn-danger" (click)="hoteldetails(hotel)">Book Room <i class="fa fa-check"></i></div>
+										<div class="pt-1"><a (click)="hoteldetails(hotel)" class="">View Details <i class="fa fa-eye"></i></a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<div class="no-rooms-available" >
+				<div id="notfound">
+					<div class="notfound">
+					<div class="notfound-404">
+					<h1>{{norecordfoundtitle}}</h1>
+					<h2>{{norecordfoundtitle}}</h2>
+					</div>
+					</div>
+					</div>
+			
+			</div>
+
+		</div>
+
+	</div>
+</div>

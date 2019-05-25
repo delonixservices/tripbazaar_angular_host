@@ -1,0 +1,15 @@
+h1{
+  color:red;
+}
+.msg{
+	color:red;
+	font-size:18px;
+}
+.forgot{
+	    float: right;
+    margin: 0 0 13px 0;
+
+}
+.card{
+	margin-bottom:20px;
+}

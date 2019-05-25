@@ -1,0 +1,347 @@
+<div class="container">   
+	<div class="row"> 
+		<div class="main-heading">
+			<h3 class=""><i class="fa fa-flights"></i> Review Your Booking</h3>
+		</div>
+		<div class="col-md-9">  
+			<!-- Flight Details -->
+			<div class="row">
+			 
+				<div class="col-md-5">
+					<div class="row">
+						<div class="carousel slide">
+							<div class="carousel-inner">
+								<div class="carousel-item " *ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index " [ngClass]="{'active' : i == 0}">
+									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}" class="img-fluid" alt="First slide" style=" height: 255px;width: 100%;object-fit: cover;">
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<h3>{{hotelObj.name}}</h3>
+					<div class="rating">
+						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 0 ? 'text-warning' : 'text-light'"></i>
+						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 1 ? 'text-warning' : 'text-light'"></i>
+						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 2 ? 'text-warning' : 'text-light'"></i>
+						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 3 ? 'text-warning' : 'text-light'"></i>
+						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 4 ? 'text-warning' : 'text-light'"></i>
+					</div>
+					<p class="text-muted"><i class="fa fa-map-marker"></i> {{hotelObj.location.address}} | {{hotelObj.location.postalCode}}</p>
+					<div class="row">
+						<div class="col">
+							<div class="checkin-out img-thumbnail bg-dark text-light pt-2 pb-1 text-center">
+								<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
+									<div>Checkin</div>
+									<b>{{hotelObj.moreDetails.checkInTime}}</b> 
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="checkin-out bg-dark img-thumbnail text-light pt-2 pb-1 text-center">
+								<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
+									<div>Checkout</div>
+									<b>{{hotelObj.moreDetails.checkOutTime}}</b>
+								</div>
+							</div>
+						</div> 
+					</div>
+					<p class="mt-3 text-center">9 Days &amp; 8 Nights | Room 1:2 Adults </p>
+				</div> 
+			</div>
+			<hr>
+			<!-- Flight Details -->
+			<!-- Traveller Details  -->
+			<div class="flightdetail">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="main-heading">
+							<h4><i class="fa fa-users"></i> Enter Guest Details </h4>
+						</div>
+					</div>
+					
+					<div class="col-md-6" *ngIf="!jwt.isAuth()">
+						<h5 class="mt-4"><a href="#" data-toggle="modal" data-target=".sign-in">Sign in</a> to book faster</h5>
+					</div> 
+					<!-- Sign In Model -->
+					<div class="modal fade bd-example-modal-sm sign-in" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" *ngIf="!jwt.isAuth()">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form class="px-2 py-1">
+										<div class="form-group">
+											<label for="exampleDropdownFormEmail1">Email address</label>
+											<input type="number" required class="form-control" id="exampleDropdownFormEmail1" [(ngModel)]="paramsObj.mobile" placeholder="Enter Your Mobile Number">
+										</div>
+										<div class="form-group">
+											<label for="exampleDropdownFormPassword1">Password</label>
+											<input type="password" class="form-control" id="exampleDropdownFormPassword1" [(ngModel)]="paramsObj.password" placeholder="Enter Your Password">
+										</div>
+										<!-- <div class="form-check">
+											<label class="checkcontainer small"> <input type="checkbox" checked=""><span class="checkmark"></span>Remember me</label>
+										</div> -->
+										<button type="submit" class="btn btn-danger btn-block gstform" (click)="login()">Sign in</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Sign In Model -->
+				</div>
+				<div class="clearfix"></div>
+				<hr>
+				<form>
+					<div class="row">
+						<div class="col-md-12"> <h5>Contact Details</h5></div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" name="contactName" required class="form-control" placeholder="Name" [(ngModel)]="contactDetail.name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="tel" name="contactlastname" required class="form-control" placeholder="Last Name"  [(ngModel)]="contactDetail.last_name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="tel" name="contactMobile" required class="form-control" placeholder="Phone"  [(ngModel)]="contactDetail.mobile">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="tel" name="contactEmail" required class="form-control" placeholder="Email"  [(ngModel)]="contactDetail.email">
+							</div>
+						</div>
+					</div>
+				</form>
+				<hr>
+				<h5>Member Details</h5>
+				
+					<div class="row" *ngFor="let room of guest; let i = index;"> 
+						<div class="col-md-12 text-primary"> <h6>Room {{i+1}}</h6></div>
+						<div class="col-md-12">
+							<div class="row" *ngFor="let guestDetail of room.room_guest; let j = index;">
+								<div class="col-md-4">
+									<div class="form-group">
+										<input type="text" name="firstname[]" class="form-control" placeholder=" First Name" [(ngModel)]="guestDetail.firstname" required>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<input type="text" name="lastname[]" class="form-control" placeholder="Last Name" [(ngModel)]="guestDetail.lastname" required>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<input type="text" name="mobile[]" class="form-control" placeholder="mobile" [(ngModel)]="guestDetail.mobile" required>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<!-- <div class="row">
+						<div class="clearfix"></div> 
+						<div class="col-md-12 text-primary"> <h6>Room 2</h6></div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder=" First Name">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Last Name">
+							</div>
+						</div> 
+						<div class="clearfix"></div> 
+					</div> -->
+				
+			</div>
+		<!-- Traveller Details  -->
+		</div>
+		<div class="col-md-3">
+			<div class="filter-data">
+				<div class="flight-booking-cart">
+					<h6>Tariff  Details</h6>
+					<div class="row mb-2">
+						<div class="col-md-7">Rate</div>
+						<div class="col-md-5 text-right"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded}}</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-7">Tax</div>
+						<div class="col-md-5 text-right"><i class="fa fa-inr"></i> {{(packageObj.taxes_and_fees) ? packageObj.taxes_and_fees.estimated_total.value : "0.00"}}</div>
+					</div>
+					
+				    <div class="row mb-2" *ngIf="couponCode.value != 0">
+						<div class="col-md-7">Discount</div>
+						<div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value)}}</div>
+						<div class="col-md-5 text-right" *ngIf="couponCode.type =='fixed'"><i class="fa fa-inr"></i> {{couponCode.value}}</div>
+					</div>
+						<!-- <div class="row mb-2">
+							<div class="col-md-7">Hotel GST</div>
+							<div class="col-md-5 text-right"><i class="fa fa-inr"></i> 649.00</div>
+						</div> -->
+						<!-- <div class="row mb-2">
+							<div class="col-md-8 fair-fee" data-toggle="popover" data-html="true" title="" data-placement="bottom" data-content="" data-original-title="Fee &amp; Surcharges Details">Convenience Fee &amp; Taxes 
+								<a href="javascript:void();"><i class="fa fa-question-circle-o"></i></a>
+							</div>
+							<div class="col-md-4 text-right"><i class="fa fa-inr"></i>  600.00</div>
+							<div class="popover-content" style="display:none;">
+								<div class="row">
+									<div class="col-md-8">Convenience Fee &amp; Taxes </div>
+									<div class="col-md-4 text-right"><i class="fa fa-inr"></i>350</div>
+									<div class="col-md-8">GST</div>
+									<div class="col-md-4 text-right"><i class="fa fa-inr"></i>350</div>
+								</div>
+							</div>
+						</div> -->
+						<!-- <div class="row mb-2 coupon-discount">
+							<div class="col-md-7"><i class="fa fa-tag"></i> Discount <i class="fa fa-close remove-discount"></i> </div> 
+							<div class="col-md-5 text-right"><i class="fa fa-inr"></i> 99.00</div>
+						</div> -->
+						<hr>
+						<div class="row">
+							<div class="col-md-5"><h5>You Pay:</h5></div> 
+							<div class="col-md-7 text-right">
+								<h5 class="mb-0" *ngIf="couponCode.value == 0"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded}}</h5>
+								<h5 class="mb-0" *ngIf="couponCode.type =='Percentage'"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded - packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value)}}</h5>
+								<h5 class="mb-0" *ngIf="couponCode.type =='fixed'"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded - couponCode.value}}</h5>
+							</div>
+							
+							
+							
+							
+							<div class="col-md-12 text-right"> 
+								<a class="gst" style="color:#0062cc; cursor: pointer;">Add your GST Details </a> <span class="text-muted">(Optional)</span>
+							</div>
+						</div>
+						<hr>
+						<h6>Have a Promo Code?</h6>
+							<div class="input-group">
+								<input type="text" class="form-control" name="code" placeholder="Coupon Code" [(ngModel)]="coupon.code" aria-label="Enter Coupon Code">
+								<span class="input-group-btn">
+									<button class="btn btn-secondary" (click)="checkCopuonCode()" type="button">Apply</button>
+								</span>
+								<span class="msg">{{validation}}</span>
+							</div>
+							
+							<div class="bbl" *ngIf="couponCode.name">
+					 	      <div class="cuponCode">{{couponCode.name}}</div>
+					 	      <span class="fa fa-times deleteCoupon" (click)="deleteCoupon()"></span>
+					 	  </div>
+						<hr>
+						<div class="form-group mt-2">
+							<button type="submit" class="btn btn-danger btn-block" (click)="hotelPreBook()">Book Hotel <i class="fa fa-plane"></i></button>
+							<p class="text-right mt-2"><a href="#" class="text-primary"> Book Hotel Via Online Payment <i class="fa fa-paypal"></i></a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Gst Side Bar Panel-->
+	<div class="side-panel-holder gst-holder ">
+		<div class="side-panel animated slideInRight">
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="heading">Featured</h4>
+			<div class="side-panel-body">
+				<form>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="gstnumber[]" class="form-control" placeholder="GST Number" [(ngModel)]="gstDetail.gstnumber">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="name[]" class="form-control" placeholder="Name" [(ngModel)]="gstDetail.name">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="email[]" class="form-control" placeholder="Email" [(ngModel)]="gstDetail.email">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="address[]" class="form-control" placeholder="Address" [(ngModel)]="gstDetail.address">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="city[]" class="form-control" placeholder="City" [(ngModel)]="gstDetail.city">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="pincode[]" class="form-control" placeholder="Pincode" [(ngModel)]="gstDetail.pincode">
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<select id="gst" name="state[]" class="form-control" [(ngModel)]="gstDetail.state">                     
+									<option value="" selected="selected">Select State</option>
+									<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+									<option value="Andhra Pradesh">Andhra Pradesh</option>
+									<option value="Andhra Pradesh (New)">Andhra Pradesh (New)</option>
+									<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+									<option value="Assam">Assam</option>
+									<option value="Bihar">Bihar</option>
+									<option value="Chandigarh">Chandigarh</option>
+									<option value="Chattisgarh">Chattisgarh</option>
+									<option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+									<option value="Daman and Diu">Daman and Diu</option>
+									<option value="Delhi">Delhi</option>
+									<option value="Goa">Goa</option>
+									<option value="Gujarat">Gujarat</option>
+									<option value="Haryana">Haryana</option>
+									<option value="Himachal Pradesh">Himachal Pradesh</option>
+									<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+									<option value="Jharkhand">Jharkhand</option>
+									<option value="Karnataka">Karnataka</option>
+									<option value="Kerala">Kerala</option>
+									<option value="Lakshadweep Islands">Lakshadweep Islands</option>
+									<option value="Madhya Pradesh">Madhya Pradesh</option>
+									<option value="Maharashtra">Maharashtra</option>
+									<option value="Manipur">Manipur</option>
+									<option value="Meghalaya">Meghalaya</option>
+									<option value="Mizoram">Mizoram</option>
+									<option value="Nagaland">Nagaland</option>
+									<option value="Odisha">Odisha</option>
+									<option value="Pondicherry">Pondicherry</option>
+									<option value="Punjab">Punjab</option>
+									<option value="Rajasthan">Rajasthan</option>
+									<option value="Sikkim">Sikkim</option>
+									<option value="Tamil Nadu">Tamil Nadu</option>
+									<option value="Telangana">Telangana</option>
+									<option value="Tripura">Tripura</option>
+									<option value="Uttar Pradesh">Uttar Pradesh</option>
+									<option value="Uttarakhand">Uttarakhand</option>
+									<option value="West Bengal">West Bengal</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-12"> 
+							<div class="form-group">
+								<input type="text" name="mobile[]" class="form-control" placeholder="Phone number" [(ngModel)]="gstDetail.mobile">
+							</div>
+						</div>
+					</div>
+					<div class="form-group text-center">
+						<input type="submit" class="btn btn-danger btn-lg" value="Add GST Details" (click)="gstSubmit()">
+					</div>
+					<p><b>Please Note:</b> Your taxes may get updated post submitting your GST details. Please review the final amount in Fare Details.</p>
+				</form>
+			</div>
+		</div>
+	</div>
