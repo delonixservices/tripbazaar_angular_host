@@ -32,6 +32,8 @@ export class SearchresultComponent implements OnInit {
   
   public allHotel = [];
   public filteredHotels = [];
+  public copyFilteredHotels = [];
+  
   public validation : any;
   
   public RootTypeFilters = [
@@ -53,6 +55,8 @@ export class SearchresultComponent implements OnInit {
 	{name : "1 Serving", selected : false, value:1},
 	{name : "2 Serving", selected : false, value:2},
   ]
+
+  searchText = '';
    
   constructor(public route:ActivatedRoute, private router: Router, public api : ApiService, public jwt : JwtService,public alertService : AlertService) {
   
@@ -67,6 +71,76 @@ export class SearchresultComponent implements OnInit {
   		this.router.navigate(['/hoteldetails']);	
   	}
   	
+  }
+
+
+  sideBarFilter(){
+	// data.hotels[""0""].rates.packages[""0""].room_details.non_refundable
+	// data.hotels[""0""].rates.packages[""0""].room_details.food
+	// data.hotels[""0""].rates.packages[""0""].room_details.room_type
+	// data.hotels[""0""].rates.packages[""0""].chargeable_rate
+	// this.filteredHotels
+
+	this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
+	setTimeout(() => {
+		const roomTypeFilter=[];
+		for (let index = 0; index < this.RootTypeFilters.length; index++) {
+			const element = this.RootTypeFilters[index];
+			if(element.name === 'All'){
+				continue;
+			}
+			if(element.selected === true){
+				roomTypeFilter.push(element.value);	
+			}
+		}
+	
+		if(roomTypeFilter.length > 0){
+			this.filteredHotels =  this.filteredHotels.filter(function(hotel) {
+				return  roomTypeFilter.includes(hotel.rates.packages[0].room_details.room_type);
+			});
+		}
+	
+	
+		const refundableFilter=[];
+		for (let index = 0; index < this.Refundable.length; index++) {
+			const element = this.Refundable[index];
+			if(element.name === 'All'){
+				continue;
+			}
+			if(element.selected === true){
+				refundableFilter.push(element.value);	
+			}
+		}
+	
+		if(refundableFilter.length > 0){
+			this.filteredHotels =  this.filteredHotels.filter(function(hotel) {
+				return  refundableFilter.includes(hotel.rates.packages[0].room_details.non_refundable);
+			});
+		}
+	
+		const foodServerdFilter=[];
+		for (let index = 0; index < this.FoodServerd.length; index++) {
+			const element = this.FoodServerd[index];
+			if(element.name === 'All'){
+				continue;
+			}
+			if(element.selected === true){
+				foodServerdFilter.push(element.value);	
+			}
+		}
+	
+		if(foodServerdFilter.length > 0){
+			this.filteredHotels =  this.filteredHotels.filter(function(hotel) {
+				return  foodServerdFilter.includes(hotel.rates.packages[0].room_details.food);
+			});
+		}
+
+		if(this.searchText){
+			this.filteredHotels = this.filteredHotels.filter(hotel => {
+				return  hotel && hotel.originalName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1;
+			});
+		}
+	});
   }
   
   FilterHotels(){
@@ -250,6 +324,7 @@ export class SearchresultComponent implements OnInit {
 				if(response.data != undefined){
 					this.allHotel = response.data;
 					this.filteredHotels = response.data.hotels;
+					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
 					localStorage.setItem('transaction_identifier', response.transaction_identifier);
 					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
 					

@@ -130,7 +130,7 @@
 			<div class="filter-data">
 					<div class="filter-body" id="rates_criteria">
 							<h4 class="headers">Search</h4>
-							<input class="form-control" type="text">
+							<input class="form-control" type="text" [(ngModel)]="searchText" (keyup)="sideBarFilter()">
 						</div>
 				<div class="filter-body" id="rates_criteria">
 					<h4 class="headers">Rates</h4>
@@ -147,7 +147,7 @@
 					<h4 class="headers">Room Types</h4>
 					<div class="checkbox" *ngFor="let type of RootTypeFilters">
 						<label class="checkcontainer">
-							<input type="checkbox" [(ngModel)]="type.selected" value="All" id="all_options_room_type" (click)="SearchFilter()">
+							<input type="checkbox" [(ngModel)]="type.selected" value="All" id="all_options_room_type" (click)="sideBarFilter()">
 							<span class="checkmark"></span><span> {{type.name}}</span>
 						</label>
 					</div>
@@ -157,7 +157,7 @@
 					<h4 class="headers">Refundable</h4>
 					<div class="checkbox" *ngFor="let refund of Refundable">
 						<label class="checkcontainer">
-							<input type="checkbox" value="All" [(ngModel)]="refund.selected" id="all_options_refundable_criteria" (change)="SearchFilter()">
+							<input type="checkbox" value="All" [(ngModel)]="refund.selected" id="all_options_refundable_criteria" (change)="sideBarFilter()">
 							<span class="checkmark"></span><span> {{refund.name}}</span>
 						</label>
 					</div>
@@ -168,7 +168,7 @@
 					<h4 class="headers">Food Serverd</h4>
 					<div class="checkbox" *ngFor="let food of FoodServerd">
 						<label class="checkcontainer">
-							<input type="checkbox" value="All" [(ngModel)]="food.selected" id="all_options_food_served_criteria" (ngModelChange)="SearchFood()">
+							<input type="checkbox" value="All" [(ngModel)]="food.selected" id="all_options_food_served_criteria" (ngModelChange)="sideBarFilter()">
 							<span class="checkmark"></span> <span> {{food.name}}</span>
 						</label>
 					</div>
@@ -178,7 +178,7 @@
 		</div>
 
 		<div class="col-md-9">
-			<div class="movies content" id="movies" fjs-items="template=#hotel-template" *ngFor="let hotel of filteredHotels; let i = index">
+			<div class="movies content" id="movies" fjs-items="template=#hotel-template" *ngFor="let hotel of filteredHotels; let i = index ">
 				<div class="flightdetail fjs_item" id="fjs_1" style="display: table;">
 					<div class="row">
 						<div class="col-md-5">
