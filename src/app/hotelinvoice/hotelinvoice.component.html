@@ -96,7 +96,7 @@
  </tbody><tfoot>
  <tr>
  <td>GRAND TOTAL</td>
- <td><i class="fa fa-inr"></i> {{ticket[0].hotelPackage.chargeable_rate}}
+ <td><i class="fa fa-inr"></i> {{getGrandTotal(ticket) | number:'1.0-2'}}
 </td>
  
  </tr>

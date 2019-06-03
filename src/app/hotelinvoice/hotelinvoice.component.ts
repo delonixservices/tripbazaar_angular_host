@@ -42,4 +42,15 @@ export class HotelinvoiceComponent implements OnInit {
 			}, (err) => {
 			})
   }
+
+  getGrandTotal(ticket) {
+    if(ticket[0] && ticket[0].hotelPackage){
+      if(ticket[0].hotelPackage.chargeable_rate){
+        return ticket[0].hotelPackage.chargeable_rate + 
+              (ticket[0].hotelPackage.chargeable_rate/100*2) + 
+              (ticket[0].hotelPackage.chargeable_rate/118*18)
+      }
+    }
+    return 0;
+  }
 }
