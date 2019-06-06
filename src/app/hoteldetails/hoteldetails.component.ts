@@ -154,4 +154,8 @@ export class HoteldetailsComponent implements OnInit {
 			this.roomdetail = this.hotelsearchkeys.details;
     
   }
+
+  searchAvailability(){
+	  
+  }
 }

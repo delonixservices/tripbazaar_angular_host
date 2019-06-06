@@ -43,5 +43,8 @@ export class VerifyotpComponent implements OnInit {
     
   ngOnInit() {
      this.otpObj.id = this.route.snapshot.paramMap.get('id');
-  }
+	}
+	resentotp(){
+		
+	}
 }

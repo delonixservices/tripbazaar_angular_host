@@ -28,7 +28,9 @@ export class HotelbookingComponent implements OnInit {
   public transaction_identifier: any;
   public guest :any = [];
   public couponCode = { 
-  	     'value' : 0,
+			name:'',
+		   'value' : 0,
+		   type:''
   };
   //public Number;
   public bookingid : any;
@@ -187,7 +189,9 @@ export class HotelbookingComponent implements OnInit {
 	
 	deleteCoupon(){
 		this.couponCode = {
-				value : 0,
+			name:'',
+			type:'',
+				value : 0
 		};
 		
 		this.coupon = {
