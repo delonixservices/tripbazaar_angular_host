@@ -147,7 +147,7 @@ export class HotelbookingComponent implements OnInit {
 			.subscribe((response) => {
 				console.log(response.data.booking_id);
 				if(response.data.booking_id !== undefined){
-					var url = this.api.baseUrl + "api/process-payment/"+response.data.booking_id;
+					var url = this.api.baseUrl + "process-payment/"+response.data.booking_id;
 					window.location.assign(url);
 					
 				}else{
