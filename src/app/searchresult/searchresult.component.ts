@@ -30,7 +30,7 @@ export class SearchresultComponent implements OnInit {
 				}];
   suggestionsInput = new Subject<HttpParams>();
   
-  public allHotel = [];
+  public allHotel;
   public filteredHotels = [];
   public copyFilteredHotels = [];
   
