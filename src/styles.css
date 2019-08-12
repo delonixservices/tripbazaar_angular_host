@@ -1,18 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 .ng-select.suggestions {
-    border:0px;
-    min-height: 0px;
-    border-radius: 0;
-}
-.ng-select.suggestions .ng-dropdown-panel  {            
-    min-height: 0px;
-    border-radius: 0;
-    left:0;
-    top:5;
+  border: 0px;
+  min-height: 0px;
+  border-radius: 0;
 }
 
-.ng-has-value .ng-placeholder{
-	display:none;
+.ng-select.suggestions .ng-dropdown-panel {
+  min-height: 0px;
+  border-radius: 0;
+  left: 0;
+  top: 38px;
+  background-color: #fff;
+}
+
+.ng-option {
+  padding: 10px 10px;
+}
+
+.ng-option:hover {
+  background-color: #f4f4f4;
+}
+
+
+.ng-has-value .ng-placeholder {
+  display: none;
 }
 
 .spinner {
@@ -23,12 +34,12 @@
   font-size: 20px;
 }
 
-.spinner > div {
+.spinner>div {
   background-color: #333;
   height: 100%;
   width: 6px;
   display: inline-block;
-  
+
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
   animation: sk-stretchdelay 1.2s infinite ease-in-out;
 }
@@ -54,15 +65,28 @@
 }
 
 @-webkit-keyframes sk-stretchdelay {
-  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }  
-  20% { -webkit-transform: scaleY(1.0) }
+
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4)
+  }
+
+  20% {
+    -webkit-transform: scaleY(1.0)
+  }
 }
 
 @keyframes sk-stretchdelay {
-  0%, 40%, 100% { 
+
+  0%,
+  40%,
+  100% {
     transform: scaleY(0.4);
     -webkit-transform: scaleY(0.4);
-  }  20% { 
+  }
+
+  20% {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
   }
