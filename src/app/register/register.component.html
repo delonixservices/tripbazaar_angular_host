@@ -10,32 +10,41 @@
 				<div class="card-body">
 					<form>
 						<div class="form-group">
-							<input type="text" required="" class="form-control" [(ngModel)]="paramsObj.name" placeholder="Enter Your First Name" name="fname">
-						</div>
-						
-						<div class="form-group">
-							<input type="text" required="" class="form-control" [(ngModel)]="paramsObj.last_name" placeholder="Enter Your Last Name" name="lname">
-						</div>
-						
-						<div class="form-group">
-							<input type="email" required="" class="form-control" [(ngModel)]="paramsObj.email" placeholder="Enter Your Email ID" name="email">
-						</div>
-						<div class="form-group">
-							<input type="number" required="" class="form-control" [(ngModel)]="paramsObj.mobile" placeholder="Enter Your Contact No." name="mobile">
+							<input type="text" required="" class="form-control" [(ngModel)]="paramsObj.name"
+								placeholder="Enter Your First Name" name="fname">
 						</div>
 
 						<div class="form-group">
-							<input type="password" required="" class="form-control" [(ngModel)]="paramsObj.password" placeholder="Create Your Password" name="password">
+							<input type="text" required="" class="form-control" [(ngModel)]="paramsObj.last_name"
+								placeholder="Enter Your Last Name" name="lname">
+						</div>
+
+						<div class="form-group">
+							<input type="email" required="" class="form-control" [(ngModel)]="paramsObj.email"
+								placeholder="Enter Your Email ID" name="email">
+						</div>
+
+						<div class="form-group">
+							<input type="number" required="" class="form-control" [(ngModel)]="paramsObj.mobile"
+								placeholder="Enter Your Contact No." name="mobile">
+						</div>
+
+						<div class="form-group">
+							<input type="password" required="" class="form-control" [(ngModel)]="paramsObj.password"
+								placeholder="Create Your Password" name="password">
 						</div>
 						<div class="form-group">
-							<input type="submit" (click)="register()" class="btn-block btn-danger btn" value="Register Now">
+							<input type="submit" (click)="register()" class="btn-block btn-danger btn"
+								value="Register Now">
 						</div>
 						<span class="msg">{{validation}}</span>
 					</form>
 
-					<p>By clicking Register, you agree with our <a href="#">Terms of Service &amp; Privacy Policy</a> </p>
+					<p>By clicking Register, you agree with our <a href="#">Terms of Service &amp; Privacy Policy</a>
+					</p>
 					<hr>
-					<button class="btn btn-block btn-primary"><i class="fa fa-facebook"></i> Connect with Facebook</button>
+					<button class="btn btn-block btn-primary"><i class="fa fa-facebook"></i> Connect with
+						Facebook</button>
 
 					<button class="btn btn-block btn-danger"><i class="fa fa-google"></i> Connect with Google</button>
 					<hr>

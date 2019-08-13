@@ -9,17 +9,15 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 
-
-
 export class ApiService {
-	
-  public baseUrl : any;
+
+  public baseUrl: any;
   constructor(private http: HttpClient, private jwtService: JwtService) {
-  	this.baseUrl = environment.asset_url;
+    this.baseUrl = environment.asset_url;
   }
 
   private formatErrors(error: any) {
-    return  throwError(error.error);
+    return throwError(error.error);
   }
 
   get(path: string, params: HttpParams = new HttpParams()): Observable<any> {

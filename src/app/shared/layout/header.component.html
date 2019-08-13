@@ -1,454 +1,503 @@
 <div class="header-container" *ngIf="nav == '/'">
-  
-  
+
+
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
-			<a class="navbar-brand" routerLink="/"><h1>Trip Bazaar</h1></a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+			<a class="navbar-brand" routerLink="/">
+				<h1>Trip Bazaar</h1>
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+				aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
 			</button>
-			
+
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav ml-auto ">
 					<li class="nav-item dropdown active">
-						<a class="nav-link dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account <span class="carat"></span></a>
+						<a class="nav-link dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">My Account <span class="carat"></span></a>
 						<div class="dropdown-menu" aria-labelledby="myaccount">
 							<a class="dropdown-item" routerLink="/login">Login</a>
-							<a class="dropdown-item" routerLink="/register">Signup</a> 
+							<a class="dropdown-item" routerLink="/register">Signup</a>
 						</div>
 					</li>
-					
+
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="supportmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Support <span class="carat"></span></a>
+						<a class="nav-link dropdown-toggle" href="#" id="supportmenu" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Support <span class="carat"></span></a>
 						<div class="dropdown-menu" aria-labelledby="supportmenu">
 							<a class="dropdown-item" routerLink="/contact">Contact Us</a>
-							<a class="dropdown-item" href="#">Submit Ticket</a> 
+							<a class="dropdown-item" href="#">Submit Ticket</a>
 						</div>
 					</li>
-					
+
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Recent Search</a>
+						<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Recent Search</a>
 						<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
-						    <a class="dropdown-item" href="#">Things you view   here.</a>
-					    </div>
+							<a class="dropdown-item" href="#">Things you view here.</a>
+						</div>
 					</li>
-				
+
 
 				</ul>
 			</div>
-			
+
 		</div>
 	</nav>
-	
+
 
 	<div class="container">
 		<!-- Search Panel -->
 		<div class="search-panel">
-		
-		<ul class="nav nav-tabs" id="myTab" role="tablist">
-			<li class="nav-item">
-			<a class="nav-link active" id="flight-search-tab" data-toggle="tab" href="#flight-search" role="tab" aria-controls="flight-search" aria-selected="true">FLIGHT</a></li>
-			<li class="nav-item">
-			<a class="nav-link" id="hotel-search-tab" data-toggle="tab" href="#hotel-search" role="tab" aria-controls="hotel-search" aria-selected="false">HOTEL</a></li>  
-		</ul>
-		
-		<div class="tab-content" id="myTabContent">
-			<div class="tab-pane fade show active" id="flight-search" role="tabpanel" aria-labelledby="flight-search-tab">
-				<form action="search-result.php" method="get">
-				<div class="fight-options">
-					<ul>
-						<li class="pull-left"><a href="#">One Way</a></li>
-						<li class="pull-left"><a href="#">Round Trip</a></li>
-						<li class="pull-left"><a href="#">Multicity</a></li>
-					</ul>
-				</div>
-				<div class="clearfix">
-				</div>
-				
-				<div class="row location">	
-					<div class="col-md-2 pr-0">
-						<div class="form-group">
-						   <input type="text" class="form-control autocomplit1" name="origin" tabindex="1" placeholder="Origin">
+
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" id="flight-search-tab" data-toggle="tab" href="#flight-search" role="tab"
+						aria-controls="flight-search" aria-selected="true">FLIGHT</a></li>
+				<li class="nav-item">
+					<a class="nav-link" id="hotel-search-tab" data-toggle="tab" href="#hotel-search" role="tab"
+						aria-controls="hotel-search" aria-selected="false">HOTEL</a></li>
+			</ul>
+
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="flight-search" role="tabpanel"
+					aria-labelledby="flight-search-tab">
+					<form action="search-result.php" method="get">
+						<div class="fight-options">
+							<ul>
+								<li class="pull-left"><a href="#">One Way</a></li>
+								<li class="pull-left"><a href="#">Round Trip</a></li>
+								<li class="pull-left"><a href="#">Multicity</a></li>
+							</ul>
 						</div>
-					</div>
-					
-					<div class="col-md-2 pl-0 pr-0">
-						<div class="form-group">
-							<input type="text" class="form-control autocomplit1" tabindex="2"  name="destination" placeholder="Destination">
+						<div class="clearfix">
 						</div>
-					</div>
-					
-					<div class="col-md-2 pl-0 pr-0">
-						<div class="form-group">
-							<input type="text" class="form-control from-dt mydatepicker" name="from_date" tabindex="3" placeholder="Date From">
-						</div>
-					</div>
-					
-					<div class="col-md-2 pl-0 pr-0">
-						<div class="form-group">
-							<input type="text" class="form-control last-dt mydatepicker" name="to_date" tabindex="4" placeholder="Date TO">
-						</div>
-					</div>
-					
-					<div class="col-md-2 pl-0 pr-0" >
-						<div class="form-group">
-							<div class="nav-item dropdown form-control">
-								<div class="dropdown-toggle" id="passenger-menu" href="#"  >Passanger	</div>
-									<div class="dropdown-menu passenger ml-auto" aria-labelledby="dropdown01">
-									<div class="col-md-12"> 
-										<div class="range-data">			  
-											<div id="total-adult" class="value">
-											</div> Adults 
+
+						<div class="row location">
+							<div class="col-md-2 pr-0">
+								<div class="form-group">
+									<input type="text" class="form-control autocomplit1" name="origin" tabindex="1"
+										placeholder="Origin">
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<input type="text" class="form-control autocomplit1" tabindex="2" name="destination"
+										placeholder="Destination">
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<input type="text" class="form-control from-dt mydatepicker" name="from_date"
+										tabindex="3" placeholder="Date From">
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<input type="text" class="form-control last-dt mydatepicker" name="to_date"
+										tabindex="4" placeholder="Date TO">
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<div class="nav-item dropdown form-control">
+										<div class="dropdown-toggle" id="passenger-menu" href="#">Passanger </div>
+										<div class="dropdown-menu passenger ml-auto" aria-labelledby="dropdown01">
+											<div class="col-md-12">
+												<div class="range-data">
+													<div id="total-adult" class="value">
+													</div> Adults
+												</div>
+
+												<div class="range">
+													<input type="range" class="adults " name="adults" tabindex="5"
+														min="1" max="9" value="1" id="adult">
+												</div>
+											</div>
+
+											<div class="clearfix"></div>
+											<div class="col-md-12">
+												<div class="range-data">
+													<div id="total-child" class="value"></div> Child <span
+														class="text-muted small">2-12 YRS</span>
+												</div>
+												<div class="range">
+													<input type="range" class="child " min="0" name="child" tabindex="6"
+														max="9" value="0" id="child">
+
+												</div>
+											</div>
+
+											<div class="clearfix">
+
+											</div>
+
+											<div class="col-md-12">
+												<div class="range-data">
+													<div id="total-infant" class="value"></div> Infant <br /><span
+														class="text-muted small">Below 2 YRS</span>
+												</div>
+
+												<div class="range">
+													<input type="range" class="infant " min="0" max="9" tabindex="7"
+														value="0" id="infant" name="infant">
+												</div>
+											</div>
+
+											<div class="clearfix">
+
+											</div>
+											<div class="border">
+
+											</div>
+
+
+											<div class="col-md-12">
+												<h6 class="mt-3 mb-3">Select Class</h6>
+
+												<label><input type="radio" name="class" tabindex="8" class="adults">
+													Economy</label>
+											</div>
+											<div class="clearfix">
+											</div>
+
+											<div class="col-md-12"><label><input tabindex="9" type="radio" name="class"
+														class="adults">Premium Economy</label>
+											</div>
+											<div class="clearfix">
+											</div>
+											<div class="col-md-12"><label><input type="radio" tabindex="10" name="class"
+														class="adults">Business</label>
+											</div>
+											<div class="clearfix">
+
+											</div>
+											<div class="col-md-12"><label><input type="radio" tabindex="11" name="class"
+														class="f-class">First Class</label>
+											</div>
+											<div class="col-md-3"><label><input type="button" name="button"
+														tabindex="12" value="OK"></label>
+											</div>
+											<div class="clearfix">
+
+											</div>
 										</div>
-										
-										<div class="range">
-											<input type="range" class="adults " name="adults"  tabindex="5" min="1" max="9" value="1" id="adult"> 
-										</div>
-									</div>
-									
-									<div class="clearfix"></div>
-									<div class="col-md-12"> 
-										<div class="range-data">			  
-										<div id="total-child" class="value"></div> Child <span class="text-muted small">2-12 YRS</span> </div>
-										<div class="range">
-										<input type="range" class="child " min="0" name="child" tabindex="6" max="9" value="0" id="child"> 
-										
-										</div>
-									</div>
-									
-									<div class="clearfix">
-									
-									</div>
-									
-									<div class="col-md-12"> 
-										<div class="range-data">			  
-										<div id="total-infant" class="value"></div> Infant <br /><span class="text-muted small">Below 2 YRS</span> 
-										</div>
-										
-										<div class="range">
-										<input type="range" class="infant " min="0" max="9"  tabindex="7" value="0" id="infant" name="infant"> 
-										</div>
-									</div>
-									
-									<div class="clearfix">
-									
-									</div>
-									<div class="border">
-									
-									</div> 
-									
-									
-									<div class="col-md-12"> 
-										<h6 class="mt-3 mb-3">Select Class</h6>
-										
-										<label><input type="radio" name="class"  tabindex="8" class="adults"> Economy</label>
-									</div>
-									<div class="clearfix">
-									</div>
-									
-									<div class="col-md-12"><label><input tabindex="9" type="radio" name="class" class="adults">Premium Economy</label>
-									</div>
-									<div class="clearfix">
-									</div>
-									<div class="col-md-12"><label><input type="radio"  tabindex="10" name="class" class="adults">Business</label>
-									</div>
-									<div class="clearfix">
-									
-									</div>
-									<div class="col-md-12"><label><input type="radio"  tabindex="11" name="class" class="f-class">First Class</label>
-									</div>
-									<div class="col-md-3"><label><input type="button" name="button" tabindex="12" value="OK"></label>
-									</div>
-									<div class="clearfix">
-									
 									</div>
 								</div>
 							</div>
-						</div>		  
-					</div>	 
-					
-					<div class="col-md-2 pl-0">
-						<div class="form-group">
-							<button type="submit"  tabindex="12" class="btn btn-block btn-danger" routerLink="/flightsearch">Search</button>
+
+							<div class="col-md-2 pl-0">
+								<div class="form-group">
+									<button type="submit" tabindex="12" class="btn btn-block btn-danger"
+										routerLink="/flightsearch">Search</button>
+								</div>
+							</div>
 						</div>
-					</div> 
-				</div>	
-				
-				<div class="nonstopflight">
-					<label><input type="checkbox"> Non Stop Flight</label>
+
+						<div class="nonstopflight">
+							<label><input type="checkbox"> Non Stop Flight</label>
+						</div>
+						<div class="clearfix">
+
+						</div>
+					</form>
 				</div>
-				<div class="clearfix">
-				
+
+				<!-- hotel search tab -->
+				<div class="tab-pane fade" id="hotel-search" role="tabpanel" aria-labelledby="hotel-search-tab">
+					<form>
+
+						<div class="hotel-options">
+							<ul>
+								<li class="pull-left"><a href="#">Domestic</a></li>
+								<li class="pull-left"><a href="#">International</a></li>
+							</ul>
+						</div>
+
+						<div class="clearfix">
+						</div>
+
+						<div class="row location">
+							<div class="col-md-4 pr-0">
+								<div class="form-group">
+									<!-- 						<input type="text" class="form-control typeahead destination" tabindex="1" placeholder="Destination">
+ -->
+									<ng-select name="destination" class="form-control suggestions"
+										[items]="suggestions | async" [hideSelected]="true"
+										[loading]="suggestionsLoading" [typeahead]="suggestionsInput"
+										[(ngModel)]="selectedArea" bindLabel="displayName" placeholder="Search here">
+									</ng-select>
+								</div>
+							</div>
+
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<input type="text" name="checkInDate" class="form-control from-dt checkInDate "
+										[(ngModel)]="checkInDate" tabindex="3" placeholder="Date From"
+										autocomplete="off">
+									<!-- <input type="date" name="checkInDate" class="form-control from-dt " [(ngModel)]="checkInDate"  tabindex="3" placeholder="Date From" autocomplete="off"> -->
+								</div>
+							</div>
+							<!--class for mydatepicker -->
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<input type="text" name="checkOutDate" class="form-control last-dt checkOutDate "
+										[(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO"
+										autocomplete="off">
+									<!-- <input type="date" name="checkOutDate" class="form-control last-dt " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off"> -->
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0 pr-0">
+								<div class="form-group">
+									<div class="nav-item dropdown form-control">
+										<div class="dropdown-toggle" id="hotel-menu" href="#" data-toggle="dropdown"
+											aria-expanded="false">{{persons}} Person, {{roomdetail.length}} Room
+										</div>
+
+										<div id="select-passanger" class="dropdown-menu passenger ml-auto"
+											aria-labelledby="hotel-menu">
+											<div class="col-md-12 mb-2" *ngFor="let room of roomdetail; let i = index"
+												[attr.data-index]="i">
+												<p class="text-red"><b>Room {{room.room}}</b></p>
+												<div class="clearfix">
+												</div>
+												<div class="range-data">
+													<div id="total-adult-hotel" class="value">{{room.adult_count}}</div>
+													Adults<br /><span class="text-muted small">+12 YRS</span>
+												</div>
+												<div class="range">
+													<input type="range" class="adults" name="adults"
+														[(ngModel)]="room.adult_count" tabindex="5" min="1" max="9"
+														id="adult-hotel">
+												</div>
+
+
+												<div class="clearfix">
+
+												</div>
+
+												<div class="range-data">
+													<div id="total-child-hotel" class="value">{{room.child_count}}
+													</div>
+													Child <br />
+													<span class="text-muted small">Below 12 YRS</span>
+												</div>
+												<div class="range">
+													<input type="range" class="child " min="0"
+														[(ngModel)]="room.child_count" (change)="checkChildren(i)"
+														name="child" tabindex="6" max="4" id="child-hotel"
+														value={{room.child_count}}>
+												</div>
+
+												<div class="clearfix">
+												</div>
+
+												<div class="row child-age" id="child-age-select">
+													<div class="col" *ngFor="let child of room.children">
+														<div class="small text-center">Child {{child.child}} Age</div>
+														<select class="form-control" name="children[]"
+															[(ngModel)]="child.age">
+															<!-- <option value="" value selected hidden>0</option> -->
+															<option value="1">1</option>
+															<option value="2">2</option>
+															<option value="3">3</option>
+															<option value="4">4</option>
+															<option value="5">5</option>
+															<option value="6">6</option>
+															<option value="7">7</option>
+															<option value="8">8</option>
+															<option value="9">9</option>
+															<option value="10">10</option>
+															<option value="11">11</option>
+															<option value="12">12</option>
+														</select>
+													</div>
+													<div class="border mb-2 mt-2">
+													</div>
+												</div>
+
+												<!--<div class="col-md-12 " id="room2" style="display:none;">-->
+												<!--<p class="text-red"><b>Room 2</b></p>-->
+												<!--<div class="clearfix">-->
+												<!--</div>			-->
+												<!--<div class="range-data">			  -->
+												<!--<div id="total-adult-hotel" class="value"></div> Adults <br /><span class="text-muted small">+12 YRS</span></div>-->
+												<!--<div class="range">-->
+												<!--<input type="range" class="adults " name="adults"  tabindex="5" min="1" max="9" value="1" id="adult-hotel"> -->
+												<!--</div>-->
+
+												<!--<div class="clearfix">-->
+												<!--</div>-->
+
+												<!--<div class="range-data">			  -->
+												<!--<div id="total-child-hotel" class="value">-->
+												<!--</div> Child <br /><span class="text-muted small">Below 12 YRS</span> -->
+												<!--</div>-->
+												<!--<div class="range">-->
+												<!--<input type="range" class="child " min="0" name="child" tabindex="6" max="9" value="0" id="child-hotel2"> -->
+												<!--</div>-->
+
+												<!--<div class="clearfix">-->
+												<!--</div>	-->
+												<!--<div class="row child-age" id="child-age-select2">-->
+												<!--<div class="col">-->
+												<!--<div class="small text-center">Child 1 Age-->
+												<!--</div>-->
+												<!--<select class="form-control">-->
+												<!--	<option>0</option>-->
+												<!--	<option>1</option>-->
+												<!--	<option>2</option>-->
+												<!--	<option>3</option>-->
+												<!--	<option>4</option>-->
+												<!--	<option>5</option>-->
+												<!--</select>-->
+												<!--</div>-->
+
+												<!--<div class="col">-->
+												<!--<div class="small text-center">Child 2 Age-->
+												<!--</div>-->
+												<!--<select class="form-control">-->
+												<!--	<option>0</option>-->
+												<!--	<option>1</option>-->
+												<!--	<option>2</option>-->
+												<!--	<option>3</option>-->
+												<!--	<option>4</option>-->
+												<!--	<option>5</option>-->
+												<!--</select>-->
+												<!--</div>-->
+
+												<!--<div class="col">-->
+												<!--<div class="small text-center">Child 3 Age-->
+												<!--</div>-->
+												<!--<select class="form-control">-->
+												<!--	<option>0</option>-->
+												<!--	<option>1</option>-->
+												<!--	<option>2</option>-->
+												<!--	<option>3</option>-->
+												<!--	<option>4</option>-->
+												<!--	<option>5</option>-->
+												<!--</select>-->
+												<!--</div>-->
+
+												<!--<div class="col">-->
+												<!--<div class="small text-center">Child 4 Age-->
+												<!--</div>-->
+												<!--<select class="form-control">-->
+												<!--	<option>0</option>-->
+												<!--	<option>1</option>-->
+												<!--	<option>2</option>-->
+												<!--	<option>3</option>-->
+												<!--	<option>4</option>-->
+												<!--	<option>5</option>-->
+												<!--</select>-->
+												<!--</div>-->
+												<!--</div>-->
+
+												<!--<div class="border mb-2 mt-2">	</div>-->
+												<!--</div>			 -->
+
+
+
+											</div>
+											<div class="row">
+												<div class="col-md-6 mt-2">
+													<a class="btn btn-danger text-light addroom ml-2 "
+														(click)="addRoomInSearch()">Add Rooms</a>
+												</div>
+
+												<div class="col-md-6   mt-2 text-right">
+													<a *ngIf="roomdetail.length> 1"
+														class="btn btn-outline-secondary removeroom mr-2"
+														(click)="removeRoomFromSearch()"><span class="small">Remove
+															Rooms</span></a>
+
+												</div>
+											</div>
+
+											<div class="col mt-2 text-right">
+												<button (click)="doneClicked()" class="btn-success btn">Done</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-2 pl-0">
+								<div class="form-group">
+									<button type="submit" tabindex="12" (click)="search()"
+										class="btn btn-block btn-danger">Search</button>
+								</div>
+							</div>
+						</div>
+					</form>
 				</div>
-				</form>
+
 			</div>
-			
-			<div class="tab-pane fade" id="hotel-search" role="tabpanel" aria-labelledby="hotel-search-tab">
-				<form>
-				
-				<div class="hotel-options">
-					<ul>
-						<li class="pull-left"><a href="#">Domestic</a></li>
-						<li class="pull-left"><a href="#">International</a></li> 
-					</ul>
-				</div>
-				
-				<div class="clearfix">
-				</div>
-				
-				<div class="row location">	
-					<div class="col-md-4 pr-0">
-					<div class="form-group">
-<!-- 						<input type="text" class="form-control typeahead destination" tabindex="1" placeholder="Destination">
- -->						
-						<ng-select name="destination" class="form-control suggestions" [items]="suggestions | async"
-        						   [hideSelected]="true"
-				                   [loading]="suggestionsLoading"
-				                   [typeahead]="suggestionsInput"
-				                   [(ngModel)]="selectedArea"
-				                   bindLabel="displayName"
-							       placeholder="Search here">
-				        </ng-select>
-					</div>
-				</div>
-				
-				
-				<div class="col-md-2 pl-0 pr-0">
-					<div class="form-group">
-						<input type="text" name="checkInDate" class="form-control from-dt checkInDate " [(ngModel)]="checkInDate"  tabindex="3" placeholder="Date From" autocomplete="off">
-						<!-- <input type="date" name="checkInDate" class="form-control from-dt " [(ngModel)]="checkInDate"  tabindex="3" placeholder="Date From" autocomplete="off"> -->
-					</div>
-				</div>
-				<!--class for mydatepicker -->
-				<div class="col-md-2 pl-0 pr-0">
-					<div class="form-group">
-						<input type="text" name="checkOutDate" class="form-control last-dt checkOutDate " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off">
-						<!-- <input type="date" name="checkOutDate" class="form-control last-dt " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off"> -->
-					</div>
-				</div>
-				
-				<div class="col-md-2 pl-0 pr-0" >
-				<div class="form-group">
-				<div class="nav-item dropdown form-control">
-				<div class="dropdown-toggle" id="hotel-menu" href="#" data-toggle="dropdown" aria-expanded="false" >1 Person, {{roomdetail.length}} Room
-				</div>
-				
-				<div class="dropdown-menu passenger ml-auto" aria-labelledby="hotel-menu">
-				<div class="col-md-12 mb-2" *ngFor="let room of roomdetail; let i = index" [attr.data-index]="i"> 
-				<p class="text-red"><b>Room {{room.room}}</b></p>	
-				<div class="clearfix">
-				</div>
-				<div class="range-data">		  
-				<div id="total-adult-hotel" class="value">{{room.adult_count}}</div> Adults<br /><span class="text-muted small">+12 YRS</span> 
-				</div>
-				<div class="range">
-				<input type="range" class="adults" name="adults"  [(ngModel)]="room.adult_count" tabindex="5" min="1" max="9" value="1" id="adult-hotel"> 
-				</div>
-				
-				
-				<div class="clearfix">
-				
-				</div>
-				
-				<div class="range-data">			  
-				<div id="total-child-hotel" class="value">
-				</div> 
-				Child <br /> 
-				<span class="text-muted small">Below 12 YRS</span> 
-				</div>
-				<div class="range">
-				<input type="range" class="child " min="0" [(ngModel)]="room.child_count" (change)="checkChildren(i)" name="child" tabindex="6" max="4" value="0" id="child-hotel"> 
-				</div>
-				
-				<div class="clearfix">
-				</div>	
-				
-				<div class="row child-age" id="child-age-select">
-				<div class="col" *ngFor="let child of room.children">
-					<div class="small text-center">Child {{child.child}} Age</div>
-						<select class="form-control" name="children[]" [(ngModel)]="child.age">
-							<!-- <option value="" value selected hidden>0</option> -->
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-						</select>
-					</div>
-				<div class="border mb-2 mt-2">
-				</div> 
-				</div>			 
-				
-				<!--<div class="col-md-12 " id="room2" style="display:none;">-->
-				<!--<p class="text-red"><b>Room 2</b></p>-->
-				<!--<div class="clearfix">-->
-				<!--</div>			-->
-				<!--<div class="range-data">			  -->
-				<!--<div id="total-adult-hotel" class="value"></div> Adults <br /><span class="text-muted small">+12 YRS</span></div>-->
-				<!--<div class="range">-->
-				<!--<input type="range" class="adults " name="adults"  tabindex="5" min="1" max="9" value="1" id="adult-hotel"> -->
-				<!--</div>-->
-				
-				<!--<div class="clearfix">-->
-				<!--</div>-->
-				
-				<!--<div class="range-data">			  -->
-				<!--<div id="total-child-hotel" class="value">-->
-				<!--</div> Child <br /><span class="text-muted small">Below 12 YRS</span> -->
-				<!--</div>-->
-				<!--<div class="range">-->
-				<!--<input type="range" class="child " min="0" name="child" tabindex="6" max="9" value="0" id="child-hotel2"> -->
-				<!--</div>-->
-				
-				<!--<div class="clearfix">-->
-				<!--</div>	-->
-				<!--<div class="row child-age" id="child-age-select2">-->
-				<!--<div class="col">-->
-				<!--<div class="small text-center">Child 1 Age-->
-				<!--</div>-->
-				<!--<select class="form-control">-->
-				<!--	<option>0</option>-->
-				<!--	<option>1</option>-->
-				<!--	<option>2</option>-->
-				<!--	<option>3</option>-->
-				<!--	<option>4</option>-->
-				<!--	<option>5</option>-->
-				<!--</select>-->
-				<!--</div>-->
-				
-				<!--<div class="col">-->
-				<!--<div class="small text-center">Child 2 Age-->
-				<!--</div>-->
-				<!--<select class="form-control">-->
-				<!--	<option>0</option>-->
-				<!--	<option>1</option>-->
-				<!--	<option>2</option>-->
-				<!--	<option>3</option>-->
-				<!--	<option>4</option>-->
-				<!--	<option>5</option>-->
-				<!--</select>-->
-				<!--</div>-->
-				
-				<!--<div class="col">-->
-				<!--<div class="small text-center">Child 3 Age-->
-				<!--</div>-->
-				<!--<select class="form-control">-->
-				<!--	<option>0</option>-->
-				<!--	<option>1</option>-->
-				<!--	<option>2</option>-->
-				<!--	<option>3</option>-->
-				<!--	<option>4</option>-->
-				<!--	<option>5</option>-->
-				<!--</select>-->
-				<!--</div>-->
-				
-				<!--<div class="col">-->
-				<!--<div class="small text-center">Child 4 Age-->
-				<!--</div>-->
-				<!--<select class="form-control">-->
-				<!--	<option>0</option>-->
-				<!--	<option>1</option>-->
-				<!--	<option>2</option>-->
-				<!--	<option>3</option>-->
-				<!--	<option>4</option>-->
-				<!--	<option>5</option>-->
-				<!--</select>-->
-				<!--</div>-->
-				<!--</div>-->
-				
-				<!--<div class="border mb-2 mt-2">	</div>-->
-				<!--</div>			 -->
-				
-				
-				
-				</div>
-				<div class="row">
-				<div class="col-md-6 mt-2">
-				<a class="btn btn-danger text-light addroom ml-2 " (click)="addRoomInSearch()">Add Rooms</a>			   		  
-				</div>
-				
-				<div class="col-md-6   mt-2 text-right">
-				<a  *ngIf="roomdetail.length> 1" class="btn btn-outline-secondary removeroom mr-2" (click)="removeRoomFromSearch()"><span class="small">Remove Rooms</span></a>
-				
-				</div>			
-				</div>
-				
-				<div class="col mt-2 text-right">
-				<button class="btn-success btn">Done</button>
-				</div>
-				</div>
-				</div>		  
-				</div>	
-				</div>	 
-				
-				<div class="col-md-2 pl-0">
-				<div class="form-group">
-				<button type="submit"  tabindex="12" (click)="search()"  class="btn btn-block btn-danger">Search</button>
-				</div>
-				</div> 
-				</div>
-				</form>
-			</div>
-		
-		</div>
-		
-		
+
+
 		</div>
 		<!-- Search Panel -->
-	</div>	
-   </div>
-   
-   
-  
-   
+	</div>
+</div>
+
+
+
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" *ngIf="nav != '/'">
 	<div class="container">
-		<a class="navbar-brand" routerLink="/"><h1>Trip Bazaar</h1></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-		    <span class="navbar-toggler-icon"></span>
+		<a class="navbar-brand" routerLink="/">
+			<h1>Trip Bazaar</h1>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+			aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
 		</button>
-		
+
 		<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item dropdown active">
-					<a class="nav-link dropdown-toggle" href="#" id="myaccount" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account <span class="carat"></span></a>
+					<a class="nav-link dropdown-toggle" href="#" id="myaccount" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">My Account <span class="carat"></span></a>
 					<div class="dropdown-menu" aria-labelledby="myaccount">
 						<a class="dropdown-item" routerLink="/login">Login</a>
 						<a class="dropdown-item" routerLink="/register">Signup</a>
 					</div>
 				</li>
-				
+
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="supportmenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Support <span class="carat"></span></a>
+					<a class="nav-link dropdown-toggle" href="#" id="supportmenu" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Support <span class="carat"></span></a>
 					<div class="dropdown-menu" aria-labelledby="supportmenu">
 						<a class="dropdown-item" href="#">Contact Us</a>
-						<a class="dropdown-item" href="#">Submit Ticket</a> 
+						<a class="dropdown-item" href="#">Submit Ticket</a>
 					</div>
 				</li>
-				
+
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Recent Search</a>
+					<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Recent Search</a>
 					<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
-						<a class="dropdown-item" href="#">Things you view   here.</a>
+						<a class="dropdown-item" href="#">Things you view here.</a>
 					</div>
 				</li>
-				
+
 				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+					<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">Profile</a>
 					<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
-					    <a class="dropdown-item" routerLink="/profile">Profile</a>
-					    <a class="dropdown-item" (click)="logout()">Logout</a>
-				    </div>
+						<a class="dropdown-item" routerLink="/profile">Profile</a>
+						<a class="dropdown-item" (click)="logout()">Logout</a>
+					</div>
 				</li>
 			</ul>
 		</div>
-		
+
 	</div>
 </nav>
