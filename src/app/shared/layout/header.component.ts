@@ -30,6 +30,11 @@ export class HeaderComponent implements OnInit {
 		"children": []
 	}];
 
+	isLoggedIn: boolean;
+	user = {
+		name: ""
+	}
+
 	suggestionsInput = new Subject<HttpParams>();
 
 	todaydate = new Date();
@@ -41,6 +46,8 @@ export class HeaderComponent implements OnInit {
 
 	}
 	ngOnInit() {
+		this.getLoggedInUser();
+		console.log('1');
 		// 	localStorage.removeItem('transaction_identifier');
 		// localStorage.removeItem('searchObj');
 		// 	localStorage.removeItem('packageObj');
@@ -157,5 +164,18 @@ export class HeaderComponent implements OnInit {
 				))
 			)
 		);
+	}
+
+	getLoggedInUser() {
+		this.api.get("/auth/me")
+			.subscribe((response) => {
+				if (response.status == 200) {
+					this.isLoggedIn = true;
+					this.user.name = response.data.name;
+				}
+			}, (err) => {
+				this.isLoggedIn = false;
+				console.log(`Unable to get logged in user: Error ${err.message}`);
+			})
 	}
 }

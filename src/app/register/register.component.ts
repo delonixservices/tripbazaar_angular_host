@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
 						this.router.navigate(['/otp/' + response.data._id]);
 					}
 				}, (err) => {
+					console.log(err)
 
 					if (err.message !== undefined) {
 						this.validation = err.message

@@ -15,10 +15,15 @@
 				<ul class="navbar-nav ml-auto ">
 					<li class="nav-item dropdown active">
 						<a class="nav-link dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">My Account <span class="carat"></span></a>
+							aria-expanded="false">
+							<span *ngIf="isLoggedIn">{{user.name}}</span>
+							<span *ngIf="isLoggedIn!==true">My Account</span>
+							<span class="carat"></span>
+						</a>
 						<div class="dropdown-menu" aria-labelledby="myaccount">
-							<a class="dropdown-item" routerLink="/login">Login</a>
-							<a class="dropdown-item" routerLink="/register">Signup</a>
+							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/login">Login</a>
+							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/register">Signup</a>
+							<a *ngIf="isLoggedIn===true" class="dropdown-item" (click)="logout()">Logout</a>
 						</div>
 					</li>
 
@@ -239,7 +244,7 @@
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
 									<input type="text" name="checkInDate" class="form-control from-dt checkInDate "
-										[(ngModel)]="checkInDate" tabindex="3" placeholder="Date From"
+										[(ngModel)]="checkInDate" tabindex="3" placeholder="CHECK-IN"
 										autocomplete="off">
 									<!-- <input type="date" name="checkInDate" class="form-control from-dt " [(ngModel)]="checkInDate"  tabindex="3" placeholder="Date From" autocomplete="off"> -->
 								</div>
@@ -248,7 +253,7 @@
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
 									<input type="text" name="checkOutDate" class="form-control last-dt checkOutDate "
-										[(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO"
+										[(ngModel)]="checkOutDate" tabindex="4" placeholder="CHECK-OUT"
 										autocomplete="off">
 									<!-- <input type="date" name="checkOutDate" class="form-control last-dt " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off"> -->
 								</div>
@@ -447,9 +452,6 @@
 	</div>
 </div>
 
-
-
-
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" *ngIf="nav != '/'">
 	<div class="container">
 		<a class="navbar-brand" routerLink="/">
@@ -464,10 +466,15 @@
 			<ul class="navbar-nav ml-auto ">
 				<li class="nav-item dropdown active">
 					<a class="nav-link dropdown-toggle" href="#" id="myaccount" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">My Account <span class="carat"></span></a>
+						aria-haspopup="true" aria-expanded="false">
+						<span *ngIf="isLoggedIn">{{user.name}}</span>
+						<span *ngIf="isLoggedIn!==true">My Account</span>
+						<span class="carat"></span>
+					</a>
 					<div class="dropdown-menu" aria-labelledby="myaccount">
-						<a class="dropdown-item" routerLink="/login">Login</a>
-						<a class="dropdown-item" routerLink="/register">Signup</a>
+						<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/login">Login</a>
+						<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/register">Signup</a>
+						<a *ngIf="isLoggedIn===true" class="dropdown-item" (click)="logout()">Logout</a>
 					</div>
 				</li>
 
@@ -488,12 +495,12 @@
 					</div>
 				</li>
 
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="recentsearch" data-toggle="dropdown"
+				<li *ngIf="isLoggedIn===true" class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="userprofile" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">Profile</a>
 					<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
 						<a class="dropdown-item" routerLink="/profile">Profile</a>
-						<a class="dropdown-item" (click)="logout()">Logout</a>
+						<!-- <a class="dropdown-item" (click)="logout()">Logout</a> -->
 					</div>
 				</li>
 			</ul>

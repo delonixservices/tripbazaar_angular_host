@@ -21,6 +21,11 @@
   background-color: #f4f4f4;
 }
 
+.nav-link {
+  cursor: pointer;
+  user-select: none;
+}
+
 
 .ng-has-value .ng-placeholder {
   display: none;
