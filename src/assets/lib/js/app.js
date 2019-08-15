@@ -1,17 +1,18 @@
 $(function () {
 
-	$("#passenger-menu, #hotel-menu").click(function () {
-		$(".passenger").show();
-	});
+	// $("#passenger-menu, #hotel-menu").click(function () {
+	// 	$(".passenger").show();
+	// });
 
-	$(document).mouseup(function (e) {
-		var container = $(".passenger");
+	// $(document).mouseup(function (e) {
+	// 	var container = $(".passenger");
 
-		// if the target of the click isn't the container nor a descendant of the container
-		if (!container.is(e.target) && container.has(e.target).length === 0) {
-			container.hide();
-		}
-	});
+	// 	// if the target of the click isn't the container nor a descendant of the container
+	// 	if (!container.is(e.target) && container.has(e.target).length === 0) {
+	// 		console.log('11')
+	// 		// container.hide();
+	// 	}
+	// });
 
 	/*Bootstrap DatePicker*/
 	$('.mydatepicker, #datepicker').datepicker();
@@ -27,6 +28,8 @@ $(function () {
 		toggleActive: true,
 		startDate: '+1d',
 	});
+
+
 
 	$(".close").click(function () {
 		$(".side-panel-holder ").hide();
@@ -50,15 +53,24 @@ $(function () {
 	// 	startDate: new Date(),
 	// });
 
-	$(".last-dt").blur(function () {
-		$(".passenger").show();
-		$("#adult").focus();
-	});
+	// commented by me
+	// $(".last-dt").blur(function () {
+	// 	$(".passenger").show();
+	// 	$("#adult").focus();
+	// });
 
 
-	$('input[name=class]').blur(function () {
-		$(".passenger").hide();
-	});
+	// $('input[name=class]').blur(function () {
+	// 	$(".passenger").hide();
+	// });// $('input[name=class]').blur(function () {
+	// 	$(".passenger").hide();
+	// });
+
+	// jQuery('.mydatepicker, #datepicker').datepicker();
+	// jQuery('#datepicker-autoclose').datepicker({
+	//         autoclose: true,
+	//         todayHighlight: true
+	// });
 
 	// jQuery('.mydatepicker, #datepicker').datepicker();
 	// jQuery('#datepicker-autoclose').datepicker({

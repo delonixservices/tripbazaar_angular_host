@@ -49,13 +49,13 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { NgDatepickerModule } from 'ng2-datepicker';
-
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
-  declarations: [ 
+  declarations: [
     AppComponent,
-    FooterComponent, 
-    HeaderComponent, 
+    FooterComponent,
+    HeaderComponent,
     HomeComponent,
     AboutComponent,
     LoginComponent,
@@ -81,16 +81,13 @@ import { NgDatepickerModule } from 'ng2-datepicker';
     ContactComponent,
     DashboardComponent,
     ProfileComponent,
-	OtpComponent,
-	VerifyotpComponent,
-	SuccessComponent,
-	ResetpasswordComponent
+    OtpComponent,
+    VerifyotpComponent,
+    SuccessComponent,
+    ResetpasswordComponent
   ],
-  
-  
-  
-  
-  imports:[
+
+  imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -103,9 +100,10 @@ import { NgDatepickerModule } from 'ng2-datepicker';
     NgProgressHttpModule,
     SweetAlert2Module.forRoot(),
     NgDatepickerModule,
+    Ng5SliderModule
   ],
-  
+
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

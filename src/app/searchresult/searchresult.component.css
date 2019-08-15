@@ -1,10 +1,9 @@
-h1{
-  color:green;
+h1 {
+  color: green;
 }
 
 #notfound {
-  position: relative;
-  height: 100vh;
+  height: 100px;
 }
 
 #notfound .notfound {
@@ -12,8 +11,8 @@ h1{
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .notfound {
@@ -41,8 +40,8 @@ h1{
   left: 50%;
   top: 30%;
   -webkit-transform: translate(-50%, -50%);
-      -ms-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .notfound .notfound-404 h2 {
@@ -91,12 +90,15 @@ h1{
     height: 148px;
     margin: 0px auto 10px;
   }
+
   .notfound .notfound-404 h1 {
     font-size: 86px;
   }
+
   .notfound .notfound-404 h2 {
     font-size: 16px;
   }
+
   .notfound a {
     padding: 7px 15px;
     font-size: 14px;

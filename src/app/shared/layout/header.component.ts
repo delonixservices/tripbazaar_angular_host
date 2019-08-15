@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 	checkOutDate: any;
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
-	persons: number;
+	guests: number;
 	roomdetail = [{
 		"room": "1",
 		"adult_count": "1",
@@ -43,9 +43,11 @@ export class HeaderComponent implements OnInit {
 		public api: ApiService,
 		public jwt: JwtService,
 		public alertService: AlertService) {
-
 	}
+
 	ngOnInit() {
+		/*Bootstrap DatePicker*/
+
 		this.getLoggedInUser();
 		console.log('1');
 		// 	localStorage.removeItem('transaction_identifier');
@@ -114,12 +116,12 @@ export class HeaderComponent implements OnInit {
 	doneClicked() {
 		// console.log('dpdn clicked');
 		$('.dropdown-menu#select-passanger').css('display', 'none');
-		let persons = 0;
+		let guests = 0;
 		this.roomdetail.forEach((room) => {
-			persons += Number(room.adult_count) + Number(room.child_count);
+			guests += Number(room.adult_count) + Number(room.child_count);
 		});
-		this.persons = persons;
-		console.log('persons =' + this.persons);
+		this.guests = guests;
+		console.log('guests =' + this.guests);
 	}
 
 	search() {

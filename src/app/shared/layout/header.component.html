@@ -256,14 +256,16 @@
 										[(ngModel)]="checkOutDate" tabindex="4" placeholder="CHECK-OUT"
 										autocomplete="off">
 									<!-- <input type="date" name="checkOutDate" class="form-control last-dt " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off"> -->
-								</div>
+								</div>roomdetail
 							</div>
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
 									<div class="nav-item dropdown form-control">
 										<div class="dropdown-toggle" id="hotel-menu" href="#" data-toggle="dropdown"
-											aria-expanded="false">{{persons}} Person, {{roomdetail.length}} Room
+											aria-expanded="false">{{roomdetail.length}} Room<span
+												*ngIf="roomdetail.length>1">s</span> & {{guests}} Guest<span
+												*ngIf="guests > 1">s</span>,
 										</div>
 
 										<div id="select-passanger" class="dropdown-menu passenger ml-auto"
@@ -427,7 +429,7 @@
 											</div>
 
 											<div class="col mt-2 text-right">
-												<button (click)="doneClicked()" class="btn-success btn">Done</button>
+												<button (click)="doneClicked()" class="btn btn-success">Done</button>
 											</div>
 										</div>
 									</div>
@@ -436,7 +438,7 @@
 
 							<div class="col-md-2 pl-0">
 								<div class="form-group">
-									<button type="submit" tabindex="12" (click)="search()"
+									<button type="button" tabindex="12" (click)="search()"
 										class="btn btn-block btn-danger">Search</button>
 								</div>
 							</div>
