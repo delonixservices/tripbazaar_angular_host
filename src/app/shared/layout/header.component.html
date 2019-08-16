@@ -263,9 +263,9 @@
 								<div class="form-group">
 									<div class="nav-item dropdown form-control">
 										<div class="dropdown-toggle" id="hotel-menu" href="#" data-toggle="dropdown"
-											aria-expanded="false">{{roomdetail.length}} Room<span
-												*ngIf="roomdetail.length>1">s</span> & {{guests}} Guest<span
-												*ngIf="guests > 1">s</span>,
+											aria-expanded="false">
+											{{roomdetail.length}} Room<span *ngIf="roomdetail.length>1">s</span> &
+											{{guests}} Guest<span *ngIf="guests > 1">s</span>
 										</div>
 
 										<div id="select-passanger" class="dropdown-menu passenger ml-auto"
@@ -307,23 +307,26 @@
 												</div>
 
 												<div class="row child-age" id="child-age-select">
-													<div class="col" *ngFor="let child of room.children">
-														<div class="small text-center">Child {{child.child}} Age</div>
-														<select class="form-control" name="children[]"
+													<div class="col" *ngFor="let child of room.children, let i=index">
+														<div class="small text-center">Child {{i+1}} Age</div>
+
+														<!-- <ng-select [items]="childAge" bindLabel="name"
+															placeholder="Select Age" [(ngModel)]="child.age">
+														</ng-select> -->
+														<select class="form-control" name="childAge{{i}}"
 															[(ngModel)]="child.age">
-															<!-- <option value="" value selected hidden>0</option> -->
-															<option value="1">1</option>
-															<option value="2">2</option>
-															<option value="3">3</option>
-															<option value="4">4</option>
-															<option value="5">5</option>
-															<option value="6">6</option>
-															<option value="7">7</option>
-															<option value="8">8</option>
-															<option value="9">9</option>
-															<option value="10">10</option>
-															<option value="11">11</option>
-															<option value="12">12</option>
+															<option [value]="1">1</option>
+															<option [value]="2">2</option>
+															<option [value]="3">3</option>
+															<option [value]="4">4</option>
+															<option [value]="5">5</option>
+															<option [value]="6">6</option>
+															<option [value]="7">7</option>
+															<option [value]="8">8</option>
+															<option [value]="9">9</option>
+															<option [value]="10">10</option>
+															<option [value]="11">11</option>
+															<option [value]="12">12</option>
 														</select>
 													</div>
 													<div class="border mb-2 mt-2">
@@ -429,7 +432,8 @@
 											</div>
 
 											<div class="col mt-2 text-right">
-												<button (click)="doneClicked()" class="btn btn-success">Done</button>
+												<button id="done" (click)="doneClicked()"
+													class="btn btn-success">Done</button>
 											</div>
 										</div>
 									</div>

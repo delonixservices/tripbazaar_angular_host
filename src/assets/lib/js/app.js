@@ -154,13 +154,27 @@ $(function () {
 	//   output3.innerHTML = this.value;
 	// }
 
-	$(".addroom").click(function () {
-		$("#room2, .removeroom").show()
-	});
+	// $(".addroom").click(function () {
+	// 	$("#room2, .removeroom").show()
+	// });
 
-	$(".removeroom").click(function () {
-		$("#room2, .removeroom").hide()
-	});
+	// $(".removeroom").click(function () {
+	// 	$("#room2, .removeroom").hide()
+	// });
+
+	$('#select-passanger').click((e) => {
+		// console.log(e.target.id);
+		if (e.target.id === "done") {
+			$(".dropdown #select-passanger #done").click(function (e) {
+
+				$('.dropdown #select-passanger').dropdown("toggle");
+				$('.dropdown #hotel-menu').dropdown("toggle");
+			});
+		} else {
+			e.stopImmediatePropagation();
+		}
+	})
+
 
 
 	$('body').prepend('<a href="#" class="back-to-top">Back To Top  </a>');

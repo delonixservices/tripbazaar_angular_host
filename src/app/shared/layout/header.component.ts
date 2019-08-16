@@ -85,6 +85,7 @@ export class HeaderComponent implements OnInit {
 			});
 		});
 	}
+
 	// console.log(this.roomdetail);
 	addRoomInSearch() {
 		this.roomdetail.push({
@@ -103,6 +104,23 @@ export class HeaderComponent implements OnInit {
 	}
 
 	checkChildren(index) {
+		console.log('room = ' + index);
+		console.log('child_count = ' + Number(this.roomdetail[index].child_count));
+		console.log(this.roomdetail[index]);
+
+		if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+			// this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - Number(this.roomdetail[index].child_count));
+			this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
+		} else {
+			for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+				console.log(this.roomdetail[index].children[i] === undefined);
+				if (this.roomdetail[index].children[i] === undefined) {
+					this.roomdetail[index].children[i] = { age: "1" };
+				}
+			}
+		}
+		console.log(this.roomdetail[index]);
+
 		// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
 		// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
 		// }else{
@@ -115,7 +133,6 @@ export class HeaderComponent implements OnInit {
 
 	doneClicked() {
 		// console.log('dpdn clicked');
-		$('.dropdown-menu#select-passanger').css('display', 'none');
 		let guests = 0;
 		this.roomdetail.forEach((room) => {
 			guests += Number(room.adult_count) + Number(room.child_count);
