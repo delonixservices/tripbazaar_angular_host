@@ -177,11 +177,14 @@ $(function () {
 
 
 
-	$('body').prepend('<a href="#" class="back-to-top">Back To Top  </a>');
+	$('body').prepend('<a class="back-to-top">Back To Top  </a>');
 
 	$(window).scroll(function () {
 		if ($(window).scrollTop() > 300) {
 			$('a.back-to-top').fadeIn('show');
+			$('a.back-to-top').click(() => {
+				document.body.scrollTop = document.documentElement.scrollTop = 0;
+			})
 		} else {
 			$('a.back-to-top').fadeOut('show');
 		}
