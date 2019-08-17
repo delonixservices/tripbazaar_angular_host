@@ -16,8 +16,7 @@
 					<li class="nav-item dropdown active">
 						<a class="nav-link dropdown-toggle" id="myaccount" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">
-							<span *ngIf="isLoggedIn">{{user.name}}</span>
-							<span *ngIf="isLoggedIn!==true">My Account</span>
+							<span>My Account</span>
 							<span class="carat"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="myaccount">
@@ -43,8 +42,16 @@
 							<a class="dropdown-item" href="#">Things you view here.</a>
 						</div>
 					</li>
-
-
+					<li *ngIf="isLoggedIn===true" class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="userprofile" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">Profile</a>
+						<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
+							<a class="dropdown-item" routerLink="/profile">Profile</a>
+						</div>
+					</li>
+					<li *ngIf="isLoggedIn===true" class="nav-item">
+						<a href="#" class="nav-link" routerLink="/dashboard">{{user.name}}</a>
+					</li>
 				</ul>
 			</div>
 
@@ -473,8 +480,7 @@
 				<li class="nav-item dropdown active">
 					<a class="nav-link dropdown-toggle" href="#" id="myaccount" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="false">
-						<span *ngIf="isLoggedIn">{{user.name}}</span>
-						<span *ngIf="isLoggedIn!==true">My Account</span>
+						<span>My Account</span>
 						<span class="carat"></span>
 					</a>
 					<div class="dropdown-menu" aria-labelledby="myaccount">
@@ -506,8 +512,10 @@
 						aria-haspopup="true" aria-expanded="false">Profile</a>
 					<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
 						<a class="dropdown-item" routerLink="/profile">Profile</a>
-						<!-- <a class="dropdown-item" (click)="logout()">Logout</a> -->
 					</div>
+				</li>
+				<li *ngIf="isLoggedIn===true" class="nav-item">
+					<a href="#" class="nav-link" routerLink="/dashboard">{{user.name}}</a>
 				</li>
 			</ul>
 		</div>

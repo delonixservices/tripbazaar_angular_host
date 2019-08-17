@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class JwtService {
-  
+
   getToken(): String {
     return window.localStorage['jwtToken'];
   }
@@ -16,15 +16,14 @@ export class JwtService {
     window.localStorage.removeItem('jwtToken');
     window.localStorage.removeItem('jwtRefresh');
   }
-  
-  isAuth(){
-  	
-  	var token = window.localStorage['jwtToken'];
-  	if(token){
-  		return true;
-  	}else{
-  		return false;
-  	}
+
+  isAuth() {
+    var token = window.localStorage['jwtToken'];
+    if (token) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

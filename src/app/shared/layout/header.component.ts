@@ -3,7 +3,7 @@ import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
-import { ApiService, JwtService, AlertService } from '../../core/services';
+import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
 
 declare var $: any;
 
@@ -15,7 +15,6 @@ declare var $: any;
 export class HeaderComponent implements OnInit {
 
 	@Input() nav: string;
-	@Input() logout: string;
 	selectedArea: any;
 	suggestions: any;
 	checkInDate: any;
@@ -42,14 +41,34 @@ export class HeaderComponent implements OnInit {
 		public router: Router,
 		public api: ApiService,
 		public jwt: JwtService,
+		private authService: AuthService,
 		public alertService: AlertService) {
 	}
 
 	ngOnInit() {
+
+		if (this.jwt.isAuth()) {
+			this.isLoggedIn = true;
+		} else {
+			this.isLoggedIn = false;
+		}
+
+		this.authService.getLoggedInUser.subscribe(name => {
+			if (name) {
+				console.log('if');
+				this.isLoggedIn = true;
+				this.user.name = <string>name;
+			} else {
+				console.log('else');
+				this.isLoggedIn = false;
+				this.user.name = "";
+			}
+		});
+
 		/*Bootstrap DatePicker*/
 
-		this.getLoggedInUser();
-		console.log('1');
+		// this.getLoggedInUser();
+
 		// 	localStorage.removeItem('transaction_identifier');
 		// localStorage.removeItem('searchObj');
 		// 	localStorage.removeItem('packageObj');
@@ -170,7 +189,7 @@ export class HeaderComponent implements OnInit {
 
 
 	loadDestination() {
-		console.log("called");
+		console.log("loadDestination called");
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
@@ -185,16 +204,23 @@ export class HeaderComponent implements OnInit {
 		);
 	}
 
-	getLoggedInUser() {
-		this.api.get("/auth/me")
-			.subscribe((response) => {
-				if (response.status == 200) {
-					this.isLoggedIn = true;
-					this.user.name = response.data.name;
-				}
-			}, (err) => {
-				this.isLoggedIn = false;
-				console.log(`Unable to get logged in user: Error ${err.message}`);
-			})
+	logout() {
+		this.authService.logout((success) => {
+			this.router.navigate(['']);
+		});
+
 	}
+
+	// getLoggedInUser() {
+	// 	this.api.get("/auth/me")
+	// 		.subscribe((response) => {
+	// 			if (response.status == 200) {
+	// 				this.isLoggedIn = true;
+	// 				this.user.name = response.data.name;
+	// 			}
+	// 		}, (err) => {
+	// 			this.isLoggedIn = false;
+	// 			console.log(`Unable to get logged in user: Error ${err.message}`);
+	// 		})
+	// }
 }

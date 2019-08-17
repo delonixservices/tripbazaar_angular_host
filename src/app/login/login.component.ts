@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { ApiService, JwtService } from '../core/services';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
 	selector: 'app-login-page',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 	public forgotObj: any;
 	public validation: any;
 
-	constructor(private router: Router, public api: ApiService, public jwt: JwtService) {
+	constructor(private router: Router, private auth: AuthService) {
 
 		this.paramsObj = {
 			mobile: '',
@@ -34,44 +34,33 @@ export class LoginComponent implements OnInit {
 		if (this.paramsObj.mobile == "" || this.paramsObj.password == "") {
 			this.validation = "Require fields are empty";
 		} else {
-			this.api.post("/auth/login", this.paramsObj)
-				.subscribe((response) => {
-					if (response.status == 200) {
-						this.jwt.saveToken(response.data.token, response.data.refreshToken);
-						// TODO : check if account is verified 
-						this.router.navigate(['/dashboard']);
-					}
-				}, (err) => {
 
+			this.auth.login(this.paramsObj, (isLoggedIn, err) => {
+				if (isLoggedIn) {
+					this.router.navigate(['/dashboard']);
+				} else {
 					if (err.message !== undefined) {
 						this.validation = err.message
 					}
-				})
+				}
+			});
 		}
-
-
 	}
 
-
 	forgotRequest() {
-
 		if (this.forgotObj.mobile == "") {
 			this.validation = "Require fields are empty";
 		} else {
-
-			this.api.post("/auth/forgot", this.forgotObj)
-				.subscribe((response) => {
-					console.log(response.data);
-					if (response.status == 200) {
-						this.router.navigate(['/verifyotp/' + response.data._id]);
-					}
-				}, (err) => {
+			this.auth.resetPassword(this.forgotObj, (res, err) => {
+				if (res.success) {
+					this.router.navigate(['/verifyotp/' + res.data._id]);
+				} else {
 					if (err.message !== undefined) {
 						this.validation = err.message
 					}
-				})
+				}
+			});
 		}
 	}
-
 
 } //main
