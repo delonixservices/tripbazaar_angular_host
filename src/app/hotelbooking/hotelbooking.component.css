@@ -1,0 +1,70 @@
+h1{
+  color:green;
+}
+.side-panel-holder {
+    display: none;
+    background-color: rgba(0,0,0,0.7);
+    bottom: 0;
+    clear: both;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 999999;
+}
+.side-panel-holder .side-panel .close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 20px;
+    color: #ccc;
+    text-shadow: 0 1px 0 #fff;
+    opacity: 1;
+}
+
+.deleteCoupon {
+        position: absolute;
+    top: -5px;
+    right: -8px;
+    background: #E72B2B;
+    padding: 3px 5px;
+    color: #fff;
+    border-radius: 13px;
+    cursor: pointer;
+}
+
+.bbl{
+	position:relative;
+	margin-top: 12px;
+}
+.cuponCode {
+    width: 100%;
+    background: #208255;
+    overflow: hidden;
+    padding: 14px 5px;
+    color: #FFF;
+    font-weight: 600;
+    text-align: center;
+}
+.side-panel-holder .side-panel {
+    width: 100%;
+    max-width: 620px;
+    background: #fff;
+    overflow: auto;
+    margin: 0;
+    position: absolute;
+    right: 0px;
+    top: 0;
+    height: 100%;
+    border-radius: 0;
+}
+.slideInRight {
+    animation-name: slideInRight;
+}
+.animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
