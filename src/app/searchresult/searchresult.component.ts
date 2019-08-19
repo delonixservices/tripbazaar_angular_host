@@ -79,7 +79,44 @@ export class SearchresultComponent implements OnInit {
 
 	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
 
+	}
 
+	ngOnInit() {
+		localStorage.removeItem('transaction_identifier');
+		localStorage.removeItem('searchObj');
+		localStorage.removeItem('packageObj');
+		localStorage.removeItem('hotelObj');
+
+		this.searchResult();
+		this.loadDestination();
+		this.selectedArea = this.hotelsearchkeys.area;
+		this.checkInDate = this.hotelsearchkeys.checkindate;
+		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
+		this.roomdetail = this.hotelsearchkeys.details;
+	}
+
+	searchResult() {
+		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
+
+		this.api.post("/search", this.hotelsearchkeys)
+			.subscribe((response) => {
+				if (response && response.data != undefined) {
+					console.log('Search res = ' + response.data);
+					this.allHotel = response.data;
+					this.filteredHotels = response.data.hotels;
+					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
+					localStorage.setItem('transaction_identifier', response.transaction_identifier);
+					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
+
+				} else {
+					this.norecordfoundtitle = "Opps";
+					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
+				}
+			}, (err) => {
+				if (err.message !== undefined) {
+					this.validation = err.message
+				}
+			});
 	}
 
 	hoteldetails(hotel) {
@@ -185,8 +222,6 @@ export class SearchresultComponent implements OnInit {
 		var foodserve;
 		var i = 0;
 		setTimeout(() => {
-
-
 			for (let refundtype of this.Refundable) {
 				if (i == 0) {
 					if (refundtype.selected === true) {
@@ -333,9 +368,7 @@ export class SearchresultComponent implements OnInit {
 		} else {
 			this.alertService.error("All fields are required!");
 		}
-
 	}
-
 
 	loadDestination() {
 		this.suggestions = concat(
@@ -350,44 +383,5 @@ export class SearchresultComponent implements OnInit {
 				))
 			)
 		);
-	}
-
-	searchResult() {
-		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
-
-		this.api.post("/search", this.hotelsearchkeys)
-			.subscribe((response) => {
-				if (response.data != undefined) {
-					this.allHotel = response.data;
-					this.filteredHotels = response.data.hotels;
-					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
-					localStorage.setItem('transaction_identifier', response.transaction_identifier);
-					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
-
-				} else {
-					this.norecordfoundtitle = "Opps";
-					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
-				}
-			}, (err) => {
-				if (err.message !== undefined) {
-					this.validation = err.message
-				}
-			});
-	}
-
-	ngOnInit() {
-		localStorage.removeItem('transaction_identifier');
-		localStorage.removeItem('searchObj');
-		localStorage.removeItem('packageObj');
-		localStorage.removeItem('hotelObj');
-
-		this.searchResult();
-		this.loadDestination();
-		this.selectedArea = this.hotelsearchkeys.area;
-		this.checkInDate = this.hotelsearchkeys.checkindate;
-		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
-		this.roomdetail = this.hotelsearchkeys.details;
-
-
 	}
 }

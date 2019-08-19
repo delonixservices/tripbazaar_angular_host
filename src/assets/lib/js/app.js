@@ -17,12 +17,14 @@ $(function () {
 	/*Bootstrap DatePicker*/
 	$('.mydatepicker, #datepicker').datepicker();
 	$('.checkInDate').datepicker({
+		// format: 'yyyy/mm/dd',
 		autoclose: true,
 		todayHighlight: true,
 		toggleActive: true,
 		startDate: 'd',
 	});
 	$('.checkOutDate').datepicker({
+		// format: 'yyyy/mm/dd',
 		autoclose: true,
 		todayHighlight: true,
 		toggleActive: true,

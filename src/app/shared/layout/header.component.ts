@@ -48,7 +48,10 @@ export class HeaderComponent implements OnInit {
 	ngOnInit() {
 
 		if (this.jwt.isAuth()) {
-			this.isLoggedIn = true;
+			if (this.user.name === "")
+				this.getLoggedInUser();
+			else
+				this.isLoggedIn = false;
 		} else {
 			this.isLoggedIn = false;
 		}
@@ -79,6 +82,7 @@ export class HeaderComponent implements OnInit {
 		$.getScript('./assets/lib/js/app.js');
 
 		$('document').ready(() => {
+			console.log('ready');
 			$(".checkInDate").datepicker().on("changeDate", (evt) => {
 				console.log('checkin ' + evt.date);
 				var date = evt.date;
@@ -211,16 +215,16 @@ export class HeaderComponent implements OnInit {
 
 	}
 
-	// getLoggedInUser() {
-	// 	this.api.get("/auth/me")
-	// 		.subscribe((response) => {
-	// 			if (response.status == 200) {
-	// 				this.isLoggedIn = true;
-	// 				this.user.name = response.data.name;
-	// 			}
-	// 		}, (err) => {
-	// 			this.isLoggedIn = false;
-	// 			console.log(`Unable to get logged in user: Error ${err.message}`);
-	// 		})
-	// }
+	getLoggedInUser() {
+		this.api.get("/auth/me")
+			.subscribe((response) => {
+				if (response.status == 200) {
+					this.user.name = response.data.name;
+					this.isLoggedIn = true;
+				}
+			}, (err) => {
+				this.isLoggedIn = false;
+				console.log(`Unable to get logged in user: Error ${err.message}`);
+			})
+	}
 }

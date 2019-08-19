@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+a {
+  cursor: pointer;
+}
+
 .ng-select.suggestions {
   border: 0px;
   min-height: 0px;
