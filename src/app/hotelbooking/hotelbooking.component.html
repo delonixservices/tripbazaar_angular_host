@@ -4,7 +4,7 @@
 			<h3 class=""><i class="fa fa-flights"></i> Review Your Booking</h3>
 		</div>
 		<div class="col-md-9">
-			<!-- Flight Details -->
+			<!-- Hotel Details -->
 			<div class="row">
 
 				<div class="col-md-5">
@@ -14,8 +14,9 @@
 								<div class="carousel-item "
 									*ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index "
 									[ngClass]="{'active' : i == 0}">
-									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}" class="img-fluid"
-										alt="First slide" style=" height: 255px;width: 100%;object-fit: cover;">
+									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}"
+										class="img-fluid" alt="First slide"
+										style=" height: 255px;width: 100%;object-fit: cover;">
 								</div>
 							</div>
 
@@ -31,7 +32,7 @@
 						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 3 ? 'text-warning' : 'text-light'"></i>
 						<i class="fa fa-star " [ngClass]="hotelObj.starRating > 4 ? 'text-warning' : 'text-light'"></i>
 					</div>
-					<p class="text-muted"><i class="fa fa-map-marker"></i> {{hotelObj.location.address}} |
+					<p class="text-muted"><i class="fa fa-map-marker"></i>{{hotelObj.location.address}} |
 						{{hotelObj.location.postalCode}}</p>
 					<div class="row">
 						<div class="col">
@@ -55,7 +56,7 @@
 				</div>
 			</div>
 			<hr>
-			<!-- Flight Details -->
+
 			<!-- Traveller Details  -->
 			<div class="flightdetail">
 				<div class="row">
@@ -66,7 +67,8 @@
 					</div>
 
 					<div class="col-md-6" *ngIf="!jwt.isAuth()">
-						<h5 class="mt-4"><a href="#" data-toggle="modal" data-target=".sign-in">Sign in</a> to book faster</h5>
+						<h5 class="mt-4"><a href="#" data-toggle="modal" data-target=".sign-in">SignIn</a> to book
+							faster</h5>
 					</div>
 					<!-- Sign In Model -->
 					<div class="modal fade bd-example-modal-sm sign-in" tabindex="-1" role="dialog"
@@ -74,7 +76,7 @@
 						<div class="modal-dialog modal-sm">
 							<div class="modal-content">
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
+									<h5 class="modal-title" id="exampleModalLabel">Log In</h5>
 									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -82,19 +84,22 @@
 								<div class="modal-body">
 									<form class="px-2 py-1">
 										<div class="form-group">
-											<label for="exampleDropdownFormEmail1">Email address</label>
-											<input type="number" required class="form-control" id="exampleDropdownFormEmail1"
-												[(ngModel)]="paramsObj.mobile" placeholder="Enter Your Mobile Number">
+											<label for="exampleDropdownFormEmail1">Mobile Number</label>
+											<input type="number" required class="form-control"
+												id="exampleDropdownFormEmail1" [(ngModel)]="paramsObj.mobile"
+												name="mobile" placeholder="Enter Your Mobile Number">
 										</div>
 										<div class="form-group">
 											<label for="exampleDropdownFormPassword1">Password</label>
-											<input type="password" class="form-control" id="exampleDropdownFormPassword1"
-												[(ngModel)]="paramsObj.password" placeholder="Enter Your Password">
+											<input type="password" class="form-control"
+												id="exampleDropdownFormPassword1" [(ngModel)]="paramsObj.password"
+												name="password" placeholder="Enter Your Password">
 										</div>
 										<!-- <div class="form-check">
 											<label class="checkcontainer small"> <input type="checkbox" checked=""><span class="checkmark"></span>Remember me</label>
 										</div> -->
-										<button type="submit" class="btn btn-danger btn-block gstform" (click)="login()">Sign in</button>
+										<button type="submit" class="btn btn-danger btn-block gstform"
+											(click)="login()">log In</button>
 									</form>
 								</div>
 							</div>
@@ -111,33 +116,37 @@
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="text" name="contactName" required class="form-control" placeholder="Name"
-									[(ngModel)]="contactDetail.name">
+								<input type="text" name="contactName" required class="form-control"
+									placeholder="First Name" [(ngModel)]="contactDetail.name">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="tel" name="contactlastname" required class="form-control" placeholder="Last Name"
-									[(ngModel)]="contactDetail.last_name">
+								<input type="text" name="contactlastname" required class="form-control"
+									placeholder="Last Name" [(ngModel)]="contactDetail.last_name">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="tel" name="contactMobile" required class="form-control" placeholder="Phone"
+								<input type="text" name="contactMobile" required class="form-control"
+									placeholder="Phone" minlength="10" maxlength="10"
 									[(ngModel)]="contactDetail.mobile">
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
-								<input type="tel" name="contactEmail" required class="form-control" placeholder="Email"
-									[(ngModel)]="contactDetail.email">
+								<input type="email" name="contactEmail" required class="form-control"
+									placeholder="Email" [(ngModel)]="contactDetail.email">
 							</div>
+						</div>
+						<div class="col-12 text-danger">
+							{{this.contactDetailsValidation}}
 						</div>
 					</div>
 				</form>
 				<hr>
-				<h5>Member Details</h5>
 
+				<h5>Member Details</h5>
 				<div class="row" *ngFor="let room of guest; let i = index;">
 					<div class="col-md-12 text-primary">
 						<h6>Room {{i+1}}</h6>
@@ -163,6 +172,9 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="col-12 text-danger">
+						{{this.memberDetailsValidation}}
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -191,18 +203,21 @@
 					<h6>Tariff Details</h6>
 					<div class="row mb-2">
 						<div class="col-md-7">Rate</div>
-						<div class="col-md-5 text-right"><i class="fa fa-inr"></i> {{packageObj.chargeable_rate_with_tax_excluded}}
+						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
+							{{packageObj.chargeable_rate_with_tax_excluded}}
 						</div>
 					</div>
 					<div class="row mb-2">
 						<div class="col-md-7">Tax</div>
 						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
-							{{(packageObj.taxes_and_fees) ? packageObj.taxes_and_fees.estimated_total.value : "0.00"}}</div>
+							{{(packageObj.taxes_and_fees) ? packageObj.taxes_and_fees.estimated_total.value : "0.00"}}
+						</div>
 					</div>
 
 					<div class="row mb-2" *ngIf="couponCode.value != 0">
 						<div class="col-md-7">Discount</div>
-						<div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i class="fa fa-inr"></i>
+						<div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i
+								class="fa fa-inr"></i>
 							{{packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value)}}</div>
 						<div class="col-md-5 text-right" *ngIf="couponCode.type =='fixed'"><i class="fa fa-inr"></i>
 							{{couponCode.value}}</div>
@@ -249,8 +264,8 @@
 					<hr>
 					<h6>Have a Promo Code?</h6>
 					<div class="input-group">
-						<input type="text" class="form-control" name="code" placeholder="Coupon Code" [(ngModel)]="coupon.code"
-							aria-label="Enter Coupon Code">
+						<input type="text" class="form-control" name="code" placeholder="Coupon Code"
+							[(ngModel)]="coupon.code" aria-label="Enter Coupon Code">
 						<span class="input-group-btn">
 							<button class="btn btn-secondary" (click)="checkCopuonCode()" type="button">Apply</button>
 						</span>
@@ -292,12 +307,14 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<div class="form-group">
-							<input type="text" name="name[]" class="form-control" placeholder="Name" [(ngModel)]="gstDetail.name">
+							<input type="text" name="name[]" class="form-control" placeholder="Name"
+								[(ngModel)]="gstDetail.name">
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<div class="form-group">
-							<input type="text" name="email[]" class="form-control" placeholder="Email" [(ngModel)]="gstDetail.email">
+							<input type="text" name="email[]" class="form-control" placeholder="Email"
+								[(ngModel)]="gstDetail.email">
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12">
@@ -308,7 +325,8 @@
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<div class="form-group">
-							<input type="text" name="city[]" class="form-control" placeholder="City" [(ngModel)]="gstDetail.city">
+							<input type="text" name="city[]" class="form-control" placeholder="City"
+								[(ngModel)]="gstDetail.city">
 						</div>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12">
@@ -371,7 +389,8 @@
 				<div class="form-group text-center">
 					<input type="submit" class="btn btn-danger btn-lg" value="Add GST Details" (click)="gstSubmit()">
 				</div>
-				<p><b>Please Note:</b> Your taxes may get updated post submitting your GST details. Please review the final
+				<p><b>Please Note:</b> Your taxes may get updated post submitting your GST details. Please review the
+					final
 					amount in Fare Details.</p>
 			</form>
 		</div>

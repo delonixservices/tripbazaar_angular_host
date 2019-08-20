@@ -14,7 +14,7 @@ $(function () {
 	// 	}
 	// });
 
-	/*Bootstrap DatePicker*/
+	/* Bootstrap DatePicker*/
 	$('.mydatepicker, #datepicker').datepicker();
 	$('.checkInDate').datepicker({
 		// format: 'yyyy/mm/dd',
@@ -130,22 +130,21 @@ $(function () {
 	// }
 
 	// Hotel 
+	// var adults = document.getElementById("adult-hotel");
+	// var output1 = document.getElementById("total-adult-hotel");
+	// output1.innerHTML = adults.value;
 
-	var adults = document.getElementById("adult-hotel");
-	var output1 = document.getElementById("total-adult-hotel");
-	output1.innerHTML = adults.value;
+	// adults.oninput = function () {
+	// 	output1.innerHTML = this.value;
+	// }
 
-	adults.oninput = function () {
-		output1.innerHTML = this.value;
-	}
+	// var child = document.getElementById("child-hotel");
+	// var output2 = document.getElementById("total-child-hotel");
+	// output2.innerHTML = child.value;
 
-	var child = document.getElementById("child-hotel");
-	var output2 = document.getElementById("total-child-hotel");
-	output2.innerHTML = child.value;
-
-	child.oninput = function () {
-		output2.innerHTML = this.value;
-	}
+	// child.oninput = function () {
+	// 	output2.innerHTML = this.value;
+	// }
 
 
 	var infant = document.getElementById("infant");

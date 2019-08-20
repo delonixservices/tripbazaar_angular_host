@@ -30,7 +30,7 @@ export class HoteldetailsComponent implements OnInit {
 	public validation: any;
 	public hotelObj: any = "";
 	public math: any;
-
+	public display: any;
 	constructor(private route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
@@ -41,6 +41,15 @@ export class HoteldetailsComponent implements OnInit {
 			this.alertService.error("Please select correct hotel");
 			this.router.navigate(['/']);
 		}
+	}
+
+	ngOnInit() {
+		this.searchResult();
+		this.loadDestination();
+		this.selectedArea = this.hotelsearchkeys.area;
+		this.checkInDate = this.hotelsearchkeys.checkindate;
+		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
+		this.roomdetail = this.hotelsearchkeys.details;
 	}
 
 	selectPackage(hotelPackage) {
@@ -77,7 +86,8 @@ export class HoteldetailsComponent implements OnInit {
 		}
 	}
 
-	search() {
+	searchAgain() {
+		this.display = "d-none";
 		if (this.selectedArea !== undefined && this.checkInDate !== undefined && this.checkOutDate !== undefined && this.roomdetail !== undefined) {
 			var flag = true;
 			loop1:
@@ -96,13 +106,11 @@ export class HoteldetailsComponent implements OnInit {
 				this.hotelObj.searchkey = this.hotelsearchkeys;
 				this.searchResult();
 				this.router.navigate(['/searchresult']);
-				console.log(this.hotelObj.searchkey);
 			}
 
 		} else {
 			this.alertService.error("All fields are required!");
 		}
-
 	}
 
 
@@ -139,17 +147,6 @@ export class HoteldetailsComponent implements OnInit {
 					this.validation = err.message
 				}
 			});
-	}
-
-	ngOnInit() {
-
-		this.searchResult();
-		this.loadDestination();
-		this.selectedArea = this.hotelsearchkeys.area;
-		this.checkInDate = this.hotelsearchkeys.checkindate;
-		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
-		this.roomdetail = this.hotelsearchkeys.details;
-
 	}
 
 	searchAvailability() {

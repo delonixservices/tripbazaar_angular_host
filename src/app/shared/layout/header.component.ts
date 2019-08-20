@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
-
+import { NgbDateStruct, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 declare var $: any;
 
 @Component({
@@ -17,8 +17,12 @@ export class HeaderComponent implements OnInit {
 	@Input() nav: string;
 	selectedArea: any;
 	suggestions: any;
+
+	checkInDateModel: NgbDateStruct;
+	checkOutDateModel: NgbDateStruct;
 	checkInDate: any;
 	checkOutDate: any;
+
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
 	guests: number;
@@ -42,18 +46,24 @@ export class HeaderComponent implements OnInit {
 		public api: ApiService,
 		public jwt: JwtService,
 		private authService: AuthService,
-		public alertService: AlertService) {
-	}
+		public alertService: AlertService,
+		public ngbDateParserFormatter: NgbDateParserFormatter
+	) { }
 
 	ngOnInit() {
 
 		if (this.jwt.isAuth()) {
-			if (this.user.name === "")
+			if (this.user.name === "") {
 				this.getLoggedInUser();
-			else
+				console.log('in username');
+			}
+			else {
 				this.isLoggedIn = false;
+				console.log('in username else');
+			}
 		} else {
 			this.isLoggedIn = false;
+			console.log('Not auth');
 		}
 
 		this.authService.getLoggedInUser.subscribe(name => {
@@ -79,34 +89,42 @@ export class HeaderComponent implements OnInit {
 		// localStorage.removeItem('hotelsearchkeys');
 		this.loadDestination();
 
-		$.getScript('./assets/lib/js/app.js');
+		// $.getScript('./assets/lib/js/app.js');
 
-		$('document').ready(() => {
-			console.log('ready');
-			$(".checkInDate").datepicker().on("changeDate", (evt) => {
-				console.log('checkin ' + evt.date);
-				var date = evt.date;
-				// var d = date.getDate();
-				var d = `${date.getDate()}`.padStart(2, '0');
-				// var m = date.getMonth() + 1;
-				// var m =	{date.getMonth() + 1}.padStart(2, '0');
-				var m = `${date.getMonth() + 1}`.padStart(2, '0');
-				var y = date.getFullYear();
-				this.checkInDate = y + '-' + m + '-' + d;
-				// console.log(this.checkInDate);
-			});
+		// $('document').ready(() => {
+		// 	console.log('ready');
+		// 	$(".checkInDate").datepicker().on("changeDate", (evt) => {
+		// 		console.log('checkin ' + evt.date);
+		// 		var date = evt.date;
+		// 		// var d = date.getDate();
+		// 		var d = `${date.getDate()}`.padStart(2, '0');
+		// 		// var m = date.getMonth() + 1;
+		// 		// var m =	{date.getMonth() + 1}.padStart(2, '0');
+		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
+		// 		var y = date.getFullYear();
+		// 		this.checkInDate = y + '-' + m + '-' + d;
+		// 		// console.log(this.checkInDate);
+		// 	});
 
-			$(".checkOutDate").datepicker().on("changeDate", (evt) => {
-				console.log('checkout ' + evt.date);
-				var date = evt.date;
-				var d = `${date.getDate()}`.padStart(2, '0');
-				var m = `${date.getMonth() + 1}`.padStart(2, '0');
-				var y = date.getFullYear();
-				// 2019-03-10
-				this.checkOutDate = y + '-' + m + '-' + d;
-				// console.log(this.checkOutDate);
-			});
-		});
+		// 	$(".checkOutDate").datepicker().on("changeDate", (evt) => {
+		// 		console.log('checkout ' + evt.date);
+		// 		var date = evt.date;
+		// 		var d = `${date.getDate()}`.padStart(2, '0');
+		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
+		// 		var y = date.getFullYear();
+		// 		// 2019-03-10
+		// 		this.checkOutDate = y + '-' + m + '-' + d;
+		// 		// console.log(this.checkOutDate);
+		// 	});
+		// });
+	}
+
+	onCheckInDateSelect(date: NgbDate) {
+		this.checkInDate = this.ngbDateParserFormatter.format(date);
+	}
+
+	onCheckOutDateSelect(date: NgbDate) {
+		this.checkOutDate = this.ngbDateParserFormatter.format(date);
 	}
 
 	// console.log(this.roomdetail);
@@ -221,9 +239,12 @@ export class HeaderComponent implements OnInit {
 				if (response.status == 200) {
 					this.user.name = response.data.name;
 					this.isLoggedIn = true;
+					console.log(1);
 				}
 			}, (err) => {
 				this.isLoggedIn = false;
+				this.jwt.destroyToken();
+				console.log('Jwt destroyed');
 				console.log(`Unable to get logged in user: Error ${err.message}`);
 			})
 	}

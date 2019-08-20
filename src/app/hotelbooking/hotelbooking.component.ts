@@ -18,6 +18,8 @@ export class HotelbookingComponent implements OnInit {
 	public packageObj: any;
 	public hotelObj: any;
 	public validation: any;
+	public contactDetailsValidation: any;
+	public memberDetailsValidation: any;
 	public booking_policy: any;
 	public paramsObj: any;
 	public loginUser: any;
@@ -45,9 +47,8 @@ export class HotelbookingComponent implements OnInit {
 					if (response.status == 200) {
 						this.loginUser = response.data;
 						this.contactDetail = response.data;
-						this.gstDetail = response.data;
+						// this.gstDetail = response.data;
 					}
-
 				}, (err) => {
 					this.paramsObj = {
 						mobile: '',
@@ -60,6 +61,7 @@ export class HotelbookingComponent implements OnInit {
 				password: ''
 			};
 		}
+
 		// this.Number = Number;
 		this.searchObj = JSON.parse(localStorage.getItem('searchObj'));
 		this.packageObj = JSON.parse(localStorage.getItem('packageObj'));
@@ -73,9 +75,33 @@ export class HotelbookingComponent implements OnInit {
 		}
 	}
 
-	login() {
+	ngOnInit() {
+		this.hotelsearchkeys.details.map((room, index) => {
+			var roomGuest = [];
+			for (let i = 1; i <= room.adult_count; i++) {
+				roomGuest.push({ "firstname": "", "lastname": "", "mobile": "" });
+			}
+			var roomObj = { "room_guest": roomGuest };
+			this.guest.push(roomObj);
+		});
+		this.loadPolicy();
+		console.log('load gst')
+		// this.api.get("/getgstdetails").subscribe((response) => {
+		// 	if (response.status == 200) {
+		// 		if (response.data.length > 0) {
+		// 			// console.log(response.data);
+		// 			this.gstDetail = response.data[0];
+		// 		}
+		// 	}
+		// }, (err) => {
+		// 	if (err.message !== undefined) {
+		// 		this.validation = err.message
+		// 	}
+		// })
+	}
 
-		if (this.paramsObj.mobile == "" || this.paramsObj.password == "") {
+	login() {
+		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.validation = "Require fields are empty";
 		} else {
 			this.api.post("/auth/login", this.paramsObj)
@@ -90,36 +116,71 @@ export class HotelbookingComponent implements OnInit {
 						// }
 					}
 				}, (err) => {
-
 					if (err.message !== undefined) {
 						this.validation = err.message
 					}
 				})
 		}
-
-
 	}
 
-	hotelBook() {
-		this.api.post("/book", { "bookingid": this.bookingid, "transactionid": this.transactionid })
+	hotelPreBook() {
+		const isMobileValid = this.contactDetail.mobile !== "" && this.contactDetail.mobile.length === 10 ? true : false;
+
+		if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined || !isMobileValid) {
+			this.contactDetailsValidation = "All the fields are required";
+			return true;
+		}
+
+		const prebookParams = {
+			"hotel": this.hotelObj,
+			"package": this.packageObj,
+			"booking_policy": this.booking_policy,
+			"search": this.searchObj,
+			"guest": this.guest, "transaction_id":
+				this.transaction_identifier,
+			"contactDetail": this.contactDetail,
+			"coupon": this.couponCode,
+			"gstDetail": this.gstDetail
+		}
+
+		console.log('prebookParams', prebookParams);
+
+		this.api.post("/prebook", prebookParams)
 			.subscribe((response) => {
-				if (response.data != undefined) {
-					localStorage.removeItem('transaction_identifier');
-					localStorage.removeItem('searchObj');
-					localStorage.removeItem('packageObj');
-					localStorage.removeItem('hotelObj');
-					localStorage.removeItem('hotelsearchkeys');
-					this.router.navigate(['/']);
+				// console.log(response.data.booking_id);
+				if (response.data.booking_id !== undefined) {
+					let url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
+					window.location.assign(url);
+				} else {
+					this.alertService.error("Something Went Wrong Try again.");
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
+					this.alertService.error("Something Went Wrong Try again.");
 					this.validation = err.message
 				}
 			});
 	}
 
-	loadPolicy() {
+	// hotelBook() {
+	// 	this.api.post("/book", { "bookingid": this.bookingid, "transactionid": this.transactionid })
+	// 		.subscribe((response) => {
+	// 			if (response.data != undefined) {
+	// 				localStorage.removeItem('transaction_identifier');
+	// 				localStorage.removeItem('searchObj');
+	// 				localStorage.removeItem('packageObj');
+	// 				localStorage.removeItem('hotelObj');
+	// 				localStorage.removeItem('hotelsearchkeys');
+	// 				this.router.navigate(['/']);
+	// 			}
+	// 		}, (err) => {
+	// 			if (err.message !== undefined) {
+	// 				this.validation = err.message
+	// 			}
+	// 		});
+	// }
 
+	loadPolicy() {
 		this.api.post("/bookingpolicy", { "package": this.packageObj, "search": this.searchObj, "transaction_id": this.transaction_identifier })
 			.subscribe((response) => {
 				if (response.data != undefined) {
@@ -133,32 +194,6 @@ export class HotelbookingComponent implements OnInit {
 					this.alertService.error("Something Went Wrong Try again.");
 					this.validation = err.message;
 					this.router.navigate(['/searchresult']);
-				}
-			});
-	}
-
-	hotelPreBook() {
-
-		if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined) {
-			this.validation = "First Name & Last Name required";
-			return true
-		}
-
-		this.api.post("/prebook", { "hotel": this.hotelObj, "package": this.packageObj, "booking_policy": this.booking_policy, "search": this.searchObj, "guest": this.guest, "transaction_id": this.transaction_identifier, "contactDetail": this.contactDetail, "coupon": this.couponCode, "gstDetail": this.gstDetail })
-			.subscribe((response) => {
-				console.log(response.data.booking_id);
-				if (response.data.booking_id !== undefined) {
-					var url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
-					window.location.assign(url);
-
-				} else {
-
-					this.alertService.error("Something Went Wrong Try again.");
-				}
-			}, (err) => {
-				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again.");
-					this.validation = err.message
 				}
 			});
 	}
@@ -218,31 +253,5 @@ export class HotelbookingComponent implements OnInit {
 					}
 				})
 		}
-	}
-
-	ngOnInit() {
-		this.hotelsearchkeys.details.map((room, index) => {
-			var roomGuest = [];
-			for (let i = 1; i <= room.adult_count; i++) {
-				roomGuest.push({ "firstname": "", "lastname": "", "mobile": "" });
-			}
-			var roomObj = { "room_guest": roomGuest };
-			this.guest.push(roomObj);
-		});
-		this.loadPolicy();
-
-		this.api.get("/getgstdetails").subscribe((response) => {
-			if (response.status == 200) {
-				if (response.data.length > 0) {
-					console.log(response.data);
-					this.gstDetail = response.data[0];
-				}
-				//console.log(response.data;);
-			}
-		}, (err) => {
-			if (err.message !== undefined) {
-				this.validation = err.message
-			}
-		})
 	}
 }

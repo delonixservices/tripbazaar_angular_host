@@ -130,16 +130,16 @@ export class SearchresultComponent implements OnInit {
 	}
 
 	priceFilter() {
-		console.log('price filter');
-		console.log('Min price = ' + this.minHotelPrice);
-		console.log('Max price = ' + this.maxHotelPrice);
+		// console.log('price filter');
+		// console.log('Min price = ' + this.minHotelPrice);
+		// console.log('Max price = ' + this.maxHotelPrice);
 		this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
 
 		this.filteredHotels = this.filteredHotels.filter((hotel) => {
 			const chargeable_rate = hotel.rates.packages[0].chargeable_rate;
 			return chargeable_rate >= this.minHotelPrice && chargeable_rate <= this.maxHotelPrice;
 		});
-		console.log(this.filteredHotels);
+		// console.log(this.filteredHotels);
 		if (this.filteredHotels.length <= 0) {
 			this.norecordfoundtitle = "No Room available currently, Please look for some other option";
 		} else {

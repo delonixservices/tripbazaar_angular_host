@@ -73,6 +73,7 @@
 			</ul>
 
 			<div class="tab-content" id="myTabContent">
+				<!-- flight search tab -->
 				<div class="tab-pane fade show active" id="flight-search" role="tabpanel"
 					aria-labelledby="flight-search-tab">
 					<form action="search-result.php" method="get">
@@ -103,15 +104,21 @@
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<input type="text" class="form-control from-dt mydatepicker" name="from_date"
-										tabindex="3" placeholder="Date From">
+									<input class="form-control" name="flightFrom" ngbDatepicker
+										#flightFrom="ngbDatepicker" (click)="flightFrom.toggle()" placeholder="From"
+										autocomplete="off">
+									<!-- <input type="text" class="form-control from-dt mydatepicker" name="from_date"
+										tabindex="3" placeholder="Date From"> -->
 								</div>
 							</div>
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<input type="text" class="form-control last-dt mydatepicker" name="to_date"
-										tabindex="4" placeholder="Date TO">
+									<input class="form-control" name="flightDest" ngbDatepicker
+										#flightDest="ngbDatepicker" (click)="flightDest.toggle()"
+										placeholder="Destination" autocomplete="off">
+									<!-- <input type="text" class="form-control last-dt mydatepicker" name="to_date"
+										tabindex="4" placeholder="Date TO"> -->
 								</div>
 							</div>
 
@@ -125,7 +132,6 @@
 													<div id="total-adult" class="value">
 													</div> Adults
 												</div>
-
 												<div class="range">
 													<input type="range" class="adults " name="adults" tabindex="5"
 														min="1" max="9" value="1" id="adult">
@@ -250,17 +256,23 @@
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<input type="text" name="checkInDate" class="form-control from-dt checkInDate"
-										tabindex="3" placeholder="CHECK-IN" autocomplete="off">
-									<!-- <input type="date" name="checkInDate" class="form-control from-dt " [(ngModel)]="checkInDate"  tabindex="3" placeholder="Date From" autocomplete="off"> -->
+									<input class="form-control" placeholder="CHECK-IN" name="checkInDate"
+										[(ngModel)]="checkInDateModel" ngbDatepicker #checkIn="ngbDatepicker"
+										(dateSelect)="onCheckInDateSelect($event)" (click)="checkIn.toggle()"
+										autocomplete="off">
+									<!-- <input type="text" name="checkInDate" class="form-control from-dt checkInDate"
+										tabindex="3" placeholder="CHECK-IN" autocomplete="off"> -->
 								</div>
 							</div>
 							<!--class for mydatepicker -->
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<input type="text" name="checkOutDate" class="form-control last-dt checkOutDate"
-										tabindex="4" placeholder="CHECK-OUT" autocomplete="off">
-									<!-- <input type="date" name="checkOutDate" class="form-control last-dt " [(ngModel)]="checkOutDate" tabindex="4" placeholder="Date TO" autocomplete="off"> -->
+									<input class="form-control" placeholder="CHECK-OUT" name="checkOutDate"
+										[(ngModel)]="checkOutDateModel" ngbDatepicker #checkOut="ngbDatepicker"
+										(dateSelect)="onCheckOutDateSelect($event)" (click)="checkOut.toggle()"
+										autocomplete="off">
+									<!-- <input type="text" name="checkOutDate" class="form-control last-dt checkOutDate"
+										tabindex="4" placeholder="CHECK-OUT" autocomplete="off"> -->
 								</div>
 							</div>
 
@@ -454,7 +466,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 
 

@@ -50,6 +50,7 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { Ng5SliderModule } from 'ng5-slider';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { Ng5SliderModule } from 'ng5-slider';
     NgProgressHttpModule,
     SweetAlert2Module.forRoot(),
     NgDatepickerModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    NgbModule.forRoot()
   ],
 
   providers: [],
