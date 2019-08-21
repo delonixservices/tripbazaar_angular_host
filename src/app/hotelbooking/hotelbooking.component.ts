@@ -115,6 +115,7 @@ export class HotelbookingComponent implements OnInit {
 	}
 
 	login(loginModal) {
+
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.validation = "Require fields are empty";
 		} else {
@@ -124,7 +125,6 @@ export class HotelbookingComponent implements OnInit {
 						this.loginValidation = err.message
 				} else {
 					loginModal.close();
-
 					this.loginUser = data.user;
 					this.contactDetail = data.user;
 				}
