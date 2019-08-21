@@ -31,8 +31,6 @@ $(function () {
 		startDate: '+1d',
 	});
 
-
-
 	$(".close").click(function () {
 		$(".side-panel-holder ").hide();
 	})
@@ -175,8 +173,6 @@ $(function () {
 			e.stopImmediatePropagation();
 		}
 	})
-
-
 
 	$('body').prepend('<a class="back-to-top">Back To Top  </a>');
 

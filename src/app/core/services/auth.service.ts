@@ -91,11 +91,11 @@ export class AuthService implements CanActivate {
 					// TODO : check if account is verified
 					this.getLoggedInUser.next(response.data.user.name);
 					console.log(response.data);
-					callback(true, null);
+					callback(response.data, false);
 				}
 			}, (err) => {
 				this.getLoggedInUser.next("");
-				callback(false, err);
+				callback(null, err);
 			});
 	}
 
@@ -107,6 +107,8 @@ export class AuthService implements CanActivate {
 				if (response.status == 200) {
 					this.jwt.destroyToken();
 					callback(true);
+				} else {
+					console.log(response.status);
 				}
 			}, (err) => {
 				this.getLoggedInUser.next("");

@@ -2,7 +2,8 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
-import { ApiService, JwtService, AlertService } from '../core/services';
+import { ApiService, JwtService, AlertService, AuthService } from '../core/services';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-hotelbooking-page',
@@ -18,6 +19,7 @@ export class HotelbookingComponent implements OnInit {
 	public packageObj: any;
 	public hotelObj: any;
 	public validation: any;
+	public loginValidation: any;
 	public contactDetailsValidation: any;
 	public memberDetailsValidation: any;
 	public booking_policy: any;
@@ -40,7 +42,14 @@ export class HotelbookingComponent implements OnInit {
 	public transactionid: any;
 
 
-	constructor(private route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
+	constructor(private route: ActivatedRoute,
+		private router: Router,
+		public api: ApiService,
+		public jwt: JwtService,
+		public authService: AuthService,
+		public alertService: AlertService,
+		public modalService: NgbModal
+	) {
 		if (this.jwt.isAuth()) {
 			this.api.get("/auth/me")
 				.subscribe((response) => {
@@ -85,7 +94,8 @@ export class HotelbookingComponent implements OnInit {
 			this.guest.push(roomObj);
 		});
 		this.loadPolicy();
-		console.log('load gst')
+
+		// @TODO Resolve problem in gst route
 		// this.api.get("/getgstdetails").subscribe((response) => {
 		// 	if (response.status == 200) {
 		// 		if (response.data.length > 0) {
@@ -100,26 +110,41 @@ export class HotelbookingComponent implements OnInit {
 		// })
 	}
 
-	login() {
+	openModal(logInModal) {
+		this.modalService.open(logInModal);
+	}
+
+	login(loginModal) {
+		loginModal.close();
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.validation = "Require fields are empty";
 		} else {
-			this.api.post("/auth/login", this.paramsObj)
-				.subscribe((response) => {
-					if (response.status == 200) {
-						this.jwt.saveToken(response.data.token, response.data.refreshToken);
-						this.loginUser = response.data.user;
-						this.contactDetail = response.data.user;
-						// if(this.guest[0].firstname == "" || this.guest[0].firstname === undefined){
-						// 	this.guest[0].firstname = contactDetail.name;
-						// 				this.guest[0].mobile = contactDetail.mobile;
-						// }
-					}
-				}, (err) => {
-					if (err.message !== undefined) {
-						this.validation = err.message
-					}
-				})
+			this.authService.login(this.paramsObj, (data, err) => {
+				if (err) {
+					if (err.message !== undefined)
+						this.loginValidation = err.message
+				} else {
+					this.loginUser = data.user;
+					this.contactDetail = data.user;
+				}
+			})
+
+			// this.api.post("/auth/login", this.paramsObj)
+			// 	.subscribe((response) => {
+			// 		if (response.status == 200) {
+			// 			this.jwt.saveToken(response.data.token, response.data.refreshToken);
+			// 			this.loginUser = response.data.user;
+			// 			this.contactDetail = response.data.user;
+			// 			// if(this.guest[0].firstname == "" || this.guest[0].firstname === undefined){
+			// 			// 	this.guest[0].firstname = contactDetail.name;
+			// 			// 	this.guest[0].mobile = contactDetail.mobile;
+			// 			// }
+			// 		}
+			// 	}, (err) => {
+			// 		if (err.message !== undefined) {
+
+			// 		}
+			// 	})
 		}
 	}
 

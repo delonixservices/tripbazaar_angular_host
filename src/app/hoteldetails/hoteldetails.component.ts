@@ -31,7 +31,14 @@ export class HoteldetailsComponent implements OnInit {
 	public hotelObj: any = "";
 	public math: any;
 	public display: any;
-	constructor(private route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
+
+
+	constructor(private route: ActivatedRoute,
+		private router: Router,
+		public api: ApiService,
+		public jwt: JwtService,
+		public alertService: AlertService,
+	) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
 		console.log('hotel search');

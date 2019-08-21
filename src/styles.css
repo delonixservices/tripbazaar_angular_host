@@ -4,6 +4,10 @@ a {
   cursor: pointer;
 }
 
+.dropdown-toggle {
+  cursor: pointer;
+}
+
 .ng-select.suggestions {
   border: 0px;
   min-height: 0px;

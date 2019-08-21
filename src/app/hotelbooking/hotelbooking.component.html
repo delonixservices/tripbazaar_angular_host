@@ -56,7 +56,6 @@
 				</div>
 			</div>
 			<hr>
-
 			<!-- Traveller Details  -->
 			<div class="flightdetail">
 				<div class="row">
@@ -67,11 +66,42 @@
 					</div>
 
 					<div class="col-md-6" *ngIf="!jwt.isAuth()">
-						<h5 class="mt-4"><a href="#" data-toggle="modal" data-target=".sign-in">SignIn</a> to book
+						<h5 class="mt-4"><a class="text-primary" (click)="openModal(logInModal)">Log In</a> to book
 							faster</h5>
 					</div>
-					<!-- Sign In Model -->
-					<div class="modal fade bd-example-modal-sm sign-in" tabindex="-1" role="dialog"
+
+					<!-- Log In Modal -->
+					<ng-template #logInModal let-modal>
+						<div class="modal-header">
+							<h5 class="modal-title">Log In</h5>
+							<button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form class="px-2 py-1">
+								<div class="form-group">
+									<label for="mobileNo">Mobile Number</label>
+									<input type="number" required class="form-control" id="mobileNo"
+										[(ngModel)]="paramsObj.mobile" name="mobile"
+										placeholder="Enter Your Mobile Number">
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input type="password" class="form-control" id="password"
+										[(ngModel)]="paramsObj.password" name="password"
+										placeholder="Enter Your Password">
+								</div>
+								<button type="button" class="btn btn-danger btn-block gstform"
+									(click)="login(modal)">log In</button>
+							</form>
+							<div class="text-danger">{{loginValidation}}</div>
+						</div>
+					</ng-template>
+
+
+					<!-- Replaced with ng-bootstrap modal -->
+					<!-- <div class="modal fade bd-example-modal-sm sign-in" tabindex="-1" role="dialog"
 						aria-labelledby="mySmallModalLabel" aria-hidden="true" *ngIf="!jwt.isAuth()">
 						<div class="modal-dialog modal-sm">
 							<div class="modal-content">
@@ -95,17 +125,13 @@
 												id="exampleDropdownFormPassword1" [(ngModel)]="paramsObj.password"
 												name="password" placeholder="Enter Your Password">
 										</div>
-										<!-- <div class="form-check">
-											<label class="checkcontainer small"> <input type="checkbox" checked=""><span class="checkmark"></span>Remember me</label>
-										</div> -->
 										<button type="submit" class="btn btn-danger btn-block gstform"
 											(click)="login()">log In</button>
 									</form>
 								</div>
 							</div>
 						</div>
-					</div>
-					<!-- Sign In Model -->
+					</div> -->
 				</div>
 				<div class="clearfix"></div>
 				<hr>
