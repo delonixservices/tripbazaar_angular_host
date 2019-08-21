@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-login-page',
@@ -12,52 +13,58 @@ export class LoginComponent implements OnInit {
 
 	public paramsObj: any;
 	public forgotObj: any;
-	public validation: any;
+	public loginValidation: any;
+	public fgPassValidation: any;
 
-	constructor(private router: Router, private auth: AuthService) {
-
+	constructor(private router: Router,
+		private auth: AuthService,
+		private modalService: NgbModal
+	) {
 		this.paramsObj = {
 			mobile: '',
 			password: ''
 		};
-
 		this.forgotObj = {
 			mobile: ''
 		};
 	}
+
 	ngOnInit() {
 		//console.log(this.auth.verify(), this.auth.isUserLoggedIn);
 	}
 
 	login() {
-
 		if (this.paramsObj.mobile == "" || this.paramsObj.password == "") {
-			this.validation = "Require fields are empty";
+			this.loginValidation = "Require fields are empty";
 		} else {
-
-			this.auth.login(this.paramsObj, (isLoggedIn, err) => {
-				if (isLoggedIn) {
-					this.router.navigate(['/dashboard']);
+			this.auth.login(this.paramsObj, (data, err) => {
+				if (err) {
+					if (err.message !== undefined)
+						this.loginValidation = err.message;
 				} else {
-					if (err.message !== undefined) {
-						this.validation = err.message
-					}
+					this.router.navigate(['/dashboard']);
 				}
 			});
 		}
 	}
 
-	forgotRequest() {
+	// Open forgot password modal
+	open(fgPassModal) {
+		this.modalService.open(fgPassModal);
+	}
+
+	forgotRequest(fgPassModal) {
 		if (this.forgotObj.mobile == "") {
-			this.validation = "Require fields are empty";
+			this.fgPassValidation = "Require fields are empty";
 		} else {
 			this.auth.resetPassword(this.forgotObj, (res, err) => {
 				if (res.success) {
+					// close the modal
+					fgPassModal.close();
 					this.router.navigate(['/verifyotp/' + res.data._id]);
 				} else {
-					if (err.message !== undefined) {
-						this.validation = err.message
-					}
+					if (err.message !== undefined)
+						this.fgPassValidation = err.message;
 				}
 			});
 		}

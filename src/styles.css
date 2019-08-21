@@ -4,6 +4,10 @@ a {
   cursor: pointer;
 }
 
+.dropdown-toggle {
+  cursor: pointer;
+}
+
 .ng-select.suggestions {
   border: 0px;
   min-height: 0px;
@@ -31,6 +35,27 @@ a {
   user-select: none;
 }
 
+/* custom css ng-5 slider */
+.ng5-slider .ng5-slider-pointer {
+  cursor: pointer;
+  width: 25px !important;
+  height: 25px !important;
+  top: -10px !important;
+  background-color: #0db9f0;
+  z-index: 3;
+  border-radius: 32px;
+}
+
+.ng5-slider .ng5-slider-pointer:after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  top: 9px !important;
+  left: 9px !important;
+  border-radius: 4px;
+  background: #fff;
+}
 
 .ng-has-value .ng-placeholder {
   display: none;
