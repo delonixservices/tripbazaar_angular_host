@@ -230,7 +230,6 @@ export class HeaderComponent implements OnInit {
 		this.authService.logout((success) => {
 			this.router.navigate(['']);
 		});
-
 	}
 
 	getLoggedInUser() {

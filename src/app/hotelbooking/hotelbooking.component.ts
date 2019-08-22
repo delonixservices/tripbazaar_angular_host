@@ -20,6 +20,7 @@ export class HotelbookingComponent implements OnInit {
 	public hotelObj: any;
 	public validation: any;
 	public loginValidation: any;
+	public couponValidation: any;
 	public contactDetailsValidation: any;
 	public memberDetailsValidation: any;
 	public booking_policy: any;
@@ -40,7 +41,6 @@ export class HotelbookingComponent implements OnInit {
 	//public Number;
 	public bookingid: any;
 	public transactionid: any;
-
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -85,6 +85,8 @@ export class HotelbookingComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.loadBookingPolicy();
+
 		this.hotelsearchkeys.details.map((room, index) => {
 			var roomGuest = [];
 			for (let i = 1; i <= room.adult_count; i++) {
@@ -93,7 +95,6 @@ export class HotelbookingComponent implements OnInit {
 			var roomObj = { "room_guest": roomGuest };
 			this.guest.push(roomObj);
 		});
-		this.loadPolicy();
 
 		// @TODO Resolve problem in gst route
 		// this.api.get("/getgstdetails").subscribe((response) => {
@@ -117,7 +118,7 @@ export class HotelbookingComponent implements OnInit {
 	login(loginModal) {
 
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
-			this.validation = "Require fields are empty";
+			this.loginValidation = "Require fields are empty";
 		} else {
 			this.authService.login(this.paramsObj, (data, err) => {
 				if (err) {
@@ -128,7 +129,7 @@ export class HotelbookingComponent implements OnInit {
 					this.loginUser = data.user;
 					this.contactDetail = data.user;
 				}
-			})
+			});
 
 			// this.api.post("/auth/login", this.paramsObj)
 			// 	.subscribe((response) => {
@@ -162,19 +163,17 @@ export class HotelbookingComponent implements OnInit {
 			"package": this.packageObj,
 			"booking_policy": this.booking_policy,
 			"search": this.searchObj,
-			"guest": this.guest, "transaction_id":
-				this.transaction_identifier,
+			"guest": this.guest,
+			"transaction_id": this.transaction_identifier,
 			"contactDetail": this.contactDetail,
 			"coupon": this.couponCode,
 			"gstDetail": this.gstDetail
 		}
-
 		console.log('prebookParams', prebookParams);
 
 		this.api.post("/prebook", prebookParams)
 			.subscribe((response) => {
-				// console.log(response.data.booking_id);
-				if (response.data.booking_id !== undefined) {
+				if (response.data && response.data.booking_id !== undefined) {
 					let url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
 					window.location.assign(url);
 				} else {
@@ -206,7 +205,7 @@ export class HotelbookingComponent implements OnInit {
 	// 		});
 	// }
 
-	loadPolicy() {
+	loadBookingPolicy() {
 		this.api.post("/bookingpolicy", { "package": this.packageObj, "search": this.searchObj, "transaction_id": this.transaction_identifier })
 			.subscribe((response) => {
 				if (response.data != undefined) {
@@ -242,7 +241,7 @@ export class HotelbookingComponent implements OnInit {
 					}
 				}, (err) => {
 					if (err.message !== undefined) {
-						this.validation = err.message
+						this.couponValidation = err.message
 					}
 				})
 		}
