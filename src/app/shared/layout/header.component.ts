@@ -1,16 +1,18 @@
-import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { checkAndUpdateTextInline } from '@angular/core/src/view/text';
 
 declare var $: any;
 
 @Component({
 	selector: 'app-layout-header',
 	templateUrl: './header.component.html',
+	host: { '(document:click)': 'hostClick($event)' }
 })
 
 export class HeaderComponent implements OnInit {
@@ -26,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
-	guests: number;
+	guests: number = 1;
 	roomdetail = [{
 		"room": "1",
 		"adult_count": "1",
@@ -38,6 +40,12 @@ export class HeaderComponent implements OnInit {
 	user = {
 		name: ""
 	}
+
+	@ViewChild('checkIn') checkIn: any;
+	@ViewChild('checkOut') checkOut: any;
+	@ViewChild('checkInContainer') checkInContainer: ElementRef;
+	@ViewChild('checkOutContainer') checkOutContainer: ElementRef;
+
 
 	suggestionsInput = new Subject<HttpParams>();
 
@@ -126,7 +134,27 @@ export class HeaderComponent implements OnInit {
 		// 	});
 		// });
 	}
-	// Ngb Date Picker
+
+	hostClick(event: MouseEvent) {
+		console.log(1);
+		if (this.checkIn && this.checkIn.isOpen()) {
+			if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
+				this.checkIn.close();
+			}
+		}
+		if (this.checkOut && this.checkOut.isOpen()) {
+			if (this.checkOutContainer && this.checkOutContainer.nativeElement && !this.checkOutContainer.nativeElement.contains(event.target)) {
+				this.checkOut.close();
+			}
+		}
+	}
+
+	// prevent dropdown from closing when clicked inside
+	preventDropdownClose(event: MouseEvent) {
+		event.stopImmediatePropagation();
+	}
+
+	// format checkIn and checkOut dates
 	onCheckInDateSelect(date: NgbDateStruct) {
 		this.checkInDate = this.ngbDateParserFormatter.format(date);
 	}

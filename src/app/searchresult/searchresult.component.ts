@@ -5,6 +5,7 @@ import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
 import { Options, LabelType } from 'ng5-slider';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-searchresult-page',
@@ -36,7 +37,7 @@ export class SearchresultComponent implements OnInit {
 	public copyFilteredHotels = [];
 
 	public validation: any;
-
+	public modalRef: any;
 	public RootTypeFilters = [
 		{ name: "All", selected: true, value: ["Standard", "Deluxe", "Superior", "Triple"] },
 		{ name: "Standard", selected: false, value: "Standard" },
@@ -68,16 +69,16 @@ export class SearchresultComponent implements OnInit {
 		translate: (value: number, label: LabelType): string => {
 			switch (label) {
 				case LabelType.Low:
-					return '<b>Min price:</b> &#8377;' + value;
+					return '<b>Min:</b> &#8377;' + value;
 				case LabelType.High:
-					return '<b>Max price:</b> &#8377;' + value;
+					return '<b>Max:</b> &#8377;' + value;
 				default:
 					return '&#8377;' + value;
 			}
 		}
 	};
 
-	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
+	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService, public modalService: NgbModal) {
 
 	}
 
@@ -317,7 +318,10 @@ export class SearchresultComponent implements OnInit {
 		this.FilterHotels();
 	}
 
-
+	// Mofify search
+	openModal(modifySearchModal) {
+		this.modalRef = this.modalService.open(modifySearchModal);
+	}
 
 	addRoomInSearch() {
 		this.roomdetail.push({
@@ -362,6 +366,7 @@ export class SearchresultComponent implements OnInit {
 			if (flag) {
 				this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
 				localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
+				this.modalRef.close();
 				this.searchResult();
 			}
 

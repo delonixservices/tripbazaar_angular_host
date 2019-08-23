@@ -11,135 +11,123 @@
 						id="total_movies">{{filteredHotels.length}}</span>)</strong></div>
 
 			<div class="col-md-2 text-right">
-				<button type="button" data-toggle="modal" data-target="#exampleModal"
-					class="btn-outline-danger btn btn-sm"><i class="fa fa-search"></i> Modify Search</button>
+				<button type="button" (click)="openModal(modifySearchModal)" class="btn-outline-danger btn btn-sm"><i
+						class="fa fa-search"></i> Modify Search</button>
 			</div>
 			<!-- Modify Search -->
-			<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-				aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Modify Search</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">×</span>
-							</button>
-						</div>
+			<ng-template #modifySearchModal let-d="dismiss">
+				<div class="modal-header">
+					<h5 class="modal-title">Modify Search</h5>
+					<button type="button" class="close" (click)="d()" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="row location">
+							<div class="col-md-4 pr-0">
+								<div class="form-group">
+									<ng-select name="destination" class="form-control suggestions"
+										[items]="suggestions | async" [hideSelected]="true"
+										[loading]="suggestionsLoading" [typeahead]="suggestionsInput"
+										[(ngModel)]="selectedArea" bindLabel="displayName" placeholder="Search here">
+									</ng-select>
+									<!-- <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text" class="form-control typeahead destination tt-hint" tabindex="-1" readonly="" autocomplete="off" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);" dir="ltr"><input type="text" class="form-control typeahead destination tt-input" tabindex="1" placeholder="Destination" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span> -->
+								</div>
+							</div>
 
-						<div class="modal-body">
-							<form>
 
-								<div class="row location">
-									<div class="col-md-4 pr-0">
-										<div class="form-group">
-											<ng-select name="destination" class="form-control suggestions"
-												[items]="suggestions | async" [hideSelected]="true"
-												[loading]="suggestionsLoading" [typeahead]="suggestionsInput"
-												[(ngModel)]="selectedArea" bindLabel="displayName"
-												placeholder="Search here">
-											</ng-select>
-											<!-- <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text" class="form-control typeahead destination tt-hint" tabindex="-1" readonly="" autocomplete="off" spellcheck="false" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: none 0% 0% / auto repeat scroll padding-box padding-box rgb(255, 255, 255);" dir="ltr"><input type="text" class="form-control typeahead destination tt-input" tabindex="1" placeholder="Destination" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span> -->
-										</div>
+							<div class="col-md-4 pl-0 pr-0">
+								<div class="form-group">
+									<input type="date" class="form-control from-dt " name="checkInDate"
+										[(ngModel)]="checkInDate" tabindex="3" placeholder="CHECK-IN">
+								</div>
+							</div>
+
+							<div class="col-md-4 pl-0  ">
+								<div class="form-group">
+									<input type="date" class="form-control last-dt" name="checkOutDate"
+										[(ngModel)]="checkOutDate" tabindex="4" placeholder="CHECK-OUT">
+								</div>
+							</div>
+
+							<div class="col-md-10 ml-auto passenger-modi">
+								<div class="col-md-9 mb-2" *ngFor="let room of roomdetail; let i = index"
+									[attr.data-index]="i">
+									<p class="text-red"><b>Room {{room.room}}</b></p>
+									<div class="clearfix"></div>
+									<div class="range-data">
+										<div id="total-adult-hotel" class="value">{{room.adult_count}}</div>
+										Adults
+										<br><span class="text-muted small">+12 YRS</span>
+									</div>
+									<div class="range">
+										<input type="range" class="adults " name="adults" [(ngModel)]="room.adult_count"
+											tabindex="5" min="1" max="9" value="1" id="adult-hotel">
 									</div>
 
+									<div class="clearfix"></div>
 
-									<div class="col-md-4 pl-0 pr-0">
-										<div class="form-group">
-											<input type="date" class="form-control from-dt " name="checkInDate"
-												[(ngModel)]="checkInDate" tabindex="3" placeholder="CHECK-IN">
-										</div>
+									<div class="range-data">
+										<div id="total-child-hotel" class="value">{{room.child_count}}</div>
+										Child
+										<br> <span class="text-muted small">Below 12 YRS</span>
+									</div>
+									<div class="range">
+										<input type="range" class="child " min="0" [(ngModel)]="room.child_count"
+											(change)="checkChildren(i)" name="child" tabindex="6" max="4" value="0"
+											id="child-hotel">
+
 									</div>
 
-									<div class="col-md-4 pl-0  ">
-										<div class="form-group">
-											<input type="date" class="form-control last-dt" name="checkOutDate"
-												[(ngModel)]="checkOutDate" tabindex="4" placeholder="CHECK-OUT">
+									<div class="clearfix"></div>
+									<div class="row child-age " id="child-age-select">
+										<div class="col" *ngFor="let child of room.children">
+											<div class="small text-center">Child {{child.child}} Age</div>
+											<select class="form-control" name="children[]" [(ngModel)]="child.age">
+												<!-- <option value="0">0</option> -->
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+											</select>
 										</div>
 									</div>
-
-									<div class="col-md-10 ml-auto passenger-modi">
-										<div class="col-md-9 mb-2" *ngFor="let room of roomdetail; let i = index"
-											[attr.data-index]="i">
-											<p class="text-red"><b>Room {{room.room}}</b></p>
-											<div class="clearfix"></div>
-											<div class="range-data">
-												<div id="total-adult-hotel" class="value">{{room.adult_count}}</div>
-												Adults
-												<br><span class="text-muted small">+12 YRS</span>
-											</div>
-											<div class="range">
-												<input type="range" class="adults " name="adults"
-													[(ngModel)]="room.adult_count" tabindex="5" min="1" max="9"
-													value="1" id="adult-hotel">
-											</div>
-
-											<div class="clearfix"></div>
-
-											<div class="range-data">
-												<div id="total-child-hotel" class="value">{{room.child_count}}</div>
-												Child
-												<br> <span class="text-muted small">Below 12 YRS</span>
-											</div>
-											<div class="range">
-												<input type="range" class="child " min="0"
-													[(ngModel)]="room.child_count" (change)="checkChildren(i)"
-													name="child" tabindex="6" max="4" value="0" id="child-hotel">
-
-											</div>
-
-											<div class="clearfix"></div>
-											<div class="row child-age " id="child-age-select">
-												<div class="col" *ngFor="let child of room.children">
-													<div class="small text-center">Child {{child.child}} Age</div>
-													<select class="form-control" name="children[]"
-														[(ngModel)]="child.age">
-														<!-- <option value="0">0</option> -->
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-														<option value="6">6</option>
-														<option value="7">7</option>
-														<option value="8">8</option>
-														<option value="9">9</option>
-														<option value="10">10</option>
-														<option value="11">11</option>
-														<option value="12">12</option>
-													</select>
-												</div>
-											</div>
-											<div class="border mb-2 mt-2"></div>
-										</div>
-
-
-										<div class="row">
-											<div class="col-md-4 mt-2 ml-2">
-												<a class="btn btn-danger  text-light addroom ml-2 "
-													(click)="addRoomInSearch()">Add Rooms</a>
-											</div>
-											<div class="col-md-5 mt-2 mr-2 text-right">
-												<a *ngIf="roomdetail.length> 1"
-													class="btn btn-outline-secondary removeroom mr-2"
-													(click)="removeRoomFromSearch()"><span class="small">Remove
-														Rooms</span></a>
-
-											</div>
-										</div>
-										<div class="col mt-2 text-right">
-											<button type="submit" tabindex="12" class="btn btn-danger"
-												(click)="searchAgain()">Search Again </button>
-										</div>
-									</div>
-
+									<div class="border mb-2 mt-2"></div>
 								</div>
 
-							</form>
+
+								<div class="row">
+									<div class="col-md-4 mt-2 ml-2">
+										<a class="btn btn-danger  text-light addroom ml-2 "
+											(click)="addRoomInSearch()">Add Rooms</a>
+									</div>
+									<div class="col-md-5 mt-2 mr-2 text-right">
+										<a *ngIf="roomdetail.length> 1"
+											class="btn btn-outline-secondary removeroom mr-2"
+											(click)="removeRoomFromSearch()"><span class="small">Remove
+												Rooms</span></a>
+									</div>
+								</div>
+								<div class="col mt-2 text-right">
+									<button tabindex="12" class="btn btn-danger" (click)="searchAgain()">Search
+										Again </button>
+								</div>
+							</div>
+
 						</div>
 
-					</div>
+					</form>
 				</div>
-			</div>
+			</ng-template>
 			<!-- Modify Search -->
 		</div>
 	</div>

@@ -85,7 +85,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     OtpComponent,
     VerifyotpComponent,
     SuccessComponent,
-    ResetpasswordComponent
+    ResetpasswordComponent,
   ],
 
   imports: [

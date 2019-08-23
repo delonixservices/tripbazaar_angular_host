@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../core/services';
 
-
 @Component({
 	selector: 'app-otp-page',
 	templateUrl: './otp.component.html',
@@ -20,20 +19,15 @@ export class OtpComponent implements OnInit {
 			otp: '',
 			id: '',
 		};
-
-
 	}
 
-
 	otpsubmit() {
-
 		if (this.otpObj.otp == "") {
 			this.validation = "Require fields are empty";
 		} else {
 			this.api.get("/auth/verify", this.otpObj)
 				.subscribe((response) => {
 					if (response.status == 200) {
-
 						this.router.navigate(['/login']);
 					}
 				}, (err) => {
@@ -42,15 +36,11 @@ export class OtpComponent implements OnInit {
 					}
 				})
 		}
-
 	}
-
-
 
 	resentotp() {
-
+		console.log('resend otp');
 	}
-
 
 	ngOnInit() {
 		this.otpObj.id = this.route.snapshot.paramMap.get('id');

@@ -249,7 +249,7 @@
 							</div>
 
 							<div class="col-md-2 pl-0 pr-0">
-								<div class="form-group">
+								<div class="form-group" #checkInContainer>
 									<input class="form-control" placeholder="CHECK-IN" name="checkInDate"
 										[(ngModel)]="checkInDateModel" ngbDatepicker #checkIn="ngbDatepicker"
 										(dateSelect)="onCheckInDateSelect($event)" (click)="checkIn.toggle()"
@@ -260,7 +260,7 @@
 							</div>
 							<!--class for mydatepicker -->
 							<div class="col-md-2 pl-0 pr-0">
-								<div class="form-group">
+								<div class="form-group" #checkOutContainer>
 									<input class="form-control" placeholder="CHECK-OUT" name="checkOutDate"
 										[(ngModel)]="checkOutDateModel" ngbDatepicker #checkOut="ngbDatepicker"
 										(dateSelect)="onCheckOutDateSelect($event)" (click)="checkOut.toggle()"
@@ -270,10 +270,12 @@
 								</div>
 							</div>
 
+							<!-- NgbDropdown -->
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<div ngbDropdown [autoClose]="false" class="nav-item form-control">
-										<div ngbDropdownToggle id="hotel-menu" href="#" aria-expanded="false">
+									<div ngbDropdown [autoClose]="true" (click)="preventDropdownClose($event)"
+										class="form-control">
+										<div ngbDropdownToggle>
 											{{roomdetail.length}} Room<span *ngIf="roomdetail.length>1">s</span> &
 											{{guests}} Guest<span *ngIf="guests > 1">s</span>
 										</div>
@@ -375,7 +377,6 @@
 					</form>
 				</div>
 			</div>
-
 
 		</div>
 		<!-- Search Panel -->
