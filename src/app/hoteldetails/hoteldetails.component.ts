@@ -41,8 +41,7 @@ export class HoteldetailsComponent implements OnInit {
 	) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
-		console.log('hotel search');
-		console.log(this.hotelObj);
+		// console.log(this.hotelObj);
 		this.math = Math;
 		if (this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null) {
 			this.alertService.error("Please select correct hotel");
@@ -143,8 +142,6 @@ export class HoteldetailsComponent implements OnInit {
 			.subscribe((response) => {
 				if (response.data != undefined) {
 					this.hotelObj.searchkey = this.hotelsearchkeys;
-					console.log('searchkey');
-					console.log(this.hotelObj.searchkey);
 					// this.filteredHotels = response.data.hotels;
 					localStorage.setItem('transaction_identifier', response.transaction_identifier);
 					localStorage.setItem('searchObj', JSON.stringify(response.data.search));

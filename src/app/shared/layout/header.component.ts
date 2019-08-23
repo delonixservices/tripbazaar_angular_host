@@ -1,15 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
-import { NgbDateStruct, NgbDate, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
+
 declare var $: any;
 
 @Component({
 	selector: 'app-layout-header',
-	templateUrl: './header.component.html'
+	templateUrl: './header.component.html',
 })
 
 export class HeaderComponent implements OnInit {
@@ -47,19 +48,26 @@ export class HeaderComponent implements OnInit {
 		public jwt: JwtService,
 		private authService: AuthService,
 		public alertService: AlertService,
-		public ngbDateParserFormatter: NgbDateParserFormatter
-	) { }
+		public ngbDateParserFormatter: NgbDateParserFormatter,
+		public dpConfig: NgbDatepickerConfig
+	) {
+		const date = new Date();
+		console.log(date.getMonth())
+		dpConfig.minDate = {
+			year: date.getFullYear(),
+			month: date.getMonth() + 1,
+			day: date.getDate()
+		};
+	}
 
 	ngOnInit() {
 
 		if (this.jwt.isAuth()) {
 			if (this.user.name === "") {
 				this.getLoggedInUser();
-				console.log('in username');
 			}
 			else {
 				this.isLoggedIn = false;
-				console.log('in username else');
 			}
 		} else {
 			this.isLoggedIn = false;
@@ -118,12 +126,12 @@ export class HeaderComponent implements OnInit {
 		// 	});
 		// });
 	}
-
-	onCheckInDateSelect(date: NgbDate) {
+	// Ngb Date Picker
+	onCheckInDateSelect(date: NgbDateStruct) {
 		this.checkInDate = this.ngbDateParserFormatter.format(date);
 	}
 
-	onCheckOutDateSelect(date: NgbDate) {
+	onCheckOutDateSelect(date: NgbDateStruct) {
 		this.checkOutDate = this.ngbDateParserFormatter.format(date);
 	}
 
@@ -211,7 +219,7 @@ export class HeaderComponent implements OnInit {
 
 
 	loadDestination() {
-		console.log("loadDestination called");
+		// console.log("loadDestination called");
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
@@ -238,7 +246,6 @@ export class HeaderComponent implements OnInit {
 				if (response.status == 200) {
 					this.user.name = response.data.name;
 					this.isLoggedIn = true;
-					console.log(1);
 				}
 			}, (err) => {
 				this.isLoggedIn = false;

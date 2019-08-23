@@ -1,6 +1,5 @@
 <div class="header-container" *ngIf="nav == '/'">
 
-
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<div class="container">
 			<a class="navbar-brand" routerLink="/">
@@ -57,7 +56,6 @@
 
 		</div>
 	</nav>
-
 
 	<div class="container">
 		<!-- Search Panel -->
@@ -229,17 +227,14 @@
 				<!-- hotel search tab -->
 				<div class="tab-pane fade" id="hotel-search" role="tabpanel" aria-labelledby="hotel-search-tab">
 					<form>
-
 						<div class="hotel-options">
 							<ul>
 								<li class="pull-left"><a href="#">Domestic</a></li>
 								<li class="pull-left"><a href="#">International</a></li>
 							</ul>
 						</div>
-
 						<div class="clearfix">
 						</div>
-
 						<div class="row location">
 							<div class="col-md-4 pr-0">
 								<div class="form-group">
@@ -252,7 +247,6 @@
 									</ng-select>
 								</div>
 							</div>
-
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
@@ -278,15 +272,13 @@
 
 							<div class="col-md-2 pl-0 pr-0">
 								<div class="form-group">
-									<div class="nav-item dropdown form-control">
-										<div class="dropdown-toggle" id="hotel-menu" href="#" data-toggle="dropdown"
-											aria-expanded="false">
+									<div ngbDropdown [autoClose]="false" class="nav-item form-control">
+										<div ngbDropdownToggle id="hotel-menu" href="#" aria-expanded="false">
 											{{roomdetail.length}} Room<span *ngIf="roomdetail.length>1">s</span> &
 											{{guests}} Guest<span *ngIf="guests > 1">s</span>
 										</div>
 
-										<div id="select-passanger" class="dropdown-menu passenger ml-auto"
-											aria-labelledby="hotel-menu">
+										<div ngbDropdownMenu class="passenger ml-auto" aria-labelledby="hotel-menu">
 											<div class="col-md-12 mb-2" *ngFor="let room of roomdetail; let i = index"
 												[attr.data-index]="i">
 												<p class="text-red"><b>Room {{room.room}}</b></p>
@@ -297,11 +289,10 @@
 													Adults<br /><span class="text-muted small">+12 YRS</span>
 												</div>
 												<div class="range">
-													<input type="range" class="adults" name="adults"
+													<input type="range" class="adults" name="adults{{i}}"
 														[(ngModel)]="room.adult_count" tabindex="5" min="1" max="9"
 														id="adult-hotel">
 												</div>
-
 
 												<div class="clearfix">
 
@@ -316,7 +307,7 @@
 												<div class="range">
 													<input type="range" class="child " min="0"
 														[(ngModel)]="room.child_count" (change)="checkChildren(i)"
-														name="child" tabindex="6" max="4" id="child-hotel"
+														name="child{{i}}" tabindex="6" max="4" id="child-hotel"
 														value={{room.child_count}}>
 												</div>
 
@@ -349,89 +340,6 @@
 													<div class="border mb-2 mt-2">
 													</div>
 												</div>
-
-												<!--<div class="col-md-12 " id="room2" style="display:none;">-->
-												<!--<p class="text-red"><b>Room 2</b></p>-->
-												<!--<div class="clearfix">-->
-												<!--</div>			-->
-												<!--<div class="range-data">			  -->
-												<!--<div id="total-adult-hotel" class="value"></div> Adults <br /><span class="text-muted small">+12 YRS</span></div>-->
-												<!--<div class="range">-->
-												<!--<input type="range" class="adults " name="adults"  tabindex="5" min="1" max="9" value="1" id="adult-hotel"> -->
-												<!--</div>-->
-
-												<!--<div class="clearfix">-->
-												<!--</div>-->
-
-												<!--<div class="range-data">			  -->
-												<!--<div id="total-child-hotel" class="value">-->
-												<!--</div> Child <br /><span class="text-muted small">Below 12 YRS</span> -->
-												<!--</div>-->
-												<!--<div class="range">-->
-												<!--<input type="range" class="child " min="0" name="child" tabindex="6" max="9" value="0" id="child-hotel2"> -->
-												<!--</div>-->
-
-												<!--<div class="clearfix">-->
-												<!--</div>	-->
-												<!--<div class="row child-age" id="child-age-select2">-->
-												<!--<div class="col">-->
-												<!--<div class="small text-center">Child 1 Age-->
-												<!--</div>-->
-												<!--<select class="form-control">-->
-												<!--	<option>0</option>-->
-												<!--	<option>1</option>-->
-												<!--	<option>2</option>-->
-												<!--	<option>3</option>-->
-												<!--	<option>4</option>-->
-												<!--	<option>5</option>-->
-												<!--</select>-->
-												<!--</div>-->
-
-												<!--<div class="col">-->
-												<!--<div class="small text-center">Child 2 Age-->
-												<!--</div>-->
-												<!--<select class="form-control">-->
-												<!--	<option>0</option>-->
-												<!--	<option>1</option>-->
-												<!--	<option>2</option>-->
-												<!--	<option>3</option>-->
-												<!--	<option>4</option>-->
-												<!--	<option>5</option>-->
-												<!--</select>-->
-												<!--</div>-->
-
-												<!--<div class="col">-->
-												<!--<div class="small text-center">Child 3 Age-->
-												<!--</div>-->
-												<!--<select class="form-control">-->
-												<!--	<option>0</option>-->
-												<!--	<option>1</option>-->
-												<!--	<option>2</option>-->
-												<!--	<option>3</option>-->
-												<!--	<option>4</option>-->
-												<!--	<option>5</option>-->
-												<!--</select>-->
-												<!--</div>-->
-
-												<!--<div class="col">-->
-												<!--<div class="small text-center">Child 4 Age-->
-												<!--</div>-->
-												<!--<select class="form-control">-->
-												<!--	<option>0</option>-->
-												<!--	<option>1</option>-->
-												<!--	<option>2</option>-->
-												<!--	<option>3</option>-->
-												<!--	<option>4</option>-->
-												<!--	<option>5</option>-->
-												<!--</select>-->
-												<!--</div>-->
-												<!--</div>-->
-
-												<!--<div class="border mb-2 mt-2">	</div>-->
-												<!--</div>			 -->
-
-
-
 											</div>
 											<div class="row">
 												<div class="col-md-6 mt-2">
@@ -449,7 +357,7 @@
 											</div>
 
 											<div class="col mt-2 text-right">
-												<button id="done" (click)="doneClicked()"
+												<button ngbDropdownToggle id="done" (click)="doneClicked()"
 													class="btn btn-success">Done</button>
 											</div>
 										</div>

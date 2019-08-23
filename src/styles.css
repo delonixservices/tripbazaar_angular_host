@@ -35,6 +35,15 @@ a {
   user-select: none;
 }
 
+/* custom css date picker */
+.ngb-dp-today {
+  color: #0db9f0;
+}
+
+#done.dropdown-toggle::after {
+  display: none;
+}
+
 /* custom css ng-5 slider */
 .ng5-slider .ng5-slider-pointer {
   cursor: pointer;

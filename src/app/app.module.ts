@@ -102,7 +102,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SweetAlert2Module.forRoot(),
     NgDatepickerModule,
     Ng5SliderModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
 
   providers: [],
