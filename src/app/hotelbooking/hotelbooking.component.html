@@ -71,10 +71,10 @@
 					</div>
 
 					<!-- Log In Modal -->
-					<ng-template #logInModal let-modal="modal">
+					<ng-template #logInModal let-d="dismiss">
 						<div class="modal-header">
 							<h5 class="modal-title">Log In</h5>
-							<button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+							<button type="button" class="close" (click)="d()" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
@@ -92,8 +92,8 @@
 										[(ngModel)]="paramsObj.password" name="password"
 										placeholder="Enter Your Password">
 								</div>
-								<button type="button" class="btn btn-danger btn-block gstform"
-									(click)="login(modal)">log In</button>
+								<button type="button" class="btn btn-danger btn-block gstform" (click)="login()">log
+									In</button>
 							</form>
 							<div class="text-danger px-2 pt-2">{{loginValidation}}</div>
 						</div>

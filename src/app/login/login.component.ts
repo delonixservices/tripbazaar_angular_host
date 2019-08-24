@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 	public forgotObj: any;
 	public loginValidation: any;
 	public fgPassValidation: any;
+	public modalRef: any;
 
 	constructor(private router: Router,
 		private auth: AuthService,
@@ -50,17 +51,17 @@ export class LoginComponent implements OnInit {
 
 	// Open forgot password modal
 	open(fgPassModal) {
-		this.modalService.open(fgPassModal);
+		this.modalRef = this.modalService.open(fgPassModal);
 	}
 
-	forgotRequest(fgPassModal) {
+	forgotRequest() {
 		if (this.forgotObj.mobile == "") {
 			this.fgPassValidation = "Require fields are empty";
 		} else {
 			this.auth.resetPassword(this.forgotObj, (res, err) => {
 				if (res.success) {
 					// close the modal
-					fgPassModal.close();
+					this.modalRef.close();
 					this.router.navigate(['/verifyotp/' + res.data._id]);
 				} else {
 					if (err.message !== undefined)

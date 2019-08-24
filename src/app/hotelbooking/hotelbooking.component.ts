@@ -41,6 +41,7 @@ export class HotelbookingComponent implements OnInit {
 	//public Number;
 	public bookingid: any;
 	public transactionid: any;
+	public modalRef: any;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -112,10 +113,10 @@ export class HotelbookingComponent implements OnInit {
 	}
 
 	openModal(logInModal) {
-		this.modalService.open(logInModal);
+		this.modalRef = this.modalService.open(logInModal);
 	}
 
-	login(loginModal) {
+	login() {
 
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.loginValidation = "Require fields are empty";
@@ -125,7 +126,7 @@ export class HotelbookingComponent implements OnInit {
 					if (err.message !== undefined)
 						this.loginValidation = err.message
 				} else {
-					loginModal.close();
+					this.modalRef.close();
 					this.loginUser = data.user;
 					this.contactDetail = data.user;
 				}

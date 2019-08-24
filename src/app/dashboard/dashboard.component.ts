@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
 	}
 
 	hotelinvoice(id) {
-		this.router.navigate(['/hotelinvoice', { id: id }]);
+		this.router.navigate(['/hotelinvoice'], { queryParams: { id: id } });
 	}
 
 	ngOnInit() {
