@@ -1,0 +1,23 @@
+#user-profile {
+    background-color: #eeeeee;
+}
+
+.profile-pic i {
+    background-color: #f80759;
+    color: #fff;
+    padding: 24px 30px;
+    border-radius: 100%;
+    font-size: 40px;
+}
+
+.profile-details {
+    position: relative;
+}
+
+.edit-profile {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    color: #f80759;
+}

@@ -41,7 +41,7 @@ export class HoteldetailsComponent implements OnInit {
 	) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
-		// console.log(this.hotelObj);
+		console.log(this.hotelObj);
 		this.math = Math;
 		if (this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null) {
 			this.alertService.error("Please select correct hotel");
