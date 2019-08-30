@@ -1,8 +1,16 @@
+<h4 class="p-3 text-center">TAX INVOICE</h4>
+
+<div *ngIf="dataLocalUrl != undefined">
+  <object name="hotelInvoice.pdf" [attr.data]="dataLocalUrl" type="application/pdf" width="100%"
+    height="1200px"></object>
+  <!-- <embed [attr.src]="dataLocalUrl" type="application/pdf" width="100%" height="100%"> -->
+</div>
+
+<!-- COMMENTED ANKIT -->
+<!-- DIRECTLY RENDERING INVOICE PDF -->
+<!-- 
 <div class="container" *ngIf="ticket.length > 0">
-  <button class="btn btn-secondary my-3 text-center" (click)="saveInvoice()">Download Voucher</button>
-
   <div #hotelInvoice id="hotel-invoice" class="card card-body">
-
     <table class="table">
       <tbody>
         <tr>
@@ -37,13 +45,11 @@
             <h5 class="text-muted"><i class="fa fa-check-circle"></i> Booking Information</h5>
             <div><strong>Booking ID:</strong> {{ticket[0].book_response.data.booking_id}}</div>
             <div><strong>No. of Rooms:</strong> {{ticket[0].book_response.data.package.room_count}}
-              <!--<strong>No. of Nights:</strong>-->
             </div>
             <div><strong>Room Type: </strong>{{ticket[0].book_response.data.package.room_details.description}}</div>
             <div><strong>CHECK-IN:</strong> {{parseDate(ticket[0].book_response.data.package.check_in_date)}}
               <strong>CHECK-OUT:</strong> {{parseDate(ticket[0].book_response.data.package.check_out_date)}}</div>
 
-            <!-- <div>Hotel Voucher No: <strong>26145651</strong></div> -->
           </td>
           <td>
             <h5 class="text-muted"><i class="fa fa-hotel"></i> Hotel Information</h5>
@@ -99,7 +105,6 @@
           <td>
             <h5 class="text-muted"><i class="fa fa-inr"></i> BOOKING CHARGES DETAILS</h5>
 
-            <!-- change Ankit -->
             <table id="price-table">
               <tbody>
                 <tr>
@@ -147,50 +152,6 @@
                 </tr>
               </tfoot>
             </table>
-            <!-- <table class="table table-bordered hotelinvoice">
-              <tbody>
-                <tr>
-                  <td>Base Amount</td>
-                  <td><i class="fa fa-inr"></i> {{ticket[0].hotelPackage.chargeable_rate}}</td>
-                </tr>
-                <tr>
-                  <td>Extras</td>
-                  <td><i class="fa fa-inr"></i> 00.00</td>
-                </tr>
-                <tr>
-                  <td>Sub Total</td>
-                  <td><i class="fa fa-inr"></i> {{ticket[0].hotelPackage.chargeable_rate}}</td>
-                </tr>
-                <tr>
-                  <td>Service Charges</td>
-                  <td><i class="fa fa-inr"></i>{{ticket[0].hotelPackage.chargeable_rate/100*2}}</td>
-                </tr>
-                <tr>
-                  <td>GST @ 18%(including HR-SGST &amp; CGST)</td>
-                  <td><i class="fa fa-inr"></i> {{ticket[0].hotelPackage.chargeable_rate/118*18 | number:'1.0-2'}}</td>
-                </tr>
-                <tr>
-                  <td>E-Coupon Amount</td>
-                  <div *ngIf="ticket[0].coupon != null">
-                    <td *ngIf="ticket[0].coupon.type=='Percentage'"><i
-                        class="fa fa-inr"></i>{{(ticket[0].hotelPackage.chargeable_rate) / 100 * (ticket[0].coupon.value)}}
-                    </td>
-                    <td *ngIf="ticket[0].coupon.type=='fixed'"><i
-                        class="fa fa-inr"></i>{{(ticket[0].hotelPackage.chargeable_rate) - (ticket[0].coupon.value)}}
-                    </td>
-                  </div>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td>GRAND TOTAL</td>
-                  <td><i class="fa fa-inr"></i> {{getGrandTotal(ticket) | number:'1.0-2'}}
-                  </td>
-
-                </tr>
-              </tfoot>
-            </table> -->
-
           </td>
         </tr>
       </tbody>
@@ -233,4 +194,4 @@
       </table>
     </div>
   </div>
-</div>
+</div> -->

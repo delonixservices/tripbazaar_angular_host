@@ -38,6 +38,7 @@ export class SearchresultComponent implements OnInit {
 
 	public validation: any;
 	public modalRef: any;
+
 	public RootTypeFilters = [
 		{ name: "All", selected: true, value: ["Standard", "Deluxe", "Superior", "Triple"] },
 		{ name: "Standard", selected: false, value: "Standard" },
@@ -96,13 +97,20 @@ export class SearchresultComponent implements OnInit {
 		this.roomdetail = this.hotelsearchkeys.details;
 	}
 
+	// No of nights in hotel
+	getNoOfNights() {
+		const checkIn = new Date(this.checkInDate).getTime();
+		const checkOut = new Date(this.checkOutDate).getTime();
+		return Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+	}
+
 	searchResult() {
 		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
 		this.api.post("/search", this.hotelsearchkeys)
 			.subscribe((response) => {
 				if (response && response.data != undefined) {
-					console.log('Search res = ' + response.data);
+					console.log('Search res ', response.data);
 					this.allHotel = response.data;
 					this.filteredHotels = response.data.hotels;
 					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
@@ -318,14 +326,14 @@ export class SearchresultComponent implements OnInit {
 		this.FilterHotels();
 	}
 
-	// Mofify search
+	// MODIFY SEARCH
 	openModal(modifySearchModal) {
 		this.modalRef = this.modalService.open(modifySearchModal);
 	}
 
 	addRoomInSearch() {
 		this.roomdetail.push({
-			"room": '' + (this.roomdetail.length) + 1,
+			"room": String((this.roomdetail.length) + 1),
 			"adult_count": "1",
 			"child_count": "0",
 			"children": []
@@ -333,21 +341,37 @@ export class SearchresultComponent implements OnInit {
 	}
 
 	removeRoomFromSearch() {
+		console.log(this.roomdetail.length);
 		if (this.roomdetail.length > 1) {
 			this.roomdetail.pop();
 		}
 	}
 
+	// CHANGES ANKIT
 	checkChildren(index) {
-		// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
-		// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
-		// }else{
-		// 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
-		//       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
-		//     }
-
-		// }
+		if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+			this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
+		} else {
+			for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+				console.log(this.roomdetail[index].children[i] === undefined);
+				if (this.roomdetail[index].children[i] === undefined) {
+					this.roomdetail[index].children[i] = { age: "1" };
+				}
+			}
+		}
+		console.log(this.roomdetail[index]);
 	}
+
+	// checkChildren(index) {
+	// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
+	// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
+	// }else{
+	// 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
+	//       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
+	//     }
+
+	// }
+	// }
 
 	searchAgain() {
 

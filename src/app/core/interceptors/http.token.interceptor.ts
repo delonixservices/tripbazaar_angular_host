@@ -7,11 +7,11 @@ import { JwtService } from '../services';
 @Injectable()
 
 export class HttpTokenInterceptor implements HttpInterceptor {
-	
-  constructor(private jwtService: JwtService) {}
+
+  constructor(private jwtService: JwtService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-  	
+
     const headersConfig = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'

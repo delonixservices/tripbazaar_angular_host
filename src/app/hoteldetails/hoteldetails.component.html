@@ -7,8 +7,8 @@
 			</div>
 
 			<div class="col-md-6 text-right">
-				<button type="button" data-toggle="modal" data-target="#exampleModal"
-					class="btn-outline-danger btn btn-sm"><i class="fa fa-search"></i> Modify Search</button>
+				<!-- <button type="button" data-toggle="modal" data-target="#exampleModal"
+					class="btn-outline-danger btn btn-sm"><i class="fa fa-search"></i> Modify Search</button> -->
 			</div>
 
 			<!-- Modify Search -->
@@ -259,7 +259,7 @@
 																class="text-muted small">+12 YRS</span>
 														</div>
 														<div class="range">
-															<input type="range" class="adults" name="adults"
+															<input type="range" class="adults" name="adults{{i}}"
 																[(ngModel)]="room.adult_count" tabindex="5" min="1"
 																max="9" value="1" id="adult-hotel">
 														</div>
@@ -278,32 +278,31 @@
 														<div class="range">
 															<input type="range" class="child " min="0"
 																[(ngModel)]="room.child_count"
-																(change)="checkChildren(i)" name="child" tabindex="6"
-																max="4" value="0" id="child-hotel">
+																(change)="checkChildren(i)" name="child{{i}}"
+																tabindex="6" max="4" value="0" id="child-hotel">
 														</div>
 
 														<div class="clearfix">
 														</div>
-
+														<!-- Added Ankit -->
 														<div class="row child-age" id="child-age-select">
-															<div class="col" *ngFor="let child of room.children">
-																<div class="small text-center">Child {{child.child}} Age
-																</div>
-																<select class="form-control" name="children[]"
+															<div class="col"
+																*ngFor="let child of room.children, let i=index">
+																<div class="small text-center">Child {{i+1}} Age</div>
+																<select class="form-control" name="childAge{{i}}"
 																	[(ngModel)]="child.age">
-																	<!-- <option value="" value selected hidden>0</option> -->
-																	<option value="1">1</option>
-																	<option value="2">2</option>
-																	<option value="3">3</option>
-																	<option value="4">4</option>
-																	<option value="5">5</option>
-																	<option value="6">6</option>
-																	<option value="7">7</option>
-																	<option value="8">8</option>
-																	<option value="9">9</option>
-																	<option value="10">10</option>
-																	<option value="11">11</option>
-																	<option value="12">12</option>
+																	<option [value]="1">1</option>
+																	<option [value]="2">2</option>
+																	<option [value]="3">3</option>
+																	<option [value]="4">4</option>
+																	<option [value]="5">5</option>
+																	<option [value]="6">6</option>
+																	<option [value]="7">7</option>
+																	<option [value]="8">8</option>
+																	<option [value]="9">9</option>
+																	<option [value]="10">10</option>
+																	<option [value]="11">11</option>
+																	<option [value]="12">12</option>
 																</select>
 															</div>
 															<div class="border mb-2 mt-2">
@@ -454,7 +453,7 @@
 	<div [innerHtml]="hotelObj.moreDetails.description"></div>
 </div>
 
-
+<!-- ADDED ANKIT -->
 <!-- CHOOSE ROOMS  -->
 <section id="choose-rooms">
 	<div class="container">

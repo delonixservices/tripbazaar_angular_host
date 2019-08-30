@@ -5,8 +5,6 @@ import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
 
-declare var $: any;
-
 @Component({
 	selector: 'app-hoteldetails-page',
 	templateUrl: './hoteldetails.component.html',
@@ -20,6 +18,7 @@ export class HoteldetailsComponent implements OnInit {
 	checkOutDate: any;
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
+	guests: number = 1;
 	roomdetail = [{
 		"room": "1",
 		"adult_count": "1",
@@ -69,7 +68,7 @@ export class HoteldetailsComponent implements OnInit {
 
 	addRoomInSearch() {
 		this.roomdetail.push({
-			"room": '' + (this.roomdetail.length) + 1,
+			"room": '' + ((this.roomdetail.length) + 1),
 			"adult_count": "1",
 			"child_count": "0",
 			"children": []
@@ -77,20 +76,37 @@ export class HoteldetailsComponent implements OnInit {
 	}
 
 	removeRoomFromSearch() {
+		console.log(this.roomdetail.length);
 		if (this.roomdetail.length > 1) {
 			this.roomdetail.pop();
 		}
 	}
 
+	// CHANGES ANKIT
 	checkChildren(index) {
-		if (this.roomdetail[index].children.length > +this.roomdetail[index].child_count) {
-			this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - +this.roomdetail[index].child_count);
+		if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+			this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
 		} else {
-			for (var i = this.roomdetail[index].children.length; i < +this.roomdetail[index].child_count; i++) {
-				this.roomdetail[index].children.push({ "child": i + 1, "age": "1" });
+			for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+				console.log(this.roomdetail[index].children[i] === undefined);
+				if (this.roomdetail[index].children[i] === undefined) {
+					this.roomdetail[index].children[i] = { age: "1" };
+				}
 			}
 		}
+		console.log(this.roomdetail[index]);
 	}
+
+	// COMMENTED ANKIT
+	// checkChildren(index) {
+	// 	if (this.roomdetail[index].children.length > +this.roomdetail[index].child_count) {
+	// 		this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - +this.roomdetail[index].child_count);
+	// 	} else {
+	// 		for (var i = this.roomdetail[index].children.length; i < +this.roomdetail[index].child_count; i++) {
+	// 			this.roomdetail[index].children.push({ "child": i + 1, "age": "1" });
+	// 		}
+	// 	}
+	// }
 
 	searchAgain() {
 		this.display = "d-none";

@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
 				if (err) {
 					if (err.message !== undefined)
 						this.loginValidation = err.message;
+				} else if (!data.user.verified) {
+					this.router.navigate(['/verifyuser', data.user._id]);
 				} else {
 					this.router.navigate(['/dashboard']);
 				}
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
 		if (this.forgotObj.mobile == "") {
 			this.fgPassValidation = "Require fields are empty";
 		} else {
+			console.log(this.forgotObj)
 			this.auth.resetPassword(this.forgotObj, (res, err) => {
 				if (res.success) {
 					// close the modal

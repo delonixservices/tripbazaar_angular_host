@@ -5,7 +5,6 @@ import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
-import { checkAndUpdateTextInline } from '@angular/core/src/view/text';
 
 declare var $: any;
 
@@ -40,16 +39,15 @@ export class HeaderComponent implements OnInit {
 	user = {
 		name: ""
 	}
+	todaydate = new Date();
 
 	@ViewChild('checkIn') checkIn: any;
 	@ViewChild('checkOut') checkOut: any;
 	@ViewChild('checkInContainer') checkInContainer: ElementRef;
 	@ViewChild('checkOutContainer') checkOutContainer: ElementRef;
 
-
 	suggestionsInput = new Subject<HttpParams>();
 
-	todaydate = new Date();
 	constructor(public route: ActivatedRoute,
 		public router: Router,
 		public api: ApiService,
@@ -69,7 +67,6 @@ export class HeaderComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		if (this.jwt.isAuth()) {
 			if (this.user.name === "") {
 				this.getLoggedInUser();
@@ -84,11 +81,9 @@ export class HeaderComponent implements OnInit {
 
 		this.authService.getLoggedInUser.subscribe(name => {
 			if (name) {
-				console.log('if');
 				this.isLoggedIn = true;
 				this.user.name = <string>name;
 			} else {
-				console.log('else');
 				this.isLoggedIn = false;
 				this.user.name = "";
 			}
@@ -136,7 +131,8 @@ export class HeaderComponent implements OnInit {
 	}
 
 	hostClick(event: MouseEvent) {
-		console.log(1);
+		console.log(this.isLoggedIn)
+
 		if (this.checkIn && this.checkIn.isOpen()) {
 			if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
 				this.checkIn.close();

@@ -31,6 +31,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { OtpComponent } from './otp/otp.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { VerifyotpComponent } from './verifyotp/verifyotp.component';
+import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 import { SuccessComponent } from './success/success.component';
 
 
@@ -64,6 +65,7 @@ const routes: Routes = [
   { path: "otp/:id", component: OtpComponent },
   { path: "resetpassword/:id", component: ResetpasswordComponent },
   { path: "verifyotp/:id", component: VerifyotpComponent },
+  { path: "verifyuser/:id", component: VerifyuserComponent },
   { path: "success", component: SuccessComponent },
 ];
 

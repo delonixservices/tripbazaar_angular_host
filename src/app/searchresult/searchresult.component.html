@@ -3,9 +3,13 @@
 		<div class="row">
 			<div class="col-md-8 text-center text-light">
 				<strong>{{allHotel.region.city}}, {{allHotel.region.country}}</strong>
-				<p class="small">{{allHotel.search.check_in_date}} - {{allHotel.search.check_out_date}} (1 NIGHT) |
-					{{allHotel.search.room_count}} ROOMS | {{allHotel.search.adult_count}} ADULTS |
-					{{allHotel.search.child_count}} CHILD(S)</p>
+				<p class="small">{{allHotel.search.check_in_date}} - {{allHotel.search.check_out_date}}
+					({{getNoOfNights()}}
+					NIGHT<span *ngIf="getNoOfNights() > 1">S</span>) |
+					{{allHotel.search.room_count}} ROOM<span *ngIf="allHotel.search.room_count > 1">S</span> |
+					{{allHotel.search.adult_count}} ADULT<span *ngIf="allHotel.search.adult_count > 1">S</span> |
+					{{allHotel.search.child_count}} <span *ngIf="allHotel.search.child_count == 1">CHILD</span><span
+						*ngIf="allHotel.search.child_count > 1">CHILDREN</span></p>
 			</div>
 			<div class="col-md-2 mt-2 text-right text-success"><strong>Hotels (<span
 						id="total_movies">{{filteredHotels.length}}</span>)</strong></div>
@@ -62,8 +66,9 @@
 										<br><span class="text-muted small">+12 YRS</span>
 									</div>
 									<div class="range">
-										<input type="range" class="adults " name="adults" [(ngModel)]="room.adult_count"
-											tabindex="5" min="1" max="9" value="1" id="adult-hotel">
+										<input type="range" class="adults " name="adults{{i}}"
+											[(ngModel)]="room.adult_count" tabindex="5" min="1" max="9" value="1"
+											id="adult-hotel">
 									</div>
 
 									<div class="clearfix"></div>
@@ -75,17 +80,38 @@
 									</div>
 									<div class="range">
 										<input type="range" class="child " min="0" [(ngModel)]="room.child_count"
-											(change)="checkChildren(i)" name="child" tabindex="6" max="4" value="0"
+											(change)="checkChildren(i)" name="child{{i}}" tabindex="6" max="4" value="0"
 											id="child-hotel">
 
 									</div>
 
 									<div class="clearfix"></div>
-									<div class="row child-age " id="child-age-select">
+									<!-- Added Ankit -->
+									<div class="row child-age" id="child-age-select">
+										<div class="col" *ngFor="let child of room.children, let i=index">
+											<div class="small text-center">Child {{i+1}} Age</div>
+											<select class="form-control" name="childAge{{i}}" [(ngModel)]="child.age">
+												<option [value]="1">1</option>
+												<option [value]="2">2</option>
+												<option [value]="3">3</option>
+												<option [value]="4">4</option>
+												<option [value]="5">5</option>
+												<option [value]="6">6</option>
+												<option [value]="7">7</option>
+												<option [value]="8">8</option>
+												<option [value]="9">9</option>
+												<option [value]="10">10</option>
+												<option [value]="11">11</option>
+												<option [value]="12">12</option>
+											</select>
+										</div>
+										<div class="border mb-2 mt-2">
+										</div>
+									</div>
+									<!-- <div class="row child-age " id="child-age-select">
 										<div class="col" *ngFor="let child of room.children">
 											<div class="small text-center">Child {{child.child}} Age</div>
 											<select class="form-control" name="children[]" [(ngModel)]="child.age">
-												<!-- <option value="0">0</option> -->
 												<option value="1">1</option>
 												<option value="2">2</option>
 												<option value="3">3</option>
@@ -100,7 +126,7 @@
 												<option value="12">12</option>
 											</select>
 										</div>
-									</div>
+									</div> -->
 									<div class="border mb-2 mt-2"></div>
 								</div>
 
@@ -138,7 +164,7 @@
 			<div class="filter-data">
 				<div class="filter-body" id="rates_criteria">
 					<h4 class="headers">Search</h4>
-					<input class="form-control" type="text" [(ngModel)]="searchText" (keyup)="sideBarFilter()"
+					<input class="form-control" type="text" [(ngModel)]="searchText" (keydown)="sideBarFilter()"
 						placeholder="Search by hotel name">
 				</div>
 				<div class="filter-body" id="rates_criteria">
@@ -156,7 +182,7 @@
 					<!-- <input type="hidden" id="range_filter" value="0-100000"
 						fjs-criteria="field=rates.packages.room_rate,type=range"> -->
 					<ng5-slider [(value)]="minHotelPrice" [(highValue)]="maxHotelPrice" [options]="options"
-						(mouseup)="priceFilter()">
+						(valueChange)="priceFilter()">
 					</ng5-slider>
 				</div>
 
@@ -296,12 +322,12 @@
 				</div>
 			</div>
 
-			<div class="no-rooms-available">
+			<div *ngIf="norecordfoundtitle" class="no-rooms-available">
 				<div id="notfound">
 					<div class="notfound">
 						<div class="notfound-404">
 							<!-- <h1>{{norecordfoundmsg}}</h1> -->
-							<!-- <h2>{{norecordfoundtitle}}</h2> -->
+							<h2>{{norecordfoundtitle}}</h2>
 						</div>
 					</div>
 				</div>

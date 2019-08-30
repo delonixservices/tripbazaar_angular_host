@@ -87,10 +87,11 @@ export class AuthService implements CanActivate {
 		this.api.post("/auth/login", paramsObj)
 			.subscribe((response) => {
 				if (response && response.status == 200) {
-					this.jwt.saveToken(response.data.token, response.data.refreshToken);
-					// TODO : check if account is verified
-					this.getLoggedInUser.next(response.data.user.name);
 					console.log(response.data);
+					if (response.data.user.verified) {
+						this.jwt.saveToken(response.data.token, response.data.refreshToken);
+						this.getLoggedInUser.next(response.data.user.name);
+					}
 					callback(response.data, false);
 				}
 			}, (err) => {

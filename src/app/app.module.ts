@@ -51,6 +51,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { NgDatepickerModule } from 'ng2-datepicker';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     VerifyotpComponent,
     SuccessComponent,
     ResetpasswordComponent,
+    VerifyuserComponent,
   ],
 
   imports: [

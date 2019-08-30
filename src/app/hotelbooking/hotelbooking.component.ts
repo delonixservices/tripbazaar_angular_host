@@ -51,6 +51,7 @@ export class HotelbookingComponent implements OnInit {
 		public alertService: AlertService,
 		public modalService: NgbModal
 	) {
+
 		if (this.jwt.isAuth()) {
 			this.api.get("/auth/me")
 				.subscribe((response) => {
@@ -80,7 +81,7 @@ export class HotelbookingComponent implements OnInit {
 		this.transaction_identifier = localStorage.getItem('transaction_identifier')
 
 		if (this.packageObj === undefined || this.packageObj == "" || this.packageObj == null || this.searchObj === undefined || this.searchObj == "" || this.searchObj == null || this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null || this.hotelsearchkeys === undefined || this.hotelsearchkeys == "" || this.hotelsearchkeys == null || this.transaction_identifier === undefined || this.transaction_identifier == "" || this.transaction_identifier == null) {
-			this.alertService.error("Something went wrong! Please search Again");
+			this.alertService.error("Something went wrong! Please search Again1");
 			this.router.navigate(['/']);
 		}
 	}
@@ -110,6 +111,13 @@ export class HotelbookingComponent implements OnInit {
 		// 		this.validation = err.message
 		// 	}
 		// })
+	}
+
+	// No of nights in hotel
+	getNoOfNights() {
+		const checkIn = new Date(this.searchObj.check_in_date).getTime();
+		const checkOut = new Date(this.searchObj.check_out_date).getTime();
+		return Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
 	}
 
 	openModal(logInModal) {
@@ -178,11 +186,11 @@ export class HotelbookingComponent implements OnInit {
 					let url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
 					window.location.assign(url);
 				} else {
-					this.alertService.error("Something Went Wrong Try again.");
+					this.alertService.error("Something Went Wrong Try again.2");
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again.");
+					this.alertService.error("Something Went Wrong Try again.3");
 					this.validation = err.message
 				}
 			});
@@ -209,15 +217,17 @@ export class HotelbookingComponent implements OnInit {
 	loadBookingPolicy() {
 		this.api.post("/bookingpolicy", { "package": this.packageObj, "search": this.searchObj, "transaction_id": this.transaction_identifier })
 			.subscribe((response) => {
-				if (response.data != undefined) {
+				if (response && response.data !== undefined) {
 					this.booking_policy = response.data;
+					console.log(this.booking_policy)
 				} else {
-					this.alertService.error("Something Went Wrong Try again.");
+					this.alertService.error("Something Went Wrong Try again.4");
+					console.log(response)
 					this.router.navigate(['/searchresult']);
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again.");
+					this.alertService.error("Something Went Wrong Try again.5");
 					this.validation = err.message;
 					this.router.navigate(['/searchresult']);
 				}
@@ -238,7 +248,7 @@ export class HotelbookingComponent implements OnInit {
 							this.discountedPrice = Math.ceil(this.packageObj.chargeable_rate_with_tax_excluded - this.couponCode.value);
 						}
 					} else {
-						this.alertService.error("Something Went Wrong Try again.");
+						this.alertService.error("Something Went Wrong Try again.6");
 					}
 				}, (err) => {
 					if (err.message !== undefined) {

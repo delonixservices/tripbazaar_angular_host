@@ -108,10 +108,14 @@ export class ProfileComponent implements OnInit {
       newPassword: this.newPassword
     }).subscribe((response) => {
       console.log(response);
+      this.currentPassword = "";
+      this.newPassword = "";
+      this.confirmPassword = "";
+      this.changePassValidation = "";
+      this.changePassModalRef.close();
     }, (err) => {
       console.log(err);
-      if (err.message)
-        this.changePassValidation = err.message;
+      this.changePassValidation = "Unable to change the password";
     })
   }
 

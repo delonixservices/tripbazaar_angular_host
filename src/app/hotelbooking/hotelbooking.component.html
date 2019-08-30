@@ -52,7 +52,12 @@
 							</div>
 						</div>
 					</div>
-					<p class="mt-3 text-center">9 Days &amp; 8 Nights | Room 1:2 Adults </p>
+					<p class="mt-3 text-center">{{getNoOfNights()+1}} Days &amp; {{getNoOfNights()}} Night<span
+							*ngIf="getNoOfNights() > 1">s</span> | {{searchObj.room_count}} Room<span
+							*ngIf="searchObj.room_count > 1">s</span>, {{searchObj.adult_count}} Adult<span
+							*ngIf="searchObj.adult_count > 1">s</span>, {{searchObj.child_count}} <span
+							*ngIf="searchObj.child_count == 1">Child</span><span
+							*ngIf="searchObj.child_count > 1">Children</span> </p>
 				</div>
 			</div>
 			<hr>
@@ -233,23 +238,36 @@
 					<div class="row mb-2">
 						<div class="col-md-7">Rate</div>
 						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
-							{{packageObj.chargeable_rate_with_tax_excluded}}
+							{{packageObj.chargeable_rate_with_tax_excluded |number:'1.0-0'}}
 						</div>
 					</div>
-					<div class="row mb-2">
+					<!-- <div class="row mb-2">
 						<div class="col-md-7">Tax</div>
 						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
 							{{(packageObj.taxes_and_fees) ? packageObj.taxes_and_fees.estimated_total.value : "0.00"}}
 						</div>
-					</div>
+					</div> -->
 
 					<div class="row mb-2" *ngIf="couponCode.value != 0">
 						<div class="col-md-7">Discount</div>
 						<div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i
 								class="fa fa-inr"></i>
-							{{packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value)}}</div>
+							{{packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value) |number:'1.0-0'}}
+						</div>
 						<div class="col-md-5 text-right" *ngIf="couponCode.type =='fixed'"><i class="fa fa-inr"></i>
-							{{couponCode.value}}</div>
+							{{couponCode.value | number:'1.0-0'}}</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-7">Service Charges</div>
+						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
+							{{100}}
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-md-7">GST</div>
+						<div class="col-md-5 text-right"><i class="fa fa-inr"></i>
+							{{18/100 * 100}}
+						</div>
 					</div>
 					<!-- <div class="row mb-2">
 							<div class="col-md-7">Hotel GST</div>
@@ -275,14 +293,15 @@
 						</div> -->
 					<hr>
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<h5>You Pay:</h5>
 						</div>
-						<div class="col-md-7 text-right">
+						<div class="col-md-6 text-right">
 							<h5 class="mb-0" *ngIf="couponCode.value == 0"><i class="fa fa-inr"></i>
-								{{packageObj.chargeable_rate_with_tax_excluded}}</h5>
+								{{packageObj.chargeable_rate_with_tax_excluded + 100 +18/100 * 100 |number:'1.0-0'}}
+							</h5>
 							<h5 class="mb-0" *ngIf="discountedPrice"><i class="fa fa-inr"></i>
-								{{discountedPrice}}
+								{{discountedPrice + 100 + 18/100 * 100 |number:'1.0-0'}}
 							</h5>
 						</div>
 						<div class="col-md-12 text-right">
