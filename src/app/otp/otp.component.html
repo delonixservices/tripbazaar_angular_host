@@ -11,18 +11,20 @@
 				<div class="card-body">
 
 					<div class="form-group">
-						<input type="email" required="" class="form-control" [(ngModel)]="otpObj.otp" placeholder="Enter OTP">
+						<input type="email" required="" class="form-control" [(ngModel)]="otpObj.otp"
+							placeholder="Enter OTP">
 					</div>
 
 					<div class="form-group">
-						<input type="submit" class="btn-block btn-danger btn" (click)="otpsubmit()" value="Submit">
+						<input type="button" class="btn-block btn-danger btn" (click)="otpsubmit()" value="Submit">
 					</div>
 
 					<div *ngIf="validation" class="msg alert alert-success" role="alert">
 						{{validation}}
 					</div>
 
-					<div class="text-center">Resent otp <a (click)="resentotp()" style="color: blue;">Click Here</a> </div>
+					<div class="text-center">Resent otp <a (click)="resentotp()" style="color: blue;">Click Here</a>
+					</div>
 				</div>
 
 			</div>

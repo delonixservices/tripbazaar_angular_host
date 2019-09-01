@@ -31,40 +31,42 @@ import { ProfileComponent } from './profile/profile.component';
 import { OtpComponent } from './otp/otp.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { VerifyotpComponent } from './verifyotp/verifyotp.component';
+import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 import { SuccessComponent } from './success/success.component';
 
 
 const routes: Routes = [
-  { path : "", component : HomeComponent },
-  { path : "about", component : AboutComponent },
-  { path : "login", component : LoginComponent, canActivate: [AuthService]  },
-  { path : "register", component : RegisterComponent, canActivate: [AuthService] },
-  { path : "product", component : ProductComponent },
-  { path : "business", component : BusinessComponent },
-  { path : "faq", component : FaqComponent },
-  { path : "our_values", component : Our_valuesComponent },
-  { path : "ticket", component : TicketComponent },
-  { path : "itinerary_details", component : Itinerary_detailsComponent },
-  { path : "flightsearch", component : FlightsearchComponent },
-  { path : "hotelvoucher", component : HotelvoucherComponent },
-  { path : "hotelinvoice", component : HotelinvoiceComponent },
-  { path : "hoteldetails", component : HoteldetailsComponent },
-  { path : "hotelbooking", component : HotelbookingComponent },
-  { path : "flightbooking", component : FlightbookingComponent },
-  { path : "care", component : CareComponent },
-  { path : "term", component : TermComponent },
-  { path : "herm", component : HotelbookingComponent },
-  { path : "searchresult", component : SearchresultComponent },
-  { path : "policy", component : PolicyComponent },
-  { path : "refund", component : RefundComponent },
-  { path : "agreement", component : AgreementComponent },
-  { path : "profile", component : ProfileComponent },
-  { path : "contact", component : ContactComponent },
-  { path : "dashboard", component : DashboardComponent, canActivate: [AuthService] },
-  { path : "otp/:id", component : OtpComponent },
-  { path : "resetpassword/:id", component : ResetpasswordComponent },
-  { path : "verifyotp/:id", component : VerifyotpComponent },
-  { path : "success", component : SuccessComponent },
+  { path: "", component: HomeComponent },
+  { path: "about", component: AboutComponent },
+  { path: "login", component: LoginComponent, canActivate: [AuthService] },
+  { path: "register", component: RegisterComponent, canActivate: [AuthService] },
+  { path: "product", component: ProductComponent },
+  { path: "business", component: BusinessComponent },
+  { path: "faq", component: FaqComponent },
+  { path: "our_values", component: Our_valuesComponent },
+  { path: "ticket", component: TicketComponent },
+  { path: "itinerary_details", component: Itinerary_detailsComponent },
+  { path: "flightsearch", component: FlightsearchComponent },
+  { path: "hotelvoucher", component: HotelvoucherComponent },
+  { path: "hotelinvoice", component: HotelinvoiceComponent },
+  { path: "hoteldetails", component: HoteldetailsComponent },
+  { path: "hotelbooking", component: HotelbookingComponent },
+  { path: "flightbooking", component: FlightbookingComponent },
+  { path: "care", component: CareComponent },
+  { path: "term", component: TermComponent },
+  { path: "herm", component: HotelbookingComponent },
+  { path: "searchresult", component: SearchresultComponent },
+  { path: "policy", component: PolicyComponent },
+  { path: "refund", component: RefundComponent },
+  { path: "agreement", component: AgreementComponent },
+  { path: "profile", component: ProfileComponent },
+  { path: "contact", component: ContactComponent },
+  { path: "dashboard", component: DashboardComponent, canActivate: [AuthService] },
+  { path: "otp/:id", component: OtpComponent },
+  { path: "resetpassword/:id", component: ResetpasswordComponent },
+  { path: "verifyotp/:id", component: VerifyotpComponent },
+  { path: "verifyuser/:id", component: VerifyuserComponent },
+  { path: "success", component: SuccessComponent },
 ];
 
 @NgModule({
@@ -73,4 +75,4 @@ const routes: Routes = [
   })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

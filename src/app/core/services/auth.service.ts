@@ -87,15 +87,16 @@ export class AuthService implements CanActivate {
 		this.api.post("/auth/login", paramsObj)
 			.subscribe((response) => {
 				if (response && response.status == 200) {
-					this.jwt.saveToken(response.data.token, response.data.refreshToken);
-					// TODO : check if account is verified
-					this.getLoggedInUser.next(response.data.user.name);
 					console.log(response.data);
-					callback(true, null);
+					if (response.data.user.verified) {
+						this.jwt.saveToken(response.data.token, response.data.refreshToken);
+						this.getLoggedInUser.next(response.data.user.name);
+					}
+					callback(response.data, false);
 				}
 			}, (err) => {
 				this.getLoggedInUser.next("");
-				callback(false, err);
+				callback(null, err);
 			});
 	}
 
@@ -107,6 +108,8 @@ export class AuthService implements CanActivate {
 				if (response.status == 200) {
 					this.jwt.destroyToken();
 					callback(true);
+				} else {
+					console.log(response.status);
 				}
 			}, (err) => {
 				this.getLoggedInUser.next("");

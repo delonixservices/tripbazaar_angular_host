@@ -1,15 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
+import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
 declare var $: any;
 
 @Component({
 	selector: 'app-layout-header',
-	templateUrl: './header.component.html'
+	templateUrl: './header.component.html',
+	host: { '(document:click)': 'hostClick($event)' }
 })
 
 export class HeaderComponent implements OnInit {
@@ -17,11 +19,15 @@ export class HeaderComponent implements OnInit {
 	@Input() nav: string;
 	selectedArea: any;
 	suggestions: any;
+
+	checkInDateModel: NgbDateStruct;
+	checkOutDateModel: NgbDateStruct;
 	checkInDate: any;
 	checkOutDate: any;
+
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
-	guests: number;
+	guests: number = 1;
 	roomdetail = [{
 		"room": "1",
 		"adult_count": "1",
@@ -33,33 +39,51 @@ export class HeaderComponent implements OnInit {
 	user = {
 		name: ""
 	}
+	todaydate = new Date();
+
+	@ViewChild('checkIn') checkIn: any;
+	@ViewChild('checkOut') checkOut: any;
+	@ViewChild('checkInContainer') checkInContainer: ElementRef;
+	@ViewChild('checkOutContainer') checkOutContainer: ElementRef;
 
 	suggestionsInput = new Subject<HttpParams>();
 
-	todaydate = new Date();
 	constructor(public route: ActivatedRoute,
 		public router: Router,
 		public api: ApiService,
 		public jwt: JwtService,
 		private authService: AuthService,
-		public alertService: AlertService) {
+		public alertService: AlertService,
+		public ngbDateParserFormatter: NgbDateParserFormatter,
+		public dpConfig: NgbDatepickerConfig
+	) {
+		const date = new Date();
+		console.log(date.getMonth())
+		dpConfig.minDate = {
+			year: date.getFullYear(),
+			month: date.getMonth() + 1,
+			day: date.getDate()
+		};
 	}
 
 	ngOnInit() {
-
 		if (this.jwt.isAuth()) {
-			this.isLoggedIn = true;
+			if (this.user.name === "") {
+				this.getLoggedInUser();
+			}
+			else {
+				this.isLoggedIn = false;
+			}
 		} else {
 			this.isLoggedIn = false;
+			console.log('Not auth');
 		}
 
 		this.authService.getLoggedInUser.subscribe(name => {
 			if (name) {
-				console.log('if');
 				this.isLoggedIn = true;
 				this.user.name = <string>name;
 			} else {
-				console.log('else');
 				this.isLoggedIn = false;
 				this.user.name = "";
 			}
@@ -76,33 +100,63 @@ export class HeaderComponent implements OnInit {
 		// localStorage.removeItem('hotelsearchkeys');
 		this.loadDestination();
 
-		$.getScript('./assets/lib/js/app.js');
+		// $.getScript('./assets/lib/js/app.js');
 
-		$('document').ready(() => {
-			$(".checkInDate").datepicker().on("changeDate", (evt) => {
-				console.log('checkin ' + evt.date);
-				var date = evt.date;
-				// var d = date.getDate();
-				var d = `${date.getDate()}`.padStart(2, '0');
-				// var m = date.getMonth() + 1;
-				// var m =	{date.getMonth() + 1}.padStart(2, '0');
-				var m = `${date.getMonth() + 1}`.padStart(2, '0');
-				var y = date.getFullYear();
-				this.checkInDate = y + '-' + m + '-' + d;
-				// console.log(this.checkInDate);
-			});
+		// $('document').ready(() => {
+		// 	console.log('ready');
+		// 	$(".checkInDate").datepicker().on("changeDate", (evt) => {
+		// 		console.log('checkin ' + evt.date);
+		// 		var date = evt.date;
+		// 		// var d = date.getDate();
+		// 		var d = `${date.getDate()}`.padStart(2, '0');
+		// 		// var m = date.getMonth() + 1;
+		// 		// var m =	{date.getMonth() + 1}.padStart(2, '0');
+		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
+		// 		var y = date.getFullYear();
+		// 		this.checkInDate = y + '-' + m + '-' + d;
+		// 		// console.log(this.checkInDate);
+		// 	});
 
-			$(".checkOutDate").datepicker().on("changeDate", (evt) => {
-				console.log('checkout ' + evt.date);
-				var date = evt.date;
-				var d = `${date.getDate()}`.padStart(2, '0');
-				var m = `${date.getMonth() + 1}`.padStart(2, '0');
-				var y = date.getFullYear();
-				// 2019-03-10
-				this.checkOutDate = y + '-' + m + '-' + d;
-				// console.log(this.checkOutDate);
-			});
-		});
+		// 	$(".checkOutDate").datepicker().on("changeDate", (evt) => {
+		// 		console.log('checkout ' + evt.date);
+		// 		var date = evt.date;
+		// 		var d = `${date.getDate()}`.padStart(2, '0');
+		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
+		// 		var y = date.getFullYear();
+		// 		// 2019-03-10
+		// 		this.checkOutDate = y + '-' + m + '-' + d;
+		// 		// console.log(this.checkOutDate);
+		// 	});
+		// });
+	}
+
+	hostClick(event: MouseEvent) {
+		console.log(this.isLoggedIn)
+
+		if (this.checkIn && this.checkIn.isOpen()) {
+			if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
+				this.checkIn.close();
+			}
+		}
+		if (this.checkOut && this.checkOut.isOpen()) {
+			if (this.checkOutContainer && this.checkOutContainer.nativeElement && !this.checkOutContainer.nativeElement.contains(event.target)) {
+				this.checkOut.close();
+			}
+		}
+	}
+
+	// prevent dropdown from closing when clicked inside
+	preventDropdownClose(event: MouseEvent) {
+		event.stopImmediatePropagation();
+	}
+
+	// format checkIn and checkOut dates
+	onCheckInDateSelect(date: NgbDateStruct) {
+		this.checkInDate = this.ngbDateParserFormatter.format(date);
+	}
+
+	onCheckOutDateSelect(date: NgbDateStruct) {
+		this.checkOutDate = this.ngbDateParserFormatter.format(date);
 	}
 
 	// console.log(this.roomdetail);
@@ -189,7 +243,7 @@ export class HeaderComponent implements OnInit {
 
 
 	loadDestination() {
-		console.log("loadDestination called");
+		// console.log("loadDestination called");
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
@@ -208,19 +262,20 @@ export class HeaderComponent implements OnInit {
 		this.authService.logout((success) => {
 			this.router.navigate(['']);
 		});
-
 	}
 
-	// getLoggedInUser() {
-	// 	this.api.get("/auth/me")
-	// 		.subscribe((response) => {
-	// 			if (response.status == 200) {
-	// 				this.isLoggedIn = true;
-	// 				this.user.name = response.data.name;
-	// 			}
-	// 		}, (err) => {
-	// 			this.isLoggedIn = false;
-	// 			console.log(`Unable to get logged in user: Error ${err.message}`);
-	// 		})
-	// }
+	getLoggedInUser() {
+		this.api.get("/auth/me")
+			.subscribe((response) => {
+				if (response.status == 200) {
+					this.user.name = response.data.name;
+					this.isLoggedIn = true;
+				}
+			}, (err) => {
+				this.isLoggedIn = false;
+				this.jwt.destroyToken();
+				console.log('Jwt destroyed');
+				console.log(`Unable to get logged in user: Error ${err.message}`);
+			})
+	}
 }

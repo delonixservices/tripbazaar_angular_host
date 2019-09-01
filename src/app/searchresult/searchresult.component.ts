@@ -5,6 +5,7 @@ import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
 import { Options, LabelType } from 'ng5-slider';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	selector: 'app-searchresult-page',
@@ -36,6 +37,7 @@ export class SearchresultComponent implements OnInit {
 	public copyFilteredHotels = [];
 
 	public validation: any;
+	public modalRef: any;
 
 	public RootTypeFilters = [
 		{ name: "All", selected: true, value: ["Standard", "Deluxe", "Superior", "Triple"] },
@@ -68,18 +70,62 @@ export class SearchresultComponent implements OnInit {
 		translate: (value: number, label: LabelType): string => {
 			switch (label) {
 				case LabelType.Low:
-					return '<b>Min price:</b> &#8377;' + value;
+					return '<b>Min:</b> &#8377;' + value;
 				case LabelType.High:
-					return '<b>Max price:</b> &#8377;' + value;
+					return '<b>Max:</b> &#8377;' + value;
 				default:
 					return '&#8377;' + value;
 			}
 		}
 	};
 
-	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService) {
+	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService, public modalService: NgbModal) {
 
+	}
 
+	ngOnInit() {
+		localStorage.removeItem('transaction_identifier');
+		localStorage.removeItem('searchObj');
+		localStorage.removeItem('packageObj');
+		localStorage.removeItem('hotelObj');
+
+		this.searchResult();
+		this.loadDestination();
+		this.selectedArea = this.hotelsearchkeys.area;
+		this.checkInDate = this.hotelsearchkeys.checkindate;
+		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
+		this.roomdetail = this.hotelsearchkeys.details;
+	}
+
+	// No of nights in hotel
+	getNoOfNights() {
+		const checkIn = new Date(this.checkInDate).getTime();
+		const checkOut = new Date(this.checkOutDate).getTime();
+		return Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+	}
+
+	searchResult() {
+		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
+
+		this.api.post("/search", this.hotelsearchkeys)
+			.subscribe((response) => {
+				if (response && response.data != undefined) {
+					console.log('Search res ', response.data);
+					this.allHotel = response.data;
+					this.filteredHotels = response.data.hotels;
+					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
+					localStorage.setItem('transaction_identifier', response.transaction_identifier);
+					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
+
+				} else {
+					this.norecordfoundtitle = "Opps";
+					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
+				}
+			}, (err) => {
+				if (err.message !== undefined) {
+					this.validation = err.message
+				}
+			});
 	}
 
 	hoteldetails(hotel) {
@@ -93,16 +139,16 @@ export class SearchresultComponent implements OnInit {
 	}
 
 	priceFilter() {
-		console.log('price filter');
-		console.log('Min price = ' + this.minHotelPrice);
-		console.log('Max price = ' + this.maxHotelPrice);
+		// console.log('price filter');
+		// console.log('Min price = ' + this.minHotelPrice);
+		// console.log('Max price = ' + this.maxHotelPrice);
 		this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
 
 		this.filteredHotels = this.filteredHotels.filter((hotel) => {
 			const chargeable_rate = hotel.rates.packages[0].chargeable_rate;
 			return chargeable_rate >= this.minHotelPrice && chargeable_rate <= this.maxHotelPrice;
 		});
-		console.log(this.filteredHotels);
+		// console.log(this.filteredHotels);
 		if (this.filteredHotels.length <= 0) {
 			this.norecordfoundtitle = "No Room available currently, Please look for some other option";
 		} else {
@@ -185,8 +231,6 @@ export class SearchresultComponent implements OnInit {
 		var foodserve;
 		var i = 0;
 		setTimeout(() => {
-
-
 			for (let refundtype of this.Refundable) {
 				if (i == 0) {
 					if (refundtype.selected === true) {
@@ -282,11 +326,14 @@ export class SearchresultComponent implements OnInit {
 		this.FilterHotels();
 	}
 
-
+	// MODIFY SEARCH
+	openModal(modifySearchModal) {
+		this.modalRef = this.modalService.open(modifySearchModal);
+	}
 
 	addRoomInSearch() {
 		this.roomdetail.push({
-			"room": '' + (this.roomdetail.length) + 1,
+			"room": String((this.roomdetail.length) + 1),
 			"adult_count": "1",
 			"child_count": "0",
 			"children": []
@@ -294,21 +341,37 @@ export class SearchresultComponent implements OnInit {
 	}
 
 	removeRoomFromSearch() {
+		console.log(this.roomdetail.length);
 		if (this.roomdetail.length > 1) {
 			this.roomdetail.pop();
 		}
 	}
 
+	// CHANGES ANKIT
 	checkChildren(index) {
-		// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
-		// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
-		// }else{
-		// 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
-		//       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
-		//     }
-
-		// }
+		if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+			this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
+		} else {
+			for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+				console.log(this.roomdetail[index].children[i] === undefined);
+				if (this.roomdetail[index].children[i] === undefined) {
+					this.roomdetail[index].children[i] = { age: "1" };
+				}
+			}
+		}
+		console.log(this.roomdetail[index]);
 	}
+
+	// checkChildren(index) {
+	// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
+	// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
+	// }else{
+	// 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
+	//       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
+	//     }
+
+	// }
+	// }
 
 	searchAgain() {
 
@@ -327,15 +390,14 @@ export class SearchresultComponent implements OnInit {
 			if (flag) {
 				this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
 				localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
+				this.modalRef.close();
 				this.searchResult();
 			}
 
 		} else {
 			this.alertService.error("All fields are required!");
 		}
-
 	}
-
 
 	loadDestination() {
 		this.suggestions = concat(
@@ -350,44 +412,5 @@ export class SearchresultComponent implements OnInit {
 				))
 			)
 		);
-	}
-
-	searchResult() {
-		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
-
-		this.api.post("/search", this.hotelsearchkeys)
-			.subscribe((response) => {
-				if (response.data != undefined) {
-					this.allHotel = response.data;
-					this.filteredHotels = response.data.hotels;
-					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
-					localStorage.setItem('transaction_identifier', response.transaction_identifier);
-					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
-
-				} else {
-					this.norecordfoundtitle = "Opps";
-					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
-				}
-			}, (err) => {
-				if (err.message !== undefined) {
-					this.validation = err.message
-				}
-			});
-	}
-
-	ngOnInit() {
-		localStorage.removeItem('transaction_identifier');
-		localStorage.removeItem('searchObj');
-		localStorage.removeItem('packageObj');
-		localStorage.removeItem('hotelObj');
-
-		this.searchResult();
-		this.loadDestination();
-		this.selectedArea = this.hotelsearchkeys.area;
-		this.checkInDate = this.hotelsearchkeys.checkindate;
-		this.checkOutDate = this.hotelsearchkeys.checkoutdate;
-		this.roomdetail = this.hotelsearchkeys.details;
-
-
 	}
 }

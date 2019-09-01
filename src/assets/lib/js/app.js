@@ -14,22 +14,22 @@ $(function () {
 	// 	}
 	// });
 
-	/*Bootstrap DatePicker*/
+	/* Bootstrap DatePicker*/
 	$('.mydatepicker, #datepicker').datepicker();
 	$('.checkInDate').datepicker({
+		// format: 'yyyy/mm/dd',
 		autoclose: true,
 		todayHighlight: true,
 		toggleActive: true,
 		startDate: 'd',
 	});
 	$('.checkOutDate').datepicker({
+		// format: 'yyyy/mm/dd',
 		autoclose: true,
 		todayHighlight: true,
 		toggleActive: true,
 		startDate: '+1d',
 	});
-
-
 
 	$(".close").click(function () {
 		$(".side-panel-holder ").hide();
@@ -106,21 +106,20 @@ $(function () {
 	});
 
 	$(".depart .col input").click(function () {
-
 		$(this).parent().parent().click();
 
 	});
 
-	var adults = document.getElementById("adult");
-	var output1 = document.getElementById("total-adult");
+	// var adults = document.getElementById("adult");
+	// var output1 = document.getElementById("total-adult");
 	// output1.innerHTML = adults.value;
 
 	// adults.oninput = function() {
 	//   output1.innerHTML = this.value;
 	// }
 
-	var child = document.getElementById("child");
-	var output2 = document.getElementById("total-child");
+	// var child = document.getElementById("child");
+	// var output2 = document.getElementById("total-child");
 	// output2.innerHTML = child.value;
 
 	// child.oninput = function() {
@@ -128,26 +127,25 @@ $(function () {
 	// }
 
 	// Hotel 
+	// var adults = document.getElementById("adult-hotel");
+	// var output1 = document.getElementById("total-adult-hotel");
+	// output1.innerHTML = adults.value;
 
-	var adults = document.getElementById("adult-hotel");
-	var output1 = document.getElementById("total-adult-hotel");
-	output1.innerHTML = adults.value;
+	// adults.oninput = function () {
+	// 	output1.innerHTML = this.value;
+	// }
 
-	adults.oninput = function () {
-		output1.innerHTML = this.value;
-	}
+	// var child = document.getElementById("child-hotel");
+	// var output2 = document.getElementById("total-child-hotel");
+	// output2.innerHTML = child.value;
 
-	var child = document.getElementById("child-hotel");
-	var output2 = document.getElementById("total-child-hotel");
-	output2.innerHTML = child.value;
-
-	child.oninput = function () {
-		output2.innerHTML = this.value;
-	}
+	// child.oninput = function () {
+	// 	output2.innerHTML = this.value;
+	// }
 
 
-	var infant = document.getElementById("infant");
-	var output3 = document.getElementById("total-infant");
+	// var infant = document.getElementById("infant");
+	// var output3 = document.getElementById("total-infant");
 	// output3.innerHTML = infant.value;
 
 	// infant.oninput = function() {
@@ -162,20 +160,17 @@ $(function () {
 	// 	$("#room2, .removeroom").hide()
 	// });
 
-	$('#select-passanger').click((e) => {
-		// console.log(e.target.id);
-		if (e.target.id === "done") {
-			$(".dropdown #select-passanger #done").click(function (e) {
-
-				$('.dropdown #select-passanger').dropdown("toggle");
-				$('.dropdown #hotel-menu').dropdown("toggle");
-			});
-		} else {
-			e.stopImmediatePropagation();
-		}
-	})
-
-
+	// $('#select-passanger').click((e) => {
+	// 	console.log(e.target.id);
+	// 	if (e.target.id === "done") {
+	// 		$(".dropdown #select-passanger #done").click(function (e) {
+	// 			$('.dropdown #select-passanger').dropdown("toggle");
+	// 			$('.dropdown #hotel-menu').dropdown("toggle");
+	// 		});
+	// 	} else {
+	// 		e.stopImmediatePropagation();
+	// 	}
+	// })
 
 	$('body').prepend('<a class="back-to-top">Back To Top  </a>');
 
