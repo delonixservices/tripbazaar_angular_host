@@ -56,7 +56,7 @@
 							*ngIf="getNoOfNights() > 1">s</span> | {{searchObj.room_count}} Room<span
 							*ngIf="searchObj.room_count > 1">s</span>, {{searchObj.adult_count}} Adult<span
 							*ngIf="searchObj.adult_count > 1">s</span>, {{searchObj.child_count}} <span
-							*ngIf="searchObj.child_count == 1">Child</span><span
+							*ngIf="searchObj.child_count <= 1">Child</span><span
 							*ngIf="searchObj.child_count > 1">Children</span> </p>
 				</div>
 			</div>

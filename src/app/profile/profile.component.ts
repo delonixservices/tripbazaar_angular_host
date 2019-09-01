@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   public password;
   public phone;
 
-  public profile = {};
+  public profile: any = {};
 
   public changePassModalRef: NgbModalRef;
   public changePhoneModalRef: NgbModalRef;

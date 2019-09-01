@@ -8,7 +8,7 @@
 					NIGHT<span *ngIf="getNoOfNights() > 1">S</span>) |
 					{{allHotel.search.room_count}} ROOM<span *ngIf="allHotel.search.room_count > 1">S</span> |
 					{{allHotel.search.adult_count}} ADULT<span *ngIf="allHotel.search.adult_count > 1">S</span> |
-					{{allHotel.search.child_count}} <span *ngIf="allHotel.search.child_count == 1">CHILD</span><span
+					{{allHotel.search.child_count}} <span *ngIf="allHotel.search.child_count <= 1">CHILD</span><span
 						*ngIf="allHotel.search.child_count > 1">CHILDREN</span></p>
 			</div>
 			<div class="col-md-2 mt-2 text-right text-success"><strong>Hotels (<span
