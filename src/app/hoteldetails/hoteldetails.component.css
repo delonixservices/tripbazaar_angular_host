@@ -96,7 +96,10 @@ a:not([href]):not([tabindex]) {
     border-bottom: 1px solid #e8e8e8;
 }
 
-.hotel-details h4 {
+.hotel-details h4,
+.hotel-policy h4,
+.overview,
+.choose_room {
     color: #f80758;
     margin-bottom: 0px;
 }
@@ -139,33 +142,44 @@ a:not([href]):not([tabindex]) {
 }
 
 /* new styles */
-.room-type {}
+/* .room-type {} */
 
 .room-type_left-sec {
     padding: 0 20px;
 }
 
-.room-type_left-sec h2 {
-    font-size: 1.7rem;
+.room-type_description {
+    padding: 5px 0 10px;
+    font-size: 23px;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
 .room-type_left-sec img {
     height: 225px;
     border-radius: 5px;
-    width: 100%;
+    max-width: 100%;
+    min-width: 340px;
     object-fit: cover;
+    margin-bottom: 20px;
 }
 
 .room-type_benefits ul {
     padding: 0 20px;
 }
 
+.room-type_info h4,
 .room-type_aminities h4 {
-    padding-top: 20px;
     padding-left: 20px;
     font-size: 1.2rem;
+}
+
+.room-type_info p {
+    padding-top: 2px;
+    padding-left: 10px;
+}
+
+.room-type_info {
+    display: flex;
 }
 
 .room-type_aminities ul {

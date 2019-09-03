@@ -79,9 +79,13 @@ export class SearchresultComponent implements OnInit {
 		}
 	};
 
-	constructor(public route: ActivatedRoute, private router: Router, public api: ApiService, public jwt: JwtService, public alertService: AlertService, public modalService: NgbModal) {
-
-	}
+	constructor(public route: ActivatedRoute,
+		private router: Router,
+		public api: ApiService,
+		public jwt: JwtService,
+		public alertService: AlertService,
+		public modalService: NgbModal
+	) { }
 
 	ngOnInit() {
 		localStorage.removeItem('transaction_identifier');
@@ -118,30 +122,39 @@ export class SearchresultComponent implements OnInit {
 					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
 
 				} else {
-					this.norecordfoundtitle = "Opps";
-					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
+					// this.norecordfoundmsg = "oops";
+					this.filteredHotels = [];
+					this.copyFilteredHotels = [];
+					this.norecordfoundtitle = ' "No Room available currently, Please look for some other option " ';
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.validation = err.message
+					this.norecordfoundtitle = err.message
+				} else {
+					this.norecordfoundtitle = "No Hotels Found"
 				}
+				this.filteredHotels = [];
+				this.copyFilteredHotels = [];
 			});
 	}
 
+	// Load hoteldetails component
 	hoteldetails(hotel) {
 		if (hotel === undefined || hotel == "" || hotel == null) {
 			this.alertService.error("Please Select correct hotel");
 		} else {
+			let hoteldetailkeys = this.hotelsearchkeys;
+			hoteldetailkeys.area.displayName = hotel.displayName;
+			hoteldetailkeys.area.name = hotel.name;
+			hoteldetailkeys.area.id = hotel.id;
+			hoteldetailkeys.area.type = "hotel";
+			localStorage.setItem('hoteldetailkeys', JSON.stringify(hoteldetailkeys));
 			localStorage.setItem('hotelObj', JSON.stringify(hotel));
 			this.router.navigate(['/hoteldetails']);
 		}
-
 	}
 
 	priceFilter() {
-		// console.log('price filter');
-		// console.log('Min price = ' + this.minHotelPrice);
-		// console.log('Max price = ' + this.maxHotelPrice);
 		this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
 
 		this.filteredHotels = this.filteredHotels.filter((hotel) => {
