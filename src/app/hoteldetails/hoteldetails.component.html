@@ -162,17 +162,17 @@
 			<div class="col-md-2 mt-2 text-center text-light">
 				<span class="small" *ngIf="hotelObj.rates.packages[0].indicative_market_rates">
 					<s *ngIf="hotelObj.rates.packages[0].guest_discount_percentage">
-						{{(((-1*hotelObj.rates.packages[0].guest_discount_percentage)/100) * hotelObj.rates.packages[0].chargeable_rate)+ hotelObj.rates.packages[0].chargeable_rate | number: '1.0-2'}}</s>
+						{{(((-1*hotelObj.rates.packages[0].guest_discount_percentage)/100) * hotelObj.rates.packages[0].chargeable_rate)+ hotelObj.rates.packages[0].chargeable_rate | number: '1.0-0'}}</s>
 				</span>&nbsp;
 				<span class="badge badge-success text-light small"
 					*ngIf="hotelObj.rates.packages[0].guest_discount_percentage">
 					{{hotelObj.rates.packages[0].guest_discount_percentage}} % </span>
 				<h4 class="text-light mb-0">
 					{{hotelObj.rates.packages[0].chargeable_rate_currency}}.
-					<span>{{hotelObj.rates.packages[0].chargeable_rate}}</span>
+					<span>{{hotelObj.rates.packages[0].chargeable_rate | number: '1.0-0'}}</span>
 					<!-- <i class="fa fa-inr"></i> {{hotelObj.rates.packages[0].chargeable_rate}} -->
 				</h4>
-				<span class="small">For 3 Night, 2 Days</span>
+				<span class="small">For {{getNoOfNights()}} night, {{getNoOfNights()+1}} days</span>
 			</div>
 
 			<div class="col-md-2 mt-2 text-right">
@@ -357,63 +357,56 @@
 		<div class="collapse navbar-collapse" id="subnav">
 			<ul class="navbar-nav mr-auto menu">
 				<li class="nav-item active">
-					<a class="nav-link" href="#">Photos</a>
+					<a class="nav-link" (click)="scroll(photos)">Photos</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Rooms</a>
+					<a class="nav-link" (click)="scroll(rooms)">Rooms</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Reviews</a>
+					<a class="nav-link" (click)="scroll(review)">Reviews</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Map</a>
+					<a class="nav-link" (click)="scroll(map)">Map</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Amenities</a>
+					<a class="nav-link" (click)="scroll(amenities)">Amenities</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Hotel Policies</a>
+					<a class="nav-link" (click)="scroll(hotelPolicy)">Hotel Policy</a>
 				</li>
-
-
-
 			</ul>
-
 		</div>
 	</nav>
-
 </div>
 
 <div class="container">
 	<div class="row">
 		<hr>
-		<div class="col-md-8">
+		<div #photos class="col-md-8">
 			<!-- slider -->
 			<ui-carousel [infinite]="true" [fade]="false" [speed]="200">
 				<ui-carousel-item *ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index ">
 					<img [ui-lazy-load]="hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix" class="slimage">
 				</ui-carousel-item>
 			</ui-carousel>
-
 		</div>
-
-
-
 		<div class="col-md-4">
 			<div class="row">
 				<div class="col">
 					<div class="checkin-out img-thumbnail bg-dark text-light pt-3 pb-1 text-center">
-						<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
-							<div>Checkin</div>
-							<h3>{{hotelObj.moreDetails.checkInTime}}</h3>
+						<div class="text-center">
+							<div><i class="fa fa-clock-o fa-2x"></i> Check In</div>
+							<p class="my-2">{{checkInDate}}</p>
+							<p>{{hotelObj.moreDetails.checkInTime}}</p>
 						</div>
 					</div>
 				</div>
 				<div class="col">
 					<div class="checkin-out bg-dark img-thumbnail text-light pt-3 pb-1 text-center">
-						<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
-							<div>Checkout</div>
-							<h3>{{hotelObj.moreDetails.checkOutTime}}</h3>
+						<div class="text-center">
+							<div><i class="fa fa-clock-o fa-2x"></i> Check Out</div>
+							<p class="my-2">{{checkOutDate}}</p>
+							<p>{{hotelObj.moreDetails.checkOutTime}}</p>
 						</div>
 					</div>
 				</div>
@@ -433,14 +426,20 @@
 			<hr>
 			<h5 class="text-uppercase text-danger">Amenities</h5>
 			<div class="hotel-hilights">
-				<i class="fa fa-wifi  text-muted" title="WIFI" *ngIf="hotelObj.amenities.dataPorts"></i>
-				<i class="fa fa-tv text-muted" title="TV" *ngIf="hotelObj.amenities.tVInRoom"></i>
-				<i class="fa fa-snowflake-o text-muted" title="AC" *ngIf="hotelObj.amenities.airConditioning"></i>
+				<!-- changes Ankit -->
+				<i class="fa fa-wifi  text-muted" title="WIFI" *ngIf="hotelObj.amenities.includes('dataPorts')"></i>
+				<i class="fa fa-tv text-muted" title="TV" *ngIf="hotelObj.amenities.includes('tVInRoom')"></i>
+				<i class="fa fa-snowflake-o text-muted" title="AC"
+					*ngIf="hotelObj.amenities.includes('airConditioning')"></i>
+				<!-- <i class="fa fa-wifi  text-muted" title="WIFI" *ngIf="hotelObj.amenities.dataPorts"></i> -->
+				<!-- <i class="fa fa-tv text-muted" title="TV" *ngIf="hotelObj.amenities.tVInRoom"></i> -->
+				<!-- <i class="fa fa-snowflake-o text-muted" title="AC" *ngIf="hotelObj.amenities.airConditioning"></i> -->
 				<i class="fa fa-bath text-muted" title="Private Washroom"></i>
 				<i class="fa fa-car text-muted" title="Free parking"></i>
 				<i class="fa fa-cutlery text-muted" title="Food"></i>
 				<i class="fa fa-coffee text-muted" title="Breakfast"></i>
-				<i class="fa fa-glass text-muted" title="Bar" *ngIf="hotelObj.amenities.miniBarInRoom"></i>
+				<i class="fa fa-glass text-muted" title="Bar" *ngIf="hotelObj.amenities.includes('miniBarInRoom')"></i>
+				<!-- <i class="fa fa-glass text-muted" title="Bar" *ngIf="hotelObj.amenities.miniBarInRoom"></i> -->
 			</div>
 		</div>
 
@@ -448,22 +447,22 @@
 	<hr>
 </div>
 
-<div class="container">
-	<h4>OVERVIEW</h4>
+<div class="container pb-3">
+	<h4 class="overview">OVERVIEW</h4>
 	<div [innerHtml]="hotelObj.moreDetails.description"></div>
 </div>
 
 <!-- ADDED ANKIT -->
 <!-- CHOOSE ROOMS  -->
-<section id="choose-rooms">
+<section #rooms id="choose-rooms">
 	<div class="container">
-		<div class="col py-3 d-flex align-items-center bg-danger">
-			<h5 class="text-light mb-0">CHOOSE ROOM</h5>
+		<div class="py-3 d-flex align-items-center">
+			<h4 class="choose_room mb-0 ml-0">CHOOSE ROOM</h4>
 		</div>
 		<div class="room-type" *ngFor="let package of hotelObj.rates.packages; let i = index">
 			<table class="table table-bordered">
 				<thead class="room-type_head">
-					<tr>
+					<tr class="bg-danger text-light">
 						<th scope="col">Room Type</th>
 						<th scope="col">Benefits</th>
 						<th scope="col">Price</th>
@@ -473,15 +472,35 @@
 					<tr>
 						<td>
 							<div class="room-type_left-sec">
-								<h2>{{package.room_details.room_type}} Room</h2>
+								<h3 class="room-type_description">{{package.room_details.description}}</h3>
 								<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}"
 									alt="First slide">
-
+								<div class="room-type_info">
+									<h4>Room Type:</h4>
+									<p>{{package.room_details.room_type}} Room</p>
+								</div>
+								<div class="room-type_info">
+									<h4>Bed Type:</h4>
+									<p *ngIf="package.room_details.beds.hasOwnProperty('single')">single -
+										{{package.room_details.beds.single}}</p>
+									<p *ngIf="package.room_details.beds.hasOwnProperty('double')">double -
+										{{package.room_details.beds.double}}</p>
+									<p *ngIf="package.room_details.beds.hasOwnProperty('double or twin')">double or twin
+										-
+										{{package.room_details.beds['double or twin']}}</p>
+									<p *ngIf="package.room_details.beds.hasOwnProperty('king')">King
+										-
+										{{package.room_details.beds['king']}}</p>
+									<p *ngIf="package.room_details.beds.hasOwnProperty('queen')">Queen
+										-
+										{{package.room_details.beds['queen']}}</p>
+								</div>
 								<div class="room-type_aminities">
 									<h4>Aminities</h4>
 									<ul class="list-unstyled">
-										<li>
-											<i class="fa fa-check" title="TV"></i> TV
+										<li *ngIf="hotelObj.amenities.includes('tVInRoom')">
+											<i class="fa fa-check" title="TV"></i>
+											TV
 										</li>
 										<li>
 											<i class="fa fa-check" title="AC"></i> Air Conditioning
@@ -500,32 +519,41 @@
 										<i class="fa fa-wifi" title="WIFI"></i> Free Wi-Fi
 									</li>
 									<li>
+										<i class="fa fa-check" title="WIFI"></i> Accommodation
+									</li>
+									<li *ngIf="package.room_details.food === 2">
 										<i class="fa fa-coffee" title="Breakfast"></i> Free Breakfast
 									</li>
-									<li class="text-success"><i class="fa fa-check-circle-o"
-											title="Free Cancellation"></i> Free Cancellation
+									<li *ngIf="package.room_details.food !==1 && package.room_details.food !== 2">
+										<i class="fa fa-cutlery"
+											title="Food"></i>{{foodType[package.room_details.food]}}
 									</li>
+									<!-- <li class="text-success"><i class="fa fa-check-circle-o"
+											title="Free Cancellation"></i> Free Cancellation
+									</li> -->
 								</ul>
 							</div>
 						</td>
 						<td>
-							<ul>
-								<li class="text-success" *ngIf="hotelObj.rates.packages[i].non_refundable == false">
-									<i class="fa fa-inr" title="Refundable"></i> Refundable
+							<ul class="list-unstyled pl-0">
+								<li class="text-success font-weight-bold"
+									*ngIf="package.room_details.non_refundable !== true">
+									<i title="refundable"></i> Refundable
 								</li>
-								<li class="text-danger" *ngIf="hotelObj.rates.packages[i].non_refundable == true">
-									<i class="fa fa-inr" title="Refundable"></i> Non-Refundable
+								<li class="text-danger font-weight-bold"
+									*ngIf="package.room_details.non_refundable == true">
+									<i title="non-refundable"></i> Non-Refundable
 								</li>
 							</ul>
-							<h4 class="price">
+							<h4 class="price text-dark font-weight-bold">
 								<span class="small" *ngIf="hotelObj.rates.packages[i].indicative_market_rates">
 									<s *ngIf="hotelObj.rates.packages[i].guest_discount_percentage">
-										{{(((-1*hotelObj.rates.packages[i].guest_discount_percentage)/100) * hotelObj.rates.packages[i].chargeable_rate)+ hotelObj.rates.packages[i].chargeable_rate | number: '1.0-2'}}</s></span>
+										{{(((-1*hotelObj.rates.packages[i].guest_discount_percentage)/100) * hotelObj.rates.packages[i].chargeable_rate)+ hotelObj.rates.packages[i].chargeable_rate | number: '1.0-0'}}</s></span>
 								<span class="badge badge-success text-light small"
 									*ngIf="hotelObj.rates.packages[i].guest_discount_percentage">
 									{{hotelObj.rates.packages[i].guest_discount_percentage}} % </span> <br>
 								{{hotelObj.rates.packages[i].chargeable_rate_currency}}.
-								<span>{{hotelObj.rates.packages[i].chargeable_rate}}</span>
+								<span>{{hotelObj.rates.packages[i].chargeable_rate  | number: '1.0-0'}}</span>
 							</h4>
 							<div class="btn btn-danger my-3" (click)="selectPackage(package)">Book Room <i
 									class="fa fa-check"></i>
@@ -537,6 +565,16 @@
 		</div>
 	</div>
 </section>
+
+<div #amenities class="container hotel-details">
+	<div class="amenities">
+		<h4 class="mb-2">HOTEL AMENITIES</h4>
+		<p class="heading">Activities</p>
+		<ul class="list" style="overflow: hidden;">
+			<li style="float:left;" *ngFor="let amenities of hotelObj.amenities">{{amenities}}</li>
+		</ul>
+	</div>
+</div>
 
 <!-- ====================================================== -->
 <!-- Uncommented because I have recreated the below section -->
@@ -663,7 +701,7 @@
 
 <!-- REVIEW -->
 
-<div class="container hotel-details">
+<div #review class="container hotel-details">
 	<div class="">
 		<h4 class="mb-2">Reviews</h4>
 		<ul class="nav nav-tabs dreview" id="myTab" role="tablist">
@@ -1072,25 +1110,18 @@
 	</div>
 </div>
 
-<div class="container hotel-details">
+<div #map class="container hotel-details py-3">
+	<h4 class="mb-2">View On Map</h4>
 	<div class="col">
-		<h4 class="mb-2">View On Map</h4>
-		<div>
-			<iframe src="http://maps.google.com/maps?q=35.856737, 10.606619&z=15&output=embed" width="100%" height="450"
-				frameborder="0" style="border:0"></iframe>
-		</div>
+		<iframe src="http://maps.google.com/maps?q=35.856737, 10.606619&z=15&output=embed" width="100%" height="450"
+			frameborder="0" style="border:0"></iframe>
 	</div>
 </div>
 
-<div class="container hotel-details">
-	<div class="col-md-12">
-		<div class="amenities">
-			<h4 class="mb-2">HOTEL AMENITIES</h4>
-			<p class="heading">Activities</p>
-			<ul class="list" style="overflow: hidden;">
-				<li style="float:left;" *ngFor="let amenities of hotelObj.amenities">{{amenities}}</li>
-			</ul>
-		</div>
+<!-- Added Ankit -->
+<div #hotelPolicy class="container">
+	<div class="hotel-policy">
+		<h4 class="mb-2">HOTEL POLICY</h4>
+		<div [innerHTML]="hotelObj.policy"></div>
 	</div>
-
 </div>
