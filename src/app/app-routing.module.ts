@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthService } from './core/services';
 
-
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
@@ -38,8 +37,8 @@ import { SuccessComponent } from './success/success.component';
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
-  { path: "login", component: LoginComponent, canActivate: [AuthService] },
-  { path: "register", component: RegisterComponent, canActivate: [AuthService] },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
   { path: "product", component: ProductComponent },
   { path: "business", component: BusinessComponent },
   { path: "faq", component: FaqComponent },
@@ -59,7 +58,7 @@ const routes: Routes = [
   { path: "policy", component: PolicyComponent },
   { path: "refund", component: RefundComponent },
   { path: "agreement", component: AgreementComponent },
-  { path: "profile", component: ProfileComponent },
+  { path: "profile", component: ProfileComponent, canActivate: [AuthService] },
   { path: "contact", component: ContactComponent },
   { path: "dashboard", component: DashboardComponent, canActivate: [AuthService] },
   { path: "otp/:id", component: OtpComponent },

@@ -1,361 +1,345 @@
-<div class="container mt-5">
-	<div class="main-heading">
+<div class="container my-5">
+    <div class="main-heading">
 
-		<h3 class=""><i class="fa fa-dashboard"></i> My Dashboard</h3>
-	</div>
-	<div class="alert alert-success" role="alert" *ngIf="loginUser">Welcome : {{loginUser.name}}</div>
-	<div class="clearfix"></div>
+        <h3 class=""><i class="fa fa-dashboard"></i> My Dashboard</h3>
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="loginUser">Welcome : {{loginUser.name}}</div>
+    <div class="clearfix"></div>
 
-	<div class="p-2 mb-3 bg-dark text-white">
-		<h5 class="mb-0">Manage Booking </h5>
-	</div>
+    <div class="p-2 mb-3 bg-dark text-white">
+        <h5 class="mb-0">Manage Booking </h5>
+    </div>
 
-	<div class="row row-eq-height">
-		<div class="col-md-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="text-center">
-						<div class="text-danger"><i class="fa fa-pencil-square-o fa-4x"></i></div>
-						<p class="text-muted">MODIFY BOOKING</p>
-					</div>
-					<hr>
-					<ul class="list-group">
-						<li><a href="#">Cancel</a></li>
-						<li><a href="#">Reschedule</a></li>
-						<li><a href="#">Cancellation Charges</a></li>
-						<li><a href="#">Reschedule Charges</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+    <div class="row row-eq-height">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="text-danger"><i class="fa fa-pencil-square-o fa-4x"></i></div>
+                        <p class="">MODIFY BOOKING</p>
+                    </div>
+                    <hr>
+                    <ul class="list-group">
+                        <li><a href="#">Cancel</a></li>
+                        <li><a href="#">Reschedule</a></li>
+                        <li><a href="#">Cancellation Charges</a></li>
+                        <li><a href="#">Reschedule Charges</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="text-center">
-						<div class="text-danger"><i class="fa fa-ticket fa-4x"></i></div>
-						<p class="text-muted">TICKET/VOUCHERS</p>
-					</div>
-					<hr>
-					<ul class="list-group">
-						<li><a href="#">SMS/Email Ticket</a></li>
-						<li><a href="#">Print Ticket</a></li>
-						<li><a routerLink="">Voucher</a></li>
-						<li><a href="#">Print Invoice/Receipt</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="text-danger"><i class="fa fa-ticket fa-4x"></i></div>
+                        <p class="">TICKET/VOUCHERS</p>
+                    </div>
+                    <hr>
+                    <ul class="list-group">
+                        <li><a href="#">SMS/Email Ticket</a></li>
+                        <li><a href="#">Print Ticket</a></li>
+                        <li><a routerLink="">Voucher</a></li>
+                        <li><a href="#">Print Invoice/Receipt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="text-center">
-						<div class="text-danger"><i class="fa fa-list fa-4x"></i></div>
-						<p class="text-muted">BOOKING DETAILS</p>
-					</div>
-					<hr>
-					<ul class="list-group">
-						<li><a href="#">Itinerary/Fare Details</a></li>
-						<li><a href="#">Make Payment</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-center">
+                        <div class="text-danger"><i class="fa fa-list fa-4x"></i></div>
+                        <p class="">BOOKING DETAILS</p>
+                    </div>
+                    <hr>
+                    <ul class="list-group">
+                        <li><a href="#">Itinerary/Fare Details</a></li>
+                        <li><a href="#">Make Payment</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-		<div class="col-md-3">
-			<div class="card">
-				<div class="card-body">
-					<div class="form-group">
-						<a href="#" class="btn-danger btn-block btn-sm btn"><i class="fa fa-inr"></i> Clam Refund/ File
-							TDR</a> </div>
-					<div class="form-group">
-						<a href="#" class="btn-dark btn-block btn-sm btn"><i class="fa fa-inr"></i> Clam Refund/ File
-							TDR</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <a href="#" class="btn-danger btn-block btn-sm btn"><i class="fa fa-inr"></i> Clam Refund/ File
+                            TDR</a> </div>
+                    <div class="form-group">
+                        <a href="#" class="btn-dark btn-block btn-sm btn"><i class="fa fa-inr"></i> Clam Refund/ File
+                            TDR</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div class="row mt-3">
-		<div class="col-md-8">
-			<div class="card  bg-dark text-white">
-				<div class="card-header">
-					<div class="row">
-						<div class="col">Upcoming Trip</div>
-						<div class="col text-right"><a href="#" class="text-danger">View All Trips</a></div>
-					</div>
-				</div>
-				<div class="upcoming-trip">
-					<div class="card-body">
-						<div class="row">
-							<div class="col col-md-2 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<div class="class"><i class="fa fa-plane"></i> PNR: #YS22H</div>
-									<div class="text-success"> <i class="fa fa-check-circle"></i> Refundable</div>
-								</div>
-							</div>
+    <div class="row mt-3">
+        <div class="col-md-8">
+            <div class="card  bg-dark text-white">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">Upcoming Trip</div>
+                        <div class="col text-right"><a href="#" class="text-danger">View All Trips</a></div>
+                    </div>
+                </div>
+                <div class="upcoming-trip">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-md-2 pt-2 pb-2">
+                                <div class="text-center ">
+                                    <div class="class"><i class="fa fa-plane"></i> PNR: #YS22H</div>
+                                    <div class="text-success"> <i class="fa fa-check-circle"></i> Refundable</div>
+                                </div>
+                            </div>
 
-							<div class="col col-md-3 pt-2 pb-2 text-muted text-center">
-								<div class="text-center pb-2 pt-1">
-									<div class="arival pull-left"></div>
-									<span>New Delhi</span>
-									<br>
-									<span>16-12-2017 07:05 AM</span>
-								</div>
-							</div>
+                            <div class="col col-md-3 pt-2 pb-2  text-center">
+                                <div class="text-center pb-2 pt-1">
+                                    <div class="arival pull-left"></div>
+                                    <span>New Delhi</span>
+                                    <br>
+                                    <span>16-12-2019 07:05 AM</span>
+                                </div>
+                            </div>
 
-							<div class="col col-md-1 pt-3 pb-2 text-center text-muted">
-								<i class="fa fa-long-arrow-right fa-2x"></i> </div>
+                            <div class="col col-md-1 pt-3 pb-2 text-center ">
+                                <i class="fa fa-long-arrow-right fa-2x"></i> </div>
 
-							<div class="col col-md-3 pt-2 pb-2  text-muted">
-								<div class="depart pull-left"></div>
-								<div class="pull-left">
-									<span>Hyderabad</span>
-									<br>
-									<span>16-12-2017 07:05 AM</span>
-								</div>
-							</div>
+                            <div class="col col-md-3 pt-2 pb-2  ">
+                                <div class="depart pull-left"></div>
+                                <div class="pull-left">
+                                    <span>Hyderabad</span>
+                                    <br>
+                                    <span>16-12-2019 07:05 AM</span>
+                                </div>
+                            </div>
 
-							<div class="col col-md-3 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<a routerLink="/itinerary_details" class="btn btn-light btn-sm">View Itinerary</a>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-md-4 text-center"><a href="#" class="btn border btn-dark btn-sm">Start
-									Cancellation</a></div>
-							<div class="col-md-4 text-center"><a href="#" class="btn border btn-dark btn-sm">Reschedule
-									Charges</a></div>
-							<div class="col-md-4 text-center"><a class="btn border  btn-dark btn-sm">Print Tickets</a>
-							</div>
+                            <div class="col col-md-3 pt-2 pb-2">
+                                <div class="text-center ">
+                                    <a routerLink="/itinerary_details" class="btn btn-light btn-sm">View Itinerary</a>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 text-center"><a href="#" class="btn btn-danger btn-sm">Start
+                                    Cancellation</a></div>
+                            <div class="col-md-4 text-center"><a href="#" class="btn btn-secondary btn-sm">Reschedule
+                                    Charges</a></div>
+                            <div class="col-md-4 text-center"><a class="btn btn-info btn-sm">Print Tickets</a>
+                            </div>
 
-						</div>
-					</div>
-					<hr>
-					<div class="card-body">
-						<div class="row">
-							<div class="col col-md-2 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<div class="class"><i class="fa fa-plane"></i> PNR: #YS22H</div>
-									<div class="text-success"> <i class="fa fa-check-circle"></i> Refundable</div>
-								</div>
-							</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-md-2 pt-2 pb-2">
+                                <div class="text-center ">
+                                    <div class="class"><i class="fa fa-plane"></i> PNR: #YS22H</div>
+                                    <div class="text-success"> <i class="fa fa-check-circle"></i> Refundable</div>
+                                </div>
+                            </div>
 
-							<div class="col col-md-3 pt-2 pb-2 text-muted text-center">
-								<div class="text-center pb-2 pt-1">
-									<div class="arival pull-left"></div>
-									<span>New Delhi</span>
-									<br>
-									<span>16-12-2017 07:05 AM</span>
-								</div>
-							</div>
+                            <div class="col col-md-3 pt-2 pb-2  text-center">
+                                <div class="text-center pb-2 pt-1">
+                                    <div class="arival pull-left"></div>
+                                    <span>New Delhi</span>
+                                    <br>
+                                    <span>16-12-2017 07:05 AM</span>
+                                </div>
+                            </div>
 
-							<div class="col col-md-1 pt-3 pb-2 text-center text-muted">
-								<i class="fa fa-long-arrow-right fa-2x"></i> </div>
+                            <div class="col col-md-1 pt-3 pb-2 text-center ">
+                                <i class="fa fa-long-arrow-right fa-2x"></i> </div>
 
-							<div class="col col-md-3 pt-2 pb-2  text-muted">
-								<div class="depart pull-left"></div>
-								<div class="pull-left">
-									<span>Hyderabad</span>
-									<br>
-									<span>16-12-2017 07:05 AM</span>
-								</div>
-							</div>
+                            <div class="col col-md-3 pt-2 pb-2  ">
+                                <div class="depart pull-left"></div>
+                                <div class="pull-left">
+                                    <span>Hyderabad</span>
+                                    <br>
+                                    <span>16-12-2017 07:05 AM</span>
+                                </div>
+                            </div>
 
-							<div class="col col-md-3 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<a href="#" class="btn btn-light btn-sm">View Itinerary</a>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-md-4 text-center"><a href="#" class="btn border btn-dark btn-sm">Start
-									Cancellation</a></div>
-							<div class="col-md-4 text-center"><a href="#" class="btn border btn-dark btn-sm">Reschedule
-									Charges</a></div>
-							<div class="col-md-4 text-center"><a href="#" class="btn border  btn-dark btn-sm">Print
-									Tickets</a></div>
+                            <div class="col col-md-3 pt-2 pb-2">
+                                <div class="text-center ">
+                                    <a href="#" class="btn btn-light btn-sm">View Itinerary</a>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 text-center"><a href="#" class="bt btn-danger btn-sm">Start
+                                    Cancellation</a></div>
+                            <div class="col-md-4 text-center"><a href="#" class="btn btn-secondary btn-sm">Reschedule
+                                    Charges</a></div>
+                            <div class="col-md-4 text-center"><a href="#" class="btn btn-info btn-sm">Print
+                                    Tickets</a></div>
 
-						</div>
-					</div>
-
-
-				</div>
-			</div>
-		</div>
+                        </div>
+                    </div>
 
 
-		<div class="col-md-4">
-			<div class="card  bg-dark text-white">
-				<div class="card-header">
-					<div class="row">
-						<div class="col">eCash Balance : <i class="fa fa-inr"></i> 500</div>
-						<div class="col text-right"><a href="#" class="text-danger">All Transactions</a></div>
-					</div>
-				</div>
-				<div class="upcoming-trip">
-					<div class="card-body">
-
-						<div class="pb-2">
-							<div class="text-uppercase text-warning"><b>Convert to Coupons</b></div>
-							<div> Convertible eCash
-								<span class="pull-right"><i class="fa fa-inr"></i> 500</span>
-							</div>
-						</div>
-						<hr>
-						<div class="pb-2">
-							<a href="#" class="btn  btn-danger btn-sm pull-left">My Coupons</a>
-							<a href="#" class="btn btn-info btn-sm disabled pull-right">Convert</a>
-							<div class="clearfix"></div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-			<div class="mt-1">
-				<a href="#" class="btn btn-warning btn-block">Special Offers <i class="fa pull fa-tag"></i></a>
-			</div>
-			<div class="mt-1">
-				<a href="#" class="btn btn-info btn-block">Your Communication <i class="fa pull fa-headphones"></i></a>
-			</div>
+                </div>
+            </div>
+        </div>
 
 
-		</div>
+        <div class="col-md-4">
+            <div class="card  bg-dark text-white">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">eCash Balance : <i class="fa fa-inr"></i> 500</div>
+                        <div class="col text-right"><a href="#" class="text-danger">All Transactions</a></div>
+                    </div>
+                </div>
+                <div class="upcoming-trip">
+                    <div class="card-body">
 
-		<div class="clearfix"></div>
-		<div class="col-md-12">
-			<div class="card mt-4 bg-light">
-				<div class="card-header">
-					<div class="row">
-						<div class="col"><b>Budget Flights</b></div>
-					</div>
-				</div>
-				<div class="upcoming-trip">
-					<div class="card-body">
-						<div class="row">
-							<div class="col col-md-3 pt-2 pb-2 text-muted text-center"> New Delhi</div>
+                        <div class="pb-2">
+                            <div class="text-uppercase text-warning"><b>Convert to Coupons</b></div>
+                            <div> Convertible eCash
+                                <span class="pull-right"><i class="fa fa-inr"></i> 500</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="pb-2">
+                            <a href="#" class="btn  btn-danger btn-sm pull-left">My Coupons</a>
+                            <a href="#" class="btn btn-info btn-sm disabled pull-right">Convert</a>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
 
-							<div class="col col-md-1 pt-3 pb-2 text-center text-muted">
-								<i class="fa fa-long-arrow-right fa-2x"></i> </div>
-
-							<div class="col col-md-3 pt-2 pb-2 text-center text-muted">Hyderabad</div>
-
-							<div class="col col-md-2 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<div class="class"><i class="fa fa-plane"></i> Depart</div>
-									<div> <i class="fa fa-clock"></i> <span>16-12-2017 07:05 AM</span></div>
-								</div>
-							</div>
-
-							<div class="col col-md-3 pt-2 pb-2 text-center">Fare : <span class="text-danger">7736</span>
-								(per Adult)</div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
+                </div>
+            </div>
+            <div class="mt-1">
+                <a href="#" class="btn btn-warning btn-block">Special Offers <i class="fa pull fa-tag"></i></a>
+            </div>
+            <div class="mt-1">
+                <a href="#" class="btn btn-info btn-block">Your Communication <i class="fa pull fa-headphones"></i></a>
+            </div>
 
 
-		</div>
+        </div>
 
-		<!-- user transaction -->
-		<div class="col-md-12">
-			<div class="card mt-4 bg-dark text-white">
-				<div class="card-header">
-					<div class="row">
-						<div class="col">Transaction</div>
-						<div class="col text-right"><a class="text-danger">View All Transaction</a></div>
-					</div>
-				</div>
-				<div class="upcoming-trip">
-					<div class="card-body" *ngFor="let transaction of transactions">
-						<div class="row">
-							<div class="col col-md-2 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<div class="class"><i class="fa fa-bed"></i>{{transaction.hotel.name}}</div>
-									<div class="text-success"
-										*ngIf="transaction.prebook_response.data.package.room_details.non_refundable == false">
-										<i class="fa fa-check-circle"></i> Refundable</div>
-								</div>
-							</div>
+        <div class="clearfix"></div>
+        <div class="col-md-12">
+            <div class="card mt-4 bg-light">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col"><b>Budget Flights</b></div>
+                    </div>
+                </div>
+                <div class="upcoming-trip">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-md-3 pt-2 pb-2  text-center"> New Delhi</div>
+                            <div class="col col-md-1 pt-3 pb-2 text-center ">
+                                <i class="fa fa-long-arrow-right fa-2x"></i> </div>
+                            <div class="col col-md-3 pt-2 pb-2 text-center ">Hyderabad</div>
+                            <div class="col col-md-2 pt-2 pb-2">
+                                <div class="text-center ">
+                                    <div class="class"><i class="fa fa-plane"></i> Depart</div>
+                                    <div> <i class="fa fa-clock"></i> <span>16-12-2017 07:05 AM</span></div>
+                                </div>
+                            </div>
+                            <div class="col col-md-3 pt-2 pb-2 text-center">Fare : <span class="text-danger">7736</span>
+                                (per Adult)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-							<div class="col col-md-2 pt-2 pb-2 text-muted text-center">
-								<div class="text-center pb-2 pt-1">
-									<div class="pull-left"></div>
-									<span>CheckIn</span>
-									<br>
-									<span>{{transaction.prebook_response.data.package.check_in_date | date:'medium'}}</span>
-								</div>
-							</div>
+        <!-- user transaction -->
+        <div class="col-md-12">
+            <div class="card mt-4 bg-dark text-white">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col">Transactions</div>
+                        <div class="col text-right"><a class="text-danger">View All Transactions</a></div>
+                    </div>
+                </div>
+                <div class="upcoming-trip">
+                    <div class="card-body border border-left-0 border-right-0" *ngFor="let transaction of transactions">
+                        <div class="row">
+                            <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
+                                <div class="class"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel.name}}</div>
+                                <div class="text-success"
+                                    *ngIf="transaction.prebook_response.data.package.room_details.non_refundable == false">
+                                    <i class="fa fa-check-circle"></i> Refundable</div>
+                            </div>
 
-							<!-- <div class="col col-md-1 pt-3 pb-2 text-center text-muted">
+                            <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
+                                <p class="text-muted">CheckIn</p>
+                                <div>
+                                    <span>{{transaction.prebook_response.data.package.check_in_date | date:'mediumDate'}}</span>
+                                    <span>{{transaction.hotel.moreDetails.checkInDate}}</span>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col col-md-1 pt-3 pb-2 text-center ">
 								<i class="fa fa-long-arrow-right fa-2x"></i> </div> -->
 
-							<div class="col col-md-2 pt-2 pb-2  text-muted text-center">
-								<div class="pull-left"></div>
-								<div class="pull-left">
-									<span>CheckOut</span>
-									<br>
-									<span>{{transaction.prebook_response.data.package.check_out_date | date:'medium'}}</span>
-								</div>
-							</div>
-							<div class="col col-md-2 pt-2 pb-2 text-muted text-center">
-								<div class="pull-left"></div>
-								<div class="">
-									<span>Rooms</span>
-									<br>
-									<span>{{transaction.prebook_response.data.package.room_count}}</span>
-								</div>
-							</div>
-							<div class="col col-md-2 pt-2 pb-2 text-muted text-center">
-								<div class="pull-left"></div>
-								<div class="">
-									<span>Guest</span>
-									<br>
-									<span>Adult - {{transaction.prebook_response.data.package.adult_count}}</span>
-									<br>
-									<span *ngIf="transaction.prebook_response.data.package.child_count>0">Child -
-										{{transaction.prebook_response.data.package.child_count}}</span>
-								</div>
-							</div>
+                            <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
+                                <p class="text-muted">CheckOut</p>
+                                <div>
+                                    <span>{{transaction.prebook_response.data.package.check_out_date | date:'mediumDate'}}</span>
+                                    <span>{{transaction.hotel.moreDetails.checkOutDate}}</span>
+                                </div>
+                            </div>
+                            <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
+                                <p class="text-muted">Rooms</p>
+                                <div>
+                                    <span>{{transaction.prebook_response.data.package.room_count}}</span>
+                                </div>
+                            </div>
+                            <div class="col col-md-2 pt-2 pb-2 text-center">
+                                <p class="text-muted">Guest</p>
+                                <div>
+                                    <span>Adult - {{transaction.prebook_response.data.package.adult_count}}</span>
+                                    <br>
+                                    <span *ngIf="transaction.prebook_response.data.package.child_count>0">Child -
+                                        {{transaction.prebook_response.data.package.child_count}}</span>
+                                </div>
+                            </div>
 
-							<div class="col col-md-2 pt-2 pb-2">
-								<div class="text-center text-muted">
-									<div class="text-danger" *ngIf="transaction.status == 0"> Failed</div>
-									<div class="text-success" *ngIf="transaction.status == 1"> Booked</div>
-									<div class="text-warning" *ngIf="transaction.status == 2"> Cancelled</div>
-								</div>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<hr>
-						<div class="row" *ngIf="transaction.status == 1">
-							<div class="col-md-3 text-center"><button class="btn border btn-dark btn-sm"
-									(click)="cancelHotelBooking(transaction._id)">Cancel Booking</button></div>
-							<div class="col-md-3 text-center"><a routerLink=""
-									class="btn border btn-dark btn-sm">Cancellation Charges</a></div>
-							<div class="col-md-3 text-center"><a (click)="hotelInvoice(transaction._id)"
-									class="btn border  btn-dark btn-sm">Print Invoice</a></div>
-							<div class="col-md-3 text-center"><a (click)="hotelVoucher(transaction._id)"
-									class="btn border  btn-dark btn-sm">Print Voucher</a></div>
-
-						</div>
-						<hr>
-					</div>
-
-
-
-				</div>
-			</div>
-		</div>
-	</div>
-
+                            <div class="col col-md-2 pt-2 pb-2">
+                                <div class="text-center">
+                                    <div class="text-danger" *ngIf="transaction.status == 0"> Failed</div>
+                                    <div class="text-success" *ngIf="transaction.status == 1"> Booked</div>
+                                    <div class="text-warning" *ngIf="transaction.status == 2"> Cancelled</div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr>
+                        <div class="row" *ngIf="transaction.status == 1">
+                            <div class="col-md-3 text-center"><button class="btn btn-danger btn-sm"
+                                    (click)="cancelHotelBooking(transaction._id)">Cancel Booking</button></div>
+                            <div class="col-md-3 text-center"><a routerLink=""
+                                    class="btn btn-secondary btn-sm">Cancellation
+                                    Charges</a></div>
+                            <div class="col-md-3 text-center"><a (click)="hotelInvoice(transaction._id)"
+                                    class="btn btn-info btn-sm">Print Invoice</a></div>
+                            <div class="col-md-3 text-center"><a (click)="hotelVoucher(transaction._id)"
+                                    class="btn btn-success btn-sm">Print Voucher</a></div>
+                        </div>
+                        <hr>
+                        <div class="row mx-3">
+                            <p><span class="font-weight-bold">Created At:&nbsp;</span>
+                                {{transaction.created_at | date:'medium' }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

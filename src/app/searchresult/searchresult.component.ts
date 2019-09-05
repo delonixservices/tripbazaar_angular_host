@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators'
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
@@ -14,6 +14,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class SearchresultComponent implements OnInit {
+
+	private ngUnsubscribe = new Subject();
 
 	selectedArea: any;
 	suggestions: any;
@@ -89,9 +91,11 @@ export class SearchresultComponent implements OnInit {
 
 	ngOnInit() {
 		localStorage.removeItem('transaction_identifier');
-		localStorage.removeItem('searchObj');
-		localStorage.removeItem('packageObj');
-		localStorage.removeItem('hotelObj');
+		// commented Ankit
+		// => creating problems when user is navigating from previous page to same page again
+		// localStorage.removeItem('searchObj');
+		// localStorage.removeItem('packageObj');
+		// localStorage.removeItem('hotelObj');
 
 		this.searchResult();
 		this.loadDestination();
@@ -112,6 +116,8 @@ export class SearchresultComponent implements OnInit {
 		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
 		this.api.post("/search", this.hotelsearchkeys)
+			// emit values until provided observable i.e ngUnsubscribe emits
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
 				if (response && response.data != undefined) {
 					console.log('Search res ', response.data);
@@ -250,12 +256,10 @@ export class SearchresultComponent implements OnInit {
 						refund = refundtype.value;
 						break;
 					}
-
 				} else {
 					if (refundtype.selected === true) {
 						refund.push(refundtype.value);
 					}
-
 				}
 				i++;
 			}
@@ -416,7 +420,7 @@ export class SearchresultComponent implements OnInit {
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(200),
+				debounceTime(1000),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(
@@ -425,5 +429,11 @@ export class SearchresultComponent implements OnInit {
 				))
 			)
 		);
+	}
+
+	ngOnDestroy() {
+		// Unsubscribing the observable after component is destroyed
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
 	}
 }

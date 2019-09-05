@@ -243,11 +243,11 @@ export class HeaderComponent implements OnInit {
 
 
 	loadDestination() {
-		// console.log("loadDestination called");
+		console.log("loadDestination called1");
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(200),
+				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(

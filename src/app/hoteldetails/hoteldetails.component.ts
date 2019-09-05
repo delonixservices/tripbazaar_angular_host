@@ -55,7 +55,7 @@ export class HoteldetailsComponent implements OnInit {
 		this.math = Math;
 		if (this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null) {
 			this.alertService.error("Please select correct hotel");
-			this.router.navigate(['/']);
+			this.router.navigate(['/searchresult']);
 		}
 	}
 
