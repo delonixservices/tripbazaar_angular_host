@@ -26,6 +26,8 @@ export class HotelbookingComponent implements OnInit {
 	public booking_policy: any;
 	public paramsObj: any;
 	public loginUser: any;
+	public checkInDate: any;
+	public checkOutDate: any;
 	public contactDetail = { "name": "", "last_name": "", "mobile": "", "email": "" };
 	public gstDetail = { "gstnumber": "", "name": "", "email": "", "address": "", "city": "", "pincode": "", "state": "", "mobile": "" };
 	public coupon = { "code": "" };
@@ -88,6 +90,8 @@ export class HotelbookingComponent implements OnInit {
 
 	ngOnInit() {
 		this.loadBookingPolicy();
+		this.checkInDate = this.searchObj.check_in_date;
+		this.checkOutDate = this.searchObj.check_out_date;
 
 		this.hotelsearchkeys.details.map((room, index) => {
 			var roomGuest = [];
