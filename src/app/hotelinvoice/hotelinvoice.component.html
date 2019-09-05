@@ -1,9 +1,9 @@
 <h4 class="p-3 text-center">TAX INVOICE</h4>
 
 <div *ngIf="dataLocalUrl != undefined">
-  <object name="hotelInvoice.pdf" [attr.data]="dataLocalUrl" type="application/pdf" width="100%"
-    height="1200px"></object>
-  <!-- <embed [attr.src]="dataLocalUrl" type="application/pdf" width="100%" height="100%"> -->
+  <embed download="hotelInvoice" [attr.src]="dataLocalUrl" type="application/pdf" width="100%" height="1200px">
+  <!-- <object download="hotelInvoice.pdf" [attr.data]="dataLocalUrl" type="application/pdf" width="100%"
+    height="1200px"></object> -->
 </div>
 
 <!-- COMMENTED ANKIT -->

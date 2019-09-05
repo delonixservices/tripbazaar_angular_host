@@ -36,18 +36,20 @@
 						{{hotelObj.location.postalCode}}</p>
 					<div class="row">
 						<div class="col">
-							<div class="checkin-out img-thumbnail bg-dark text-light pt-2 pb-1 text-center">
-								<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
-									<div>Checkin</div>
-									<b>{{hotelObj.moreDetails.checkInTime}}</b>
+							<div class="checkin-out img-thumbnail bg-dark text-light pt-3 pb-1 text-center">
+								<div class="text-center">
+									<div><i class="fa fa-clock-o fa-2x"></i> Check In</div>
+									<p class="my-2">{{checkInDate}}</p>
+									<p>{{hotelObj.moreDetails.checkInTime}}</p>
 								</div>
 							</div>
 						</div>
 						<div class="col">
-							<div class="checkin-out bg-dark img-thumbnail text-light pt-2 pb-1 text-center">
-								<div class="text-center"><i class="fa fa-clock-o fa-2x"></i>
-									<div>Checkout</div>
-									<b>{{hotelObj.moreDetails.checkOutTime}}</b>
+							<div class="checkin-out bg-dark img-thumbnail text-light pt-3 pb-1 text-center">
+								<div class="text-center">
+									<div><i class="fa fa-clock-o fa-2x"></i> Check Out</div>
+									<p class="my-2">{{checkOutDate}}</p>
+									<p>{{hotelObj.moreDetails.checkOutTime}}</p>
 								</div>
 							</div>
 						</div>

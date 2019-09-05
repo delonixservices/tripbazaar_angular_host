@@ -82,7 +82,7 @@ export class HotelbookingComponent implements OnInit {
 
 		if (this.packageObj === undefined || this.packageObj == "" || this.packageObj == null || this.searchObj === undefined || this.searchObj == "" || this.searchObj == null || this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null || this.hotelsearchkeys === undefined || this.hotelsearchkeys == "" || this.hotelsearchkeys == null || this.transaction_identifier === undefined || this.transaction_identifier == "" || this.transaction_identifier == null) {
 			this.alertService.error("Something went wrong! Please search Again1");
-			this.router.navigate(['/']);
+			this.router.navigate(['/searchresult']);
 		}
 	}
 
