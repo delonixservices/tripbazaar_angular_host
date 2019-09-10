@@ -1,5 +1,12 @@
 <!-- Change Ankit -->
-<h4 class="p-3 text-center">VOUCHER</h4>
+<div class="row p-3">
+  <div class="col">
+    <h4 class="text-right mb-0">VOUCHER</h4>
+  </div>
+  <div class="col text-right">
+    <a [routerLink]="['/hotelinvoice']" [queryParams]="{'id':transactionId}">Download Invoice</a>
+  </div>
+</div>
 
 <div *ngIf="dataLocalUrl != undefined">
   <object name="hotelVoucher.pdf" [attr.data]="dataLocalUrl" type="application/pdf" width="100%"

@@ -16,6 +16,7 @@ export class HotelvoucherComponent implements OnInit {
 
   public dataLocalUrl;
   public baseUrl;
+  public transactionId;
 
   constructor(
     private router: Router, public api: ApiService, public domSanitizer: DomSanitizer, private route: ActivatedRoute, private http: HttpClient,
@@ -34,6 +35,7 @@ export class HotelvoucherComponent implements OnInit {
       .subscribe(params => {
         const httpParams = new HttpParams()
           .set('transactionid', params.id);
+        this.transactionId = params.id;
         let headers = new HttpHeaders();
         headers = headers.set('Accept', 'application/pdf');
         this.http.get(`${this.baseUrl}/voucher`, { params: httpParams, headers: headers, responseType: 'blob', observe: 'response' })

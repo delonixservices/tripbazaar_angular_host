@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../core/services';
 
 @Component({
   selector: 'app-profile-page',
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
+    private authService: AuthService,
     private modalService: NgbModal,
   ) { }
 
@@ -77,6 +79,8 @@ export class ProfileComponent implements OnInit {
         this.lastName = response.data.last_name;
         this.email = response.data.email;
         this.showEditProfile = false;
+        this.authService.getLoggedInUser.next(this.firstName);
+        this.validation = "";
         console.log(response);
       }
     }, (err) => {

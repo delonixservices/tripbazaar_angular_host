@@ -502,7 +502,7 @@
 											<i class="fa fa-check" title="TV"></i>
 											TV
 										</li>
-										<li>
+										<li *ngIf="hotelObj.amenities.includes('airConditioning')">
 											<i class="fa fa-check" title="AC"></i> Air Conditioning
 										</li>
 										<li>

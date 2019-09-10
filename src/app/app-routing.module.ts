@@ -37,8 +37,8 @@ import { SuccessComponent } from './success/success.component';
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "about", component: AboutComponent },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "login", component: LoginComponent, canActivate: [AuthService] },
+  { path: "register", component: RegisterComponent, canActivate: [AuthService] },
   { path: "product", component: ProductComponent },
   { path: "business", component: BusinessComponent },
   { path: "faq", component: FaqComponent },

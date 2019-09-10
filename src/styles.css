@@ -55,6 +55,10 @@ a {
   border-radius: 32px;
 }
 
+.ng5-slider .ng5-slider-span {
+  outline: none;
+}
+
 .ng5-slider .ng5-slider-pointer:after {
   content: '';
   width: 8px;

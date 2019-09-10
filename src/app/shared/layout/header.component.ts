@@ -6,8 +6,6 @@ import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core/services';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 
-declare var $: any;
-
 @Component({
 	selector: 'app-layout-header',
 	templateUrl: './header.component.html',
@@ -24,6 +22,8 @@ export class HeaderComponent implements OnInit {
 	checkOutDateModel: NgbDateStruct;
 	checkInDate: any;
 	checkOutDate: any;
+	checkInMinDate: NgbDateStruct;
+	checkOutMinDate: NgbDateStruct;
 
 	suggestionsLoading = false;
 	hotelsearchkeys: any;
@@ -58,12 +58,14 @@ export class HeaderComponent implements OnInit {
 		public dpConfig: NgbDatepickerConfig
 	) {
 		const date = new Date();
-		console.log(date.getMonth())
-		dpConfig.minDate = {
+		const todaysDate = {
 			year: date.getFullYear(),
 			month: date.getMonth() + 1,
 			day: date.getDate()
 		};
+		dpConfig.minDate = todaysDate;
+		this.checkInDateModel = todaysDate;
+		this.onCheckInDateSelect(todaysDate);
 	}
 
 	ngOnInit() {
@@ -88,51 +90,12 @@ export class HeaderComponent implements OnInit {
 				this.user.name = "";
 			}
 		});
-
-		/*Bootstrap DatePicker*/
-
-		// this.getLoggedInUser();
-
-		// 	localStorage.removeItem('transaction_identifier');
-		// localStorage.removeItem('searchObj');
-		// 	localStorage.removeItem('packageObj');
-		// 	localStorage.removeItem('hotelObj');
-		// localStorage.removeItem('hotelsearchkeys');
 		this.loadDestination();
-
-		// $.getScript('./assets/lib/js/app.js');
-
-		// $('document').ready(() => {
-		// 	console.log('ready');
-		// 	$(".checkInDate").datepicker().on("changeDate", (evt) => {
-		// 		console.log('checkin ' + evt.date);
-		// 		var date = evt.date;
-		// 		// var d = date.getDate();
-		// 		var d = `${date.getDate()}`.padStart(2, '0');
-		// 		// var m = date.getMonth() + 1;
-		// 		// var m =	{date.getMonth() + 1}.padStart(2, '0');
-		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
-		// 		var y = date.getFullYear();
-		// 		this.checkInDate = y + '-' + m + '-' + d;
-		// 		// console.log(this.checkInDate);
-		// 	});
-
-		// 	$(".checkOutDate").datepicker().on("changeDate", (evt) => {
-		// 		console.log('checkout ' + evt.date);
-		// 		var date = evt.date;
-		// 		var d = `${date.getDate()}`.padStart(2, '0');
-		// 		var m = `${date.getMonth() + 1}`.padStart(2, '0');
-		// 		var y = date.getFullYear();
-		// 		// 2019-03-10
-		// 		this.checkOutDate = y + '-' + m + '-' + d;
-		// 		// console.log(this.checkOutDate);
-		// 	});
-		// });
 	}
 
+	// close date dropdowns if user clicks somewhere else
 	hostClick(event: MouseEvent) {
 		console.log(this.isLoggedIn)
-
 		if (this.checkIn && this.checkIn.isOpen()) {
 			if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
 				this.checkIn.close();
@@ -153,6 +116,11 @@ export class HeaderComponent implements OnInit {
 	// format checkIn and checkOut dates
 	onCheckInDateSelect(date: NgbDateStruct) {
 		this.checkInDate = this.ngbDateParserFormatter.format(date);
+		const dateModal = Object.assign({}, this.checkInDateModel);
+		dateModal.day = dateModal.day + 1;
+		this.checkOutMinDate = dateModal;
+		this.checkOutDateModel = dateModal;
+		this.checkOutDate = this.ngbDateParserFormatter.format(dateModal);
 	}
 
 	onCheckOutDateSelect(date: NgbDateStruct) {
@@ -193,15 +161,6 @@ export class HeaderComponent implements OnInit {
 			}
 		}
 		console.log(this.roomdetail[index]);
-
-		// if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
-		// 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
-		// }else{
-		// 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
-		//       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
-		//     }
-
-		// }
 	}
 
 	doneClicked() {
@@ -238,12 +197,10 @@ export class HeaderComponent implements OnInit {
 		} else {
 			this.alertService.error("All fields are required!");
 		}
-
 	}
 
-
 	loadDestination() {
-		console.log("loadDestination called1");
+		// console.log("loadDestination called1");
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(

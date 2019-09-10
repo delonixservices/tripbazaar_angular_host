@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators'
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
@@ -11,9 +11,11 @@ import { ApiService, JwtService, AlertService } from '../core/services';
 	styleUrls: ['./hoteldetails.component.css']
 })
 
-export class HoteldetailsComponent implements OnInit {
-	selectedArea: any;
+export class HoteldetailsComponent implements OnInit, OnDestroy {
 	suggestions: any;
+	private ngUnsubscribe = new Subject();
+
+	selectedArea: any;
 	checkInDate: any;
 	checkOutDate: any;
 	suggestionsLoading = false;
@@ -86,10 +88,14 @@ export class HoteldetailsComponent implements OnInit {
 	loadHotelDetails() {
 		this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
 		this.api.post("/search", this.hoteldetailkeys)
+			// Added Ankit	
+			// emit values until provided observable i.e ngUnsubscribe emits
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
 				if (response.data != undefined) {
 					console.log(response);
 					this.hotelObj = response.data.hotels[0];
+					this.hotelObj.rates.packages.sort((a, b) => a.chargeable_rate - b.chargeable_rate);
 					this.hotelObj.searchkey = this.hoteldetailkeys;
 					localStorage.setItem('hotelObj', JSON.stringify(response.data.hotels[0]));
 					localStorage.setItem('transaction_identifier', response.transaction_identifier);
@@ -188,7 +194,7 @@ export class HoteldetailsComponent implements OnInit {
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(200),
+				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(
@@ -222,5 +228,12 @@ export class HoteldetailsComponent implements OnInit {
 	// Scroll into view
 	scroll(el: HTMLElement) {
 		el.scrollIntoView();
+	}
+
+	ngOnDestroy() {
+		// Added Ankit
+		// Unsubscribing the observable after component is destroyed - prevents memory leak
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
 	}
 }
