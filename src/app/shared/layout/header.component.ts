@@ -95,7 +95,6 @@ export class HeaderComponent implements OnInit {
 
 	// close date dropdowns if user clicks somewhere else
 	hostClick(event: MouseEvent) {
-		console.log(this.isLoggedIn)
 		if (this.checkIn && this.checkIn.isOpen()) {
 			if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
 				this.checkIn.close();

@@ -37,6 +37,7 @@ import { OtpComponent } from './otp/otp.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { VerifyotpComponent } from './verifyotp/verifyotp.component';
 import { SuccessComponent } from './success/success.component';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import {
   FooterComponent,
@@ -105,6 +106,7 @@ import { VerifyuserComponent } from './verifyuser/verifyuser.component';
     NgDatepickerModule,
     Ng5SliderModule,
     NgbModule.forRoot(),
+    NgxGalleryModule
   ],
 
   providers: [],

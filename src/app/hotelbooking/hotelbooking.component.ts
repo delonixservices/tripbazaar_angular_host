@@ -46,6 +46,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 	public bookingid: any;
 	public transactionid: any;
 	public modalRef: any;
+	public userAgree: boolean;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -133,6 +134,14 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 		this.modalRef = this.modalService.open(logInModal);
 	}
 
+	openBkgPolicyModal(bgkPolicyModal) {
+		this.modalService.open(bgkPolicyModal);
+	}
+
+	openCancellationPolicyModal(cancellationPolicyModal) {
+		this.modalService.open(cancellationPolicyModal);
+	}
+
 	login() {
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.loginValidation = "Require fields are empty";
@@ -172,7 +181,12 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 
 		if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined || !isMobileValid) {
 			this.contactDetailsValidation = "All the fields are required";
-			return true;
+			return;
+		}
+
+		if (!this.userAgree) {
+			this.validation = "Please accept Hotel booking Policy and Terms of Service to proceed.";
+			return;
 		}
 
 		const prebookParams = {
@@ -310,6 +324,11 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 					}
 				})
 		}
+	}
+
+	checkUserAgree() {
+		this.userAgree = !this.userAgree;
+		console.log(this.userAgree);
 	}
 
 	ngOnDestroy() {

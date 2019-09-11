@@ -19,9 +19,9 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 
 	selectedArea: any;
 	suggestions: any;
+	suggestionsLoading = false;
 	checkInDate: any;
 	checkOutDate: any;
-	suggestionsLoading = false;
 	hotelsearchkeys: any;
 	checkRecord = false;
 	norecordfoundtitle;
@@ -424,7 +424,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(1000),
+				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(

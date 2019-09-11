@@ -4,6 +4,7 @@ import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUnt
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
+import { NgxGalleryAnimation, NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 
 @Component({
 	selector: 'app-hoteldetails-page',
@@ -33,6 +34,8 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 	public hotelObj: any = "";
 	public math: any;
 	public display: any;
+	public galleryImages: NgxGalleryImage[];
+	public galleryOptions: NgxGalleryOptions[];
 
 	// for getting food type from food code, eg: foodCode 1 = Room Only
 	public foodType = [
@@ -74,6 +77,45 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 		// this.checkInDate = this.hotelsearchkeys.checkindate;
 		// this.checkOutDate = this.hotelsearchkeys.checkoutdate;
 		// this.roomdetail = this.hotelsearchkeys.details;
+
+		// Added Ankit
+		// ngx-gallery
+
+		this.galleryOptions = [
+			{
+				width: '600px',
+				height: '400px',
+				thumbnailsColumns: 4,
+				imageAnimation: NgxGalleryAnimation.Slide
+			},
+			// max-width 800
+			{
+				breakpoint: 800,
+				width: '100%',
+				height: '600px',
+				imagePercent: 80,
+				thumbnailsPercent: 20,
+				thumbnailsMargin: 20,
+				thumbnailMargin: 20
+			},
+			// max-width 400
+			{
+				breakpoint: 400,
+				preview: false
+			}
+		];
+
+		this.galleryImages = [];
+
+		for (let i = 0; i < this.hotelObj.imageDetails.count; i++) {
+			const imageObj = {
+				small: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
+				medium: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
+				big: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`
+			};
+			this.galleryImages.push(imageObj);
+		}
+
 	}
 
 	// No of nights in hotel
@@ -95,6 +137,7 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 				if (response.data != undefined) {
 					console.log(response);
 					this.hotelObj = response.data.hotels[0];
+					// sorting packages in increasing order of the price
 					this.hotelObj.rates.packages.sort((a, b) => a.chargeable_rate - b.chargeable_rate);
 					this.hotelObj.searchkey = this.hoteldetailkeys;
 					localStorage.setItem('hotelObj', JSON.stringify(response.data.hotels[0]));
