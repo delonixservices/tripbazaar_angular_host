@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError } from 'rxjs/operators'
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
+import { NgxGalleryAnimation, NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
 
 @Component({
 	selector: 'app-hoteldetails-page',
@@ -11,9 +12,11 @@ import { ApiService, JwtService, AlertService } from '../core/services';
 	styleUrls: ['./hoteldetails.component.css']
 })
 
-export class HoteldetailsComponent implements OnInit {
-	selectedArea: any;
+export class HoteldetailsComponent implements OnInit, OnDestroy {
 	suggestions: any;
+	private ngUnsubscribe = new Subject();
+
+	selectedArea: any;
 	checkInDate: any;
 	checkOutDate: any;
 	suggestionsLoading = false;
@@ -31,6 +34,8 @@ export class HoteldetailsComponent implements OnInit {
 	public hotelObj: any = "";
 	public math: any;
 	public display: any;
+	public galleryImages: NgxGalleryImage[];
+	public galleryOptions: NgxGalleryOptions[];
 
 	// for getting food type from food code, eg: foodCode 1 = Room Only
 	public foodType = [
@@ -72,6 +77,45 @@ export class HoteldetailsComponent implements OnInit {
 		// this.checkInDate = this.hotelsearchkeys.checkindate;
 		// this.checkOutDate = this.hotelsearchkeys.checkoutdate;
 		// this.roomdetail = this.hotelsearchkeys.details;
+
+		// Added Ankit
+		// ngx-gallery
+
+		this.galleryOptions = [
+			{
+				width: '600px',
+				height: '400px',
+				thumbnailsColumns: 4,
+				imageAnimation: NgxGalleryAnimation.Slide
+			},
+			// max-width 800
+			{
+				breakpoint: 800,
+				width: '100%',
+				height: '600px',
+				imagePercent: 80,
+				thumbnailsPercent: 20,
+				thumbnailsMargin: 20,
+				thumbnailMargin: 20
+			},
+			// max-width 400
+			{
+				breakpoint: 400,
+				preview: false
+			}
+		];
+
+		this.galleryImages = [];
+
+		for (let i = 0; i < this.hotelObj.imageDetails.count; i++) {
+			const imageObj = {
+				small: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
+				medium: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
+				big: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`
+			};
+			this.galleryImages.push(imageObj);
+		}
+
 	}
 
 	// No of nights in hotel
@@ -86,10 +130,15 @@ export class HoteldetailsComponent implements OnInit {
 	loadHotelDetails() {
 		this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
 		this.api.post("/search", this.hoteldetailkeys)
+			// Added Ankit	
+			// emit values until provided observable i.e ngUnsubscribe emits
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
 				if (response.data != undefined) {
 					console.log(response);
 					this.hotelObj = response.data.hotels[0];
+					// sorting packages in increasing order of the price
+					this.hotelObj.rates.packages.sort((a, b) => a.chargeable_rate - b.chargeable_rate);
 					this.hotelObj.searchkey = this.hoteldetailkeys;
 					localStorage.setItem('hotelObj', JSON.stringify(response.data.hotels[0]));
 					localStorage.setItem('transaction_identifier', response.transaction_identifier);
@@ -188,7 +237,7 @@ export class HoteldetailsComponent implements OnInit {
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(200),
+				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(
@@ -222,5 +271,12 @@ export class HoteldetailsComponent implements OnInit {
 	// Scroll into view
 	scroll(el: HTMLElement) {
 		el.scrollIntoView();
+	}
+
+	ngOnDestroy() {
+		// Added Ankit
+		// Unsubscribing the observable after component is destroyed - prevents memory leak
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
 	}
 }

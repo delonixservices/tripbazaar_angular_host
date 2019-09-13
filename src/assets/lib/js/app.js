@@ -178,7 +178,11 @@ $(function () {
 		if ($(window).scrollTop() > 300) {
 			$('a.back-to-top').fadeIn('show');
 			$('a.back-to-top').click(() => {
-				document.body.scrollTop = document.documentElement.scrollTop = 0;
+				// document.body.scrollTop = document.documentElement.scrollTop = 0;
+				window.scrollTo({
+					top: 0,
+					behavior: 'smooth'
+				});
 			})
 		} else {
 			$('a.back-to-top').fadeOut('show');

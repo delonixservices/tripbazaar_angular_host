@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { ApiService, JwtService, AlertService } from '../core/services';
 import { Options, LabelType } from 'ng5-slider';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,15 +13,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 	styleUrls: ['././searchresult.component.css']
 })
 
-export class SearchresultComponent implements OnInit {
+export class SearchresultComponent implements OnInit, OnDestroy {
 
 	private ngUnsubscribe = new Subject();
 
 	selectedArea: any;
 	suggestions: any;
+	suggestionsLoading = false;
 	checkInDate: any;
 	checkOutDate: any;
-	suggestionsLoading = false;
 	hotelsearchkeys: any;
 	checkRecord = false;
 	norecordfoundtitle;
@@ -64,22 +64,9 @@ export class SearchresultComponent implements OnInit {
 	searchText = '';
 
 	// ng-slider
-	minHotelPrice: number = 5000;
-	maxHotelPrice: number = 100000;
-	options: Options = {
-		floor: 5000,
-		ceil: 100000,
-		translate: (value: number, label: LabelType): string => {
-			switch (label) {
-				case LabelType.Low:
-					return '<b>Min:</b> &#8377;' + value;
-				case LabelType.High:
-					return '<b>Max:</b> &#8377;' + value;
-				default:
-					return '&#8377;' + value;
-			}
-		}
-	};
+	minHotelPrice: number;
+	maxHotelPrice: number;
+	options: Options;
 
 	constructor(public route: ActivatedRoute,
 		private router: Router,
@@ -90,9 +77,25 @@ export class SearchresultComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		localStorage.removeItem('transaction_identifier');
+		this.minHotelPrice = 5000;
+		this.maxHotelPrice = 100000;
+		this.options = {
+			floor: 5000,
+			ceil: 100000,
+			translate: (value: number, label: LabelType): string => {
+				switch (label) {
+					case LabelType.Low:
+						return '<b>Min:</b> &#8377;' + value;
+					case LabelType.High:
+						return '<b>Max:</b> &#8377;' + value;
+					default:
+						return '&#8377;' + value;
+				}
+			}
+		};
 		// commented Ankit
 		// => creating problems when user is navigating from previous page to same page again
+		// localStorage.removeItem('transaction_identifier');
 		// localStorage.removeItem('searchObj');
 		// localStorage.removeItem('packageObj');
 		// localStorage.removeItem('hotelObj');
@@ -116,6 +119,7 @@ export class SearchresultComponent implements OnInit {
 		this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
 		this.api.post("/search", this.hotelsearchkeys)
+			// Added Ankit	
 			// emit values until provided observable i.e ngUnsubscribe emits
 			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
@@ -420,7 +424,7 @@ export class SearchresultComponent implements OnInit {
 		this.suggestions = concat(
 			of([]),
 			this.suggestionsInput.pipe(
-				debounceTime(1000),
+				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
 				switchMap(term => this.api.get("/suggest", term).pipe(
@@ -432,7 +436,8 @@ export class SearchresultComponent implements OnInit {
 	}
 
 	ngOnDestroy() {
-		// Unsubscribing the observable after component is destroyed
+		// Added Ankit
+		// Unsubscribing the observable after component is destroyed - prevents memory leak
 		this.ngUnsubscribe.next();
 		this.ngUnsubscribe.complete();
 	}

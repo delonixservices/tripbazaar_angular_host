@@ -371,9 +371,9 @@
 				<li class="nav-item">
 					<a class="nav-link" (click)="scroll(amenities)">Amenities</a>
 				</li>
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a class="nav-link" (click)="scroll(hotelPolicy)">Hotel Policy</a>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</nav>
@@ -383,12 +383,14 @@
 	<div class="row">
 		<hr>
 		<div #photos class="col-md-8">
+			<!-- ngx gallery -->
+			<ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
 			<!-- slider -->
-			<ui-carousel [infinite]="true" [fade]="false" [speed]="200">
+			<!-- <ui-carousel [infinite]="true" [fade]="false" [speed]="200">
 				<ui-carousel-item *ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index ">
 					<img [ui-lazy-load]="hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix" class="slimage">
 				</ui-carousel-item>
-			</ui-carousel>
+			</ui-carousel> -->
 		</div>
 		<div class="col-md-4">
 			<div class="row">
@@ -502,7 +504,7 @@
 											<i class="fa fa-check" title="TV"></i>
 											TV
 										</li>
-										<li>
+										<li *ngIf="hotelObj.amenities.includes('airConditioning')">
 											<i class="fa fa-check" title="AC"></i> Air Conditioning
 										</li>
 										<li>
@@ -515,11 +517,11 @@
 						<td>
 							<div class="room-type_benefits">
 								<ul class="list-unstyled">
-									<li>
+									<li *ngIf="hotelObj.amenities.includes('dataPorts')">
 										<i class="fa fa-wifi" title="WIFI"></i> Free Wi-Fi
 									</li>
 									<li>
-										<i class="fa fa-check" title="WIFI"></i> Accommodation
+										<i class="fa fa-check" title="Accommodation"></i> Accommodation
 									</li>
 									<li *ngIf="package.room_details.food === 2">
 										<i class="fa fa-coffee" title="Breakfast"></i> Free Breakfast
@@ -828,62 +830,6 @@
 									room dining, taste
 									can't say awesome but okay - but service was great.</p>
 							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -1045,62 +991,6 @@
 									room dining, taste
 									can't say awesome but okay - but service was great.</p>
 							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
-
-							<h5><img src="https://www.tripadvisor.com/img/cdsi/img2/ratings/traveler/s4.0-11942-5.svg">
-								A quality
-								hotel near airport</h5>
-							<p class="small">by reemasadhu on Thu December 28 20:02:17 +05:30 2017</p>
-							<div class="text-justify review">
-								<p class="text-truncate">This was my 2nd stay at this hotel - not so far from airport -
-									a part of ITC
-									hotels - room are spacious with all modern amenities - complementary fruits was a
-									part of executive
-									club rooms - breakfast spread was pretty good with lots of different options - in
-									room dining, taste
-									can't say awesome but okay - but service was great.</p>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -1115,13 +1005,5 @@
 	<div class="col">
 		<iframe src="http://maps.google.com/maps?q=35.856737, 10.606619&z=15&output=embed" width="100%" height="450"
 			frameborder="0" style="border:0"></iframe>
-	</div>
-</div>
-
-<!-- Added Ankit -->
-<div #hotelPolicy class="container">
-	<div class="hotel-policy">
-		<h4 class="mb-2">HOTEL POLICY</h4>
-		<div [innerHTML]="hotelObj.policy"></div>
 	</div>
 </div>

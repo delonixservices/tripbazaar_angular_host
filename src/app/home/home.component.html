@@ -168,7 +168,7 @@
 <div class="clearfix"></div>
 <div class="container mt-5 mb-4">
 	<div class="row">
-		<div class="col" *ngFor="let banner of allBanner">
+		<div class="col-12 col-md-4 col-lg-3 py-2" *ngFor="let banner of allBanner">
 			<a href="{{banner.url}}" target="_blank">
 				<img [src]="api.baseUrl+banner.image" class="embed-responsive mns">
 			</a>
@@ -184,7 +184,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col" *ngFor="let holiday of allHoliday">
+		<div class="col-12 col-md-4 col-lg-3 py-2" *ngFor="let holiday of allHoliday">
 			<a href="{{holiday.url}}" target="_blank">
 				<img [src]="api.baseUrl+holiday.image" class="embed-responsive mns">
 			</a>

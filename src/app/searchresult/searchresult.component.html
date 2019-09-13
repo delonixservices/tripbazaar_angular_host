@@ -47,7 +47,7 @@
 					<!-- <input type="hidden" id="range_filter" value="0-100000"
 						fjs-criteria="field=rates.packages.room_rate,type=range"> -->
 					<ng5-slider [(value)]="minHotelPrice" [(highValue)]="maxHotelPrice" [options]="options"
-						(valueChange)="priceFilter()">
+						(userChangeEnd)="priceFilter()">
 					</ng5-slider>
 				</div>
 
@@ -101,9 +101,7 @@
 											*ngFor="let item of [].constructor(hotel.imageDetails.count); let i = index "
 											[ngClass]="{'active' : i == 0}">
 											<img src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}"
-												class="img-fluid" alt="First slide"
-												style="    height: 255px;width: 100%;"
-												onError="this.src='./src/assets/images/cS-5.jpg';">
+												class="img-fluid" alt="First slide" style="height: 255px;width: 100%;">
 										</div>
 									</div>
 									<a class="carousel-control-prev" href="#carouselExampleIndicators{{i}}"
@@ -155,9 +153,8 @@
 												*ngIf="hotel.amenities.miniBarInRoom"></i>
 										</p>
 										<hr>
-										<div class="text-success"><i class="fa fa-check-circle-o"
-												title="Free Cancellation"></i> Free Cancellation</div>
-
+										<!-- <div class="text-success"><i class="fa fa-check-circle-o"
+												title="Free Cancellation"></i> Free Cancellation</div> -->
 									</div>
 
 									<div class="col-5 text-right ">
@@ -219,7 +216,6 @@
 
 	</div>
 </div>
-
 
 <!-- Modify Search -->
 <ng-template #modifySearchModal let-d="dismiss">

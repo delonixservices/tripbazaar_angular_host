@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService, AuthService } from '../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-hotelbooking-page',
@@ -11,9 +12,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 	styleUrls: ['./hotelbooking.component.css']
 })
 
-export class HotelbookingComponent implements OnInit {
+export class HotelbookingComponent implements OnInit, OnDestroy {
 
 	@ViewChild('form') form: ElementRef;
+	private ngUnsubscribe = new Subject();
 
 	public searchObj: any;
 	public packageObj: any;
@@ -44,6 +46,7 @@ export class HotelbookingComponent implements OnInit {
 	public bookingid: any;
 	public transactionid: any;
 	public modalRef: any;
+	public userAgree: boolean;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -56,6 +59,9 @@ export class HotelbookingComponent implements OnInit {
 
 		if (this.jwt.isAuth()) {
 			this.api.get("/auth/me")
+				// Added Ankit	
+				// emit values until provided observable i.e ngUnsubscribe emits
+				.pipe(takeUntil(this.ngUnsubscribe))
 				.subscribe((response) => {
 					if (response.status == 200) {
 						this.loginUser = response.data;
@@ -128,8 +134,15 @@ export class HotelbookingComponent implements OnInit {
 		this.modalRef = this.modalService.open(logInModal);
 	}
 
-	login() {
+	openBkgPolicyModal(bgkPolicyModal) {
+		this.modalService.open(bgkPolicyModal);
+	}
 
+	openCancellationPolicyModal(cancellationPolicyModal) {
+		this.modalService.open(cancellationPolicyModal);
+	}
+
+	login() {
 		if (this.paramsObj.mobile === "" || this.paramsObj.password === "") {
 			this.loginValidation = "Require fields are empty";
 		} else {
@@ -168,7 +181,12 @@ export class HotelbookingComponent implements OnInit {
 
 		if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined || !isMobileValid) {
 			this.contactDetailsValidation = "All the fields are required";
-			return true;
+			return;
+		}
+
+		if (!this.userAgree) {
+			this.validation = "Please accept Hotel booking Policy and Terms of Service to proceed.";
+			return;
 		}
 
 		const prebookParams = {
@@ -185,8 +203,11 @@ export class HotelbookingComponent implements OnInit {
 		console.log('prebookParams', prebookParams);
 
 		this.api.post("/prebook", prebookParams)
+			// Added Ankit	
+			// emit values until provided observable i.e ngUnsubscribe emits
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
-				if (response.data && response.data.booking_id !== undefined) {
+				if (response && response.data && response.data.booking_id !== undefined) {
 					let url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
 					window.location.assign(url);
 				} else {
@@ -194,9 +215,10 @@ export class HotelbookingComponent implements OnInit {
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again.3");
+					this.alertService.error(err.message);
 					this.validation = err.message
-				}
+				} else
+					this.alertService.error("Something Went Wrong Try again.3");
 			});
 	}
 
@@ -220,6 +242,9 @@ export class HotelbookingComponent implements OnInit {
 
 	loadBookingPolicy() {
 		this.api.post("/bookingpolicy", { "package": this.packageObj, "search": this.searchObj, "transaction_id": this.transaction_identifier })
+			// Added Ankit	
+			// emit values until provided observable i.e ngUnsubscribe emits
+			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
 				if (response && response.data !== undefined) {
 					this.booking_policy = response.data;
@@ -243,6 +268,9 @@ export class HotelbookingComponent implements OnInit {
 			this.alertService.error("Required fields are empty");
 		} else {
 			this.api.post("/couponCheck", this.coupon)
+				// Added Ankit	
+				// emit values until provided observable i.e ngUnsubscribe emits
+				.pipe(takeUntil(this.ngUnsubscribe))
 				.subscribe((response) => {
 					if (response.code != undefined) {
 						this.couponCode = response.code;
@@ -280,6 +308,9 @@ export class HotelbookingComponent implements OnInit {
 			this.validation = "Require fields are empty";
 		} else {
 			this.api.post("/gstupdate", this.gstDetail)
+				// Added Ankit	
+				// emit values until provided observable i.e ngUnsubscribe emits
+				.pipe(takeUntil(this.ngUnsubscribe))
 				.subscribe((response) => {
 					if (response.data != undefined) {
 						console.log(response);
@@ -293,5 +324,17 @@ export class HotelbookingComponent implements OnInit {
 					}
 				})
 		}
+	}
+
+	checkUserAgree() {
+		this.userAgree = !this.userAgree;
+		console.log(this.userAgree);
+	}
+
+	ngOnDestroy() {
+		// Added Ankit
+		// Unsubscribing the observable after component is destroyed - prevents memory leak
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
 	}
 }

@@ -2,7 +2,7 @@
 body,
 html {
     background: #f7f7f7;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
 }
 
 body,
@@ -1489,9 +1489,9 @@ a.back-to-top {
     width: 60px;
     height: 60px;
     position: fixed;
-    bottom: 40px;
-    right: 0px;
-    background: #ccc url(../../images/arrow-up.png) no-repeat center 43%;
+    bottom: 30px;
+    right: 20px;
+    background: #f80759 url(../../images/arrow-up.png) no-repeat center 43%;
     text-indent: -9999px;
     border-radius: 30px;
     z-index: 1000;
