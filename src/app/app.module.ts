@@ -36,7 +36,7 @@ import { OtpComponent } from './otp/otp.component';
 import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
 import { VerifyotpComponent } from './verifyotp/verifyotp.component';
 import { SuccessComponent } from './success/success.component';
-import { NgxGalleryModule } from 'ngx-gallery';
+import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 
 import {
   FooterComponent,
@@ -47,11 +47,9 @@ import { CoreModule } from './core/core.module';
 
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
-import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
-import { NgDatepickerModule } from 'ng2-datepicker';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { VerifyuserComponent } from './verifyuser/verifyuser.component';
+import { GalleryModule } from '@ngx-gallery/core';
 
 @NgModule({
   declarations: [
@@ -100,11 +98,9 @@ import { VerifyuserComponent } from './verifyuser/verifyuser.component';
     NgSelectModule,
     NgProgressModule,
     NgProgressHttpModule,
-    SweetAlert2Module.forRoot(),
-    NgDatepickerModule,
     Ng5SliderModule,
-    NgbModule.forRoot(),
-    NgxGalleryModule
+    NgbModule,
+    GalleryModule
   ],
 
   providers: [],

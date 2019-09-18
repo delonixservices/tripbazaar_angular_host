@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
 import { HttpParams } from "@angular/common/http";
-import { Subject, Observable, of, concat } from 'rxjs';
+import { Subject, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../core/services';
-import { NgxGalleryAnimation, NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
+// import { NgxGalleryAnimation, NgxGalleryOptions, NgxGalleryImage } from 'ngx-gallery';
+import { ImageItem, GalleryComponent } from '@ngx-gallery/core';
 
 @Component({
 	selector: 'app-hoteldetails-page',
@@ -12,7 +13,7 @@ import { NgxGalleryAnimation, NgxGalleryOptions, NgxGalleryImage } from 'ngx-gal
 	styleUrls: ['./hoteldetails.component.css']
 })
 
-export class HoteldetailsComponent implements OnInit, OnDestroy {
+export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 	suggestions: any;
 	private ngUnsubscribe = new Subject();
 
@@ -34,8 +35,11 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 	public hotelObj: any = "";
 	public math: any;
 	public display: any;
-	public galleryImages: NgxGalleryImage[];
-	public galleryOptions: NgxGalleryOptions[];
+
+	@ViewChild(GalleryComponent, { static: false }) gallery: GalleryComponent;
+
+	// public galleryImages: NgxGalleryImage[];
+	// public galleryOptions: NgxGalleryOptions[];
 
 	// for getting food type from food code, eg: foodCode 1 = Room Only
 	public foodType = [
@@ -53,7 +57,7 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 		private router: Router,
 		public api: ApiService,
 		public jwt: JwtService,
-		public alertService: AlertService,
+		public alertService: AlertService
 	) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
@@ -81,41 +85,39 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 		// Added Ankit
 		// ngx-gallery
 
-		this.galleryOptions = [
-			{
-				width: '600px',
-				height: '400px',
-				thumbnailsColumns: 4,
-				imageAnimation: NgxGalleryAnimation.Slide
-			},
-			// max-width 800
-			{
-				breakpoint: 800,
-				width: '100%',
-				height: '600px',
-				imagePercent: 80,
-				thumbnailsPercent: 20,
-				thumbnailsMargin: 20,
-				thumbnailMargin: 20
-			},
-			// max-width 400
-			{
-				breakpoint: 400,
-				preview: false
-			}
-		];
+		// this.galleryOptions = [
+		// 	{
+		// 		width: '600px',
+		// 		height: '400px',
+		// 		thumbnailsColumns: 4,
+		// 		imageAnimation: NgxGalleryAnimation.Slide
+		// 	},
+		// 	// max-width 800
+		// 	{
+		// 		breakpoint: 800,
+		// 		width: '100%',
+		// 		height: '600px',
+		// 		imagePercent: 80,
+		// 		thumbnailsPercent: 20,
+		// 		thumbnailsMargin: 20,
+		// 		thumbnailMargin: 20
+		// 	},
+		// 	// max-width 400
+		// 	{
+		// 		breakpoint: 400,
+		// 		preview: false
+		// 	}
+		// ];
+	}
 
-		this.galleryImages = [];
-
+	ngAfterViewInit(): void {
+		let imageItems = [];
 		for (let i = 0; i < this.hotelObj.imageDetails.count; i++) {
-			const imageObj = {
-				small: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
-				medium: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`,
-				big: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`
-			};
-			this.galleryImages.push(imageObj);
-		}
+			const image: ImageItem = new ImageItem({ src: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`, thumb: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}` });
 
+			imageItems.push(image);
+		}
+		this.gallery.load(imageItems);
 	}
 
 	// No of nights in hotel
@@ -270,7 +272,9 @@ export class HoteldetailsComponent implements OnInit, OnDestroy {
 
 	// Scroll into view
 	scroll(el: HTMLElement) {
-		el.scrollIntoView();
+		el.scrollIntoView({
+			behavior: 'smooth'
+		});
 	}
 
 	ngOnDestroy() {

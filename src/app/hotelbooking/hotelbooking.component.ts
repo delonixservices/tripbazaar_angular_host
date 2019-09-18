@@ -5,7 +5,6 @@ import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService, AuthService } from '../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs/operators';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
 	selector: 'app-hotelbooking-page',
@@ -15,7 +14,7 @@ import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 export class HotelbookingComponent implements OnInit, OnDestroy {
 
-	@ViewChild('form') form: ElementRef;
+	@ViewChild('form', { static: false }) form: ElementRef;
 	private ngUnsubscribe = new Subject();
 
 	public searchObj: any;

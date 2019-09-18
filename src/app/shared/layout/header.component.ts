@@ -41,10 +41,10 @@ export class HeaderComponent implements OnInit {
 	}
 	todaydate = new Date();
 
-	@ViewChild('checkIn') checkIn: any;
-	@ViewChild('checkOut') checkOut: any;
-	@ViewChild('checkInContainer') checkInContainer: ElementRef;
-	@ViewChild('checkOutContainer') checkOutContainer: ElementRef;
+	@ViewChild('checkIn', { static: false }) checkIn: any;
+	@ViewChild('checkOut', { static: false }) checkOut: any;
+	@ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
+	@ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
 
 	suggestionsInput = new Subject<HttpParams>();
 
