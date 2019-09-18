@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { UICarouselModule } from "ui-carousel";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -99,7 +98,6 @@ import { VerifyuserComponent } from './verifyuser/verifyuser.component';
     FormsModule,
     AppRoutingModule,
     NgSelectModule,
-    UICarouselModule,
     NgProgressModule,
     NgProgressHttpModule,
     SweetAlert2Module.forRoot(),
