@@ -539,7 +539,7 @@
 						<td>
 							<ul class="list-unstyled pl-0">
 								<li class="text-success font-weight-bold"
-									*ngIf="package.room_details.non_refundable !== true">
+									*ngIf="package.room_details.non_refundable === false">
 									<i title="refundable"></i> Refundable
 								</li>
 								<li class="text-danger font-weight-bold"

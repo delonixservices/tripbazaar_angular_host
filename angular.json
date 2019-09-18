@@ -36,9 +36,7 @@
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./src/assets/lib/js/bootstrap-datepicker.min.js",
               "./src/assets/lib/js/filter.js",
-              "./src/assets/lib/js/app.js",
-              "./node_modules/jspdf/dist/jspdf.min.js",
-              "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+              "./src/assets/lib/js/app.js"
             ]
           },
           "configurations": {

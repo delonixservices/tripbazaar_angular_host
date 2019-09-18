@@ -66,6 +66,7 @@ const routes: Routes = [
   { path: "verifyotp/:id", component: VerifyotpComponent },
   { path: "verifyuser/:id", component: VerifyuserComponent },
   { path: "success", component: SuccessComponent },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

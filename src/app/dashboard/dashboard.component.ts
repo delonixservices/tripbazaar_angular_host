@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../core/services';
+import Swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-dashboard-page',
@@ -31,16 +32,44 @@ export class DashboardComponent implements OnInit {
 	}
 
 	cancelHotelBooking(transactionid) {
-		this.api.post("/cancel", { "user": this.loginUser, 'transactionid': transactionid })
-			.subscribe((response) => {
-				if (response.status == 200) {
-					// this.transactions = response.data;
-					console.log(response);
-				}
 
-			}, (err) => {
-				console.log(err);
-			})
+		Swal({
+			title: 'Are you sure?',
+			text: 'Your hotel will be cancelled after this request',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Yes, cancel it!',
+			cancelButtonText: 'Do not cancel'
+		}).then((result) => {
+			if (result.value) {
+				this.api.post("/cancel", { "user": this.loginUser, 'transactionid': transactionid })
+					.subscribe((response) => {
+						console.log(response)
+						if (response && response.data) {
+							this.transactions.forEach((transaction) => {
+								if (transaction._id === transactionid) {
+									transaction.status = 2;
+								}
+							})
+							Swal({
+								title: 'Hotel Cancelled!',
+								text: 'Your hotel has been cancelled successfully',
+								type: 'success'
+							})
+							console.log(response);
+						}
+
+					}, (err) => {
+						Swal({
+							title: 'Hotel Cancellation Failed!',
+							text: "Hotel cannot be cancelled! Please try again.",
+							type: 'error'
+						})
+					})
+			} else if (result.dismiss === Swal.DismissReason.cancel) {
+				// handle dismiss
+			}
+		})
 	}
 
 	hotelInvoice(id) {
@@ -64,4 +93,8 @@ export class DashboardComponent implements OnInit {
 			})
 	}
 
+	isCancelAllowed(date) {
+		const checkInDate = new Date(date).getTime();
+		return checkInDate > Date.now();
+	}
 }

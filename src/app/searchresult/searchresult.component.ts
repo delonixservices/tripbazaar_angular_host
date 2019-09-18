@@ -77,10 +77,10 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
-		this.minHotelPrice = 5000;
+		this.minHotelPrice = 0;
 		this.maxHotelPrice = 100000;
 		this.options = {
-			floor: 5000,
+			floor: 0,
 			ceil: 100000,
 			translate: (value: number, label: LabelType): string => {
 				switch (label) {
@@ -125,24 +125,27 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 			.subscribe((response) => {
 				if (response && response.data != undefined) {
 					console.log('Search res ', response.data);
+					if (response.data.totalHotelsCount == 0) {
+						this.norecordfoundtitle = "There is no hotel available currently. Please search for other hotels";
+						this.filteredHotels = [];
+						this.copyFilteredHotels = [];
+						return;
+					}
 					this.allHotel = response.data;
 					this.filteredHotels = response.data.hotels;
 					this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
 					localStorage.setItem('transaction_identifier', response.transaction_identifier);
 					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
-
+					this.norecordfoundtitle = "";
 				} else {
 					// this.norecordfoundmsg = "oops";
 					this.filteredHotels = [];
 					this.copyFilteredHotels = [];
-					this.norecordfoundtitle = ' "No Room available currently, Please look for some other option " ';
+					this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
 				}
 			}, (err) => {
-				if (err.message !== undefined) {
-					this.norecordfoundtitle = err.message
-				} else {
-					this.norecordfoundtitle = "No Hotels Found"
-				}
+				this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+				console.log(err);
 				this.filteredHotels = [];
 				this.copyFilteredHotels = [];
 			});
@@ -173,7 +176,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 		});
 		// console.log(this.filteredHotels);
 		if (this.filteredHotels.length <= 0) {
-			this.norecordfoundtitle = "No Room available currently, Please look for some other option";
+			this.norecordfoundtitle = "There is no Hotel available currently. Please search for other hotels";
 		} else {
 			this.norecordfoundtitle = "";
 		}
@@ -282,7 +285,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 						roomtype.push(type.value);
 					}
 					this.norecordfoundtitle = "Opps";
-					this.norecordfoundmsg = ' "No Room available currently, Please look for some other option " ';
+					this.norecordfoundmsg = "No Room available currently, Please look for some other option";
 				}
 
 			});
@@ -308,12 +311,10 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 						foodserve = food.value;
 						break;
 					}
-
 				} else {
 					if (food.selected === true) {
 						foodserve.push(food.value);
 					}
-
 				}
 				i++;
 			}

@@ -273,7 +273,7 @@
                             <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
                                 <div class="mb-3"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel.name}}</div>
                                 <div class="text-success"
-                                    *ngIf="transaction.prebook_response.data.package.room_details.non_refundable == false">
+                                    *ngIf="transaction.prebook_response.data.package.room_details.non_refundable === false">
                                     <i class="fa fa-check-circle"></i> Refundable</div>
                             </div>
 
@@ -322,15 +322,18 @@
                         </div>
                         <hr>
                         <div class="row" *ngIf="transaction.status == 1">
-                            <div class="col-md-3 text-center"><button class="btn btn-danger btn-sm"
-                                    (click)="cancelHotelBooking(transaction._id)">Cancel Booking</button></div>
-                            <div class="col-md-3 text-center"><a routerLink=""
+                            <div class="col-md-4 text-center"><button
+                                    *ngIf="isCancelAllowed(transaction.search.check_in_date)"
+                                    class="btn btn-danger btn-sm" (click)="cancelHotelBooking(transaction._id)">Cancel
+                                    Booking</button></div>
+                            <!-- <div class="col-md-3 text-center"><a
+                                    *ngIf="isCancelAllowed(transaction.search.check_in_date)" [routerLink]=""
                                     class="btn btn-secondary btn-sm">Cancellation
-                                    Charges</a></div>
-                            <div class="col-md-3 text-center"><a (click)="hotelInvoice(transaction._id)"
-                                    class="btn btn-info btn-sm">Print Invoice</a></div>
-                            <div class="col-md-3 text-center"><a (click)="hotelVoucher(transaction._id)"
-                                    class="btn btn-success btn-sm">Print Voucher</a></div>
+                                    Charges</a></div> -->
+                            <div class="col-md-4 text-center"><a (click)="hotelInvoice(transaction._id)"
+                                    class="btn btn-info btn-sm">View Invoice</a></div>
+                            <div class="col-md-4 text-center"><a (click)="hotelVoucher(transaction._id)"
+                                    class="btn btn-success btn-sm">View Voucher</a></div>
                         </div>
                         <hr>
                         <div class="row mx-3">
@@ -343,3 +346,7 @@
         </div>
     </div>
 </div>
+
+<ng-template #cancelBkg>
+
+</ng-template>

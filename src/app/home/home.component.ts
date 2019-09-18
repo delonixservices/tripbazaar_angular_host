@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 
 	}
 	async ngOnInit() {
-		await this.api.get("/site/allspacialoffer")
+		await this.api.get("/site/allspecialoffer")
 			.subscribe((response) => {
 
 				if (response.status == 200) {

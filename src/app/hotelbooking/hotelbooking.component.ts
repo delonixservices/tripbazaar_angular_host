@@ -5,6 +5,7 @@ import { Subject, Observable, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService, AuthService } from '../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { takeUntil } from 'rxjs/operators';
+import { routerNgProbeToken } from '@angular/router/src/router_module';
 
 @Component({
 	selector: 'app-hotelbooking-page',
@@ -89,7 +90,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 		this.transaction_identifier = localStorage.getItem('transaction_identifier')
 
 		if (this.packageObj === undefined || this.packageObj == "" || this.packageObj == null || this.searchObj === undefined || this.searchObj == "" || this.searchObj == null || this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null || this.hotelsearchkeys === undefined || this.hotelsearchkeys == "" || this.hotelsearchkeys == null || this.transaction_identifier === undefined || this.transaction_identifier == "" || this.transaction_identifier == null) {
-			this.alertService.error("Something went wrong! Please search Again1");
+			this.alertService.error("Something went wrong! Please search Again");
 			this.router.navigate(['/searchresult']);
 		}
 	}
@@ -211,14 +212,12 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 					let url = this.api.baseUrl + "api/process-payment/" + response.data.booking_id;
 					window.location.assign(url);
 				} else {
-					this.alertService.error("Something Went Wrong Try again.2");
+					this.alertService.error("Something Went Wrong Try again");
 				}
 			}, (err) => {
-				if (err.message !== undefined) {
-					this.alertService.error(err.message);
-					this.validation = err.message
-				} else
-					this.alertService.error("Something Went Wrong Try again.3");
+				this.alertService.error("Booking session expired! Please try again.");
+				console.log(err);
+				this.router.navigate(['/searchresult']);
 			});
 	}
 
@@ -250,13 +249,13 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 					this.booking_policy = response.data;
 					console.log(this.booking_policy)
 				} else {
-					this.alertService.error("Something Went Wrong Try again.4");
+					this.alertService.error("Something Went Wrong Try again.");
 					console.log(response)
 					this.router.navigate(['/searchresult']);
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again.5");
+					this.alertService.error("Something Went Wrong Try again");
 					this.validation = err.message;
 					this.router.navigate(['/searchresult']);
 				}
@@ -275,17 +274,17 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 					if (response.code != undefined) {
 						this.couponCode = response.code;
 						if (this.couponCode.type == 'Percentage') {
-							this.discountedPrice = Math.ceil(this.packageObj.chargeable_rate_with_tax_excluded - this.packageObj.chargeable_rate_with_tax_excluded / 100 * (this.couponCode.value));
+							this.discountedPrice = Math.ceil(this.packageObj.chargeable_rate - this.packageObj.chargeable_rate / 100 * (this.couponCode.value));
 						} else {
-							this.discountedPrice = Math.ceil(this.packageObj.chargeable_rate_with_tax_excluded - this.couponCode.value);
+							this.discountedPrice = Math.ceil(this.packageObj.chargeable_rate - this.couponCode.value);
+
 						}
+						this.couponValidation = "";
 					} else {
 						this.alertService.error("Something Went Wrong Try again.6");
 					}
 				}, (err) => {
-					if (err.message !== undefined) {
-						this.couponValidation = err.message
-					}
+					this.couponValidation = "Sorry! Invalid coupon code";
 				})
 		}
 	}

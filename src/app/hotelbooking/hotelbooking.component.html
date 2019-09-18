@@ -115,7 +115,7 @@
 				<form>
 					<div class="row">
 						<div class="col-md-12">
-							<h5>Traveller Information</h5>
+							<h5>Guest's Information</h5>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
@@ -240,7 +240,7 @@
 								class="fa fa-inr"></i>
 							<span
 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
-							{{packageObj.chargeable_rate_with_tax_excluded |number:'1.0-0'}}
+							{{packageObj.chargeable_rate |number:'1.0-0'}}
 						</div>
 					</div>
 					<!-- <div class="row mb-2">
@@ -254,7 +254,7 @@
 						<div class="col-md-7">Discount</div>
 						<div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i
 								class="fa fa-inr"></i>
-							{{packageObj.chargeable_rate_with_tax_excluded/100*(couponCode.value) |number:'1.0-0'}}
+							{{packageObj.chargeable_rate/100*(couponCode.value) |number:'1.0-0'}}
 						</div>
 						<div class="col-md-5 text-right" *ngIf="couponCode.type =='fixed'"><i
 								*ngIf="packageObj.chargeable_rate_currency === 'INR'" class="fa fa-inr"></i> <span
@@ -308,7 +308,7 @@
 							<h5 class="mb-0" *ngIf="couponCode.value == 0"><i
 									*ngIf="packageObj.chargeable_rate_currency === 'INR'" class="fa fa-inr"></i> <span
 									*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
-								{{packageObj.chargeable_rate_with_tax_excluded + 100 +18/100 * 100 |number:'1.0-0'}}
+								{{packageObj.chargeable_rate + 100 +18/100 * 100 |number:'1.0-0'}}
 							</h5>
 							<h5 class="mb-0" *ngIf="discountedPrice"><i
 									*ngIf="packageObj.chargeable_rate_currency === 'INR'" class="fa fa-inr"></i> <span
