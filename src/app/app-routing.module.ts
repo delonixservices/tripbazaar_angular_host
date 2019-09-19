@@ -4,38 +4,35 @@ import { AuthService } from './core/services';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 import { ProductComponent } from './product/product.component';
 import { BusinessComponent } from './business/business.component';
 import { FaqComponent } from './faq/faq.component';
 import { Our_valuesComponent } from './our_values/our_values.component';
 import { TicketComponent } from './ticket/ticket.component';
-import { HotelinvoiceComponent } from './hotelinvoice/hotelinvoice.component';
 import { Itinerary_detailsComponent } from './itinerary_details/itinerary_details.component';
-import { HotelvoucherComponent } from './hotelvoucher/hotelvoucher.component';
 import { FlightsearchComponent } from './flightsearch/flightsearch.component';
 import { FlightbookingComponent } from './flightbooking/flightbooking.component';
-import { HotelbookingComponent } from './hotelbooking/hotelbooking.component';
-import { HoteldetailsComponent } from './hoteldetails/hoteldetails.component';
 import { CareComponent } from './care/care.component';
 import { TermComponent } from './term/term.component';
 import { PolicyComponent } from './policy/policy.component';
 import { RefundComponent } from './refund/refund.component';
 import { AgreementComponent } from './agreement/agreement.component';
 import { ContactComponent } from './contact/contact.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SearchresultComponent } from './searchresult/searchresult.component';
-import { ProfileComponent } from './profile/profile.component';
-import { OtpComponent } from './otp/otp.component';
-import { ResetpasswordComponent } from './resetpassword/resetpassword.component';
-import { VerifyotpComponent } from './verifyotp/verifyotp.component';
-import { VerifyuserComponent } from './verifyuser/verifyuser.component';
+import { DashboardComponent } from './account/dashboard/dashboard.component';
+import { ProfileComponent } from './account/profile/profile.component';
+import { OtpComponent } from './account/otp/otp.component';
+import { ResetpasswordComponent } from './account/resetpassword/resetpassword.component';
+import { VerifyotpComponent } from './account/verifyotp/verifyotp.component';
+import { VerifyuserComponent } from './account/verifyuser/verifyuser.component';
 import { SuccessComponent } from './success/success.component';
-
+import { HotelHomeComponent } from './hotels/hotel-home/hotel-home.component'
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
+  // { path: "", component: HomeComponent },
+  { path: "", redirectTo: "hotels", pathMatch: "full" },
+  { path: "hotels", component: HotelHomeComponent },
   { path: "about", component: AboutComponent },
   { path: "login", component: LoginComponent, canActivate: [AuthService] },
   { path: "register", component: RegisterComponent, canActivate: [AuthService] },
@@ -46,15 +43,9 @@ const routes: Routes = [
   { path: "ticket", component: TicketComponent },
   { path: "itinerary_details", component: Itinerary_detailsComponent },
   { path: "flightsearch", component: FlightsearchComponent },
-  { path: "hotelvoucher", component: HotelvoucherComponent },
-  { path: "hotelinvoice", component: HotelinvoiceComponent },
-  { path: "hoteldetails", component: HoteldetailsComponent },
-  { path: "hotelbooking", component: HotelbookingComponent },
   { path: "flightbooking", component: FlightbookingComponent },
   { path: "care", component: CareComponent },
   { path: "term", component: TermComponent },
-  { path: "herm", component: HotelbookingComponent },
-  { path: "searchresult", component: SearchresultComponent },
   { path: "policy", component: PolicyComponent },
   { path: "refund", component: RefundComponent },
   { path: "agreement", component: AgreementComponent },
@@ -66,7 +57,7 @@ const routes: Routes = [
   { path: "verifyotp/:id", component: VerifyotpComponent },
   { path: "verifyuser/:id", component: VerifyuserComponent },
   { path: "success", component: SuccessComponent },
-  { path: '**', redirectTo: '/' }
+  // { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
