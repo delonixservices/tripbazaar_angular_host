@@ -47,7 +47,7 @@ export class VerifyuserComponent implements OnInit {
       this.api.get("/auth/verify", this.otpObj)
         .subscribe((response) => {
           if (response.status == 200) {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/account/login']);
           }
         }, (err) => {
           if (err.message !== undefined) {

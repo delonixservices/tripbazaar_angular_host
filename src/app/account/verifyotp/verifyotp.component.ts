@@ -31,7 +31,7 @@ export class VerifyotpComponent implements OnInit {
 				.subscribe((response) => {
 					console.log(response);
 					if (response.status == 200) {
-						this.router.navigate(['/resetpassword/' + response.data._id]);
+						this.router.navigate(['/account/resetpassword/' + response.data._id]);
 					}
 				}, (err) => {
 					if (err.message !== undefined) {

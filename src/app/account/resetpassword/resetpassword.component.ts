@@ -32,7 +32,7 @@ export class ResetpasswordComponent implements OnInit {
 			this.api.post("/auth/reset", this.resetObj)
 				.subscribe((response) => {
 					if (response.status == 200) {
-						this.router.navigate(['/login']);
+						this.router.navigate(['/account/login']);
 					}
 				}, (err) => {
 					if (err.message !== undefined) {

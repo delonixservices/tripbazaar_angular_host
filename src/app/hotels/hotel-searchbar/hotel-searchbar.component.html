@@ -3,10 +3,16 @@
     <div class="row location">
         <div class="col-md-3 pr-0">
             <div class="form-group">
-                <ng-select name="destination" class="form-control suggestions" [items]="suggestions | async"
-                    [hideSelected]="true" [loading]="suggestionsLoading" [typeahead]="suggestionsInput"
-                    [(ngModel)]="selectedArea" bindLabel="displayName" placeholder="Search here">
-                </ng-select>
+                <div class="hotel-suggestions">
+                    <div class="hotel-suggestions_header">
+                        CITY / HOTEL
+                    </div>
+                    <ng-select name="destination" class="form-control suggestions home-searchbar"
+                        [items]="suggestions | async" [hideSelected]="true" [loading]="suggestionsLoading"
+                        [typeahead]="suggestionsInput" [(ngModel)]="selectedArea" bindLabel="displayName"
+                        placeholder="Search here">
+                    </ng-select>
+                </div>
             </div>
         </div>
 
@@ -19,7 +25,7 @@
                 <div id="checkindate" (click)="selectDate()">
                     <div id="checkInStatus">CHECK-IN</div>
                     <div id="checkInDate">{{formatDate(fromDate)}}</div>
-                    <div id="checkInDay">Monday</div>
+                    <div id="checkInDay">{{fromDay}}</div>
                 </div>
 
                 <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
@@ -41,7 +47,7 @@
                 <div id="checkoutdate" (click)="selectDate()">
                     <div id="checkOutStatus">CHECK-OUT</div>
                     <div id="checkOutDate"> {{formatDate(toDate)}} </div>
-                    <div id="checkOutDay">Tuesday</div>
+                    <div id="checkOutDay">{{toDay}}</div>
                 </div>
                 <!-- <input id="checkoutdate" class="form-control" placeholder="CHECK-OUT" name="checkOutDate"
                     [(ngModel)]="checkOutDateModel" ngbDatepicker #checkOut="ngbDatepicker" [minDate]="checkOutMinDate"
@@ -53,7 +59,10 @@
         <div class="col-md-3 pl-0 pr-0">
             <div class="form-group">
                 <div ngbDropdown [autoClose]="true" class="form-control customDropdown">
-                    <div class="customDropdownToggle" ngbDropdownToggle>
+                    <div class="dropdown_header" ngbDropdownToggle>
+                        Rooms & Guests
+                    </div>
+                    <div class="customDropdownToggle">
                         {{roomdetail.length}} Room<span *ngIf="roomdetail.length>1">s</span> &
                         {{guests}} Guest<span *ngIf="guests > 1">s</span>
                     </div>

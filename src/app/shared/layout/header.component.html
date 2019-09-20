@@ -27,8 +27,8 @@
 							<span class="carat"></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="myaccount">
-							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/login">Login</a>
-							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/register">Signup</a>
+							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/account/login">Login</a>
+							<a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/account/register">Signup</a>
 							<a *ngIf="isLoggedIn===true" class="dropdown-item" (click)="logout()">Logout</a>
 						</div>
 					</li>
@@ -37,11 +37,11 @@
 						<a class="nav-link dropdown-toggle" href="#" id="userprofile" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">Profile</a>
 						<div class="dropdown-menu mr-auto" aria-labelledby="recentsearch">
-							<a class="dropdown-item" routerLink="/profile">Profile</a>
+							<a class="dropdown-item" routerLink="/account/profile">Profile</a>
 						</div>
 					</li>
 					<li *ngIf="isLoggedIn===true" class="nav-item">
-						<a href="#" class="nav-link" routerLink="/dashboard">{{user.name}}</a>
+						<a href="#" class="nav-link" routerLink="/account/dashboard">{{user.name}}</a>
 					</li>
 				</ul>
 			</div>

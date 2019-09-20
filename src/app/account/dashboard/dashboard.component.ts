@@ -73,10 +73,10 @@ export class DashboardComponent implements OnInit {
 	}
 
 	hotelInvoice(id) {
-		this.router.navigate(['/hotelinvoice'], { queryParams: { id: id } });
+		this.router.navigate(['/hotels/hotelinvoice'], { queryParams: { id: id } });
 	}
 	hotelVoucher(id) {
-		this.router.navigate(['/hotelvoucher'], { queryParams: { id: id } });
+		this.router.navigate(['/hotels/hotelvoucher'], { queryParams: { id: id } });
 	}
 
 	ngOnInit() {
@@ -89,7 +89,7 @@ export class DashboardComponent implements OnInit {
 				}
 
 			}, (err) => {
-				this.router.navigate(['/login']);
+				this.router.navigate(['/account/login']);
 			})
 	}
 

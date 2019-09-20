@@ -62,7 +62,7 @@ export class AuthService implements CanActivate {
 
 				this.router.navigateByUrl(
 					this.router.createUrlTree(
-						['/dashboard']
+						['/account/dashboard']
 					)
 				);
 			}
@@ -76,7 +76,7 @@ export class AuthService implements CanActivate {
 
 			this.router.navigateByUrl(
 				this.router.createUrlTree(
-					['/login']
+					['/account/login']
 				)
 			);
 			return false;

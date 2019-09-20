@@ -10,15 +10,18 @@ import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-hotel-searchbar',
   templateUrl: './hotel-searchbar.component.html',
-  styleUrls: ['./hotel-searchbar.component.css']
+  styleUrls: ['./hotel-searchbar.component.css'],
+  host: {
+    '(document:click)': 'hostClick($event)',
+  }
 })
 export class HotelSearchbarComponent implements OnInit {
 
   selectedArea: any;
   suggestions: any;
 
-  checkInDateModel: NgbDateStruct;
-  checkOutDateModel: NgbDateStruct;
+  // checkInDateModel: NgbDateStruct;
+  // checkOutDateModel: NgbDateStruct;
   checkInDate: any;
   checkOutDate: any;
   checkInMinDate: NgbDateStruct;
@@ -34,14 +37,19 @@ export class HotelSearchbarComponent implements OnInit {
     "children": []
   }];
 
-  todaydate = new Date();
-
-  @ViewChild('checkIn', { static: false }) checkIn: any;
-  @ViewChild('checkOut', { static: false }) checkOut: any;
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
 
   suggestionsInput = new Subject<HttpParams>();
+
+
+  hoveredDate: NgbDate;
+
+  fromDate: NgbDate;
+  toDate: NgbDate;
+  showDatePicker: boolean = false;
+  fromDay: string;
+  toDay: string;
 
   constructor(public route: ActivatedRoute,
     public router: Router,
@@ -60,53 +68,49 @@ export class HotelSearchbarComponent implements OnInit {
       day: date.getDate()
     };
     dpConfig.minDate = todaysDate;
-    this.checkInDateModel = todaysDate;
+    // this.checkInDateModel = todaysDate;
     // this.onCheckInDateSelect(todaysDate);
 
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.toDate = calendar.getNext(calendar.getToday());
+
+    const weekdays = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    this.fromDay = weekdays[calendar.getWeekday(this.fromDate)];
+    this.toDay = weekdays[calendar.getWeekday(this.toDate)];
   }
 
   ngOnInit() {
+    this.checkInDate = this.parseDate(this.fromDate);
+    this.checkOutDate = this.parseDate(this.toDate);
+
     this.loadDestination();
   }
 
-  // hostClick(event: MouseEvent) {
-  //   if (this.checkIn && this.checkIn.isOpen()) {
-  //     if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target)) {
-  //       this.checkIn.close();
-  //     }
-  //   }
-  //   if (this.checkOut && this.checkOut.isOpen()) {
-  //     if (this.checkOutContainer && this.checkOutContainer.nativeElement && !this.checkOutContainer.nativeElement.contains(event.target)) {
-  //       this.checkOut.close();
-  //     }
-  //   }
-  // }
-
-
-  hoveredDate: NgbDate;
-
-  fromDate: NgbDate;
-  toDate: NgbDate;
-  showDatePicker: boolean = false;
+  hostClick(event: MouseEvent) {
+    if (this.showDatePicker) {
+      if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target) && !this.checkOutContainer.nativeElement.contains(event.target)) {
+        this.showDatePicker = false;
+      }
+    }
+  }
 
   selectDate() {
-    this.showDatePicker = true;
+    this.showDatePicker = !this.showDatePicker;
   }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-      this.checkInDate = this.ngbDateParserFormatter.format(date);
+      this.checkInDate = this.parseDate(date);
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
-      this.checkOutDate = this.ngbDateParserFormatter.format(date);
+      this.checkOutDate = this.parseDate(date);
 
     } else {
       this.toDate = null;
       this.fromDate = date;
-      this.checkInDate = this.ngbDateParserFormatter.format(date);
+      this.checkInDate = this.parseDate(date);
     }
 
     if (this.fromDate && this.toDate) {
@@ -129,6 +133,11 @@ export class HotelSearchbarComponent implements OnInit {
   formatDate(date: NgbDate) {
     if (date)
       return `${date.day}/${date.month}/${date.year}`;
+  }
+
+  parseDate(date: NgbDate) {
+    if (date)
+      return this.ngbDateParserFormatter.format(date);
   }
 
 

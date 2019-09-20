@@ -16,8 +16,6 @@ import { GalleryModule } from '@ngx-gallery/core';
 import { HotelsRoutingModule } from './hotels-routing.module';
 import { HotelSearchbarComponent } from './hotel-searchbar/hotel-searchbar.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
-import { NgProgressModule } from '@ngx-progressbar/core';
-import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 @NgModule({
     declarations: [
@@ -38,8 +36,6 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
         Ng5SliderModule,
         NgSelectModule,
         HotelsRoutingModule,
-        NgProgressModule,
-        NgProgressHttpModule,
     ]
 })
 

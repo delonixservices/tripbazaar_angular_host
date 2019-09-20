@@ -693,8 +693,6 @@ button:focus {
     padding: 6px 0px;
     margin: 0px;
     display: inline;
-    height: 30px;
-    width: 30px;
 }
 
 /*origin*/
@@ -1019,8 +1017,6 @@ ul.flightstops {
     text-align: center;
     list-style-type: none;
     display: inline;
-    float: left;
-    width: 25%;
 }
 
 .ins-benefit-list li h6 {
@@ -1263,8 +1259,6 @@ a.plane1 {
     font-size: 12px;
 
 }
-
-.text-links ul li a:hover {}
 
 .agreement p {
     font-family: 'Lato', sans-serif;

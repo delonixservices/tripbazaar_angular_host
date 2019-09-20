@@ -6,23 +6,22 @@
     min-width: 1000px;
 }
 
-.customDropdown,
-.customDropdownToggle {
-    height: 80px;
-}
-
-.ng-select {
+.hotel-suggestions {
     height: 80px;
     border: 1px solid #ccc;
+    padding: 5px 15px 0px;
+
 }
 
 .ng-select.suggestions .ng-dropdown-panel {
     box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
 
+.hotel-suggestions:hover,
 .ng-select.suggestions:hover,
 #checkindate:hover,
-#checkoutdate:hover {
+#checkoutdate:hover,
+.customDropdown:hover {
     background-color: #a8d0ff;
 }
 
@@ -34,6 +33,7 @@
     padding: 5px 15px 0px;
 }
 
+.hotel-suggestions_header,
 #checkindate #checkInStatus,
 #checkoutdate #checkOutStatus {
     font-weight: bold;
@@ -49,6 +49,28 @@
 #checkoutdate #checkOutDay {
     font-weight: 400;
     font-size: 12px;
+}
+
+
+.customDropdown {
+    height: 80px;
+    padding: 5px 15px 0px;
+    border-radius: 0.1px;
+}
+
+.customDropdown::after {
+    display: none;
+}
+
+#done.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown_header {
+    font-weight: bold;
+    font-size: 14px;
+    color: #212529;
+    text-transform: uppercase;
 }
 
 ngb-datepicker {
@@ -77,6 +99,12 @@ ngb-datepicker {
 
 .custom-day.faded {
     background-color: rgba(2, 117, 216, 0.5);
+}
+
+.ngb-dp-day.disabled .custom-day:hover {
+    background-color: #ccc;
+
+    color: #ccc !important;
 }
 
 .hotel_search-btn {

@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
         this.phone = response.data.mobile;
       }
     }, (err) => {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/account/login']);
     });
   }
 

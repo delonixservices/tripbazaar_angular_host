@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit {
 					if (err.message !== undefined)
 						this.loginValidation = err.message;
 				} else if (!data.user.verified) {
-					this.router.navigate(['/verifyuser', data.user._id]);
+					this.router.navigate(['/account/verifyuser', data.user._id]);
 				} else {
-					this.router.navigate(['/dashboard']);
+					this.router.navigate(['/account/dashboard']);
 				}
 			});
 		}

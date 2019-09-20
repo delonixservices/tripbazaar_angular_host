@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { AccountComponent } from './account.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -11,10 +12,11 @@ import { VerifyotpComponent } from './verifyotp/verifyotp.component';
 import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { AppRoutingModule } from "../app-routing.module";
+import { AccountRoutingModule } from "./account-routing.module";
 
 @NgModule({
     declarations: [
+        AccountComponent,
         LoginComponent,
         RegisterComponent,
         ProfileComponent,
@@ -26,7 +28,7 @@ import { AppRoutingModule } from "../app-routing.module";
     ],
     imports: [
         CommonModule,
-        AppRoutingModule,
+        AccountRoutingModule,
         FormsModule,
     ]
 })

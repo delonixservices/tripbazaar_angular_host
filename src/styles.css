@@ -41,6 +41,11 @@ a {
   background-color: #fff;
 }
 
+.ng-select.suggestions.home-searchbar .ng-dropdown-panel {
+  top: 40px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+}
+
 .ng-option {
   padding: 10px 10px;
 }
@@ -59,8 +64,9 @@ a {
   color: #0db9f0;
 }
 
-#done.dropdown-toggle::after {
-  display: none;
+.ngb-dp-day.disabled,
+.ngb-dp-day.hidden {
+  color: #bbbbbb;
 }
 
 /* custom css ng-5 slider */
