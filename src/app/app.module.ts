@@ -18,7 +18,7 @@ import { CoreModule } from './core/core.module';
 import { AccountModule } from './account/account.module'
 import { AboutModule } from './about/about.module'
 import { HotelsModule } from './hotels/hotels.module';
-import { FlightsModule } from './flights/flights.module';
+// import { FlightsModule } from './flights/flights.module';
 
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
@@ -38,7 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AccountModule,
     AboutModule,
     HotelsModule,
-    FlightsModule,
+    // FlightsModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
     {
-        path: "flights", component: FlightsComponent, children: [
+        path: "", component: FlightsComponent, children: [
             { path: "ticket", component: TicketComponent },
             { path: "flightsearch", component: FlightsearchComponent },
             { path: "flightbooking", component: FlightbookingComponent },

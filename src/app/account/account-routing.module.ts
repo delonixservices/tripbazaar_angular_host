@@ -14,7 +14,7 @@ import { VerifyotpComponent } from './verifyotp/verifyotp.component';
 import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 
 const routes: Routes = [{
-    path: "account", component: AccountComponent, children: [
+    path: "", component: AccountComponent, children: [
         { path: "login", component: LoginComponent, canActivate: [AuthService] },
         { path: "register", component: RegisterComponent, canActivate: [AuthService] },
         { path: "profile", component: ProfileComponent, canActivate: [AuthService] },

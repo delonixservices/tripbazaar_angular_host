@@ -1,25 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
-
-import { AboutComponent } from './about/about.component';
-import { HotelHomeComponent } from './hotels/hotel-home/hotel-home.component';
-import { FlightsComponent } from './flights/flights.component';
-import { AccountComponent } from './account/account.component';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   // { path: "", component: HomeComponent },
   { path: "", redirectTo: "hotels", pathMatch: "full" },
-  { path: "hotels", component: HotelHomeComponent },
-  { path: "flights", component: FlightsComponent },
-  { path: "account", component: AccountComponent },
-  { path: "about", component: AboutComponent },
+  { path: "hotels", loadChildren: () => import('./hotels/hotels.module').then(m => m.HotelsModule) },
+  // { path: "flights", loadChildren: () => import('./flights/flights.module').then(m => m.FlightsModule) },
+  { path: "account", loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+  { path: "about", loadChildren: () => import('./about/about.module').then(m => m.AboutModule) },
   // { path: '**', redirectTo: '/hotels' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules
-  })],
+  // imports: [RouterModule.forRoot(routes, {
+  //   preloadingStrategy: PreloadAllModules
+  // })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
