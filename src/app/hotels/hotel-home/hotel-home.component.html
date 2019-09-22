@@ -14,7 +14,7 @@
                 <div class="owl-carousel owl-theme">
                     <div class="col-md-12 hotel-col" *ngFor="let item of allOffer">
                         <img class="embed-responsive" [src]="api.baseUrl+item.image" style="min-height: 208px;">
-                        <div class="hotel-info">
+                        <div class="hotel-info special_offers-banner">
                             <h5>{{item.name}}</h5>
                             <p>From : {{item.from}} - {{item.to}}</p>
                             <a href="{{item.url}}" target="_blank" class="btn-light btn">Avail Offer</a>

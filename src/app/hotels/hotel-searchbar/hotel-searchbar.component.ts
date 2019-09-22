@@ -17,9 +17,16 @@ import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HotelSearchbarComponent implements OnInit {
 
-  selectedArea: any;
+  selectedArea: any = {
+    displayName: "Singapore, Singapore | (486)",
+    hotelCount: 486,
+    id: "3168",
+    name: "Singapore, Singapore",
+    transaction_identifier: "60a2022f77404b808be86fc770fe3cfc",
+    type: "city"
+  };
   suggestions: any;
-
+  showNgSelect: boolean;
   // checkInDateModel: NgbDateStruct;
   // checkOutDateModel: NgbDateStruct;
   checkInDate: any;
@@ -39,6 +46,7 @@ export class HotelSearchbarComponent implements OnInit {
 
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
+  @ViewChild('hotelSuggestionsContainer', { static: false }) hotelSuggestionsContainer: ElementRef;
 
   suggestionsInput = new Subject<HttpParams>();
 
@@ -50,6 +58,7 @@ export class HotelSearchbarComponent implements OnInit {
   showDatePicker: boolean = false;
   fromDay: string;
   toDay: string;
+  weekdays = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
   constructor(public route: ActivatedRoute,
     public router: Router,
@@ -59,7 +68,7 @@ export class HotelSearchbarComponent implements OnInit {
     public alertService: AlertService,
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
-    calendar: NgbCalendar
+    public calendar: NgbCalendar
   ) {
     const date = new Date();
     const todaysDate = {
@@ -74,10 +83,8 @@ export class HotelSearchbarComponent implements OnInit {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday());
 
-    const weekdays = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-    this.fromDay = weekdays[calendar.getWeekday(this.fromDate)];
-    this.toDay = weekdays[calendar.getWeekday(this.toDate)];
+    this.fromDay = this.weekdays[calendar.getWeekday(this.fromDate)];
+    this.toDay = this.weekdays[calendar.getWeekday(this.toDate)];
   }
 
   ngOnInit() {
@@ -93,6 +100,16 @@ export class HotelSearchbarComponent implements OnInit {
         this.showDatePicker = false;
       }
     }
+
+    if (this.showNgSelect) {
+      if (this.hotelSuggestionsContainer && this.hotelSuggestionsContainer.nativeElement && !this.hotelSuggestionsContainer.nativeElement.contains(event.target)) {
+        this.showNgSelect = false;
+      }
+    }
+  }
+
+  suggestionsClicked() {
+    this.showNgSelect = true;
   }
 
   selectDate() {
@@ -103,14 +120,18 @@ export class HotelSearchbarComponent implements OnInit {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
       this.checkInDate = this.parseDate(date);
+      this.fromDay = this.weekdays[this.calendar.getWeekday(this.fromDate)];
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
       this.checkOutDate = this.parseDate(date);
-
+      this.toDay = this.weekdays[this.calendar.getWeekday(this.toDate)];
     } else {
       this.toDate = null;
+      this.checkOutDate = null;
+      this.toDay = "";
       this.fromDate = date;
       this.checkInDate = this.parseDate(date);
+      this.fromDay = this.weekdays[this.calendar.getWeekday(this.fromDate)];
     }
 
     if (this.fromDate && this.toDate) {
@@ -173,9 +194,9 @@ export class HotelSearchbarComponent implements OnInit {
   }
 
   checkChildren(index) {
-    console.log('room = ' + index);
-    console.log('child_count = ' + Number(this.roomdetail[index].child_count));
-    console.log(this.roomdetail[index]);
+    // console.log('room = ' + index);
+    // console.log('child_count = ' + Number(this.roomdetail[index].child_count));
+    // console.log(this.roomdetail[index]);
 
     if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
       // this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - Number(this.roomdetail[index].child_count));
@@ -184,26 +205,25 @@ export class HotelSearchbarComponent implements OnInit {
       for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
         console.log(this.roomdetail[index].children[i] === undefined);
         if (this.roomdetail[index].children[i] === undefined) {
-          this.roomdetail[index].children[i] = { age: "1" };
+          this.roomdetail[index].children[i] = { age: "5" };
         }
       }
     }
-    console.log(this.roomdetail[index]);
+    // console.log(this.roomdetail[index]);
   }
 
   doneClicked() {
-    // console.log('dpdn clicked');
     let guests = 0;
     this.roomdetail.forEach((room) => {
       guests += Number(room.adult_count) + Number(room.child_count);
     });
     this.guests = guests;
-    console.log('guests =' + this.guests);
+    // console.log('guests =' + this.guests);
   }
 
   search() {
     // console.log(this.checkInDate);
-    if (this.selectedArea !== undefined && this.checkInDate !== undefined && this.checkOutDate !== undefined && this.roomdetail !== undefined) {
+    if (this.selectedArea && this.checkInDate && this.checkOutDate && this.roomdetail) {
       var flag = true;
       loop1:
       for (let o of this.roomdetail) {

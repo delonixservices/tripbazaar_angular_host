@@ -49,11 +49,10 @@ h6 {
     position: relative;
 }
 
-.passenger {
+.select_room-menu {
     width: 350px;
     right: 0px;
     top: 38px;
-    display: none;
 }
 
 .dropdown-menu,
@@ -77,7 +76,7 @@ h6 {
     width: 125px;
 }
 
-.range-data .value {
+/* .range-data .value {
     height: 25px;
     width: 25px !important;
     line-height: 25px;
@@ -86,7 +85,7 @@ h6 {
     border-radius: 100px;
     float: left;
     margin-right: 7px;
-}
+} */
 
 input,
 select {
@@ -465,7 +464,7 @@ button:focus {
     position: absolute;
     transition: ease-in-out .5s;
     z-index: 1;
-    bottom: -45px;
+    bottom: -30px;
     color: #fff;
     padding: 0 0 0 15px;
 }
