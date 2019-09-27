@@ -9,6 +9,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { JwtService, ApiService, AuthService, AlertService, CacheService } from './core';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { HotelsModule } from './hotels/hotels.module';
 
 import {
   FooterComponent,
@@ -30,6 +31,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   ],
 
   imports: [
+    HotelsModule,
     AppRoutingModule,
     CoreModule,
     BrowserModule,

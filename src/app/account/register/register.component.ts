@@ -35,8 +35,8 @@ export class RegisterComponent implements OnInit {
 
 			this.api.post("/auth/register", this.paramsObj)
 				.subscribe((response) => {
-					if (response.status == 201) {
-						this.router.navigate(['/account/otp/' + response.data._id]);
+					if (response) {
+						this.router.navigate(['/account/otp/' + response.userId]);
 					}
 				}, (err) => {
 					console.log(err)

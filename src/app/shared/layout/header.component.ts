@@ -52,17 +52,28 @@ export class HeaderComponent implements OnInit {
 
 	logout() {
 		this.authService.logout((success) => {
-			this.router.navigate(['']);
+			if(success) {
+				console.log('logged out');
+				this.isLoggedIn = false;
+				this.router.navigate(['']);
+			} else {
+				console.log("Cannot logout");
+			}
 		});
 	}
 
 	getLoggedInUser() {
 		this.api.get("/auth/me")
 			.subscribe((response) => {
-				if (response.status == 200) {
-					this.user.name = response.data.name;
+				if(response) {
+					this.user.name = response.name;
 					this.isLoggedIn = true;
 				}
+
+				// if (response.status == 200) {
+				// 	this.user.name = response.data.name;
+				// 	this.isLoggedIn = true;
+				// }
 			}, (err) => {
 				this.isLoggedIn = false;
 				this.jwt.destroyToken();

@@ -10,11 +10,11 @@ declare var $: any;
 })
 
 export class HotelHomeComponent implements OnInit {
-  public allOffer = [];
+  public allOffer: Array<any> = [];
+  public allBanner: Array<any> = [];
+  public allHoliday: Array<any> = [];
+  public allHotel: Array<any> = [];
   public validation: any;
-  public allBanner: any;
-  public allHoliday: any;
-  public allHotel: any;
 
 
   customOptions: any = {

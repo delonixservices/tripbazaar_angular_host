@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container pt-3">
 	<div class="row">
 		<div class="main-heading">
 			<h3 class=""><i class="fa fa-flights"></i> Review Your Booking</h3>
@@ -8,20 +8,24 @@
 			<div class="row">
 
 				<div class="col-md-5">
-					<div class="row">
-						<div class="carousel slide">
-							<div class="carousel-inner">
-								<div class="carousel-item "
-									*ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index "
-									[ngClass]="{'active' : i == 0}">
-									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}"
-										class="img-fluid" alt="First slide"
-										style=" height: 255px;width: 100%;object-fit: cover;">
-								</div>
-							</div>
-
-						</div>
+					<div>
+						<img src="{{hotelObj.imageDetails.prefix+0+hotelObj.imageDetails.suffix}}" class="img-fluid"
+							alt="First slide" style=" height: 255px;width: 100%;object-fit: cover;">
 					</div>
+					<!--					<div class="row">-->
+					<!--						<div class="carousel slide">-->
+					<!--							<div class="carousel-inner">-->
+					<!--								<div class="carousel-item "-->
+					<!--									*ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index "-->
+					<!--									[ngClass]="{'active' : i == 0}">-->
+					<!--									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}"-->
+					<!--										class="img-fluid" alt="First slide"-->
+					<!--										style=" height: 255px;width: 100%;object-fit: cover;">-->
+					<!--								</div>-->
+					<!--							</div>-->
+
+					<!--						</div>-->
+					<!--					</div>-->
 				</div>
 				<div class="col-md-7">
 					<h3>{{hotelObj.name}}</h3>
@@ -326,11 +330,11 @@
 					<div class="input-group">
 						<input type="text" class="form-control" name="code" placeholder="Coupon Code"
 							[(ngModel)]="coupon.code" aria-label="Enter Coupon Code">
-						<span class="input-group-btn">
+						<p class="input-group-btn">
 							<button class="btn btn-secondary" (click)="checkCopuonCode()" type="button">Apply</button>
-						</span>
-						<span class="text-danger small pt-2">{{couponValidation}}</span>
+						</p>
 					</div>
+					<p class="text-danger small pt-2">{{couponValidation}}</p>
 
 					<div class="bbl" *ngIf="couponCode.name">
 						<div class="cuponCode">{{couponCode.name}}</div>

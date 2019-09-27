@@ -41,15 +41,15 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.api.get('/auth/me').subscribe((response) => {
-      if (response && response.status === 200) {
-        console.log(response.data);
-        this.profile = response.data;
-        this.userId = response.data._id;
-        this.firstName = response.data.name;
-        this.lastName = response.data.last_name;
-        this.email = response.data.email;
+      if (response) {
+        console.log(response);
+        this.profile = response;
+        this.userId = response._id;
+        this.firstName = response.name;
+        this.lastName = response.last_name;
+        this.email = response.email;
         this.password = "**********";
-        this.phone = response.data.mobile;
+        this.phone = response.mobile;
       }
     }, (err) => {
       this.router.navigate(['/account/login']);
@@ -67,17 +67,17 @@ export class ProfileComponent implements OnInit {
       return true;
     }
 
-    this.api.post('/auth/profile', {
-      id: this.userId,
+    this.api.post('/auth/user-profile', {
+      userId: this.userId,
       name: this.firstName,
       last_name: this.lastName,
       email: this.email,
     }).subscribe((response) => {
-      if (response && response.data) {
-        this.profile = response.data;
-        this.firstName = response.data.name;
-        this.lastName = response.data.last_name;
-        this.email = response.data.email;
+      if (response && response.user) {
+        this.profile = response.user;
+        this.firstName = response.user.name;
+        this.lastName = response.user.last_name;
+        this.email = response.user.email;
         this.showEditProfile = false;
         this.authService.getLoggedInUser.next(this.firstName);
         this.validation = "";
@@ -107,9 +107,10 @@ export class ProfileComponent implements OnInit {
       return true;
     }
 
-    this.api.post('/auth/password', {
+    this.api.post('/auth/password-update', {
       password: this.currentPassword,
-      newPassword: this.newPassword
+      newPassword: this.newPassword,
+      userId: this.userId,
     }).subscribe((response) => {
       console.log(response);
       this.currentPassword = "";

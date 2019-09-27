@@ -216,7 +216,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 			}, (err) => {
 				this.alertService.error("Booking session expired! Please try again.");
 				console.log(err);
-				this.router.navigate(['/hotels/searchresult']);
+				this.router.navigate(['/hotels/hoteldetails']);
 			});
 	}
 
@@ -254,10 +254,10 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 				}
 			}, (err) => {
 				if (err.message !== undefined) {
-					this.alertService.error("Something Went Wrong Try again");
 					this.validation = err.message;
-					this.router.navigate(['/hotels/searchresult']);
 				}
+				this.alertService.error("Booking session expired! Please try again!!!");
+				this.router.navigate(['/hotels/searchresult']);
 			});
 	}
 
@@ -283,6 +283,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 						this.alertService.error("Something Went Wrong Try again.6");
 					}
 				}, (err) => {
+					this.deleteCoupon();
 					this.couponValidation = "Sorry! Invalid coupon code";
 				})
 		}

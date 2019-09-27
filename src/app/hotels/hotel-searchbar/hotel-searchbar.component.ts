@@ -22,7 +22,7 @@ export class HotelSearchbarComponent implements OnInit {
     hotelCount: 486,
     id: "3168",
     name: "Singapore, Singapore",
-    transaction_identifier: "60a2022f77404b808be86fc770fe3cfc",
+    transaction_identifier: "",
     type: "city"
   };
   suggestions: any;

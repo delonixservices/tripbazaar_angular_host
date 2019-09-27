@@ -26,12 +26,12 @@ export class VerifyuserComponent implements OnInit {
   ) {
     this.otpObj = {
       otp: '',
-      id: '',
+      userId: '',
     };
   }
 
   ngOnInit() {
-    this.otpObj.id = this.route.snapshot.paramMap.get('id');
+    this.otpObj.userId = this.route.snapshot.paramMap.get('id');
     this.userId = this.route.snapshot.paramMap.get('id');
     console.log(this.otpObj)
   }
@@ -44,11 +44,12 @@ export class VerifyuserComponent implements OnInit {
     if (this.otpObj.otp == "") {
       this.validation = "Require fields are empty";
     } else {
-      this.api.get("/auth/verify", this.otpObj)
+      this.api.post("/auth/user-verify", this.otpObj)
         .subscribe((response) => {
-          if (response.status == 200) {
-            this.router.navigate(['/account/login']);
-          }
+          this.router.navigate(['/account/login']);
+          // if (response.status == 200) {
+          //   this.router.navigate(['/account/login']);
+          // }
         }, (err) => {
           if (err.message !== undefined) {
             this.validation = err.message

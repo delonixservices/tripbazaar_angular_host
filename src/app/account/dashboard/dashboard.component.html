@@ -273,14 +273,14 @@
                             <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
                                 <div class="mb-3"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel.name}}</div>
                                 <div class="text-success"
-                                    *ngIf="transaction.prebook_response.data.package.room_details.non_refundable === false">
+                                    *ngIf="transaction.prebook_response?.data.package.room_details.non_refundable === false">
                                     <i class="fa fa-check-circle"></i> Refundable</div>
                             </div>
 
                             <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
                                 <p class="text-muted">CheckIn</p>
                                 <div>
-                                    <span>{{transaction.prebook_response.data.package.check_in_date | date:'mediumDate'}}</span>
+                                    <span>{{transaction.prebook_response?.data.package.check_in_date | date:'mediumDate'}}</span>
                                     <span>{{transaction.hotel.moreDetails.checkInDate}}</span>
                                 </div>
                             </div>
@@ -291,23 +291,23 @@
                             <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
                                 <p class="text-muted">CheckOut</p>
                                 <div>
-                                    <span>{{transaction.prebook_response.data.package.check_out_date | date:'mediumDate'}}</span>
+                                    <span>{{transaction.prebook_response?.data.package.check_out_date | date:'mediumDate'}}</span>
                                     <span>{{transaction.hotel.moreDetails.checkOutDate}}</span>
                                 </div>
                             </div>
                             <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
                                 <p class="text-muted">Rooms</p>
                                 <div>
-                                    <span>{{transaction.prebook_response.data.package.room_count}}</span>
+                                    <span>{{transaction.prebook_response?.data.package.room_count}}</span>
                                 </div>
                             </div>
                             <div class="col col-md-2 pt-2 pb-2 text-center">
                                 <p class="text-muted">Guest</p>
                                 <div>
-                                    <span>Adult - {{transaction.prebook_response.data.package.adult_count}}</span>
+                                    <span>Adult - {{transaction.prebook_response?.data.package.adult_count}}</span>
                                     <br>
-                                    <span *ngIf="transaction.prebook_response.data.package.child_count>0">Child -
-                                        {{transaction.prebook_response.data.package.child_count}}</span>
+                                    <span *ngIf="transaction.prebook_response?.data.package.child_count>0">Child -
+                                        {{transaction.prebook_response?.data.package.child_count}}</span>
                                 </div>
                             </div>
 

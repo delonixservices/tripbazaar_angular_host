@@ -17,7 +17,7 @@ export class OtpComponent implements OnInit {
 	constructor(private router: Router, public api: ApiService, private route: ActivatedRoute) {
 		this.otpObj = {
 			otp: '',
-			id: '',
+			userId: '',
 		};
 	}
 
@@ -25,9 +25,9 @@ export class OtpComponent implements OnInit {
 		if (this.otpObj.otp == "") {
 			this.validation = "Require fields are empty";
 		} else {
-			this.api.get("/auth/verify", this.otpObj)
+			this.api.post("/auth/otp-verify", this.otpObj)
 				.subscribe((response) => {
-					if (response.status == 200) {
+					if (response.status === 200) {
 						this.router.navigate(['/account/login']);
 					}
 				}, (err) => {
@@ -43,6 +43,6 @@ export class OtpComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.otpObj.id = this.route.snapshot.paramMap.get('id');
+		this.otpObj.userId = this.route.snapshot.paramMap.get('id');
 	}
 }

@@ -35,10 +35,12 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
+		this.loginValidation = "";
 		if (this.paramsObj.mobile == "" || this.paramsObj.password == "") {
 			this.loginValidation = "Require fields are empty";
 		} else {
 			this.auth.login(this.paramsObj, (data, err) => {
+				console.log(data);
 				if (err) {
 					if (err.message !== undefined)
 						this.loginValidation = err.message;

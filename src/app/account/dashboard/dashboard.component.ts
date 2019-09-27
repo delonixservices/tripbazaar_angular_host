@@ -18,14 +18,32 @@ export class DashboardComponent implements OnInit {
 
 	}
 
-	getMyTransaction() {
-		this.api.post("/mytransaction", { "user": this.loginUser })
-			.subscribe((response) => {
-				if (response.status == 200) {
-					this.transactions = response.data;
-					console.log(this.transactions);
-				}
+	ngOnInit() {
 
+		this.api.get("/auth/me")
+			.subscribe((response) => {
+				if(response) {
+					this.loginUser = response;
+					this.getMyTransaction();
+				}
+				// if (response.status === 200) {
+				// 	this.loginUser = response.data;
+				// 	this.getMyTransaction();
+				// } else {
+				// 	this.router.navigate(['/account/login']);
+				// }
+
+			}, (err) => {
+				this.router.navigate(['/account/login']);
+			})
+	}
+
+
+	getMyTransaction() {
+		this.api.post("/transactions", { "user": this.loginUser })
+			.subscribe((response) => {
+				this.transactions = response.data;
+				console.log(this.transactions);
 			}, (err) => {
 				console.log(err);
 			})
@@ -42,7 +60,7 @@ export class DashboardComponent implements OnInit {
 			cancelButtonText: 'Do not cancel'
 		}).then((result) => {
 			if (result.value) {
-				this.api.post("/cancel", { "user": this.loginUser, 'transactionid': transactionid })
+				this.api.post("/cancel", { "user": this.loginUser, 'transactionId': transactionid })
 					.subscribe((response) => {
 						console.log(response)
 						if (response && response.data) {
@@ -77,20 +95,6 @@ export class DashboardComponent implements OnInit {
 	}
 	hotelVoucher(id) {
 		this.router.navigate(['/hotels/hotelvoucher'], { queryParams: { id: id } });
-	}
-
-	ngOnInit() {
-
-		this.api.get("/auth/me")
-			.subscribe((response) => {
-				if (response.status == 200) {
-					this.loginUser = response.data;
-					this.getMyTransaction();
-				}
-
-			}, (err) => {
-				this.router.navigate(['/account/login']);
-			})
 	}
 
 	isCancelAllowed(date) {

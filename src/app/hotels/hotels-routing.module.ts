@@ -10,7 +10,7 @@ import { SearchresultComponent } from './searchresult/searchresult.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
 
 const routes: Routes = [{
-    path: "", component: HotelsComponent, children: [
+    path: "hotels", component: HotelsComponent, children: [
         { path: "", component: HotelHomeComponent },
         { path: "hotelvoucher", component: HotelvoucherComponent },
         { path: "hotelinvoice", component: HotelinvoiceComponent },
