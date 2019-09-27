@@ -40,7 +40,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { JwtService } from './jwt.service';
 import { ApiService } from './api.service';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router/src/router_state';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Subject } from 'rxjs';
 
 @Injectable()
@@ -57,12 +57,11 @@ export class AuthService implements CanActivate {
 		const redirectUrl = route['_routerState']['url'];
 
 		if (redirectUrl.search("/login") != -1 || redirectUrl.search("/register") != -1) {
-
 			if (this.jwt.isAuth()) {
 
 				this.router.navigateByUrl(
 					this.router.createUrlTree(
-						['/dashboard']
+						['/account/dashboard']
 					)
 				);
 			}
@@ -76,7 +75,7 @@ export class AuthService implements CanActivate {
 
 			this.router.navigateByUrl(
 				this.router.createUrlTree(
-					['/login']
+					['/account/login']
 				)
 			);
 			return false;
@@ -86,14 +85,23 @@ export class AuthService implements CanActivate {
 	login(paramsObj, callback) {
 		this.api.post("/auth/login", paramsObj)
 			.subscribe((response) => {
-				if (response && response.status == 200) {
-					console.log(response.data);
-					if (response.data.user.verified) {
-						this.jwt.saveToken(response.data.token, response.data.refreshToken);
-						this.getLoggedInUser.next(response.data.user.name);
-					}
-					callback(response.data, false);
+				console.log(response);
+				if (response)
+				this.jwt.saveToken(response.token, response.refreshToken);
+				if (response.user.verified) {
+					// this.jwt.saveToken(response.data.token, response.data.refreshToken);
+					this.getLoggedInUser.next(response.user.name);
 				}
+				callback(response, false);
+				// if (response && response.status == 200) {
+				// 	console.log(response.data);
+				// 	this.jwt.saveToken(response.data.token, response.data.refreshToken);
+				// 	if (response.data.user.verified) {
+				// 		// this.jwt.saveToken(response.data.token, response.data.refreshToken);
+				// 		this.getLoggedInUser.next(response.data.user.name);
+				// 	}
+				// 	callback(response.data, false);
+				// }
 			}, (err) => {
 				this.getLoggedInUser.next("");
 				callback(null, err);
@@ -105,14 +113,11 @@ export class AuthService implements CanActivate {
 			.subscribe((response) => {
 				console.log(response);
 				this.getLoggedInUser.next("");
-				if (response.status == 200) {
-					this.jwt.destroyToken();
-					callback(true);
-				} else {
-					console.log(response.status);
-				}
+				this.jwt.destroyToken();
+				callback(true);
 			}, (err) => {
-				this.getLoggedInUser.next("");
+				// this.getLoggedInUser.next("");
+				console.log(err);
 				callback(false);
 			});
 	}

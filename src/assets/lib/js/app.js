@@ -15,37 +15,37 @@ $(function () {
 	// });
 
 	/* Bootstrap DatePicker*/
-	$('.mydatepicker, #datepicker').datepicker();
-	$('.checkInDate').datepicker({
-		// format: 'yyyy/mm/dd',
-		autoclose: true,
-		todayHighlight: true,
-		toggleActive: true,
-		startDate: 'd',
-	});
-	$('.checkOutDate').datepicker({
-		// format: 'yyyy/mm/dd',
-		autoclose: true,
-		todayHighlight: true,
-		toggleActive: true,
-		startDate: '+1d',
-	});
+	// $('.mydatepicker, #datepicker').datepicker();
+	// $('.checkInDate').datepicker({
+	// 	// format: 'yyyy/mm/dd',
+	// 	autoclose: true,
+	// 	todayHighlight: true,
+	// 	toggleActive: true,
+	// 	startDate: 'd',
+	// });
+	// $('.checkOutDate').datepicker({
+	// 	// format: 'yyyy/mm/dd',
+	// 	autoclose: true,
+	// 	todayHighlight: true,
+	// 	toggleActive: true,
+	// 	startDate: '+1d',
+	// });
 
-	$(".close").click(function () {
-		$(".side-panel-holder ").hide();
-	})
-	$(".gstform").click(function () {
-		$(".side-panel-holder ").hide();
-	})
+	// $(".close").click(function () {
+	// 	$(".side-panel-holder ").hide();
+	// })
+	// $(".gstform").click(function () {
+	// 	$(".side-panel-holder ").hide();
+	// })
 
-	$(".gst").click(function () {
-		$(".gst-holder").show();
-		$(".side-panel").addClass("slideInRight");
-	})
+	// $(".gst").click(function () {
+	// 	$(".gst-holder").show();
+	// 	$(".side-panel").addClass("slideInRight");
+	// })
 
-	$(".remove-discount").click(function () {
-		$(".coupon-discount").hide(100);
-	})
+	// $(".remove-discount").click(function () {
+	// 	$(".coupon-discount").hide(100);
+	// })
 	// $('#datepicker-autoclose').datepicker({
 	//     autoclose: true,
 	// 	todayHighlight: true,
@@ -78,37 +78,36 @@ $(function () {
 	//         todayHighlight: true
 	// });
 
-	$('.fair-fee').popover({
-		trigger: "click"
-	});
-	$("[data-toggle='popover']").on('show.bs.popover', function () {
-		$(this).attr("data-content", $(this).parent().children(".popover-content").html());
+	// $('.fair-fee').popover({
+	// 	trigger: "click"
+	// });
+	// $("[data-toggle='popover']").on('show.bs.popover', function () {
+	// 	$(this).attr("data-content", $(this).parent().children(".popover-content").html());
 
-	});
+	// });
 
-	$(".close").click(function () {
-		$(".side-panel-holder ").hide();
-	})
+	// $(".close").click(function () {
+	// 	$(".side-panel-holder ").hide();
+	// })
 
-	$(".gst").click(function () {
-		$(".gst-holder").show();
-		$(".side-panel").addClass("slideInRight");
-	})
+	// $(".gst").click(function () {
+	// 	$(".gst-holder").show();
+	// 	$(".side-panel").addClass("slideInRight");
+	// })
 
-	$(".remove-discount").click(function () {
-		$(".coupon-discount").hide(100);
-	})
+	// $(".remove-discount").click(function () {
+	// 	$(".coupon-discount").hide(100);
+	// })
 
+	// $(".depart .col").click(function () {
+	// 	$(this).toggleClass("active");
 
-	$(".depart .col").click(function () {
-		$(this).toggleClass("active");
+	// });
 
-	});
+	// $(".depart .col input").click(function () {
+	// 	$(this).parent().parent().click();
 
-	$(".depart .col input").click(function () {
-		$(this).parent().parent().click();
-
-	});
+	// });
 
 	// var adults = document.getElementById("adult");
 	// var output1 = document.getElementById("total-adult");

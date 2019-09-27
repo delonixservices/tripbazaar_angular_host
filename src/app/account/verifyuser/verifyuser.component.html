@@ -1,0 +1,53 @@
+<div class="container my-5 py-5">
+  <div class="row justify-content-center">
+    <div class="col-6">
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="text-danger">User not verified</h5>
+          <p class="text-danger font-weight-bold">Please enter the otp sent to your registered mobile number</p>
+        </div>
+
+        <div class="card-body">
+
+          <div class="form-group">
+            <input type="email" required="" class="form-control" [(ngModel)]="otpObj.otp" placeholder="Enter OTP">
+          </div>
+
+          <div class="form-group">
+            <input type="button" class="btn-block btn-danger btn" (click)="otpsubmit()" value="Submit">
+          </div>
+
+          <div *ngIf="validation" class="msg alert alert-danger" role="alert">
+            {{validation}}
+          </div>
+
+          <div class="text-center">Resent otp <a (click)="resentotp()" style="color: blue;">Click Here</a>
+          </div>
+          <div class="text-center">Change Mobile No<a (click)="openModal(changeMobile)" style="color: blue;">Click
+              Here</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- change mobile no modal -->
+<ng-template #changeMobile let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Mobile Number</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d()"><span
+        aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="mobileNo">Please enter your mobile number</label>
+      <input type="number" id="mobileNo" class="form-control" [(ngModel)]="mobile" placeholder="Mobile Number">
+    </div>
+    <button type="button" class="btn btn-danger" (click)="changeMobile()">Submit</button>
+  </div>
+  <div class="text-danger px-3 pb-3">{{chgMobileValidation}}</div>
+</ng-template>

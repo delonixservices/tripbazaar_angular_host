@@ -1,0 +1,55 @@
+.hotel-home_header {
+    background: url(https://cdn.pixabay.com/photo/2017/01/18/15/34/singapore-1990090_1280.jpg);
+    height: 30rem;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-repeat: no-repeat;
+    background-color: #0a1946;
+}
+
+.hotel_offers,
+.popular_hotels,
+.holiday_packages,
+.special_offers {
+    box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.hotel_offers img,
+.popular_hotels img,
+.holiday_packages img,
+.special_offers img {
+    box-shadow: 0 1px 6px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.special_offers,
+.hotel_offers {
+    padding: 20px 30px;
+}
+
+.holiday_packages {
+    padding: 20px 30px;
+}
+
+.popular_hotels {
+    padding: 20px 30px 10px;
+}
+
+.special_offers-banner {
+    bottom: -45px;
+}
+
+/* from home component */
+.mns {
+    height: 200px;
+    object-fit: cover;
+}
+
+.mnd {
+    height: 253px;
+}

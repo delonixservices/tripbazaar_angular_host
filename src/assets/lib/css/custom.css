@@ -1,18 +1,4 @@
 /*Custom Css File*/
-body,
-html {
-    background: #f7f7f7;
-    /* scroll-behavior: smooth; */
-}
-
-body,
-p,
-ul {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 13px;
-    list-style: none;
-    list-style-type: unset;
-}
 
 h1,
 h2,
@@ -20,11 +6,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Raleway', sans-serif;
-}
-
-.navbar-nav a {
-    color: #fff;
+    font-family: 'Lato', sans-serif, Helvetica;
 }
 
 .navbar-dark.bg-dark {
@@ -40,14 +22,17 @@ h6 {
 }
 
 .navbar-brand h1 {
-    font-family: 'Helvetica', sans-serif
+    font-family: 'Lato', 'Helvetica', sans-serif
 }
 
 .main-heading {
     color: #f80759;
     text-transform: uppercase;
-    font-size: 28px;
-    margin: 25px 0 15px 0px
+}
+
+.main-heading .heading {
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .header-container {
@@ -64,11 +49,10 @@ h6 {
     position: relative;
 }
 
-.passenger {
+.select_room-menu {
     width: 350px;
     right: 0px;
     top: 38px;
-    display: none;
 }
 
 .dropdown-menu,
@@ -92,7 +76,7 @@ h6 {
     width: 125px;
 }
 
-.range-data .value {
+/* .range-data .value {
     height: 25px;
     width: 25px !important;
     line-height: 25px;
@@ -101,7 +85,7 @@ h6 {
     border-radius: 100px;
     float: left;
     margin-right: 7px;
-}
+} */
 
 input,
 select {
@@ -464,7 +448,7 @@ button:focus {
     color: #f80759;
     font-size: 16px;
     font-weight: 600;
-    font-family: Raleway;
+    font-family: 'Lato', sans-serif;
 }
 
 .hotel-col {
@@ -480,7 +464,7 @@ button:focus {
     position: absolute;
     transition: ease-in-out .5s;
     z-index: 1;
-    bottom: -45px;
+    bottom: -30px;
     color: #fff;
     padding: 0 0 0 15px;
 }
@@ -708,8 +692,6 @@ button:focus {
     padding: 6px 0px;
     margin: 0px;
     display: inline;
-    height: 30px;
-    width: 30px;
 }
 
 /*origin*/
@@ -1034,8 +1016,6 @@ ul.flightstops {
     text-align: center;
     list-style-type: none;
     display: inline;
-    float: left;
-    width: 25%;
 }
 
 .ins-benefit-list li h6 {
@@ -1207,14 +1187,14 @@ a.plane1 {
 /*user-agreement*/
 
 .headerType h5 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-size: 25px;
     color: #494949;
 }
 
 .headerType p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-size: 18px;
     color: #494949;
@@ -1222,7 +1202,7 @@ a.plane1 {
 
 
 .text-link ul li {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     text-align: left;
     font-size: 13px;
     margin-top: 5px;
@@ -1242,7 +1222,7 @@ a.plane1 {
 }
 
 .text-link ul li a {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     color: inherit;
     font-size: 12px;
 
@@ -1253,7 +1233,7 @@ a.plane1 {
 /*user agreement links*/
 
 .text-links ul li {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     text-align: left;
     font-size: 13px;
     margin-top: 5px;
@@ -1273,16 +1253,14 @@ a.plane1 {
 }
 
 .text-links ul li a {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     color: blue;
     font-size: 12px;
 
 }
 
-.text-links ul li a:hover {}
-
 .agreement p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 12px;
     color: #494949;
     font-weight: bold;
@@ -1293,7 +1271,7 @@ a.plane1 {
 }
 
 .user-agreement>p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 11px;
     color: inherit;
 
@@ -1379,7 +1357,7 @@ a.swap1 {
 
 /*our values*/
 .excellence h2 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     text-align: center;
 }
 
@@ -1396,7 +1374,7 @@ a.swap1 {
 }
 
 .OurValues h4 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     color: inherit;
     font-weight: bold;
     text-decoration: none;
@@ -1405,7 +1383,7 @@ a.swap1 {
 
 .OurValues p {
     margin: -40px 0px 5px 80px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 12px;
     text-decoration: none;
 
@@ -1444,7 +1422,7 @@ a.swap1 {
 
 /*Privacy Policy*/
 .button {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     font-size: 13px;
     float: left;
@@ -1460,7 +1438,7 @@ a.swap1 {
 
 .privacyContent h3,
 .privacyContent h6 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: bold;
     color: #494949;
     background-color: #e2e2e2;
@@ -1469,7 +1447,7 @@ a.swap1 {
 }
 
 .privacyContent p {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-size: 12px;
     color: inherit;
 
@@ -1553,7 +1531,7 @@ a hover.back-to-top {
     color: #f80759;
     font-size: 18px;
     font-weight: 600;
-    font-family: Raleway;
+    font-family: 'Lato', sans-serif;
 }
 
 .footer-upper i {
