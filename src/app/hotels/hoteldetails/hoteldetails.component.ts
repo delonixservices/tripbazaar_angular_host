@@ -21,8 +21,8 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 	checkInDate: any;
 	checkOutDate: any;
 	suggestionsLoading = false;
-	hotelsearchkeys: any;
-	hoteldetailkeys: any;
+	// hotelsearchkeys: any;
+	hoteldetailkeys: any = {};
 	guests: number = 1;
 	roomdetail = [{
 		"room": "1",
@@ -52,6 +52,8 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 		"Full Board: Breakfast, lunch and dinner",
 		"All Inclusive"
 	];
+	searchObj: any;
+	searchresultkeys: any;
 
 	constructor(private route: ActivatedRoute,
 		private router: Router,
@@ -61,22 +63,51 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 	) {
 
 		this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
-		this.math = Math;
-		if (this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null) {
+		console.log(this.hotelObj);
+		if (!this.hotelObj) {
 			this.alertService.error("Please select correct hotel");
-			this.router.navigate(['/hotels/searchresult']);
+			// this.router.navigate(['/hotels/searchresult']);
 		}
 	}
 
 	ngOnInit() {
+
+		this.searchresultkeys = JSON.parse(localStorage.getItem('searchresultkeys'));
+
+		this.route.queryParams.subscribe((params) => {
+			this.hoteldetailkeys.checkindate = params.checkindate;
+			this.hoteldetailkeys.checkoutdate = params.checkoutdate;
+			// this.hoteldetailkeys.area = {
+			// 	'id': params.hotelId,
+			// 	'name': params.name,
+			// 	'type': params.type
+			// }
+			this.hoteldetailkeys.hotelId = params.hotelId;
+			this.hoteldetailkeys.details = JSON.parse(params.details);
+			this.hoteldetailkeys.transaction_identifier = params.transaction_identifier;
+			console.log(this.hoteldetailkeys);
+
+			this.loadHotelDetails();
+			this.loadDestination();
+
+			this.selectedArea = this.hoteldetailkeys.area;
+			this.checkInDate = this.hoteldetailkeys.checkindate;
+			this.checkOutDate = this.hoteldetailkeys.checkoutdate;
+			this.roomdetail = this.hoteldetailkeys.details;
+
+		}, (err) => {
+			console.log(err);
+			this.router.navigate(['/hotels', 'searchresult'], { queryParams: this.searchresultkeys });
+		});
+
 		// this.searchResult();
-		this.loadHotelDetails();
-		this.loadDestination();
-		// Changes Ankit
-		this.selectedArea = this.hoteldetailkeys.area;
-		this.checkInDate = this.hoteldetailkeys.checkindate;
-		this.checkOutDate = this.hoteldetailkeys.checkoutdate;
-		this.roomdetail = this.hoteldetailkeys.details;
+		// this.loadHotelDetails();
+		// this.loadDestination();
+		// // Changes Ankit
+		// this.selectedArea = this.hoteldetailkeys.area;
+		// this.checkInDate = this.hoteldetailkeys.checkindate;
+		// this.checkOutDate = this.hoteldetailkeys.checkoutdate;
+		// this.roomdetail = this.hoteldetailkeys.details;
 		// this.selectedArea = this.hotelsearchkeys.area;
 		// this.checkInDate = this.hotelsearchkeys.checkindate;
 		// this.checkOutDate = this.hotelsearchkeys.checkoutdate;
@@ -130,20 +161,22 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 	// changes Ankit
 	// Load hotel details
 	loadHotelDetails() {
-		this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
-		this.api.post("/search", this.hoteldetailkeys)
+		// this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
+		console.log(this.hoteldetailkeys)
+		this.api.post("/hotels/packages", this.hoteldetailkeys)
 			// Added Ankit	
 			// emit values until provided observable i.e ngUnsubscribe emits
 			.pipe(takeUntil(this.ngUnsubscribe))
 			.subscribe((response) => {
-				if (response.data != undefined) {
+				if (response.data) {
 					console.log(response);
-					this.hotelObj = response.data.hotels[0];
+					this.hotelObj = response.data.hotel;
 					// sorting packages in increasing order of the price
 					this.hotelObj.rates.packages.sort((a, b) => a.chargeable_rate - b.chargeable_rate);
 					this.hotelObj.searchkey = this.hoteldetailkeys;
-					localStorage.setItem('hotelObj', JSON.stringify(response.data.hotels[0]));
-					localStorage.setItem('transaction_identifier', response.transaction_identifier);
+					this.searchObj = response.data.search;
+					localStorage.setItem('hotelObj', JSON.stringify(response.data.hotel));
+					localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
 					localStorage.setItem('searchObj', JSON.stringify(response.data.search));
 				}
 			}, (err) => {
@@ -151,7 +184,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 				if (err.message !== undefined) {
 					this.validation = err.message
 				}
-				this.hoteldetailkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
+				// this.hoteldetailkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 				this.hotelObj.searchkey = this.hoteldetailkeys;
 			});
 	}
@@ -161,7 +194,17 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 			this.alertService.error("Please Select correct hotel package");
 		} else {
 			localStorage.setItem('packageObj', JSON.stringify(hotelPackage));
-			this.router.navigate(['/hotels/hotelbooking']);
+			// this.router.navigate(['/hotels/hotelbooking']);
+			const queryParams = {
+				search: JSON.stringify(this.searchObj),
+				details: JSON.stringify(this.hoteldetailkeys.details),
+				hotelId: this.hotelObj.hotelId,
+				bookingKey: hotelPackage.booking_key,
+				transaction_identifier: this.hoteldetailkeys.transaction_identifier
+			};
+			console.log(queryParams)
+
+			this.router.navigate(['/hotels', 'hotelbooking'], { 'queryParams': queryParams });
 		}
 	}
 
@@ -222,18 +265,17 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 			}
 			if (flag) {
-				this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
-				localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
-				this.hotelObj.searchkey = this.hotelsearchkeys;
-				// this.searchResult();
-				this.router.navigate(['/hotels/searchresult']);
+				// this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
+				// localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
+				// this.hotelObj.searchkey = this.hotelsearchkeys;
+				// // this.searchResult();
+				// this.router.navigate(['/hotels/searchresult']);
 			}
 
 		} else {
 			this.alertService.error("All fields are required!");
 		}
 	}
-
 
 	loadDestination() {
 		this.suggestions = concat(
@@ -242,7 +284,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 				debounceTime(800),
 				distinctUntilChanged(),
 				tap(() => this.suggestionsLoading = true),
-				switchMap(term => this.api.get("/suggest", term).pipe(
+				switchMap(term => this.api.get("/hotels/suggest", term).pipe(
 					catchError(() => of([])), // empty list on error
 					tap(() => this.suggestionsLoading = false)
 				))
@@ -258,7 +300,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 	// 			if (response.data != undefined) {
 	// 				this.hotelObj.searchkey = this.hotelsearchkeys;
 	// 				// this.filteredHotels = response.data.hotels;
-	// 				localStorage.setItem('transaction_identifier', response.transaction_identifier);
+	// localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
 	// 				localStorage.setItem('searchObj', JSON.stringify(response.data.search));
 	// 			}
 	// 		}, (err) => {

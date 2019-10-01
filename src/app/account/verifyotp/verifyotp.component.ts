@@ -17,7 +17,7 @@ export class VerifyotpComponent implements OnInit {
 
 		this.otpObj = {
 			otp: '',
-			id: ''
+			userId: '',
 		}
 	}
 
@@ -27,7 +27,7 @@ export class VerifyotpComponent implements OnInit {
 			this.validation = "Require fields are empty";
 		} else {
 
-			this.api.get("/auth/reset", this.otpObj)
+			this.api.post("/auth/otp-verify", this.otpObj)
 				.subscribe((response) => {
 					console.log(response);
 					if (response.status == 200) {
@@ -42,7 +42,7 @@ export class VerifyotpComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.otpObj.id = this.route.snapshot.paramMap.get('id');
+		this.otpObj.userId = this.route.snapshot.paramMap.get('id');
 	}
 	resentotp() {
 

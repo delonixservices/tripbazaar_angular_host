@@ -238,7 +238,21 @@ export class HotelSearchbarComponent implements OnInit {
       if (flag) {
         this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
         localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
-        this.router.navigate(['/hotels', 'searchresult']);
+
+        const queryParams = {
+          "checkindate": this.checkInDate,
+          "checkoutdate": this.checkOutDate,
+          "name": this.selectedArea.name,
+          "type": this.selectedArea.type,
+          "id": this.selectedArea.id,
+          "transaction_identifier": this.selectedArea.transaction_identifier,
+          "details": JSON.stringify(this.roomdetail)
+        };
+
+        // saving query params in local storage, for navigating to the searchresult component again
+        localStorage.setItem('searchresultkeys', JSON.stringify(queryParams));
+
+        this.router.navigate(['/hotels', 'searchresult'], { 'queryParams': queryParams });
 
         console.log(this.hotelsearchkeys);
       }
@@ -255,7 +269,7 @@ export class HotelSearchbarComponent implements OnInit {
         debounceTime(800),
         distinctUntilChanged(),
         tap(() => this.suggestionsLoading = true),
-        switchMap(term => this.api.get("/suggest", term).pipe(
+        switchMap(term => this.api.get("/hotels/suggest", term).pipe(
           catchError(() => of([])), // empty list on error
           tap(() => this.suggestionsLoading = false)
         ))

@@ -34,18 +34,6 @@
 				</div>
 				<div class="filter-body" id="rates_criteria">
 					<h4 class="headers">Rates</h4>
-					<!-- <span id="rates_range_label" class="slider-label">0 - 100000</span> -->
-					<!-- <div id="rates_slider"
-						class="slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-						aria-disabled="false">
-						<div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 100%;">
-						</div>
-						<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 0%;"></a>
-						<a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 100%;"></a>
-					</div> -->
-
-					<!-- <input type="hidden" id="range_filter" value="0-100000"
-						fjs-criteria="field=rates.packages.room_rate,type=range"> -->
 					<ng5-slider [(value)]="minHotelPrice" [(highValue)]="maxHotelPrice" [options]="options"
 						(userChangeEnd)="priceFilter()">
 					</ng5-slider>
@@ -177,14 +165,14 @@
 												*ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].indicative_market_rates">
 												<s
 													*ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
-													{{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].chargeable_rate)+ hotel.rates.packages[0].chargeable_rate | number: '1.0-0'}}</s></span>
+													{{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].base_amount)+ hotel.rates.packages[0].base_amount | number: '1.0-0'}}</s></span>
 
 											<span class="badge badge-success text-light small"
 												*ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
 												{{hotel.rates.packages[0].guest_discount_percentage}} % </span> <br>
 
 											{{hotel.rates.packages[0].chargeable_rate_currency}}.
-											<span>{{hotel.rates.packages[0].chargeable_rate | number: '1.0-0'}}</span>
+											<span>{{hotel.rates.packages[0].base_amount | number: '1.0-0'}}</span>
 										</h4>
 										<hr>
 										<div class="btn btn-danger" (click)="hoteldetails(hotel)">Book Room <i
