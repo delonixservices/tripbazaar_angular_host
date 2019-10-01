@@ -38,7 +38,7 @@ export class HotelvoucherComponent implements OnInit {
         this.transactionId = params.id;
         let headers = new HttpHeaders();
         headers = headers.set('Accept', 'application/pdf');
-        this.http.get(`${this.baseUrl}/voucher`, { params: httpParams, headers: headers, responseType: 'blob', observe: 'response' })
+        this.http.get(`${this.baseUrl}/hotels/voucher`, { params: httpParams, headers: headers, responseType: 'blob', observe: 'response' })
           .subscribe((response) => {
             var blob = new Blob([response.body], { type: 'application/pdf' });
             this.dataLocalUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));

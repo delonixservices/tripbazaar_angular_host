@@ -271,7 +271,7 @@
                     <div class="card-body border border-left-0 border-right-0" *ngFor="let transaction of transactions">
                         <div class="row">
                             <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
-                                <div class="mb-3"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel.name}}</div>
+                                <div class="mb-3"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel?.name}}</div>
                                 <div class="text-success"
                                     *ngIf="transaction.prebook_response?.data.package.room_details.non_refundable === false">
                                     <i class="fa fa-check-circle"></i> Refundable</div>
@@ -281,7 +281,7 @@
                                 <p class="text-muted">CheckIn</p>
                                 <div>
                                     <span>{{transaction.prebook_response?.data.package.check_in_date | date:'mediumDate'}}</span>
-                                    <span>{{transaction.hotel.moreDetails.checkInDate}}</span>
+                                    <span>{{transaction.hotel?.moreDetails.checkInTime}}</span>
                                 </div>
                             </div>
 
@@ -292,7 +292,7 @@
                                 <p class="text-muted">CheckOut</p>
                                 <div>
                                     <span>{{transaction.prebook_response?.data.package.check_out_date | date:'mediumDate'}}</span>
-                                    <span>{{transaction.hotel.moreDetails.checkOutDate}}</span>
+                                    <span>{{transaction.hotel?.moreDetails.checkOutTime}}</span>
                                 </div>
                             </div>
                             <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">

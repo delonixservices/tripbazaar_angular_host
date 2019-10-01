@@ -19,8 +19,8 @@ export class ResetpasswordComponent implements OnInit {
 		this.resetObj = {
 			id: '',
 			password: '',
-			newpassword: ''
-
+			newpassword: '',
+			password_reset_token: ''
 		};
 	}
 
@@ -28,10 +28,16 @@ export class ResetpasswordComponent implements OnInit {
 
 		if (this.resetObj.password == "" || this.resetObj.newpassword == "") {
 			this.validation = "Require fields are empty";
-		} else {
-			this.api.post("/auth/reset", this.resetObj)
+		}
+		else if (this.resetObj.password !== this.resetObj.newpassword) {
+			this.validation = "Password does not match";
+		}
+		else {
+			this.api.post("/auth/password-reset", this.resetObj)
 				.subscribe((response) => {
 					if (response.status == 200) {
+						this.validation = "";
+						localStorage.removeItem('password_reset');
 						this.router.navigate(['/account/login']);
 					}
 				}, (err) => {
@@ -43,6 +49,7 @@ export class ResetpasswordComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.resetObj.id = this.route.snapshot.paramMap.get('id');
+		this.resetObj.userId = this.route.snapshot.paramMap.get('id');
+		this.resetObj.password_reset_token = localStorage.getItem('password_reset');
 	}
 }

@@ -64,10 +64,11 @@ export class LoginComponent implements OnInit {
 		} else {
 			console.log(this.forgotObj)
 			this.auth.resetPassword(this.forgotObj, (res, err) => {
-				if (res.success) {
+				if (res) {
 					// close the modal
 					this.modalRef.close();
-					this.router.navigate(['/verifyotp/' + res.data._id]);
+					localStorage.setItem('password_reset', res.data.password_reset_token);
+					this.router.navigate(['/account/verifyotp/' + res.data._id]);
 				} else {
 					if (err.message !== undefined)
 						this.fgPassValidation = err.message;

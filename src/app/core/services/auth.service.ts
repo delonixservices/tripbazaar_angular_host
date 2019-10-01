@@ -87,7 +87,7 @@ export class AuthService implements CanActivate {
 			.subscribe((response) => {
 				console.log(response);
 				if (response)
-				this.jwt.saveToken(response.token, response.refreshToken);
+					this.jwt.saveToken(response.token, response.refreshToken);
 				if (response.user.verified) {
 					// this.jwt.saveToken(response.data.token, response.data.refreshToken);
 					this.getLoggedInUser.next(response.user.name);
@@ -123,7 +123,7 @@ export class AuthService implements CanActivate {
 	}
 
 	resetPassword(resetObj, callback) {
-		this.api.post("/auth/forgot", resetObj)
+		this.api.post("/auth/password-forgot", resetObj)
 			.subscribe((response) => {
 				console.log(response.data);
 				if (response && response.status == 200) {

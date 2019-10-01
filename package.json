@@ -4,9 +4,9 @@
   "license": "private",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 192.168.1.25 --disable-host-check",
-    "start2": "ng serve --host 172.31.1.168 --disable-host-check",
-    "build": "ng build --prod  --base-href ./",
+    "start": "ng serve",
+    "start2": "ng serve",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint --force",
     "e2e": "ng e2e"

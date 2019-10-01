@@ -16,7 +16,7 @@ export class FlightsearchComponent implements OnInit {
 
   ngOnInit() {
     const params = {};
-    this.api.post('', params);
+    // this.api.post('', params);
   }
 }
 
