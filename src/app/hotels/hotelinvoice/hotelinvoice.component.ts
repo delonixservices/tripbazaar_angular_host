@@ -18,7 +18,14 @@ export class HotelinvoiceComponent implements OnInit {
   public ticket = [];
   public dataLocalUrl;
   public baseUrl;
-  constructor(private router: Router, public api: ApiService, public domSanitizer: DomSanitizer, private route: ActivatedRoute, private http: HttpClient, ) {
+  constructor(
+    private router: Router,
+    public api: ApiService,
+    public alert: AlertService,
+    public domSanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+  ) {
     this.baseUrl = environment.api_url;
   }
 
@@ -56,7 +63,8 @@ export class HotelinvoiceComponent implements OnInit {
             // saveAs(blob, filename);
           },
             error => {
-              console.error(`Error: ${error.message}`);
+              this.alert.error(`Error: cannot get invoice for the selected transaction`);
+              this.router.navigate(['/account', 'dashboard']);
             }
           );
       });
@@ -68,21 +76,21 @@ export class HotelinvoiceComponent implements OnInit {
   //   return `${d.getDate()} ${months[d.getMonth()]}, ${d.getFullYear()}`;
   // }
 
-  getiframeUrl(long, lat) {
-    var url = "https://maps.google.com/maps?&q=" + lat + "," + long + "&output=embed";
-    console.log(url)
-    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
+  // getiframeUrl(long, lat) {
+  //   var url = "https://maps.google.com/maps?&q=" + lat + "," + long + "&output=embed";
+  //   console.log(url)
+  //   return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
 
-  }
+  // }
 
   // Add temp Rs 100 service change and 18% gst on service charge
-  getGrandTotal(ticket) {
-    if (ticket[0] && ticket[0].hotelPackage) {
-      if (ticket[0].hotelPackage.chargeable_rate) {
-        return Math.ceil(ticket[0].hotelPackage.chargeable_rate +
-          100 + (100 / 100 * 18));
-      }
-    }
-    return 0;
-  }
+  // getGrandTotal(ticket) {
+  //   if (ticket[0] && ticket[0].hotelPackage) {
+  //     if (ticket[0].hotelPackage.chargeable_rate) {
+  //       return Math.ceil(ticket[0].hotelPackage.chargeable_rate +
+  //         100 + (100 / 100 * 18));
+  //     }
+  //   }
+  //   return 0;
+  // }
 }

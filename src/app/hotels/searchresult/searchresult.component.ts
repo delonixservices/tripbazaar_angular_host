@@ -164,6 +164,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
         }
       }, (err) => {
         this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+        this.alertService.error("No hotels available for this checkin date. Please select another checkin date.");
         console.log(err);
         this.filteredHotels = [];
         this.copyFilteredHotels = [];

@@ -9,6 +9,7 @@
           </div>
           <div class="selected_area">
             {{selectedArea?.name}}
+            <span *ngIf="!selectedArea">Select City / Hotel</span>
           </div>
           <ng-select *ngIf="showNgSelect" name="destination" class="form-control suggestions home-searchbar"
             [items]="suggestions | async" [hideSelected]="true" [loading]="suggestionsLoading"
@@ -131,7 +132,7 @@
               </div>
 
               <div class="col mt-2 text-right">
-                <button ngbDropdownToggle id="done" (click)="doneClicked()" class="btn btn-success">Done</button>
+                <button ngbDropdownToggle id="done" (click)="updateGuests()" class="btn btn-success">Done</button>
               </div>
             </div>
           </div>
