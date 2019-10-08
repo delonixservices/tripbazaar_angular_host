@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService, JwtService, AlertService } from '../../core/services';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -19,7 +19,12 @@ export class HotelvoucherComponent implements OnInit {
   public transactionId;
 
   constructor(
-    private router: Router, public api: ApiService, public domSanitizer: DomSanitizer, private route: ActivatedRoute, private http: HttpClient,
+    private router: Router,
+    public api: ApiService,
+    public alert: AlertService,
+    public domSanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    private http: HttpClient,
   ) {
     this.baseUrl = environment.api_url;
   }
@@ -46,7 +51,8 @@ export class HotelvoucherComponent implements OnInit {
             // saveAs(blob, filename);
           },
             error => {
-              console.error(`Error: ${error.message}`);
+              this.alert.error(`Error: cannot get voucher for the selected transaction`);
+              this.router.navigate(['/account', 'dashboard']);
             }
           );
       });

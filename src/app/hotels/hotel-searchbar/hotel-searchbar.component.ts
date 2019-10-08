@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
-import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-hotel-searchbar',
@@ -18,8 +17,7 @@ import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 export class HotelSearchbarComponent implements OnInit {
 
   selectedArea: any = {
-    displayName: "Singapore, Singapore | (486)",
-    hotelCount: 486,
+    displayName: "Singapore, Singapore",
     id: "3168",
     name: "Singapore, Singapore",
     transaction_identifier: "",
@@ -36,6 +34,7 @@ export class HotelSearchbarComponent implements OnInit {
 
   suggestionsLoading = false;
   hotelsearchkeys: any;
+
   guests: number = 1;
   roomdetail = [{
     "room": "1",
@@ -70,26 +69,54 @@ export class HotelSearchbarComponent implements OnInit {
     public dpConfig: NgbDatepickerConfig,
     public calendar: NgbCalendar
   ) {
+
+  }
+
+  ngOnInit() {
+
     const date = new Date();
     const todaysDate = {
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       day: date.getDate()
     };
-    dpConfig.minDate = todaysDate;
-    // this.checkInDateModel = todaysDate;
-    // this.onCheckInDateSelect(todaysDate);
+    this.dpConfig.minDate = todaysDate;
 
-    this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday());
+    const recentSearch = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
-    this.fromDay = this.weekdays[calendar.getWeekday(this.fromDate)];
-    this.toDay = this.weekdays[calendar.getWeekday(this.toDate)];
-  }
+    if (recentSearch) {
+      this.selectedArea = recentSearch.area;
+      this.roomdetail = recentSearch.details;
+      this.updateGuests();
 
-  ngOnInit() {
+      const checkIn = recentSearch.checkindate;
+      const checkOut = recentSearch.checkoutdate;
+
+      console.log('Data from the recent search..');
+
+      const date = new Date(checkIn);
+      console.log(date);
+
+      if (Date.now() > date.getTime()) {
+        this.fromDate = this.calendar.getToday();
+        this.toDate = this.calendar.getNext(this.calendar.getToday());
+      } else {
+        console.log(this.calendar.getToday())
+        console.log(this.ngbDateParserFormatter.parse(checkIn));
+        this.fromDate = this.ngbDateParserFormatter.parse(checkIn) as NgbDate;
+        this.toDate = this.ngbDateParserFormatter.parse(checkOut) as NgbDate;
+      }
+
+    } else {
+      this.fromDate = this.calendar.getToday();
+      this.toDate = this.calendar.getNext(this.calendar.getToday());
+    }
+
     this.checkInDate = this.parseDate(this.fromDate);
     this.checkOutDate = this.parseDate(this.toDate);
+
+    this.fromDay = this.weekdays[this.calendar.getWeekday(this.fromDate)];
+    this.toDay = this.weekdays[this.calendar.getWeekday(this.toDate)];
 
     this.loadDestination();
   }
@@ -212,7 +239,7 @@ export class HotelSearchbarComponent implements OnInit {
     // console.log(this.roomdetail[index]);
   }
 
-  doneClicked() {
+  updateGuests() {
     let guests = 0;
     this.roomdetail.forEach((room) => {
       guests += Number(room.adult_count) + Number(room.child_count);
@@ -224,7 +251,7 @@ export class HotelSearchbarComponent implements OnInit {
   search() {
     // console.log(this.checkInDate);
     if (this.selectedArea && this.checkInDate && this.checkOutDate && this.roomdetail) {
-      var flag = true;
+      let flag = true;
       loop1:
       for (let o of this.roomdetail) {
         for (let child of o.children) {
@@ -237,6 +264,7 @@ export class HotelSearchbarComponent implements OnInit {
       }
       if (flag) {
         this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
+
         localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
 
         const queryParams = {

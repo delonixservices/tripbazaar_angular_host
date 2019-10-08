@@ -186,6 +186,8 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 				}
 				// this.hoteldetailkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 				this.hotelObj.searchkey = this.hoteldetailkeys;
+				this.alertService.error("No room available for this date. Please select another date.");
+				this.router.navigate(['/']);
 			});
 	}
 
