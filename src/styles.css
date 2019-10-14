@@ -104,6 +104,11 @@ a {
   display: none;
 }
 
+gallery-slider .g-image-item {
+  background-size: cover !important;
+}
+
+
 .spinner_container {
   width: 100%;
   height: 100%;
