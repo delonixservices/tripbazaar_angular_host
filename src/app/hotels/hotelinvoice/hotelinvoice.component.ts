@@ -63,7 +63,8 @@ export class HotelinvoiceComponent implements OnInit {
             // saveAs(blob, filename);
           },
             error => {
-              this.alert.error(`Error: cannot get invoice for the selected transaction`);
+              // this.alert.error(`Error: cannot get invoice for the selected transaction`);
+              this.alert.error(`Error: You must be logged in to view the Invoice`);
               this.router.navigate(['/account', 'dashboard']);
             }
           );

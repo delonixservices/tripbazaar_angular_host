@@ -16,27 +16,29 @@ import { GalleryModule } from '@ngx-gallery/core';
 import { HotelsRoutingModule } from './hotels-routing.module';
 import { HotelSearchbarComponent } from './hotel-searchbar/hotel-searchbar.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
+import { ImgFallbackModule } from 'ngx-img-fallback';
 
 @NgModule({
-    declarations: [
-        HotelsComponent,
-        HoteldetailsComponent,
-        HotelvoucherComponent,
-        HotelbookingComponent,
-        SearchresultComponent,
-        HotelinvoiceComponent,
-        HotelSearchbarComponent,
-        HotelHomeComponent,
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        GalleryModule,
-        NgbModule,
-        Ng5SliderModule,
-        NgSelectModule,
-        HotelsRoutingModule,
-    ]
+  declarations: [
+    HotelsComponent,
+    HoteldetailsComponent,
+    HotelvoucherComponent,
+    HotelbookingComponent,
+    SearchresultComponent,
+    HotelinvoiceComponent,
+    HotelSearchbarComponent,
+    HotelHomeComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    GalleryModule,
+    NgbModule,
+    Ng5SliderModule,
+    NgSelectModule,
+    HotelsRoutingModule,
+    ImgFallbackModule
+  ]
 })
 
 export class HotelsModule { }

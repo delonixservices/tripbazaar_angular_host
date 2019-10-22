@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Event } from '@angular/router';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-hotel-searchbar',
@@ -25,6 +26,7 @@ export class HotelSearchbarComponent implements OnInit {
   };
   suggestions: any;
   showNgSelect: boolean;
+  openNgSelect: boolean;
   // checkInDateModel: NgbDateStruct;
   // checkOutDateModel: NgbDateStruct;
   checkInDate: any;
@@ -46,6 +48,8 @@ export class HotelSearchbarComponent implements OnInit {
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
   @ViewChild('hotelSuggestionsContainer', { static: false }) hotelSuggestionsContainer: ElementRef;
+
+  @ViewChild('select', { static: true }) ngSelect: NgSelectComponent;
 
   suggestionsInput = new Subject<HttpParams>();
 
@@ -121,6 +125,7 @@ export class HotelSearchbarComponent implements OnInit {
     this.loadDestination();
   }
 
+
   hostClick(event: MouseEvent) {
     if (this.showDatePicker) {
       if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target) && !this.checkOutContainer.nativeElement.contains(event.target)) {
@@ -137,6 +142,9 @@ export class HotelSearchbarComponent implements OnInit {
 
   suggestionsClicked() {
     this.showNgSelect = true;
+    // focus on ng-select input
+    // The timeout is required because you can't focus() an element that is still hidden. Until Angular change detection has a chance to run (which will be after method suggestionsClicked() finishes executing), the showNgSelect property in the DOM will not be updated, even though you set showNgSelect to true in your method.
+    setTimeout(() => this.ngSelect.searchInput.nativeElement.focus(), 0);
   }
 
   selectDate() {
@@ -299,7 +307,10 @@ export class HotelSearchbarComponent implements OnInit {
         tap(() => this.suggestionsLoading = true),
         switchMap(term => this.api.get("/hotels/suggest", term).pipe(
           catchError(() => of([])), // empty list on error
-          tap(() => this.suggestionsLoading = false)
+          tap(() => {
+            this.suggestionsLoading = false
+            this.openNgSelect = true;
+          })
         ))
       )
     );

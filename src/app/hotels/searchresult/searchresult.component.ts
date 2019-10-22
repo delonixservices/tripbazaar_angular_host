@@ -142,7 +142,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response) => {
         if (response && response.data != undefined) {
-          console.log('Search res ', response.data);
+          console.log('Search res ', JSON.stringify(response.data));
           if (response.data.totalHotelsCount == 0) {
             this.norecordfoundtitle = "There is no hotel available currently. Please search for other hotels";
             this.filteredHotels = [];

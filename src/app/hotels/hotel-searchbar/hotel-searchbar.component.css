@@ -1,160 +1,189 @@
 .hotel-searchbar {
-    background-color: #fff;
-    padding: 2rem 2rem 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
-    min-width: 1000px;
+  background-color: #fff;
+  padding: 2rem 2rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  /* min-width: 1000px; */
 }
 
 .hotel-suggestions {
-    height: 80px;
-    border: 1px solid #ccc;
-    padding: 5px 15px 0px;
-    position: relative;
-    cursor:pointer;
+  height: 80px;
+  border: 1px solid #ccc;
+  padding: 5px 15px 0px;
+  position: relative;
+  cursor: pointer;
 }
 
 .suggestions.home-searchbar {
-    position: absolute;
-    top: 40%;
-    left: 0;
-    min-height: 80px;
-    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 40%;
+  left: 0;
+  min-height: 40px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
 
 .ng-select.suggestions .ng-dropdown-panel {
-    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
-    border-top: none;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  border-top: none;
 }
 
 .selected_area {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .hotel-suggestions:hover,
 #checkindate:hover,
 #checkoutdate:hover,
 .customDropdown:hover {
-    background-color: #a8d0ff;
+  background-color: #a8d0ff;
 }
 
 .bg-blue {
-    background-color: #a8d0ff;
+  background-color: #a8d0ff;
 }
 
 #checkindate,
 #checkoutdate {
-    height: 80px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    padding: 5px 15px 0px;
+  height: 80px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  padding: 5px 15px 0px;
 }
 
 .hotel-suggestions_header,
 #checkindate #checkInStatus,
 #checkoutdate #checkOutStatus {
-    font-weight: bold;
-    font-size: 14px;
-    user-select: none;
+  font-weight: bold;
+  font-size: 14px;
+  user-select: none;
 }
 
 #checkindate #checkInDate,
 #checkoutdate #checkOutDate {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 #checkindate #checkInDay,
 #checkoutdate #checkOutDay {
-    font-weight: 400;
-    font-size: 12px;
+  font-weight: 400;
+  font-size: 12px;
 }
 
 .customDropdown {
-    height: 80px;
-    border-radius: 0.1px;
+  height: 80px;
+  border-radius: 0.1px;
 }
 
 .customDropdownToggle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 5px 15px 0px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 5px 15px 0px;
 }
 
 .customDropdownToggle::after {
-    display: none;
+  display: none;
 }
 
 #done.dropdown-toggle::after {
-    display: none;
+  display: none;
 }
 
 .dropdown_header {
-    font-weight: bold;
-    font-size: 14px;
-    color: #212529;
-    text-transform: uppercase;
-    user-select: none;
+  font-weight: bold;
+  font-size: 14px;
+  color: #212529;
+  text-transform: uppercase;
+  user-select: none;
 }
 
 ngb-datepicker {
-    position: absolute;
-    z-index: 100;
-    background-color: white;
+  position: absolute;
+  z-index: 100;
+  background-color: white;
 }
 
 .custom-day {
-    text-align: center;
-    padding: 0.185rem 0.25rem;
-    display: inline-block;
-    height: 2rem;
-    width: 2rem;
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
 }
 
 .custom-day.focused {
-    background-color: #e6e6e6;
+  background-color: #e6e6e6;
 }
 
 .custom-day.range,
 .custom-day:hover {
-    background-color: rgb(2, 117, 216);
-    color: white;
+  background-color: rgb(2, 117, 216);
+  color: white;
 }
 
 .custom-day.faded {
-    background-color: rgba(2, 117, 216, 0.5);
+  background-color: rgba(2, 117, 216, 0.5);
 }
 
 .ngb-dp-day.disabled .custom-day:hover {
-    background-color: #ccc;
+  background-color: #ccc;
 
-    color: #ccc !important;
+  color: #ccc !important;
 }
 
 .hotel_search-btn {
-    width: 160px;
-    border-radius: 30px;
-    height: 50px;
-    background-image: linear-gradient(45deg, #ff00e0, #0008ff);
-    color: #fff;
+  width: 160px;
+  border-radius: 30px;
+  height: 50px;
+  background-image: linear-gradient(45deg, #ff00e0, #0008ff);
+  color: #fff;
 }
 
 #total-adult-hotel .value,
 #total-child-hotel .value {
-    height: 25px;
-    width: 25px !important;
-    line-height: 25px;
-    text-align: center;
-    background: #ccc;
-    border-radius: 100px;
-    float: left;
-    margin-right: 7px;
+  height: 25px;
+  width: 25px !important;
+  line-height: 25px;
+  text-align: center;
+  background: #ccc;
+  border-radius: 100px;
+  float: left;
+  margin-right: 7px;
 }
 
 #total-adult-hotel>div,
 #total-child-hotel>div {
-    min-width: 130px;
+  min-width: 130px;
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+  .selected_area {
+    font-size: 1rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  .selected_area {
+    font-size: 1rem;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .selected_area {
+    font-size: 1rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  .selected_area {
+    font-size: 1rem;
+  }
 }
