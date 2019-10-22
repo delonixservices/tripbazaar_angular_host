@@ -1,5 +1,5 @@
 .hotel-home_header {
-  background: url(https://cdn.pixabay.com/photo/2017/01/18/15/34/singapore-1990090_1280.jpg);
+  background-image: url(https://cdn.pixabay.com/photo/2017/01/18/15/34/singapore-1990090_1280.jpg);
   height: 30rem;
   background-size: cover;
   background-position: center;
@@ -8,6 +8,10 @@
   align-items: center;
   background-repeat: no-repeat;
   background-color: #0a1946;
+}
+
+.searchbar-wrapper {
+  flex-basis: 70%;
 }
 
 .hotel_offers,
@@ -56,4 +60,36 @@
 
 .mnd {
   height: 253px;
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+  .searchbar-wrapper {
+    flex-basis: 75%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  .searchbar-wrapper {
+    flex-basis: 90%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .searchbar-wrapper {
+    flex-basis: 80%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  .searchbar-wrapper {
+    flex-basis: 95%;
+  }
+
+  .hotel-home_header {
+    background-image: none;
+  }
 }

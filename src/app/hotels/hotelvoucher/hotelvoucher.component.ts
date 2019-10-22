@@ -51,7 +51,8 @@ export class HotelvoucherComponent implements OnInit {
             // saveAs(blob, filename);
           },
             error => {
-              this.alert.error(`Error: cannot get voucher for the selected transaction`);
+              // this.alert.error(`Error: cannot get voucher for the selected transaction`);
+              this.alert.error(`Error: You must be logged in to view the voucher`);
               this.router.navigate(['/account', 'dashboard']);
             }
           );
