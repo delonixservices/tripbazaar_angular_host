@@ -6,6 +6,31 @@
   /* min-width: 1000px; */
 }
 
+
+.accordion div.card-header {
+  background-color: #fff;
+}
+
+.accordion div.card-header .btn-link:hover,
+.accordion div.card-header .btn-link:active,
+.accordion div.card-header .btn-link:focus {
+  text-decoration: none !important;
+}
+
+.accordion div.card-header button {
+  /* border-bottom: 0; */
+  width: 100%;
+}
+
+.accordion>.card {
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+/* ::ng-deep div.card-body {
+  background-color: var(--subtle-gray);
+  } */
+
+
 .hotel-suggestions {
   height: 80px;
   border: 1px solid #ccc;
@@ -85,7 +110,7 @@
 }
 
 .customDropdownToggle::after {
-  display: none;
+  display: none !important;
 }
 
 #done.dropdown-toggle::after {
@@ -142,6 +167,10 @@ ngb-datepicker {
   color: #fff;
 }
 
+.hotel_search-btn:hover {
+  color: #fff;
+}
+
 #total-adult-hotel .value,
 #total-child-hotel .value {
   height: 25px;
@@ -157,6 +186,10 @@ ngb-datepicker {
 #total-adult-hotel>div,
 #total-child-hotel>div {
   min-width: 130px;
+}
+
+.select_room-menu {
+  width: 28rem;
 }
 
 
@@ -185,5 +218,9 @@ ngb-datepicker {
 @media only screen and (max-width: 600px) {
   .selected_area {
     font-size: 1rem;
+  }
+
+  .select_room-menu {
+    width: 100%;
   }
 }

@@ -92,4 +92,27 @@
   .hotel-home_header {
     background-image: none;
   }
+
+
+  .hotel_offers,
+  .popular_hotels,
+  .holiday_packages,
+  .special_offers {
+    box-shadow: none;
+    border-radius: 0px;
+    background-color: inherit;
+  }
+
+  .special_offers,
+  .hotel_offers {
+    padding: 0 10px;
+  }
+
+  .holiday_packages {
+    padding: 0 10px;
+  }
+
+  .popular_hotels {
+    padding: 0 10px;
+  }
 }

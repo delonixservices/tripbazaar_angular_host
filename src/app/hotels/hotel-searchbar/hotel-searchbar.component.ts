@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
@@ -11,6 +11,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-hotel-searchbar',
   templateUrl: './hotel-searchbar.component.html',
   styleUrls: ['./hotel-searchbar.component.css'],
+  encapsulation: ViewEncapsulation.None,
   host: {
     '(document:click)': 'hostClick($event)',
   }
@@ -37,13 +38,15 @@ export class HotelSearchbarComponent implements OnInit {
   suggestionsLoading = false;
   hotelsearchkeys: any;
 
-  guests: number = 1;
+  guests: number = 2;
   roomdetail = [{
     "room": "1",
     "adult_count": "1",
     "child_count": "0",
     "children": []
   }];
+
+  currentAccordion: number = 0;
 
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
@@ -212,21 +215,36 @@ export class HotelSearchbarComponent implements OnInit {
   // }
 
   // console.log(this.roomdetail);
-  addRoomInSearch() {
+  addRoomInSearch(acc: NgbAccordion) {
+    this.currentAccordion = this.currentAccordion + 1;
+    setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
     this.roomdetail.push({
       "room": '' + ((this.roomdetail.length) + 1),
       "adult_count": "1",
       "child_count": "0",
       "children": []
     });
+    this.updateGuests();
   }
 
-  removeRoomFromSearch() {
+  removeRoomFromSearch(index) {
     console.log(this.roomdetail.length);
     if (this.roomdetail.length > 1) {
-      this.roomdetail.pop();
+      const arr = this.roomdetail.splice(index, 1);
+      console.log(arr, index);
     }
+    this.updateGuests();
   }
+
+  // removeRoomFromSearch(acc: NgbAccordion) {
+  //   setTimeout(() => acc.collapse(`panel${this.currentAccordion}`), 0);
+  //   this.currentAccordion = this.currentAccordion - 1;
+  //   setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
+  //   console.log(this.roomdetail.length);
+  //   if (this.roomdetail.length > 1) {
+  //     this.roomdetail.pop();
+  //   }
+  // }
 
   checkChildren(index) {
     // console.log('room = ' + index);
