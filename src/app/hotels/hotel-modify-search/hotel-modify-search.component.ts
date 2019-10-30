@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Output, ViewChild, ElementRef, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
@@ -18,6 +18,8 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 })
 
 export class HotelModifySearchComponent implements OnInit {
+
+  @Output() searchClicked = new EventEmitter();
 
   selectedArea: any = {
     displayName: "Singapore, Singapore",
@@ -72,7 +74,8 @@ export class HotelModifySearchComponent implements OnInit {
     public alertService: AlertService,
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
-    public calendar: NgbCalendar
+    public calendar: NgbCalendar,
+    public modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -221,6 +224,11 @@ export class HotelModifySearchComponent implements OnInit {
     }
   }
 
+  // OPEN MODAL
+  openModal(modifySearchModal) {
+    this.modalService.open(modifySearchModal);
+  }
+
   search() {
     // console.log(this.checkInDate);
     if (this.selectedArea && this.checkInDate && this.checkOutDate && this.roomdetail) {
@@ -236,6 +244,8 @@ export class HotelModifySearchComponent implements OnInit {
         }
       }
       if (flag) {
+        this.searchClicked.emit();
+
         this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
 
         localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));

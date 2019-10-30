@@ -20,6 +20,7 @@ export class HotelSelectGuestsComponent implements OnInit {
 
   @Output() guestsChange = new EventEmitter();
   @Output() roomdetailChange = new EventEmitter();
+  @Output() applyClicked = new EventEmitter();
 
   currentAccordion: number = 0;
 
@@ -49,6 +50,11 @@ export class HotelSelectGuestsComponent implements OnInit {
       console.log(arr, index);
     }
     this.updateGuests();
+  }
+
+  onApplyClicked() {
+    this.updateGuests();
+    this.applyClicked.emit();
   }
 
   updateGuests() {

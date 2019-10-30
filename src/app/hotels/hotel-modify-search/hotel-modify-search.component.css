@@ -1,6 +1,6 @@
 .hotel-modify_search {
   /* background-color: #9a8be4; */
-  background-color: #414097;
+  background-color: #3b3a7f;
   color: #fafafa;
   padding: .5rem 2rem 0.4rem;
   /* box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3); */
@@ -94,7 +94,9 @@
 .customDropdown {
   height: 80px;
   border-radius: 0.1px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  background-color: inherit;
+  color: #fff;
 }
 
 .customDropdownToggle {
