@@ -1,4 +1,4 @@
-<!-- hotel search tab -->
+<!-- hotel-searchbar -->
 <div class="hotel-searchbar">
   <div class="row location">
     <div class="col-md-3 px-0">
@@ -9,7 +9,7 @@
           </div>
           <div class="selected_area">
             {{selectedArea?.name}}
-            <span *ngIf="!selectedArea">Select City / Hotel</span>
+            <span *ngIf="!selectedArea || !selectedArea?.name">Select City / Hotel</span>
           </div>
           <ng-select #select [ngClass]="{'d-none': !showNgSelect}" name="destination"
             class="form-control suggestions home-searchbar" [items]="suggestions | async" [hideSelected]="true"
@@ -32,9 +32,17 @@
           <div id="checkInDay">{{fromDay}}</div>
         </div>
 
-        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-          outsideDays="hidden" [class.d-none]="!showDatePicker">
-        </ngb-datepicker>
+        <div class="d-none d-md-block">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
+        <!-- for mobile device -->
+        <div class="d-md-none">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
 
         <ng-template #t let-date let-focused="focused">
           <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
@@ -58,7 +66,7 @@
 
     <!-- NgbDropdown -->
     <div class="col-md-3 pl-0 pr-0">
-      <div class="form-group">
+      <div class="form-group nav">
         <div ngbDropdown autoClose="outside" class="form-control customDropdown">
           <div ngbDropdownToggle class="customDropdownToggle">
             <div class="dropdown_header">
@@ -68,98 +76,17 @@
               {{roomdetail.length}} Room<span *ngIf="roomdetail.length>1">s</span> &
               {{guests}} Guest<span *ngIf="guests > 1">s</span>
             </div>
-
             <div ngbDropdownMenu class="select_room-menu ml-auto px-3" aria-labelledby="hotel-menu">
-              <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" activeIds="panel0">
-                <div class="col-md-12 mb-2" *ngFor="let room of roomdetail; let i = index" [attr.data-index]="i">
-                  <!-- <p class="text-danger text-uppercase pt-2"><b>Room {{room.room}}</b></p> -->
-
-                  <ngb-panel id="panel{{i}}">
-                    <ng-template ngbPanelTitle>
-                      <div class="d-flex text-de">
-                        <div class="text-danger">
-                          <span class="text-primary font-weight-bold">Room {{i+1}}</span>
-                        </div>
-                        <div class="pl-3">
-                          <span class="text-dark font-weight-bold">{{room.adult_count}} Adults,&nbsp;
-                            {{room.child_count}} Children</span>
-                        </div>
-                        <div class="ml-auto">
-                          <a class="text-danger" [class.disabled]="roomdetail.length<=1"
-                            (click)="removeRoomFromSearch(i)"><span class="small">Remove</span></a>
-                        </div>
-                      </div>
-                    </ng-template>
-                    <ng-template let-opened="opened" ngbPanelContent>
-                      <div id="total-adult-hotel" class="d-flex justify-content-between pb-3">
-                        <div>
-                          <div class="value">{{room.adult_count}}</div>
-                          Adults<br /><span class="text-muted small">+12 YRS</span>
-                        </div>
-                        <div>
-                          <input type="range" class="adults" name="adults{{i}}" [(ngModel)]="room.adult_count"
-                            tabindex="5" min="1" max="3" id="adult-hotel">
-                        </div>
-                      </div>
-
-                      <div id="total-child-hotel" class="d-flex justify-content-between py-3">
-                        <div>
-                          <div class="value">{{room.child_count}}
-                          </div>
-                          Child <br />
-                          <span class="text-muted small">Below 12 YRS</span>
-                        </div>
-                        <div>
-                          <input type="range" class="child " [(ngModel)]="room.child_count" (change)="checkChildren(i)"
-                            name="child{{i}}" tabindex="6" min="0" max="4" id="child-hotel" value={{room.child_count}}>
-                        </div>
-                      </div>
-
-                      <div class="row child-age" id="child-age-select">
-                        <div class="col" *ngFor="let child of room.children, let i=index">
-                          <div class="small text-center">Child {{i+1}} Age</div>
-                          <select class="form-control" name="childAge{{i}}" [(ngModel)]="child.age">
-                            <option [value]="1">1</option>
-                            <option [value]="2">2</option>
-                            <option [value]="3">3</option>
-                            <option [value]="4">4</option>
-                            <option [value]="5">5</option>
-                            <option [value]="6">6</option>
-                            <option [value]="7">7</option>
-                            <option [value]="8">8</option>
-                            <option [value]="9">9</option>
-                            <option [value]="10">10</option>
-                            <option [value]="11">11</option>
-                            <option [value]="12">12</option>
-                          </select>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ngb-panel>
-                </div>
-              </ngb-accordion>
-              <div class="row my-2">
-                <div class="col mt-2">
-                  <a class="btn btn-danger text-light addroom ml-2 " (click)="addRoomInSearch(acc)">Add
-                    Room</a>
-                </div>
-                <div class="col mt-2 text-right">
-                  <button ngbDropdownToggle id="done" (click)="updateGuests()" class="btn btn-success">Apply</button>
-                </div>
-
-                <!-- <div class="col-md-6   mt-2 text-right">
-                  <a [class.disabled]="roomdetail.length<=1" class="btn btn-outline-secondary removeroom mr-2"
-                    (click)="removeRoomFromSearch(acc)"><span class="small">Remove
-                      Rooms</span></a>
-                </div> -->
-              </div>
+              <app-hotel-select-guests [roomdetail]="roomdetail" [guests]="guests"
+                (guestsChange)="onGuestsChange($event)" (roomdetailChange)="onRoomdetailChange($event)">
+              </app-hotel-select-guests>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="text-center">
+  <div class="text-center pt-3">
     <button type="button" tabindex="12" (click)="search()" class="btn hotel_search-btn">Search</button>
   </div>
 </div>

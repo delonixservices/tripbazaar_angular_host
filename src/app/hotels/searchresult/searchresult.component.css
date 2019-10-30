@@ -2,6 +2,23 @@ h1 {
   color: green;
 }
 
+.modify_search-container {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: 900;
+}
+
+.hotel_search-item {
+  background: #fff;
+  padding: 12px;
+  border-radius: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+}
+
 .carousel-img-wrapper {
   height: 220px;
   width: 100%;

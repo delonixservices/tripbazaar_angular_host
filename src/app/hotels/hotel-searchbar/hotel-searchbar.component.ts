@@ -46,7 +46,7 @@ export class HotelSearchbarComponent implements OnInit {
     "children": []
   }];
 
-  currentAccordion: number = 0;
+  // currentAccordion: number = 0;
 
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
@@ -148,6 +148,7 @@ export class HotelSearchbarComponent implements OnInit {
     // focus on ng-select input
     // The timeout is required because you can't focus() an element that is still hidden. Until Angular change detection has a chance to run (which will be after method suggestionsClicked() finishes executing), the showNgSelect property in the DOM will not be updated, even though you set showNgSelect to true in your method.
     setTimeout(() => this.ngSelect.searchInput.nativeElement.focus(), 0);
+    this.selectedArea = {};
   }
 
   selectDate() {
@@ -215,26 +216,26 @@ export class HotelSearchbarComponent implements OnInit {
   // }
 
   // console.log(this.roomdetail);
-  addRoomInSearch(acc: NgbAccordion) {
-    this.currentAccordion = this.currentAccordion + 1;
-    setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
-    this.roomdetail.push({
-      "room": '' + ((this.roomdetail.length) + 1),
-      "adult_count": "1",
-      "child_count": "0",
-      "children": []
-    });
-    this.updateGuests();
-  }
+  // addRoomInSearch(acc: NgbAccordion) {
+  //   this.currentAccordion = this.currentAccordion + 1;
+  //   setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
+  //   this.roomdetail.push({
+  //     "room": '' + ((this.roomdetail.length) + 1),
+  //     "adult_count": "1",
+  //     "child_count": "0",
+  //     "children": []
+  //   });
+  //   this.updateGuests();
+  // }
 
-  removeRoomFromSearch(index) {
-    console.log(this.roomdetail.length);
-    if (this.roomdetail.length > 1) {
-      const arr = this.roomdetail.splice(index, 1);
-      console.log(arr, index);
-    }
-    this.updateGuests();
-  }
+  // removeRoomFromSearch(index) {
+  //   console.log(this.roomdetail.length);
+  //   if (this.roomdetail.length > 1) {
+  //     const arr = this.roomdetail.splice(index, 1);
+  //     console.log(arr, index);
+  //   }
+  //   this.updateGuests();
+  // }
 
   // removeRoomFromSearch(acc: NgbAccordion) {
   //   setTimeout(() => acc.collapse(`panel${this.currentAccordion}`), 0);
@@ -246,24 +247,24 @@ export class HotelSearchbarComponent implements OnInit {
   //   }
   // }
 
-  checkChildren(index) {
-    // console.log('room = ' + index);
-    // console.log('child_count = ' + Number(this.roomdetail[index].child_count));
-    // console.log(this.roomdetail[index]);
+  // checkChildren(index) {
+  //   // console.log('room = ' + index);
+  //   // console.log('child_count = ' + Number(this.roomdetail[index].child_count));
+  //   // console.log(this.roomdetail[index]);
 
-    if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
-      // this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - Number(this.roomdetail[index].child_count));
-      this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
-    } else {
-      for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
-        console.log(this.roomdetail[index].children[i] === undefined);
-        if (this.roomdetail[index].children[i] === undefined) {
-          this.roomdetail[index].children[i] = { age: "5" };
-        }
-      }
-    }
-    // console.log(this.roomdetail[index]);
-  }
+  //   if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+  //     // this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - Number(this.roomdetail[index].child_count));
+  //     this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
+  //   } else {
+  //     for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+  //       console.log(this.roomdetail[index].children[i] === undefined);
+  //       if (this.roomdetail[index].children[i] === undefined) {
+  //         this.roomdetail[index].children[i] = { age: "5" };
+  //       }
+  //     }
+  //   }
+  //   // console.log(this.roomdetail[index]);
+  // }
 
   updateGuests() {
     let guests = 0;
@@ -272,6 +273,20 @@ export class HotelSearchbarComponent implements OnInit {
     });
     this.guests = guests;
     // console.log('guests =' + this.guests);
+  }
+
+  onGuestsChange(guests) {
+    if (guests) {
+      this.guests = guests;
+    }
+    console.log(guests)
+  }
+
+  onRoomdetailChange(roomdetail) {
+    console.log(roomdetail)
+    if (roomdetail) {
+      // this.roomdetail = roomdetail;
+    }
   }
 
   search() {

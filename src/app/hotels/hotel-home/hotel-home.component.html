@@ -13,7 +13,7 @@
     <div class="row">
       <div class="carousel">
         <div class="owl-carousel owl-theme">
-          <div class="col-md-12 hotel-col" *ngFor="let item of allOffer">
+          <div class="col-md-12 hotel-col py-2" *ngFor="let item of allOffer">
             <img class="embed-responsive" [src]="api.baseUrl+item.image">
             <div class="hotel-info special_offers-banner">
               <h5>{{item.name}}</h5>
