@@ -48,7 +48,7 @@ export class HotelHomeComponent implements OnInit {
             $(".owl-carousel").owlCarousel({
               loop: true,
               items: 3,
-              autoPlay: 1000,
+              autoplay: 1000,
               nav: true,
               responsiveClass: true,
               stopOnHover: true,

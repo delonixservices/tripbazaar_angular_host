@@ -135,9 +135,11 @@ export class SearchresultComponent implements OnInit, OnDestroy {
           }
           this.allHotel = response.data;
           this.totalHotelsCount = response.data.totalHotelsCount;
-          this.minHotelPrice = response.data.price.minPrice;
-          this.maxHotelPrice = response.data.price.maxPrice;
 
+          if (response.data.price) {
+            this.minHotelPrice = response.data.price.minPrice;
+            this.maxHotelPrice = response.data.price.maxPrice;
+          }
           this.filteredHotels = response.data.hotels;
           this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
           // localStorage.setItem('transaction_identifier', response.data.transaction_identifier);

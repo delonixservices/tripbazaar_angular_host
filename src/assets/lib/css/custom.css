@@ -464,13 +464,13 @@ button:focus {
   position: absolute;
   transition: ease-in-out .5s;
   z-index: 1;
-  bottom: -30px;
+  bottom: -40px;
   color: #fff;
   padding: 0 0 0 15px;
 }
 
 .hotel-col:hover .hotel-info {
-  bottom: 15px;
+  bottom: 20px;
 }
 
 /*------------------reset all-------*/

@@ -31,13 +31,13 @@ h1 {
 }
 
 #notfound {
-  height: 100px;
+  padding-top: 100px;
 }
 
 #notfound .notfound {
   position: absolute;
   left: 50%;
-  top: 50%;
+  /* top: 50%; */
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -107,14 +107,21 @@ h1 {
 }
 
 @media only screen and (max-width: 767px) {
+  #notfound {
+    padding: 80px 0 20px;
+  }
+
   .notfound .notfound-404 h1 {
-    font-size: 148px;
+    font-size: 60px;
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 600px) {
+  #notfound {
+    padding: 80px 0 20px;
+  }
+
   .notfound .notfound-404 {
-    height: 148px;
     margin: 0px auto 10px;
   }
 

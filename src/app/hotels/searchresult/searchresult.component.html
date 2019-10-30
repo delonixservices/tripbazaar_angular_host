@@ -3,11 +3,9 @@
   <div class="modify_search-container d-none d-md-block">
     <app-hotel-modify-search></app-hotel-modify-search>
   </div>
-  <div class="d-md-none">
+  <div class="d-flex d-md-none mt-4 mb-3 justify-content-around">
     <button type="button" (click)="openModal(sortAndFilterModal)" class="btn-outline-primary btn btn-sm">Sort and
-      Filters</button>
-  </div>
-  <div class="text-right d-md-none">
+      Filter</button>
     <button type="button" (click)="openModal(modifySearchModal)" class="btn-outline-danger btn btn-sm"><i
         class="fa fa-search"></i> Modify Search</button>
   </div>
@@ -177,11 +175,28 @@
   </div>
 </div>
 
-<ng-template #modifySearchModal let-d="dismiss">
-  <app-hotel-modify-search></app-hotel-modify-search>
+<ng-template #modifySearchModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Modify Search</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-hotel-modify-search></app-hotel-modify-search>
+  </div>
 </ng-template>
 
-<ng-template #sortAndFilterModal let-d="dismiss">
-  <app-hotel-search-filters [minHotelPrice]="minHotelPrice" [maxHotelPrice]="maxHotelPrice"
-    (filtersChange)="onFiltersChange($event)"></app-hotel-search-filters>
+<ng-template #sortAndFilterModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Sort and
+      Filter</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-hotel-search-filters [minHotelPrice]="minHotelPrice" [maxHotelPrice]="maxHotelPrice"
+      (filtersChange)="onFiltersChange($event)"></app-hotel-search-filters>
+  </div>
 </ng-template>
