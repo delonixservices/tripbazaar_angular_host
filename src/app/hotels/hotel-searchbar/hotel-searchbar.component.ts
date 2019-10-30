@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbAccordion, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
@@ -74,7 +74,8 @@ export class HotelSearchbarComponent implements OnInit {
     public alertService: AlertService,
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
-    public calendar: NgbCalendar
+    public calendar: NgbCalendar,
+    public modalService: NgbModal
   ) {
 
   }
@@ -198,6 +199,11 @@ export class HotelSearchbarComponent implements OnInit {
   parseDate(date: NgbDate) {
     if (date)
       return this.ngbDateParserFormatter.format(date);
+  }
+
+  // OPEN MODAL
+  openModal(modifySearchModal) {
+    this.modalService.open(modifySearchModal);
   }
 
 
