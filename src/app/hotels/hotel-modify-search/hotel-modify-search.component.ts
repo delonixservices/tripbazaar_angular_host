@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
@@ -8,15 +8,16 @@ import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from '
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
-  selector: 'app-hotel-searchbar',
-  templateUrl: './hotel-searchbar.component.html',
-  styleUrls: ['./hotel-searchbar.component.css'],
+  selector: 'app-hotel-modify-search',
+  templateUrl: './hotel-modify-search.component.html',
+  styleUrls: ['./hotel-modify-search.component.css'],
   encapsulation: ViewEncapsulation.None,
   host: {
     '(document:click)': 'hostClick($event)',
   }
 })
-export class HotelSearchbarComponent implements OnInit {
+
+export class HotelModifySearchComponent implements OnInit {
 
   selectedArea: any = {
     displayName: "Singapore, Singapore",
@@ -25,11 +26,10 @@ export class HotelSearchbarComponent implements OnInit {
     transaction_identifier: "",
     type: "city"
   };
+
   suggestions: any;
   showNgSelect: boolean;
   openNgSelect: boolean;
-  // checkInDateModel: NgbDateStruct;
-  // checkOutDateModel: NgbDateStruct;
   checkInDate: any;
   checkOutDate: any;
   checkInMinDate: NgbDateStruct;
@@ -45,8 +45,6 @@ export class HotelSearchbarComponent implements OnInit {
     "child_count": "0",
     "children": []
   }];
-
-  // currentAccordion: number = 0;
 
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
@@ -75,9 +73,7 @@ export class HotelSearchbarComponent implements OnInit {
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
     public calendar: NgbCalendar
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
 
@@ -126,6 +122,8 @@ export class HotelSearchbarComponent implements OnInit {
     this.toDay = this.weekdays[this.calendar.getWeekday(this.toDate)];
 
     this.loadDestination();
+
+    this.router.onSameUrlNavigation = 'reload';
   }
 
 
@@ -199,72 +197,6 @@ export class HotelSearchbarComponent implements OnInit {
     if (date)
       return this.ngbDateParserFormatter.format(date);
   }
-
-
-  // format checkIn and checkOut dates
-  // onCheckInDateSelect(date: NgbDateStruct) {
-  //   this.checkInDate = this.ngbDateParserFormatter.format(date);
-  //   const dateModal = Object.assign({}, this.checkInDateModel);
-  //   dateModal.day = dateModal.day + 1;
-  //   this.checkOutMinDate = dateModal;
-  //   this.checkOutDateModel = dateModal;
-  //   this.checkOutDate = this.ngbDateParserFormatter.format(dateModal);
-  // }
-
-  // onCheckOutDateSelect(date: NgbDateStruct) {
-  //   this.checkOutDate = this.ngbDateParserFormatter.format(date);
-  // }
-
-  // console.log(this.roomdetail);
-  // addRoomInSearch(acc: NgbAccordion) {
-  //   this.currentAccordion = this.currentAccordion + 1;
-  //   setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
-  //   this.roomdetail.push({
-  //     "room": '' + ((this.roomdetail.length) + 1),
-  //     "adult_count": "1",
-  //     "child_count": "0",
-  //     "children": []
-  //   });
-  //   this.updateGuests();
-  // }
-
-  // removeRoomFromSearch(index) {
-  //   console.log(this.roomdetail.length);
-  //   if (this.roomdetail.length > 1) {
-  //     const arr = this.roomdetail.splice(index, 1);
-  //     console.log(arr, index);
-  //   }
-  //   this.updateGuests();
-  // }
-
-  // removeRoomFromSearch(acc: NgbAccordion) {
-  //   setTimeout(() => acc.collapse(`panel${this.currentAccordion}`), 0);
-  //   this.currentAccordion = this.currentAccordion - 1;
-  //   setTimeout(() => acc.expand(`panel${this.currentAccordion}`), 0);
-  //   console.log(this.roomdetail.length);
-  //   if (this.roomdetail.length > 1) {
-  //     this.roomdetail.pop();
-  //   }
-  // }
-
-  // checkChildren(index) {
-  //   // console.log('room = ' + index);
-  //   // console.log('child_count = ' + Number(this.roomdetail[index].child_count));
-  //   // console.log(this.roomdetail[index]);
-
-  //   if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
-  //     // this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - Number(this.roomdetail[index].child_count));
-  //     this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
-  //   } else {
-  //     for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
-  //       console.log(this.roomdetail[index].children[i] === undefined);
-  //       if (this.roomdetail[index].children[i] === undefined) {
-  //         this.roomdetail[index].children[i] = { age: "5" };
-  //       }
-  //     }
-  //   }
-  //   // console.log(this.roomdetail[index]);
-  // }
 
   updateGuests() {
     let guests = 0;
@@ -349,3 +281,4 @@ export class HotelSearchbarComponent implements OnInit {
     );
   }
 }
+

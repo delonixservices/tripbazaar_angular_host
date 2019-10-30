@@ -1,8 +1,8 @@
 <div class="navWrapper">
-  <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
+  <nav [ngClass]="{'fixed-top': isHomePage()}" class="navbar navbar-expand-md navbar-light bg-white">
     <div class="container">
       <a class="navbar-brand" routerLink="/">
-        <h2>TripBazaar</h2>
+        <h3>TripBazaar</h3>
       </a>
       <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse"
         data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,7 +10,7 @@
       </button>
 
       <div [ngbCollapse]="!isCollapsed" class="collapse navbar-collapse" id="navbarMenu">
-        <ul class="navbar-nav mx-auto ">
+        <ul class="navbar-nav mx-auto m-0">
           <!-- <li class="nav-item text-uppercase">
 						<a class="nav-link" routerLink="/flights" routerLinkActive="active">Flights</a>
 					</li> -->
@@ -18,7 +18,7 @@
             <a class="nav-link" routerLink="/hotels" routerLinkActive="active">Hotels</a>
           </li>
           <li class="nav-item text-uppercase">
-            <a class="nav-link" href="http://holidays.tripbazaar.co" routerLinkActive="active">Holidays</a>
+            <a class="nav-link" href="https://holidays.tripbazaar.co" routerLinkActive="active">Holidays</a>
           </li>
           <li class="nav-item" ngbDropdown>
             <a ngbDropdownToggle class="nav-link" id="myaccount" aria-haspopup="true" aria-expanded="false">

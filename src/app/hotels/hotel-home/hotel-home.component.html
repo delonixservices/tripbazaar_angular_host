@@ -6,14 +6,14 @@
 
 <!-- SPECIAL OFFERS -->
 <div class="container">
-  <div class="special_offers mt-5" *ngIf="allOffer.length > 0">
-    <div class="main-heading">
+  <div class="special_offers mt-4" *ngIf="allOffer.length > 0">
+    <div class="main-heading my-3 my-md-0">
       <h3 class="heading"><i class="fa fa-tags"></i> Special Offers</h3>
     </div>
     <div class="row">
       <div class="carousel">
         <div class="owl-carousel owl-theme">
-          <div class="col-md-12 hotel-col" *ngFor="let item of allOffer">
+          <div class="col-md-12 hotel-col my-md-2" *ngFor="let item of allOffer">
             <img class="embed-responsive" [src]="api.baseUrl+item.image">
             <div class="hotel-info special_offers-banner">
               <h5>{{item.name}}</h5>
@@ -28,14 +28,19 @@
 </div>
 
 <div class="container">
-  <div class="hotel_offers mt-5 mb-4" *ngIf="allBanner.length > 0">
-    <div class="main-heading">
+  <div class="hotel_offers mt-md-5 mb-md-4" *ngIf="allBanner.length > 0">
+    <div class="main-heading my-3 my-md-0">
       <h3 class="heading"><i class="fa fa-smile-o"></i> Banners</h3>
     </div>
     <div class="row">
-      <div class="col-12 col-md-4 col-lg-3 py-2" *ngFor="let banner of allBanner">
+      <div class="col-12 col-md-4 col-lg-3 hotel-col my-md-2" *ngFor="let banner of allBanner">
         <a href="{{banner.url}}" target="_blank">
           <img [src]="api.baseUrl+banner.image" class="embed-responsive mns">
+          <div class="hotel-info">
+            <h5>{{banner.name}}</h5>
+            <p>{{banner.subtitle}}</p>
+            <a href="{{banner.url}}" target="_blank" class="btn-light btn">Book Now</a>
+          </div>
         </a>
       </div>
     </div>
@@ -44,14 +49,19 @@
 
 <!-- Holiday package -->
 <div class="container">
-  <div class="holiday_packages mt-5 mb-4" *ngIf="allHoliday.length > 0">
-    <div class="main-heading">
+  <div class="holiday_packages mt-md-5 mb-md-4" *ngIf="allHoliday.length > 0">
+    <div class="main-heading my-3 my-md-0">
       <h3 class="heading"><i class="fa fa-smile-o"></i> Holiday Packages</h3>
     </div>
     <div class="row">
-      <div class="col-12 col-md-4 col-lg-3 py-2" *ngFor="let holiday of allHoliday">
+      <div class="col-12 col-md-4 col-lg-3 hotel-col my-md-2" *ngFor="let holiday of allHoliday">
         <a href="{{holiday.url}}" target="_blank">
           <img [src]="api.baseUrl+holiday.image" class="embed-responsive mns">
+          <div class="hotel-info">
+            <h5>{{holiday.name}}</h5>
+            <p>{{holiday.subtitle}}</p>
+            <a href="{{holiday.url}}" target="_blank" class="btn-light btn">Book Now</a>
+          </div>
         </a>
       </div>
     </div>
@@ -61,12 +71,12 @@
 
 <!-- Popular Hotels In India -->
 <div class="container">
-  <div class="popular_hotels mt-5 mb-4" *ngIf="allHotel.length > 0">
-    <div class="main-heading">
+  <div class="popular_hotels mt-md-5 mb-md-4" *ngIf="allHotel.length > 0">
+    <div class="main-heading my-3 my-md-0">
       <h3 class="heading"><i class="fa fa-building"></i> Popular Hotels In India</h3>
     </div>
     <div class="row">
-      <div class="col-md-4 hotel-col py-2" *ngFor="let hotel of allHotel">
+      <div class="col-md-4 hotel-col my-md-2" *ngFor="let hotel of allHotel">
         <img [src]="api.baseUrl+hotel.image" class="embed-responsive mnd">
         <div class="hotel-info">
           <h5>{{hotel.name}}</h5>

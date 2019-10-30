@@ -1,0 +1,61 @@
+<div class="filters_sidebar">
+  <div class="filter-data">
+    <div class="filter-body" id="rates_criteria">
+      <h5 class="headers">Search</h5>
+      <input class="form-control" type="text" [(ngModel)]="searchText" (keydown)="sideBarFilter()"
+        placeholder="Search by hotel name">
+    </div>
+
+    <div class="filter-body" id="price_range_criteria">
+      <h5 class="headers">Price Range</h5>
+      <div class="checkbox" *ngFor="let range of priceRange">
+        <label class="checkcontainer">
+          <input type="checkbox" value="All" [(ngModel)]="range.selected" id="all_options_price_range_criteria"
+            (ngModelChange)="sideBarFilter()">
+          <span class="checkmark"></span> <span> {{range.name}}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-body" id="rates_criteria">
+      <h5 class="headers">Rates</h5>
+      <ng5-slider [(value)]="minPrice" [(highValue)]="maxPrice" [options]="options" (userChangeEnd)="priceFilter()">
+      </ng5-slider>
+    </div>
+
+    <div class=" filter-body" id="room_type_criteria">
+      <h5 class="headers">Room Types</h5>
+      <div class="checkbox" *ngFor="let type of RoomTypeFilters">
+        <label class="checkcontainer">
+          <input type="checkbox" [(ngModel)]="type.selected" value="All" id="all_options_room_type"
+            (click)="sideBarFilter()">
+          <span class="checkmark"></span><span> {{type.name}}</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="filter-body" id="refundable_criteria">
+      <h5 class="headers">Refundable</h5>
+      <div class="checkbox" *ngFor="let refund of Refundable">
+        <label class="checkcontainer">
+          <input type="checkbox" value="All" [(ngModel)]="refund.selected" id="all_options_refundable_criteria"
+            (change)="sideBarFilter()">
+          <span class="checkmark"></span><span> {{refund.name}}</span>
+        </label>
+      </div>
+    </div>
+
+
+    <div class="filter-body" id="rating_criteria">
+      <h5 class="headers">Star Rating</h5>
+      <div class="checkbox" *ngFor="let rating of startRating">
+        <label class="checkcontainer">
+          <input type="checkbox" value="All" [(ngModel)]="rating.selected" id="all_options_rating_criteria"
+            (ngModelChange)="sideBarFilter()">
+          <span class="checkmark"></span> <span> {{rating.name}}</span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+</div>

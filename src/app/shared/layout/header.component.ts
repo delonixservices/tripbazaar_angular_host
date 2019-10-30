@@ -18,14 +18,14 @@ export class HeaderComponent implements OnInit {
 
   public isCollapsed: boolean;
 
-  constructor(public route: ActivatedRoute,
+  constructor(
+    public route: ActivatedRoute,
     public router: Router,
     public api: ApiService,
     public jwt: JwtService,
     private authService: AuthService,
     public alertService: AlertService
-  ) {
-  }
+  ) { }
 
   ngOnInit() {
     if (this.jwt.isAuth()) {
@@ -49,6 +49,10 @@ export class HeaderComponent implements OnInit {
         this.user.name = "";
       }
     });
+  }
+
+  isHomePage() {
+    return false;
   }
 
   logout() {

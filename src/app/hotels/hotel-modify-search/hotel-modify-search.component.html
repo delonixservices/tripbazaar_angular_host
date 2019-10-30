@@ -1,5 +1,5 @@
-<!-- hotel-searchbar -->
-<div class="hotel-searchbar">
+<!-- hotel-modify-search -->
+<div class="hotel-modify_search">
   <div class="row location">
     <div class="col-md-3 px-0">
       <div class="">
@@ -20,29 +20,17 @@
       </div>
     </div>
 
-    <div class="col-md-3 pl-0 pr-0">
+    <div class="col-md-2 pl-0 pr-0">
       <div #checkInContainer>
-        <!-- <input id="checkindate" class="form-control" placeholder="CHECK-IN" name="checkInDate"
-                    [(ngModel)]="checkInDateModel" ngbDatepicker #checkIn="ngbDatepicker"
-                    (dateSelect)="onCheckInDateSelect($event,checkOut)" (click)="checkIn.toggle()" autocomplete="off"
-                    readonly> -->
         <div id="checkindate" (click)="selectDate()">
           <div id="checkInStatus">CHECK-IN</div>
           <div id="checkInDate">{{formatDate(fromDate)}}</div>
           <div id="checkInDay">{{fromDay}}</div>
         </div>
 
-        <div class="d-none d-md-block">
-          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-            outsideDays="hidden" [class.d-none]="!showDatePicker">
-          </ngb-datepicker>
-        </div>
-        <!-- for mobile device -->
-        <div class="d-md-none">
-          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t"
-            outsideDays="hidden" [class.d-none]="!showDatePicker">
-          </ngb-datepicker>
-        </div>
+        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+          outsideDays="hidden" [class.d-none]="!showDatePicker">
+        </ngb-datepicker>
 
         <ng-template #t let-date let-focused="focused">
           <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
@@ -53,8 +41,8 @@
         </ng-template>
       </div>
     </div>
-    <!--class for mydatepicker -->
-    <div class="col-md-3 pl-0 pr-0">
+
+    <div class="col-md-2 pl-0 pr-0">
       <div #checkOutContainer>
         <div id="checkoutdate" (click)="selectDate()">
           <div id="checkOutStatus">CHECK-OUT</div>
@@ -64,10 +52,9 @@
       </div>
     </div>
 
-    <!-- NgbDropdown -->
-    <div class="col-md-3 pl-0 pr-0">
-      <div class="form-group nav">
-        <div ngbDropdown autoClose="outside" class="form-control customDropdown">
+    <div class="col-md-2 pl-0 pr-0">
+      <div class="">
+        <div ngbDropdown autoClose="outside" class="customDropdown">
           <div ngbDropdownToggle class="customDropdownToggle">
             <div class="dropdown_header">
               Rooms & Guests
@@ -85,8 +72,8 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="text-center pt-3">
-    <button type="button" tabindex="12" (click)="search()" class="btn hotel_search-btn">Search</button>
+    <div class="col-md-2 py-3 text-center align-self-center">
+      <button type="button" (click)="search()" class="btn hotel_search-btn">Search</button>
+    </div>
   </div>
 </div>

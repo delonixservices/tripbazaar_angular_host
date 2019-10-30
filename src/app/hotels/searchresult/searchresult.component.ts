@@ -42,32 +42,11 @@ export class SearchresultComponent implements OnInit, OnDestroy {
   public validation: any;
   public modalRef: any;
 
-  public RootTypeFilters = [
-    { name: "All", selected: true, value: ["Standard", "Deluxe", "Superior", "Triple"] },
-    { name: "Standard", selected: false, value: "Standard" },
-    { name: "Deluxe", selected: false, value: "Deluxe" },
-    { name: "Superior", selected: false, value: "Superior" },
-    { name: "Triple", selected: false, value: "Triple" },
-  ]
-
-  public Refundable = [
-    { name: "All", selected: true, value: [true, false] },
-    { name: "Yes", selected: false, value: true },
-    { name: "No", selected: false, value: false },
-  ]
-
-  public FoodServerd = [
-    { name: "All", selected: true, value: [1, 2] },
-    { name: "1 Serving", selected: false, value: 1 },
-    { name: "2 Serving", selected: false, value: 2 },
-  ]
-
-  searchText = '';
-
-  // ng-slider
+  // for hotel-search-filter component
   minHotelPrice: number;
   maxHotelPrice: number;
-  options: Options;
+
+  totalHotelsCount: any;
 
   constructor(public route: ActivatedRoute,
     private router: Router,
@@ -75,9 +54,28 @@ export class SearchresultComponent implements OnInit, OnDestroy {
     public jwt: JwtService,
     public alertService: AlertService,
     public modalService: NgbModal
-  ) { }
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+    // commented Ankit
+    // => creating problems when user is navigating from previous page to same page again
+    // localStorage.removeItem('transaction_identifier');
+    // localStorage.removeItem('searchObj');
+    // localStorage.removeItem('packageObj');
+    // localStorage.removeItem('hotelObj');
+
+    // this.searchResult();
+    // this.loadDestination();
+    // this.selectedArea = this.hotelsearchkeys.area;
+    // this.checkInDate = this.hotelsearchkeys.checkindate;
+    // this.checkOutDate = this.hotelsearchkeys.checkoutdate;
+    // this.roomdetail = this.hotelsearchkeys.details;
+  }
 
   ngOnInit() {
+
+    this.minHotelPrice = 0;
+    this.maxHotelPrice = 100000;
 
     this.route.queryParams.subscribe((params) => {
       this.hotelsearchkeys.checkindate = params.checkindate;
@@ -91,39 +89,16 @@ export class SearchresultComponent implements OnInit, OnDestroy {
       this.hotelsearchkeys.transaction_identifier = params.transaction_identifier;
       console.log(this.hotelsearchkeys);
 
+      this.searchResult(this.hotelsearchkeys);
+      this.loadDestination();
+      this.selectedArea = this.hotelsearchkeys.area;
+      this.checkInDate = this.hotelsearchkeys.checkindate;
+      this.checkOutDate = this.hotelsearchkeys.checkoutdate;
+      this.roomdetail = this.hotelsearchkeys.details;
+
     }, (err) => {
       console.log(err);
     });
-
-    this.minHotelPrice = 0;
-    this.maxHotelPrice = 100000;
-    this.options = {
-      floor: 0,
-      ceil: 100000,
-      translate: (value: number, label: LabelType): string => {
-        switch (label) {
-          case LabelType.Low:
-            return '<b>Min:</b> &#8377;' + value;
-          case LabelType.High:
-            return '<b>Max:</b> &#8377;' + value;
-          default:
-            return '&#8377;' + value;
-        }
-      }
-    };
-    // commented Ankit
-    // => creating problems when user is navigating from previous page to same page again
-    // localStorage.removeItem('transaction_identifier');
-    // localStorage.removeItem('searchObj');
-    // localStorage.removeItem('packageObj');
-    // localStorage.removeItem('hotelObj');
-
-    this.searchResult();
-    this.loadDestination();
-    this.selectedArea = this.hotelsearchkeys.area;
-    this.checkInDate = this.hotelsearchkeys.checkindate;
-    this.checkOutDate = this.hotelsearchkeys.checkoutdate;
-    this.roomdetail = this.hotelsearchkeys.details;
   }
 
   // No of nights in hotel
@@ -133,16 +108,25 @@ export class SearchresultComponent implements OnInit, OnDestroy {
     return Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
   }
 
-  searchResult() {
+  onFiltersChange(filters) {
+    console.log(filters);
+    this.ngUnsubscribe.next();
+    this.searchResult(this.hotelsearchkeys, filters);
+  }
+
+  searchResult(hotelsearchkeys, filters = {}) {
     // this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
-    this.api.post("/hotels/search", this.hotelsearchkeys)
+    const queryParams = Object.assign({}, hotelsearchkeys);
+    queryParams.filters = filters;
+
+    this.api.post("/hotels/search", queryParams)
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((response) => {
         if (response && response.data != undefined) {
-          console.log('Search res ', JSON.stringify(response.data));
+          console.log('Search res ', response.data);
           if (response.data.totalHotelsCount == 0) {
             this.norecordfoundtitle = "There is no hotel available currently. Please search for other hotels";
             this.filteredHotels = [];
@@ -150,6 +134,12 @@ export class SearchresultComponent implements OnInit, OnDestroy {
             return;
           }
           this.allHotel = response.data;
+          this.totalHotelsCount = response.data.totalHotelsCount;
+
+          if (response.data.price) {
+            this.minHotelPrice = response.data.price.minPrice;
+            this.maxHotelPrice = response.data.price.maxPrice;
+          }
           this.filteredHotels = response.data.hotels;
           this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
           // localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
@@ -204,169 +194,169 @@ export class SearchresultComponent implements OnInit, OnDestroy {
     }
   }
 
-  priceFilter() {
-    this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
+  // priceFilter() {
+  //   this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
 
-    this.filteredHotels = this.filteredHotels.filter((hotel) => {
-      const chargeable_rate = hotel.rates.packages[0].chargeable_rate;
-      return chargeable_rate >= this.minHotelPrice && chargeable_rate <= this.maxHotelPrice;
-    });
-    // console.log(this.filteredHotels);
-    if (this.filteredHotels.length <= 0) {
-      this.norecordfoundtitle = "There is no Hotel available currently. Please search for other hotels";
-    } else {
-      this.norecordfoundtitle = "";
-    }
-  }
+  //   this.filteredHotels = this.filteredHotels.filter((hotel) => {
+  //     const chargeable_rate = hotel.rates.packages[0].chargeable_rate;
+  //     return chargeable_rate >= this.minHotelPrice && chargeable_rate <= this.maxHotelPrice;
+  //   });
+  //   // console.log(this.filteredHotels);
+  //   if (this.filteredHotels.length <= 0) {
+  //     this.norecordfoundtitle = "There is no Hotel available currently. Please search for other hotels";
+  //   } else {
+  //     this.norecordfoundtitle = "";
+  //   }
+  // }
 
 
-  sideBarFilter() {
-    // data.hotels[""0""].rates.packages[""0""].room_details.non_refundable
-    // data.hotels[""0""].rates.packages[""0""].room_details.food
-    // data.hotels[""0""].rates.packages[""0""].room_details.room_type
-    // data.hotels[""0""].rates.packages[""0""].chargeable_rate
-    // this.filteredHotels
+  // sideBarFilter() {
+  //   // data.hotels[""0""].rates.packages[""0""].room_details.non_refundable
+  //   // data.hotels[""0""].rates.packages[""0""].room_details.food
+  //   // data.hotels[""0""].rates.packages[""0""].room_details.room_type
+  //   // data.hotels[""0""].rates.packages[""0""].chargeable_rate
+  //   // this.filteredHotels
 
-    this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
-    setTimeout(() => {
-      const roomTypeFilter = [];
-      for (let index = 0; index < this.RootTypeFilters.length; index++) {
-        const element = this.RootTypeFilters[index];
-        if (element.name === 'All') {
-          continue;
-        }
-        if (element.selected === true) {
-          roomTypeFilter.push(element.value);
-        }
-      }
+  //   this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
+  //   setTimeout(() => {
+  //     const roomTypeFilter = [];
+  //     for (let index = 0; index < this.RootTypeFilters.length; index++) {
+  //       const element = this.RootTypeFilters[index];
+  //       if (element.name === 'All') {
+  //         continue;
+  //       }
+  //       if (element.selected === true) {
+  //         roomTypeFilter.push(element.value);
+  //       }
+  //     }
 
-      if (roomTypeFilter.length > 0) {
-        this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-          return roomTypeFilter.includes(hotel.rates.packages[0].room_details.room_type);
-        });
-      }
+  //     if (roomTypeFilter.length > 0) {
+  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
+  //         return roomTypeFilter.includes(hotel.rates.packages[0].room_details.room_type);
+  //       });
+  //     }
 
-      const refundableFilter = [];
-      for (let index = 0; index < this.Refundable.length; index++) {
-        const element = this.Refundable[index];
-        if (element.name === 'All') {
-          continue;
-        }
-        if (element.selected === true) {
-          refundableFilter.push(element.value);
-        }
-      }
+  //     const refundableFilter = [];
+  //     for (let index = 0; index < this.Refundable.length; index++) {
+  //       const element = this.Refundable[index];
+  //       if (element.name === 'All') {
+  //         continue;
+  //       }
+  //       if (element.selected === true) {
+  //         refundableFilter.push(element.value);
+  //       }
+  //     }
 
-      if (refundableFilter.length > 0) {
-        this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-          return refundableFilter.includes(hotel.rates.packages[0].room_details.non_refundable);
-        });
-      }
+  //     if (refundableFilter.length > 0) {
+  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
+  //         return refundableFilter.includes(hotel.rates.packages[0].room_details.non_refundable);
+  //       });
+  //     }
 
-      const foodServerdFilter = [];
-      for (let index = 0; index < this.FoodServerd.length; index++) {
-        const element = this.FoodServerd[index];
-        if (element.name === 'All') {
-          continue;
-        }
-        if (element.selected === true) {
-          foodServerdFilter.push(element.value);
-        }
-      }
+  //     const foodServerdFilter = [];
+  //     for (let index = 0; index < this.FoodServerd.length; index++) {
+  //       const element = this.FoodServerd[index];
+  //       if (element.name === 'All') {
+  //         continue;
+  //       }
+  //       if (element.selected === true) {
+  //         foodServerdFilter.push(element.value);
+  //       }
+  //     }
 
-      if (foodServerdFilter.length > 0) {
-        this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-          return foodServerdFilter.includes(hotel.rates.packages[0].room_details.food);
-        });
-      }
+  //     if (foodServerdFilter.length > 0) {
+  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
+  //         return foodServerdFilter.includes(hotel.rates.packages[0].room_details.food);
+  //       });
+  //     }
 
-      if (this.searchText) {
-        this.filteredHotels = this.filteredHotels.filter(hotel => {
-          return hotel && hotel.originalName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1;
-        });
-      }
-    }, 0);
-  }
+  //     if (this.searchText) {
+  //       this.filteredHotels = this.filteredHotels.filter(hotel => {
+  //         return hotel && hotel.originalName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1;
+  //       });
+  //     }
+  //   }, 0);
+  // }
 
-  FilterHotels() {
-    var refund;
-    var roomtype;
-    var foodserve;
-    var i = 0;
-    setTimeout(() => {
-      for (let refundtype of this.Refundable) {
-        if (i == 0) {
-          if (refundtype.selected === true) {
-            refund = refundtype.value;
-            break;
-          }
-        } else {
-          if (refundtype.selected === true) {
-            refund.push(refundtype.value);
-          }
-        }
-        i++;
-      }
+  // FilterHotels() {
+  //   var refund;
+  //   var roomtype;
+  //   var foodserve;
+  //   var i = 0;
+  //   setTimeout(() => {
+  //     for (let refundtype of this.Refundable) {
+  //       if (i == 0) {
+  //         if (refundtype.selected === true) {
+  //           refund = refundtype.value;
+  //           break;
+  //         }
+  //       } else {
+  //         if (refundtype.selected === true) {
+  //           refund.push(refundtype.value);
+  //         }
+  //       }
+  //       i++;
+  //     }
 
-      i = 0;
-      this.RootTypeFilters.map((type, index) => {
-        console.log(index);
-        console.log(type);
-        if (index == 0) {
-          if (type.selected == true) {
-            roomtype = type.value;
-            return true;
-          }
-        } else {
-          if (type.selected == true) {
-            roomtype.push(type.value);
-          }
-          this.norecordfoundtitle = "Opps";
-          this.norecordfoundmsg = "No Room available currently, Please look for some other option";
-        }
+  //     i = 0;
+  //     this.RootTypeFilters.map((type, index) => {
+  //       console.log(index);
+  //       console.log(type);
+  //       if (index == 0) {
+  //         if (type.selected == true) {
+  //           roomtype = type.value;
+  //           return true;
+  //         }
+  //       } else {
+  //         if (type.selected == true) {
+  //           roomtype.push(type.value);
+  //         }
+  //         this.norecordfoundtitle = "Opps";
+  //         this.norecordfoundmsg = "No Room available currently, Please look for some other option";
+  //       }
 
-      });
-      // for(let type of this.RootTypeFilters; let){
-      // 	if(i == 0){
-      // 		if(type.selected == true){
-      // 			roomtype = type.value;
-      // 			break;
-      // 		}
+  //     });
+  //     // for(let type of this.RootTypeFilters; let){
+  //     // 	if(i == 0){
+  //     // 		if(type.selected == true){
+  //     // 			roomtype = type.value;
+  //     // 			break;
+  //     // 		}
 
-      // 	}else{
-      // 		if(type.selected == true){
-      // 			roomtype.push(type.value);	
-      // 		}
-      // 	}
-      // 	i++;
-      // }
+  //     // 	}else{
+  //     // 		if(type.selected == true){
+  //     // 			roomtype.push(type.value);	
+  //     // 		}
+  //     // 	}
+  //     // 	i++;
+  //     // }
 
-      i = 0;
-      for (let food of this.FoodServerd) {
-        if (i == 0) {
-          if (food.selected === true) {
-            foodserve = food.value;
-            break;
-          }
-        } else {
-          if (food.selected === true) {
-            foodserve.push(food.value);
-          }
-        }
-        i++;
-      }
+  //     i = 0;
+  //     for (let food of this.FoodServerd) {
+  //       if (i == 0) {
+  //         if (food.selected === true) {
+  //           foodserve = food.value;
+  //           break;
+  //         }
+  //       } else {
+  //         if (food.selected === true) {
+  //           foodserve.push(food.value);
+  //         }
+  //       }
+  //       i++;
+  //     }
 
-      // this.filteredHotels =  this.allHotel.hotels.filter(function(hotel) {
-      this.filteredHotels = this.allHotel.filter(function (hotel) {
-        // return true;
-        return (roomtype.indexOf(hotel.rates.packages[0].room_details.room_type) > -1) && (foodserve.indexOf(hotel.rates.packages[0].room_details.food) > -1);
-      });
-    }, 200)
-  }
+  //     // this.filteredHotels =  this.allHotel.hotels.filter(function(hotel) {
+  //     this.filteredHotels = this.allHotel.filter(function (hotel) {
+  //       // return true;
+  //       return (roomtype.indexOf(hotel.rates.packages[0].room_details.room_type) > -1) && (foodserve.indexOf(hotel.rates.packages[0].room_details.food) > -1);
+  //     });
+  //   }, 200)
+  // }
 
-  SearchFilter() {
-    this.FilterHotels();
-  }
+  // SearchFilter() {
+  //   this.FilterHotels();
+  // }
 
   SearchFood() {
     // console.log(this.FoodServerd[0]);
@@ -382,7 +372,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
     // 	console.log("no");
     // }
     // console.log(this.FoodServerd);
-    this.FilterHotels();
+    // this.FilterHotels();
   }
 
   // MODIFY SEARCH
@@ -390,36 +380,36 @@ export class SearchresultComponent implements OnInit, OnDestroy {
     this.modalRef = this.modalService.open(modifySearchModal);
   }
 
-  addRoomInSearch() {
-    this.roomdetail.push({
-      "room": String((this.roomdetail.length) + 1),
-      "adult_count": "1",
-      "child_count": "0",
-      "children": []
-    });
-  }
+  // addRoomInSearch() {
+  //   this.roomdetail.push({
+  //     "room": String((this.roomdetail.length) + 1),
+  //     "adult_count": "1",
+  //     "child_count": "0",
+  //     "children": []
+  //   });
+  // }
 
-  removeRoomFromSearch() {
-    console.log(this.roomdetail.length);
-    if (this.roomdetail.length > 1) {
-      this.roomdetail.pop();
-    }
-  }
+  // removeRoomFromSearch() {
+  //   console.log(this.roomdetail.length);
+  //   if (this.roomdetail.length > 1) {
+  //     this.roomdetail.pop();
+  //   }
+  // }
 
   // CHANGES ANKIT
-  checkChildren(index) {
-    if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
-      this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
-    } else {
-      for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
-        console.log(this.roomdetail[index].children[i] === undefined);
-        if (this.roomdetail[index].children[i] === undefined) {
-          this.roomdetail[index].children[i] = { age: "1" };
-        }
-      }
-    }
-    console.log(this.roomdetail[index]);
-  }
+  // checkChildren(index) {
+  //   if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
+  //     this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
+  //   } else {
+  //     for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
+  //       console.log(this.roomdetail[index].children[i] === undefined);
+  //       if (this.roomdetail[index].children[i] === undefined) {
+  //         this.roomdetail[index].children[i] = { age: "1" };
+  //       }
+  //     }
+  //   }
+  //   console.log(this.roomdetail[index]);
+  // }
 
   // checkChildren(index) {
   // if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
@@ -432,33 +422,33 @@ export class SearchresultComponent implements OnInit, OnDestroy {
   // }
   // }
 
-  searchAgain() {
+  // searchAgain() {
 
-    if (this.selectedArea !== undefined && this.checkInDate !== undefined && this.checkOutDate !== undefined && this.roomdetail !== undefined) {
-      var flag = true;
-      loop1:
-      for (let o of this.roomdetail) {
-        for (let child of o.children) {
-          if (child.age === undefined || child.age == "" || child.age > 11 || child.age < 0) {
-            this.alertService.error("select correct age of child " + child.child + " in room " + o.room);
-            flag = false;
-            break loop1;
-          }
-        }
-      }
-      if (flag) {
-        // this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
-        // localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
-        this.hotelsearchkeys = { "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "name": this.selectedArea.name, "type": this.selectedArea.type, "id": this.selectedArea.id, "transaction_identifier": this.selectedArea.transaction_identifier, "details": JSON.stringify(this.roomdetail) };
+  //   if (this.selectedArea !== undefined && this.checkInDate !== undefined && this.checkOutDate !== undefined && this.roomdetail !== undefined) {
+  //     var flag = true;
+  //     loop1:
+  //     for (let o of this.roomdetail) {
+  //       for (let child of o.children) {
+  //         if (child.age === undefined || child.age == "" || child.age > 11 || child.age < 0) {
+  //           this.alertService.error("select correct age of child " + child.child + " in room " + o.room);
+  //           flag = false;
+  //           break loop1;
+  //         }
+  //       }
+  //     }
+  //     if (flag) {
+  //       // this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
+  //       // localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
+  //       this.hotelsearchkeys = { "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "name": this.selectedArea.name, "type": this.selectedArea.type, "id": this.selectedArea.id, "transaction_identifier": this.selectedArea.transaction_identifier, "details": JSON.stringify(this.roomdetail) };
 
-        this.modalRef.close();
-        this.searchResult();
-      }
+  //       this.modalRef.close();
+  //       this.searchResult();
+  //     }
 
-    } else {
-      this.alertService.error("All fields are required!");
-    }
-  }
+  //   } else {
+  //     this.alertService.error("All fields are required!");
+  //   }
+  // }
 
   loadDestination() {
     this.suggestions = concat(

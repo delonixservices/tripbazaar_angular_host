@@ -17,6 +17,9 @@ import { HotelsRoutingModule } from './hotels-routing.module';
 import { HotelSearchbarComponent } from './hotel-searchbar/hotel-searchbar.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
 import { ImgFallbackModule } from 'ngx-img-fallback';
+import { HotelModifySearchComponent } from './hotel-modify-search/hotel-modify-search.component';
+import { HotelSelectGuestsComponent } from './hotel-select-guests/hotel-select-guests.component';
+import { HotelSearchFiltersComponent } from './hotel-search-filters/hotel-search-filters.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { ImgFallbackModule } from 'ngx-img-fallback';
     HotelinvoiceComponent,
     HotelSearchbarComponent,
     HotelHomeComponent,
+    HotelModifySearchComponent,
+    HotelSelectGuestsComponent,
+    HotelSearchFiltersComponent,
   ],
   imports: [
     CommonModule,

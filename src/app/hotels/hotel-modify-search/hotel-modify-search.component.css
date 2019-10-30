@@ -1,11 +1,12 @@
-.hotel-searchbar {
-  background-color: #fff;
-  padding: 2rem 2rem 1rem;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+.hotel-modify_search {
+  /* background-color: #9a8be4; */
+  background-color: #414097;
+  color: #fafafa;
+  padding: .5rem 2rem 0.4rem;
+  /* box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0 5px 5px -4px rgba(0, 0, 0, 0.3);
   /* min-width: 1000px; */
 }
-
 
 .accordion div.card-header {
   background-color: #fff;
@@ -25,11 +26,6 @@
 .accordion>.card {
   border: 1px solid rgba(0, 0, 0, .125);
 }
-
-/* ::ng-deep div.card-body {
-  background-color: var(--subtle-gray);
-  } */
-
 
 .hotel-suggestions {
   height: 80px;
@@ -57,12 +53,12 @@
   font-weight: bold;
 }
 
-.hotel-suggestions:hover,
+/* .hotel-suggestions:hover,
 #checkindate:hover,
 #checkoutdate:hover,
 .customDropdown:hover {
-  background-color: #a8d0ff;
-}
+  background-color: #cad4df;
+} */
 
 .bg-blue {
   background-color: #a8d0ff;
@@ -98,6 +94,7 @@
 .customDropdown {
   height: 80px;
   border-radius: 0.1px;
+  border: 1px solid #ccc;
 }
 
 .customDropdownToggle {
@@ -125,7 +122,8 @@
 .dropdown_header {
   font-weight: bold;
   font-size: 14px;
-  color: #212529;
+  /* color: #212529; */
+  color: inherit;
   text-transform: uppercase;
   user-select: none;
 }
@@ -134,6 +132,7 @@ ngb-datepicker {
   position: absolute;
   z-index: 100;
   background-color: white;
+  color: #212529;
 }
 
 .custom-day {
@@ -227,9 +226,5 @@ ngb-datepicker {
 
   .select_room-menu {
     width: 100%;
-  }
-
-  .hotel-searchbar {
-    border-radius: 5px;
   }
 }
