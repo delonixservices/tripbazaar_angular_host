@@ -28,9 +28,17 @@
           <div id="checkInDay">{{fromDay}}</div>
         </div>
 
-        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-          outsideDays="hidden" [class.d-none]="!showDatePicker">
-        </ngb-datepicker>
+        <div class="d-none d-md-block">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
+        <!-- for mobile device -->
+        <div class="d-md-none">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
 
         <ng-template #t let-date let-focused="focused">
           <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"

@@ -91,12 +91,12 @@
   font-size: 12px;
 }
 
-.customDropdown {
+.hotel-modify_search .customDropdown {
   height: 80px;
   border-radius: 0.1px;
   /* border: 1px solid #ccc; */
   background-color: inherit;
-  color: #fff;
+  color: inherit;
 }
 
 .customDropdownToggle {
