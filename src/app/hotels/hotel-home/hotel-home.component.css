@@ -1,6 +1,6 @@
 .hotel-home_header {
   background-image: url(https://cdn.pixabay.com/photo/2017/01/18/15/34/singapore-1990090_1280.jpg);
-  height: 30rem;
+  min-height: 30rem;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -12,6 +12,7 @@
 
 .searchbar-wrapper {
   flex-basis: 70%;
+  margin: .8rem 0;
 }
 
 .hotel_offers,

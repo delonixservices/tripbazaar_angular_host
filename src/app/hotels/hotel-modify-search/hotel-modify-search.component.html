@@ -3,13 +3,14 @@
   <div class="row location">
     <div class="col-md-3 px-0">
       <div class="">
-        <div #hotelSuggestionsContainer class="hotel-suggestions" (click)="suggestionsClicked()">
+        <div #hotelSuggestionsContainer class="hotel-suggestions" (click)="suggestionsClicked($event)">
           <div class="hotel-suggestions_header">
             CITY / HOTEL
           </div>
           <div class="selected_area">
             {{selectedArea?.name}}
-            <span *ngIf="!selectedArea || !selectedArea?.name">Select City / Hotel</span>
+            <span class="selected_area-placeholder" *ngIf="!selectedArea || !selectedArea?.name">Select City /
+              Hotel</span>
           </div>
           <ng-select #select [ngClass]="{'d-none': !showNgSelect}" name="destination"
             class="form-control suggestions home-searchbar" [items]="suggestions | async" [hideSelected]="true"
@@ -28,9 +29,17 @@
           <div id="checkInDay">{{fromDay}}</div>
         </div>
 
-        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
-          outsideDays="hidden" [class.d-none]="!showDatePicker">
-        </ngb-datepicker>
+        <div class="d-none d-md-block">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
+        <!-- for mobile device -->
+        <div class="d-md-none">
+          <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="1" [dayTemplate]="t"
+            outsideDays="hidden" [class.d-none]="!showDatePicker">
+          </ngb-datepicker>
+        </div>
 
         <ng-template #t let-date let-focused="focused">
           <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"

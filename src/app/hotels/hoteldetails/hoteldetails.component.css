@@ -91,6 +91,10 @@ a:not([href]):not([tabindex]) {
   align-items: center;
 }
 
+gallery {
+  height: 500px !important;
+}
+
 .hotel-details .amenities {
   margin-bottom: 15px;
   border-bottom: 1px solid #e8e8e8;
@@ -210,4 +214,21 @@ a:not([href]):not([tabindex]) {
 .room-type_benefits ul li {
   margin: 20px 0;
 
+}
+
+.room-type_body tr td:last-child {
+  min-width: 12rem;
+}
+
+@media only screen and (max-width: 767px) {
+  gallery {
+    height: 500px !important;
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  gallery {
+    height: 300px !important;
+  }
 }

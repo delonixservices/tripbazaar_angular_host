@@ -1,0 +1,16 @@
+#total-adult-hotel .value,
+#total-child-hotel .value {
+  height: 1.5rem;
+  width: 1.5rem !important;
+  line-height: 1.5rem;
+  text-align: center;
+  background: #ccc;
+  border-radius: 6.2rem;
+  float: left;
+  margin-right: .4rem;
+}
+
+#total-adult-hotel>div,
+#total-child-hotel>div {
+  min-width: 8.1rem;
+}

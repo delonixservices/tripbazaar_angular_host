@@ -28,18 +28,19 @@
 }
 
 .hotel-suggestions {
-  height: 80px;
+  height: 5rem;
   border: 1px solid #ccc;
-  padding: 5px 15px 0px;
+  padding: .3rem .9rem 0;
   position: relative;
   cursor: pointer;
 }
 
 .suggestions.home-searchbar {
   position: absolute;
-  top: 40%;
+  top: 38%;
   left: 0;
-  min-height: 40px;
+  /* min-height: 40px; */
+  min-height: 2.5rem;
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
 
@@ -53,12 +54,12 @@
   font-weight: bold;
 }
 
-/* .hotel-suggestions:hover,
+.hotel-suggestions:hover,
 #checkindate:hover,
 #checkoutdate:hover,
-.customDropdown:hover {
-  background-color: #cad4df;
-} */
+.hotel-modify_search .customDropdown:hover {
+  background-color: #a8d0ff;
+}
 
 .bg-blue {
   background-color: #a8d0ff;
@@ -66,37 +67,37 @@
 
 #checkindate,
 #checkoutdate {
-  height: 80px;
+  height: 5rem;
   border: 1px solid #ccc;
   cursor: pointer;
-  padding: 5px 15px 0px;
+  padding: .3rem .9rem 0;
 }
 
 .hotel-suggestions_header,
 #checkindate #checkInStatus,
 #checkoutdate #checkOutStatus {
   font-weight: bold;
-  font-size: 14px;
+  font-size: .8rem;
   user-select: none;
 }
 
 #checkindate #checkInDate,
 #checkoutdate #checkOutDate {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 #checkindate #checkInDay,
 #checkoutdate #checkOutDay {
   font-weight: 400;
-  font-size: 12px;
+  font-size: .7rem;
 }
 
-.customDropdown {
-  height: 80px;
+.hotel-modify_search .customDropdown {
+  height: 5rem;
   border-radius: 0.1px;
   /* border: 1px solid #ccc; */
   background-color: inherit;
-  color: #fff;
+  color: inherit;
 }
 
 .customDropdownToggle {
@@ -105,7 +106,7 @@
   right: 0 !important;
   bottom: 0;
   left: 0;
-  padding: 5px 15px 0px;
+  padding: .3rem .9rem 0;
 }
 
 .customDropdownToggle::after {
@@ -123,7 +124,7 @@
 
 .dropdown_header {
   font-weight: bold;
-  font-size: 14px;
+  font-size: .8rem;
   /* color: #212529; */
   color: inherit;
   text-transform: uppercase;
@@ -166,9 +167,9 @@ ngb-datepicker {
 }
 
 .hotel_search-btn {
-  width: 160px;
-  border-radius: 30px;
-  height: 50px;
+  width: 10rem;
+  border-radius: 1.8rem;
+  height: 3.1rem;
   background-image: linear-gradient(45deg, #ff00e0, #0008ff);
   color: #fff;
 }
@@ -177,7 +178,7 @@ ngb-datepicker {
   color: #fff;
 }
 
-#total-adult-hotel .value,
+/* #total-adult-hotel .value,
 #total-child-hotel .value {
   height: 25px;
   width: 25px !important;
@@ -192,7 +193,7 @@ ngb-datepicker {
 #total-adult-hotel>div,
 #total-child-hotel>div {
   min-width: 130px;
-}
+} */
 
 .select_room-menu {
   width: 28rem;
@@ -222,6 +223,10 @@ ngb-datepicker {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 600px) {
+  .hotel-modify_search {
+    padding: 1rem 2rem 0.4rem;
+  }
+
   .selected_area {
     font-size: 1rem;
   }

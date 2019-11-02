@@ -1,16 +1,19 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Options, LabelType } from 'ng5-slider';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-hotel-search-filters',
   templateUrl: './hotel-search-filters.component.html',
   styleUrls: ['./hotel-search-filters.component.css']
 })
-export class HotelSearchFiltersComponent implements OnInit, OnChanges {
+export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges {
 
   @Output() filtersChange = new EventEmitter();
   @Input() minHotelPrice: number;
   @Input() maxHotelPrice: number;
+
+  public onChanges = new Subject<SimpleChanges>();
 
   norecordfoundtitle;
   norecordfoundmsg;
@@ -79,6 +82,9 @@ export class HotelSearchFiltersComponent implements OnInit, OnChanges {
       this.maxHotelPrice = 100000;
     }
 
+    this.minHotelPrice = Math.floor(this.minHotelPrice / 1000) * 1000;
+    this.maxHotelPrice = Math.ceil(this.maxHotelPrice / 1000) * 1000;
+
     console.log(this.minHotelPrice, this.maxHotelPrice);
 
     this.minPrice = this.minHotelPrice;
@@ -97,11 +103,8 @@ export class HotelSearchFiltersComponent implements OnInit, OnChanges {
         }
       }
     };
-  }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
-    if (this.options) {
+    this.onChanges.subscribe((changes: SimpleChanges) => {
       let minHotelPrice;
       let maxHotelPrice;
       if (changes.minHotelPrice) {
@@ -111,19 +114,30 @@ export class HotelSearchFiltersComponent implements OnInit, OnChanges {
       }
       if (changes.maxHotelPrice) {
         // Rounding up to the nearest 100
-        maxHotelPrice = Math.ceil(changes.maxHotelPrice.currentValue / 100) * 100;
+        maxHotelPrice = Math.ceil(changes.maxHotelPrice.currentValue / 1000) * 1000;
+        console.log(maxHotelPrice);
       } else {
         maxHotelPrice = 100000;
       }
-
       const options = {
         floor: minHotelPrice,
         ceil: maxHotelPrice,
         translate: this.options.translate
       }
+
       // reassign floor and ceil for dynamic floor and ceil to work
       this.options = options;
-    }
+    });
+
+    console.log(this.options);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // emit any new changes
+    this.onChanges.next(changes);
+
+    // if (changes["minHotelPrice"].isFirstChange() && changes["maxHotelPrice"].isFirstChange()) {
+    // }
   }
 
   priceFilter() {
@@ -394,6 +408,10 @@ export class HotelSearchFiltersComponent implements OnInit, OnChanges {
 
   SearchFilter() {
     this.FilterHotels();
+  }
+
+  ngOnDestroy() {
+    this.onChanges.complete();
   }
 
 }

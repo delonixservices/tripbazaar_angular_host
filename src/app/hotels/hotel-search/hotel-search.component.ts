@@ -1,19 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
-import { Subject, Observable, of, concat } from 'rxjs';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators'
 import { ApiService, JwtService, AlertService } from '../../core/services';
-import { Options, LabelType } from 'ng5-slider';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-searchresult-page',
-  templateUrl: '././searchresult.component.html',
-  styleUrls: ['././searchresult.component.css']
+  templateUrl: './hotel-search.component.html',
+  styleUrls: ['./hotel-search.component.css']
 })
 
-export class SearchresultComponent implements OnInit, OnDestroy {
+export class HotelSearchComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe = new Subject();
 
@@ -90,7 +89,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
       console.log(this.hotelsearchkeys);
 
       this.searchResult(this.hotelsearchkeys);
-      this.loadDestination();
+
       this.selectedArea = this.hotelsearchkeys.area;
       this.checkInDate = this.hotelsearchkeys.checkindate;
       this.checkOutDate = this.hotelsearchkeys.checkoutdate;
@@ -110,6 +109,7 @@ export class SearchresultComponent implements OnInit, OnDestroy {
 
   onFiltersChange(filters) {
     console.log(filters);
+    // cancel previous search request
     this.ngUnsubscribe.next();
     this.searchResult(this.hotelsearchkeys, filters);
   }
@@ -450,19 +450,8 @@ export class SearchresultComponent implements OnInit, OnDestroy {
   //   }
   // }
 
-  loadDestination() {
-    this.suggestions = concat(
-      of([]),
-      this.suggestionsInput.pipe(
-        debounceTime(800),
-        distinctUntilChanged(),
-        tap(() => this.suggestionsLoading = true),
-        switchMap(term => this.api.get("/hotels/suggest", term).pipe(
-          catchError(() => of([])), // empty list on error
-          tap(() => this.suggestionsLoading = false)
-        ))
-      )
-    );
+  showSearchLoader() {
+    return (!this.allHotel || !this.allHotel.search) && (!this.norecordfoundtitle);
   }
 
   ngOnDestroy() {
