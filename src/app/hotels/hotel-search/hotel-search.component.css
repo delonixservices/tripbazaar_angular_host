@@ -19,13 +19,13 @@ h1 {
   border: 1px solid #eee;
 }
 
-.carousel-img-wrapper {
+.search_item_img-wrapper {
   height: 220px;
   width: 100%;
   object-fit: cover;
 }
 
-.carousel-img-wrapper img {
+.search_item_img-wrapper img {
   width: 100%;
   height: 100%;
 }
@@ -41,6 +41,32 @@ h1 {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.hotel-details .hotel_name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #dc3545;
+  /* color: #f80758;  */
+}
+
+.hotel-details .hotel_address {
+  font-size: .8rem;
+}
+
+.star_rating i {
+  color: #cfcece;
+}
+
+.price .hotel_rate {
+  font-size: 1rem;
+  color: #211b19;
+  font-weight: bold;
+}
+
+.price .discounted_price,
+.price .discount_percent {
+  font-size: .8rem;
 }
 
 .notfound {
@@ -136,5 +162,51 @@ h1 {
   .notfound a {
     padding: 7px 15px;
     font-size: 14px;
+  }
+}
+
+.search_result-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .search_result-container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .search_result-container {
+    max-width: 820px;
+  }
+}
+
+@media (min-width: 992px) {
+  .search_result-container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 992px) {
+  .search_result-container {
+    max-width: 1140px;
+  }
+}
+
+@media (max-width:600px) {
+  .search_item_img-wrapper {
+    height: 4.2rem;
+    width: 100%;
+  }
+
+  .hotel-details .hotel_name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #dc3545;
+    /* color: #f80758;  */
   }
 }

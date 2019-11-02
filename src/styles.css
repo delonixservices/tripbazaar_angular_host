@@ -2,8 +2,9 @@
 
 body,
 html {
-  background: #fff;
+  /* background: #fff; */
   /* background: #f7f7f7; */
+  background-color: #f8f9fa;
   height: 100%;
 }
 
@@ -43,12 +44,12 @@ a {
   min-height: 0px;
   border-radius: 0;
   left: 0;
-  top: 38px;
+  top: 2.3rem;
   background-color: #fff;
 }
 
 .ng-select.suggestions.home-searchbar .ng-dropdown-panel {
-  top: 40px;
+  top: 2.5rem;
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
 
@@ -185,5 +186,12 @@ gallery-slider .g-image-item {
   20% {
     transform: scaleY(1.0);
     -webkit-transform: scaleY(1.0);
+  }
+}
+
+/* for small screen (rem units) */
+@media (max-width: 575.98px) {
+  html {
+    font-size: 14px;
   }
 }

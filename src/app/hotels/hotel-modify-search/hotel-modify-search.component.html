@@ -3,13 +3,14 @@
   <div class="row location">
     <div class="col-md-3 px-0">
       <div class="">
-        <div #hotelSuggestionsContainer class="hotel-suggestions" (click)="suggestionsClicked()">
+        <div #hotelSuggestionsContainer class="hotel-suggestions" (click)="suggestionsClicked($event)">
           <div class="hotel-suggestions_header">
             CITY / HOTEL
           </div>
           <div class="selected_area">
             {{selectedArea?.name}}
-            <span *ngIf="!selectedArea || !selectedArea?.name">Select City / Hotel</span>
+            <span class="selected_area-placeholder" *ngIf="!selectedArea || !selectedArea?.name">Select City /
+              Hotel</span>
           </div>
           <ng-select #select [ngClass]="{'d-none': !showNgSelect}" name="destination"
             class="form-control suggestions home-searchbar" [items]="suggestions | async" [hideSelected]="true"

@@ -4,8 +4,8 @@ export const environment = {
   // asset_url: 'http://185.172.165.146/',
   // api_url: 'https://tripbazaar.online/api',
   // asset_url: 'https://tripbazaar.online/',
-  api_url: 'http://127.0.0.1:3334/api',
-  asset_url: 'http://127.0.0.1:3334/',
-  // api_url: 'http://192.168.29.76:3334/api',
-  // asset_url: 'http://192.168.29.76:3334/',
+  // api_url: 'http://127.0.0.1:3334/api',
+  // asset_url: 'http://127.0.0.1:3334/',
+  api_url: 'http://192.168.29.76:3334/api',
+  asset_url: 'http://192.168.29.76:3334/',
 };

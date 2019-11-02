@@ -144,12 +144,21 @@ export class HotelSearchbarComponent implements OnInit {
     }
   }
 
-  suggestionsClicked() {
+  suggestionsClicked(event: MouseEvent) {
+    console.log(event);
+    // if .hotel-suggestions is clicked
+    const target = (event.target || event.srcElement || event.currentTarget) as any;
+
+    // ng-dropdown-panel
     this.showNgSelect = true;
     // focus on ng-select input
     // The timeout is required because you can't focus() an element that is still hidden. Until Angular change detection has a chance to run (which will be after method suggestionsClicked() finishes executing), the showNgSelect property in the DOM will not be updated, even though you set showNgSelect to true in your method.
     setTimeout(() => this.ngSelect.searchInput.nativeElement.focus(), 0);
-    this.selectedArea = {};
+
+    // reset selected area
+    if (target.classList.contains('hotel-suggestions') || target.classList.contains('hotel-suggestions_header') || target.classList.contains('selected_area') || target.classList.contains('selected_area-placeholder')) {
+      this.selectedArea = {};
+    }
   }
 
   selectDate() {
@@ -296,7 +305,7 @@ export class HotelSearchbarComponent implements OnInit {
   }
 
   search() {
-    // console.log(this.checkInDate);
+    console.log(this.selectedArea);
     if (this.selectedArea && this.checkInDate && this.checkOutDate && this.roomdetail) {
       let flag = true;
       loop1:
@@ -336,10 +345,26 @@ export class HotelSearchbarComponent implements OnInit {
     }
   }
 
+  onSuggestionAdded(suggest) {
+    console.log(suggest);
+    console.log(this.selectedArea)
+
+    this.selectedArea = suggest;
+    console.log(this.selectedArea)
+  }
+
   loadDestination() {
     // console.log("loadDestination called1");
+    this.openNgSelect = true;
+
     this.suggestions = concat(
-      of([]),
+      of([{
+        displayName: "Singapore, Singapore",
+        id: "3168",
+        name: "Singapore, Singapore",
+        transaction_identifier: "",
+        type: "city"
+      }]),
       this.suggestionsInput.pipe(
         debounceTime(800),
         distinctUntilChanged(),
@@ -353,5 +378,21 @@ export class HotelSearchbarComponent implements OnInit {
         ))
       )
     );
+
+    // this.suggestions = concat(
+    //   of([]),
+    //   this.suggestionsInput.pipe(
+    //     debounceTime(800),
+    //     distinctUntilChanged(),
+    //     tap(() => this.suggestionsLoading = true),
+    //     switchMap(term => this.api.get("/hotels/suggest", term).pipe(
+    //       catchError(() => of([])), // empty list on error
+    //       tap(() => {
+    //         this.suggestionsLoading = false
+    //         this.openNgSelect = true;
+    //       })
+    //     ))
+    //   )
+    // );
   }
 }
