@@ -3,7 +3,7 @@ import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepic
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
-import { ApiService, JwtService, AuthService, AlertService } from '../../core';
+import { ApiService, JwtService, AuthService, AlertService, GoogleAnalyticsService } from '../../core';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
@@ -72,10 +72,11 @@ export class HotelSearchbarComponent implements OnInit {
     public jwt: JwtService,
     private authService: AuthService,
     public alertService: AlertService,
+    public googleAnalytics: GoogleAnalyticsService,
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
     public calendar: NgbCalendar,
-    public modalService: NgbModal
+    public modalService: NgbModal,
   ) {
 
   }
@@ -304,7 +305,11 @@ export class HotelSearchbarComponent implements OnInit {
     }
   }
 
-  search() {
+  onSearchClinked() {
+
+    // google analytics
+    this.googleAnalytics.eventEmitter('hotelSearch', 'hotels', 'click', 'method', 1);
+
     console.log(this.selectedArea);
     if (this.selectedArea && this.checkInDate && this.checkOutDate && this.roomdetail) {
       let flag = true;
@@ -346,6 +351,9 @@ export class HotelSearchbarComponent implements OnInit {
   }
 
   onSuggestionAdded(suggest) {
+    // google analytics
+    this.googleAnalytics.eventEmitter('autosuggest', 'hotels', 'selected', `Name=${suggest.name}, Type=${suggest.type}`, 2);
+
     console.log(suggest);
     console.log(this.selectedArea)
 

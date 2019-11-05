@@ -1,0 +1,57 @@
+/* for mobile */
+
+.hotel_packages .hotel_package-item {
+  box-shadow: 0 0 3px 0px rgba(0, 0, 0, 0.2);
+  margin: 1rem 0;
+  padding: .6rem;
+}
+
+.hotel_preview_img-container {
+  width: 100%;
+  height: 8rem;
+  overflow: hidden;
+}
+
+.hotel_preview_img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hotel_package-item .room_type {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.hotel_package-item .bed_type {
+  text-transform: capitalize;
+}
+
+.hotel_package-item .bed_type p {
+  font-size: .8rem;
+}
+
+.hotel_package-inclusions {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.hotel_package-price {
+  font-size: 1.2rem;
+}
+
+.hotel_badge-refundable {
+  border: 1px solid #36b436;
+  background-color: #36b436;
+  color: #fff;
+  border-radius: 2px;
+  padding: .2rem .3rem;
+}
+
+.hotel_badge-non-refundable {
+  border: 1px solid #f12e2e;
+  background-color: #e02a2a;
+  color: #fff;
+  padding: .2rem .3rem;
+  border-radius: 2px;
+}

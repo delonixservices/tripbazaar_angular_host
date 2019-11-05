@@ -9,8 +9,8 @@ import { ImageItem, GalleryComponent } from '@ngx-gallery/core';
 
 @Component({
   selector: 'app-hoteldetails-page',
-  templateUrl: './hoteldetails.component.html',
-  styleUrls: ['./hoteldetails.component.css'],
+  templateUrl: './hotel-details.component.html',
+  styleUrls: ['./hotel-details.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
 
@@ -42,17 +42,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   // public galleryImages: NgxGalleryImage[];
   // public galleryOptions: NgxGalleryOptions[];
 
-  // for getting food type from food code, eg: foodCode 1 = Room Only
-  public foodType = [
-    "",
-    "Room Only",
-    "Breakfast",
-    "Lunch",
-    "Dinner",
-    "Half Board: Could be any 2 meals (e.g.breakfast and lunch, lunch and dinner",
-    "Full Board: Breakfast, lunch and dinner",
-    "All Inclusive"
-  ];
+
   searchObj: any;
   searchresultkeys: any;
 
@@ -167,7 +157,8 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   loadHotelDetails() {
     // this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
     console.log(this.hoteldetailkeys)
-    this.api.post("/hotels/packages", this.hoteldetailkeys)
+    // this.api.post("/hotels/packages", this.hoteldetailkeys)
+    this.api.load("/hotelPackages.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))

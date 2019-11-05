@@ -8,8 +8,8 @@ import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-hotelvoucher-page',
-  templateUrl: './hotelvoucher.component.html',
-  styleUrls: ['./hotelvoucher.component.css']
+  templateUrl: './hotel-voucher.component.html',
+  styleUrls: ['./hotel-voucher.component.css']
 })
 
 export class HotelvoucherComponent implements OnInit {
