@@ -5,8 +5,23 @@
   <meta charset="utf-8">
   <title>TripBazaar - Flights, Hotels & Holiday Packages...</title>
   <base href="/">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137598713-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    // add this to the app.component.ts for all routes
+    // gtag('config', 'UA-137598713-1');
+  </script>
+  <!-- google analytics end -->
+
   <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
   <link href="assets/lib/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/lib/css/custom.css">

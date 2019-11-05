@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators'
-import { ApiService, JwtService, AlertService } from '../../core/services';
+import { ApiService, JwtService, AlertService, GoogleAnalyticsService } from '../../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -52,6 +52,7 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     public api: ApiService,
     public jwt: JwtService,
     public alertService: AlertService,
+    public googleAnalytics: GoogleAnalyticsService,
     public modalService: NgbModal
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -120,7 +121,8 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     const queryParams = Object.assign({}, hotelsearchkeys);
     queryParams.filters = filters;
 
-    this.api.post("/hotels/search", queryParams)
+    // this.api.post("/hotels/search", queryParams)
+    this.api.load("/hotelSearch.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -166,6 +168,9 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     if (hotel === undefined || hotel == "" || hotel == null) {
       this.alertService.error("Please Select correct hotel");
     } else {
+
+      // google analytics
+      this.googleAnalytics.eventEmitter('hoteldetails', 'hotels', 'click', `hotelName=${hotel.name}`, 3);
 
       let hoteldetailkeys = this.hotelsearchkeys;
       hoteldetailkeys.area.displayName = hotel.displayName;

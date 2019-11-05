@@ -4,12 +4,11 @@ import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
 import { ApiService, JwtService, AlertService } from '../../core/services';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-hotelinvoice-page',
-  templateUrl: './hotelinvoice.component.html',
-  styleUrls: ['./hotelinvoice.component.css']
+  templateUrl: './hotel-invoice.component.html',
+  styleUrls: ['./hotel-invoice.component.css']
 })
 
 export class HotelinvoiceComponent implements OnInit {

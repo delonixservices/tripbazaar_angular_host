@@ -4,10 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { HotelsComponent } from './hotels.component';
 import { HotelSearchComponent } from './hotel-search/hotel-search.component';
-import { HotelinvoiceComponent } from './hotelinvoice/hotelinvoice.component';
-import { HotelvoucherComponent } from './hotelvoucher/hotelvoucher.component';
-import { HotelbookingComponent } from './hotelbooking/hotelbooking.component';
-import { HoteldetailsComponent } from './hoteldetails/hoteldetails.component';
+import { HotelinvoiceComponent } from './hotel-invoice/hotel-invoice.component';
+import { HotelvoucherComponent } from './hotel-voucher/hotel-voucher.component';
+import { HotelbookingComponent } from './hotel-booking/hotel-booking.component';
+import { HoteldetailsComponent } from './hotel-details/hotel-details.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Ng5SliderModule } from 'ng5-slider';
@@ -23,6 +23,10 @@ import { HotelModifySearchComponent } from './hotel-modify-search/hotel-modify-s
 import { HotelSelectGuestsComponent } from './hotel-select-guests/hotel-select-guests.component';
 import { HotelSearchFiltersComponent } from './hotel-search-filters/hotel-search-filters.component';
 import { HotelSearchLoaderComponent } from './hotel-search-loader/hotel-search-loader.component';
+import { HotelViewOnMapComponent } from './hotel-details/hotel-view-on-map/hotel-view-on-map.component';
+import { HotelReviewComponent } from './hotel-details/hotel-review/hotel-review.component';
+import { HotelAmenitiesComponent } from './hotel-details/hotel-amenities/hotel-amenities.component';
+import { HotelRoomSelectComponent } from './hotel-details/hotel-room-select/hotel-room-select.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,10 @@ import { HotelSearchLoaderComponent } from './hotel-search-loader/hotel-search-l
     HotelSelectGuestsComponent,
     HotelSearchFiltersComponent,
     HotelSearchLoaderComponent,
+    HotelViewOnMapComponent,
+    HotelReviewComponent,
+    HotelAmenitiesComponent,
+    HotelRoomSelectComponent,
   ],
   imports: [
     CommonModule,

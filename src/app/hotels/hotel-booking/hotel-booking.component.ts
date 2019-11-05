@@ -7,8 +7,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hotelbooking-page',
-  templateUrl: './hotelbooking.component.html',
-  styleUrls: ['./hotelbooking.component.css']
+  templateUrl: './hotel-booking.component.html',
+  styleUrls: ['./hotel-booking.component.css']
 })
 
 export class HotelbookingComponent implements OnInit, OnDestroy {
@@ -223,7 +223,8 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
   }
 
   loadBookingPolicy() {
-    this.api.post("/hotels/bookingpolicy", { "hotelId": this.hotelId, "bookingKey": this.bookingKey, "search": this.searchObj, "transaction_id": this.transaction_identifier })
+    // this.api.post("/hotels/bookingpolicy", { "hotelId": this.hotelId, "bookingKey": this.bookingKey, "search": this.searchObj, "transaction_id": this.transaction_identifier })
+    this.api.load("/hotelBookingpolicy.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))

@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
-import { HotelinvoiceComponent } from './hotelinvoice/hotelinvoice.component';
+import { HotelinvoiceComponent } from './hotel-invoice/hotel-invoice.component';
 import { HotelsComponent } from './hotels.component';
-import { HotelvoucherComponent } from './hotelvoucher/hotelvoucher.component';
-import { HoteldetailsComponent } from './hoteldetails/hoteldetails.component';
-import { HotelbookingComponent } from './hotelbooking/hotelbooking.component';
+import { HotelvoucherComponent } from './hotel-voucher/hotel-voucher.component';
+import { HoteldetailsComponent } from './hotel-details/hotel-details.component';
+import { HotelbookingComponent } from './hotel-booking/hotel-booking.component';
 import { HotelSearchComponent } from './hotel-search/hotel-search.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
 

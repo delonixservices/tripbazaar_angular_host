@@ -44,4 +44,8 @@ export class ApiService {
       `${environment.api_url}${path}`
     ).pipe(catchError(this.formatErrors));
   }
+
+  load(path): Observable<any> {
+    return this.http.get(`/assets/response${path}`).pipe(catchError(this.formatErrors));
+  }
 }
