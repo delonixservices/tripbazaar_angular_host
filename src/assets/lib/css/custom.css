@@ -1145,12 +1145,6 @@ ul.list-group {
   color: #494949;
 }
 
-.upcoming-trip {
-  max-height: 260px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 /*User Profile*/
 
 

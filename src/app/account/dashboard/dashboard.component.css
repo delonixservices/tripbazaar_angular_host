@@ -1,0 +1,23 @@
+.upcoming-trip {
+  max-height: 28rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+@media only screen and (max-width: 767px) {
+  .upcoming-trip {
+    max-height: 30rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .upcoming-trip {
+    max-height: 35rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
