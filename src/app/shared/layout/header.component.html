@@ -2,7 +2,10 @@
   <nav [ngClass]="{'fixed-top': isHomePage()}" class="navbar navbar-expand-md navbar-light bg-white">
     <div class="container">
       <a class="navbar-brand" routerLink="/">
-        <h3>TripBazaar</h3>
+        <!-- <h3>TripBazaar</h3> -->
+        <div class="nav_logo">
+          <img src="assets/logo.png" alt="tripbazaar">
+        </div>
       </a>
       <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse"
         data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">

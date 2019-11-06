@@ -1145,12 +1145,6 @@ ul.list-group {
   color: #494949;
 }
 
-.upcoming-trip {
-  max-height: 260px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 /*User Profile*/
 
 
@@ -1467,7 +1461,7 @@ a.back-to-top {
   width: 60px;
   height: 60px;
   position: fixed;
-  bottom: 30px;
+  bottom: 45px;
   right: 20px;
   background: #f80759 url(../../images/arrow-up.png) no-repeat center 43%;
   text-indent: -9999px;

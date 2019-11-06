@@ -11,3 +11,15 @@
   color: #dc3545;
   font-weight: bold;
 }
+
+.nav_logo {
+  width: 160px;
+  height: 50px;
+  overflow: hidden;
+}
+
+.nav_logo img {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
