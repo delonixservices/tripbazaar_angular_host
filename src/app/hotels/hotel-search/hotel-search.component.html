@@ -13,8 +13,9 @@
     <div class="pt-2 pl-2 pr-2 mt-1 mb-1 bg-light text-dark" *ngIf="allHotel && allHotel.search">
       <div class="row">
         <div class="col">
-          <div class="h3">Hotels in {{allHotel.region.city}}</div>
-          <p>Showing {{totalHotelsCount}} out of total 1374 properties in {{allHotel.region.city}} | Sort By low to high
+          <div class="h3">Hotels in {{allHotel?.region?.city}}</div>
+          <p>Showing {{totalHotelsCount}} out of total 1374 properties in {{allHotel?.region?.city}} | Sort By low to
+            high
           </p>
         </div>
       </div>
@@ -52,10 +53,10 @@
                 <div class="hotel-details">
                   <div class="row">
                     <div class="col-md-7 py-md-3">
-                      <div class="hotel_name mb-md-2">{{hotel.name}}</div>
+                      <div class="hotel_name mb-md-2">{{hotel?.name}}</div>
                       <div class=""><i class="fa fa-map-marker"></i>
                         &nbsp;<span>{{hotel.location.address}},
-                          {{allHotel.region.city}} {{allHotel.region.country}}</span>
+                          {{allHotel.region?.city}} {{allHotel.region?.country}}</span>
                       </div>
                       <div class="mb-2 star_rating">
                         <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 0 }"></i>
@@ -91,8 +92,8 @@
                           <i class="fa fa-star"></i>
                         </div>
                         <div class="text-md-right">
-                          <span class="small">{{hotel.moreRatings.tripAdvisor.rating}} / 5 Excellent |
-                            {{hotel.moreRatings.tripAdvisor.reviewCount}} Reviews</span>
+                          <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
+                            {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
                         </div>
 
                         <h4 class="text-md-right price">
@@ -134,8 +135,8 @@
                     <i class="fa fa-star"></i>
                   </div>
                   <div class="">
-                    <span class="small">{{hotel.moreRatings.tripAdvisor.rating}} / 5 Excellent |
-                      {{hotel.moreRatings.tripAdvisor.reviewCount}} Reviews</span>
+                    <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
+                      {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
                   </div>
                 </div>
               </div>
