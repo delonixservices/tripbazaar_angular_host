@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  <div class="row">
+  <div class="row justify-content-center mb-3">
     <div class="col-sm-5 col-md-6 col-lg-5 col-xl-4">
       <div class="card">
         <div class="card-header">
@@ -32,10 +32,10 @@
               <input type="password" required="" class="form-control" [(ngModel)]="paramsObj.password"
                 placeholder="Create Your Password" name="password">
             </div>
-            <div class="form-group">
+            <div class="mb-2">
               <input type="submit" (click)="register()" class="btn-block btn-danger btn" value="Register Now">
             </div>
-            <span class="msg">{{validation}}</span>
+            <span class="my-3 text-danger">{{validation}}</span>
           </form>
 
           <p>By clicking Register, you agree with our <a href="#">Terms of Service &amp; Privacy Policy</a>

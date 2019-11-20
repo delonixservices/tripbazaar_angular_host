@@ -26,13 +26,14 @@ h6 {
 }
 
 .main-heading {
-  color: #f80759;
-  text-transform: uppercase;
+  /* color: #f80759; */
+  color: #f64859;
+  text-transform: capitalize;
 }
 
 .main-heading .heading {
   font-weight: bold;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .header-container {
@@ -453,7 +454,11 @@ button:focus {
 
 .hotel-col {
   overflow: hidden;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
+}
+
+.hotel-col-content {
+  position: relative;
 }
 
 .hotel-col h5 {
@@ -1326,10 +1331,9 @@ a.swap1 {
   display: inline-block;
   padding-right: 3px;
   vertical-align: middle;
-
 }
 
-/*service page*/
+/* service page */
 .service-container {
   background: url(../../images/service-plane2.jpg) no-repeat center top;
   height: 345px;
@@ -1346,7 +1350,6 @@ a.swap1 {
   display: inline-block;
   padding-right: 3px;
   vertical-align: middle;
-
 }
 
 /*our values*/
@@ -1356,7 +1359,6 @@ a.swap1 {
 }
 
 .OurValues {
-
   margin: 0px 10px 10px 10px;
 }
 
@@ -1364,7 +1366,6 @@ a.swap1 {
   height: 50px;
   width: 50px;
   margin: 15px 5px 5px 25px;
-
 }
 
 .OurValues h4 {
@@ -1372,7 +1373,6 @@ a.swap1 {
   color: inherit;
   font-weight: bold;
   text-decoration: none;
-
 }
 
 .OurValues p {
@@ -1380,7 +1380,6 @@ a.swap1 {
   font-family: 'Lato', sans-serif;
   font-size: 12px;
   text-decoration: none;
-
 }
 
 .OurValuesContent {
@@ -1462,7 +1461,7 @@ a.back-to-top {
   height: 60px;
   position: fixed;
   bottom: 45px;
-  right: 20px;
+  right: 8px;
   background: #f80759 url(../../images/arrow-up.png) no-repeat center 43%;
   text-indent: -9999px;
   border-radius: 30px;
