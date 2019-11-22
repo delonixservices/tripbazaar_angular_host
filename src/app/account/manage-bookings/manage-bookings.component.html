@@ -1,0 +1,187 @@
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-4">
+      <div class="">
+        <div class="d-flex align-items-center py-2">
+          <h3 class="font-weight-bold text-info">{{transaction?.hotel.name}}</h3>
+          <div class="pl-2">
+            <div class="rating">
+              <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 0 ? 'text-warning' : 'text-light'"></i>
+              <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 1 ? 'text-warning' : 'text-light'"></i>
+              <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 2 ? 'text-warning' : 'text-light'"></i>
+              <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 3 ? 'text-warning' : 'text-light'"></i>
+              <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 4 ? 'text-warning' : 'text-light'"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img class="img-fluid" [src]="transaction?.hotel.imageDetails.prefix+1+transaction?.hotel.imageDetails.suffix"
+          alt="hotel_image">
+      </div>
+      <div class="py-3">
+        <div>
+          {{transaction?.hotel.location.address}}, {{transaction?.hotel.location.city}},
+          {{transaction?.hotel.location.postalCode}}
+        </div>
+        <div *ngIf="transaction?.hotel.moreDetails.phone">
+          Phone: {{transaction?.hotel.moreDetails.phone}}
+        </div>
+        <div *ngIf="transaction?.hotel.moreDetails.email">
+          Email: {{transaction?.hotel.moreDetails.email}}
+        </div>
+        <div *ngIf="transaction?.hotel.moreDetails.website !== 'null'">
+          Website: {{transaction?.hotel.moreDetails.website}}
+        </div>
+        <div class="font-weight-bold py-2">
+          Note: {{transaction?.cancellation_policy.remarks}}
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+      <div class="row pt-2 pt-md-4">
+        <div class="col">
+          Booking ID
+        </div>
+        <div class="col">
+          {{transaction?.bookingId}}
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Check-in
+          <br>
+          Check-out
+        </div>
+        <div class="col">
+          {{transaction?.prebook_response.data.package.check_in_date | date: 'mediumDate'}}
+          <br>
+          {{transaction?.prebook_response.data.package.check_out_date | date: 'mediumDate'}}
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Contact details
+        </div>
+        <div class="col">
+          <div>
+            {{transaction?.contact_details.mobile}}
+          </div>
+          <div>
+            {{transaction?.contact_details.email}}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Guest name
+        </div>
+        <div class="col">
+          {{transaction?.contact_details.name}} {{transaction?.contact_details.last_name}}
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Room
+        </div>
+        <div class="col">
+          {{transaction?.prebook_response.data.package.room_details.supplier_description}}
+          <br>
+          {{transaction?.prebook_response.data.package.adult_count}} adults,
+          {{transaction?.prebook_response.data.package.child_count}} child
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Payment Details
+        </div>
+        <div class="col">
+          <div>
+            Amount: {{transaction?.payment_response.amount}}
+          </div>
+          <div>
+            Status: {{transaction?.payment_response.order_status}}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Payment Method
+        </div>
+        <div class="col">
+          <div>
+            Mode: {{transaction?.payment_response.payment_mode}}
+          </div>
+          <div>
+            Name : {{transaction?.payment_response.billing_name}}
+          </div>
+          <div>
+            Card: {{transaction?.payment_response.card_name}}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col">
+          Cancellation Policy
+        </div>
+        <div class="col">
+          <table class="table">
+            <thead>
+              <th>Date From</th>
+              <th>Date To</th>
+              <th>Penalty %</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cancellation_policy of transaction?.cancellation_policy.cancellation_policies">
+                <td>
+                  {{cancellation_policy.date_from | date: 'mediumDate'}}
+                </td>
+                <td>
+                  {{cancellation_policy.date_to | date: 'mediumDate'}}
+                </td>
+                <td>
+                  {{cancellation_policy.penalty_percentage}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row" *ngIf="cancellation">
+        <div class="col">
+          Cancellation Details
+        </div>
+        <div class="col">
+          <div class="text-danger">
+            Cancelled on: {{cancellation?.data.cancellation_details.cancelled_at | date:'mediumDate'}}
+          </div>
+          <div>
+            Penalty: {{cancellation?.data.cancellation_details.api_penalty.currency}}
+            {{cancellation?.data.cancellation_details.api_penalty.value}}
+          </div>
+          <div>
+            Penalty %: {{cancellation?.data.cancellation_details.api_penalty_percentage}}
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div *ngIf="transaction.status === 1">
+        <div class="pb-3">
+          <button *ngIf="isCancelAllowed(transaction.search.check_in_date)" class="btn btn-danger btn-sm"
+            (click)="cancelHotelBooking(transaction.bookingId)">
+            Cancel Booking
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

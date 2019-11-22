@@ -13,6 +13,7 @@ import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AccountRoutingModule } from "./account-routing.module";
+import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { AccountRoutingModule } from "./account-routing.module";
         VerifyotpComponent,
         ResetpasswordComponent,
         VerifyuserComponent,
-        DashboardComponent
+        DashboardComponent,
+        ManageBookingsComponent
     ],
     imports: [
         CommonModule,
