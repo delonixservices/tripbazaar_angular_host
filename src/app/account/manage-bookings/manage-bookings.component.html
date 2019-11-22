@@ -16,8 +16,8 @@
         </div>
       </div>
       <div>
-        <img class="img-fluid" [src]="transaction?.hotel.imageDetails.prefix+1+transaction?.hotel.imageDetails.suffix"
-          alt="hotel_image">
+        <img class="img-fluid" [src]="transaction?.hotel.imageDetails.prefix+0+transaction?.hotel.imageDetails.suffix"
+          alt="hotel_image" style="max-height:210px">
       </div>
       <div class="py-3">
         <div>
@@ -156,7 +156,7 @@
       </div>
       <hr>
 
-      <div class="row" *ngIf="cancellation">
+      <div class="row" *ngIf="cancellation && cancellation.data">
         <div class="col">
           Cancellation Details
         </div>

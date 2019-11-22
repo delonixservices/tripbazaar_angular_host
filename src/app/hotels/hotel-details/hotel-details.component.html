@@ -186,13 +186,15 @@
   <!-- CHOOSE ROOMS  -->
   <section #rooms id="choose-rooms">
     <div class="container d-none d-md-block">
-      <app-hotel-room-select [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
+      <app-hotel-room-select (packageSelected)="packageSelectedHandler($event)"
+        [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
         [amenities]="hotelObj.amenities">
       </app-hotel-room-select>
     </div>
 
     <div class="container d-md-none sticky-top">
-      <app-hotel-room-select [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
+      <app-hotel-room-select (packageSelected)="packageSelectedHandler($event)"
+        [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
         [amenities]="hotelObj.amenities" [mobile]="true">
       </app-hotel-room-select>
     </div>

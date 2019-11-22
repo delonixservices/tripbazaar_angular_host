@@ -1,16 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-hotel-room-select',
   templateUrl: './hotel-room-select.component.html',
   styleUrls: ['./hotel-room-select.component.css']
 })
+
 export class HotelRoomSelectComponent implements OnInit {
 
   @Input() hotelPackages;
   @Input() amenities;
   @Input() imageDetails;
   @Input() mobile: boolean;
+
+  @Output() packageSelected = new EventEmitter();
 
   // for getting food type from food code, eg: foodCode 1 = Room Only
   public foodType = [
@@ -27,6 +30,10 @@ export class HotelRoomSelectComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selectPackage(hotelPackage) {
+    this.packageSelected.emit(hotelPackage);
   }
 
 }
