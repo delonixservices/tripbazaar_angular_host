@@ -13,7 +13,7 @@ export class ManageBookingsComponent implements OnInit {
 
   public transaction: any;
   private loginUser: any;
-  private cancellation: any;
+  public cancellation: any;
 
   constructor(
     public api: ApiService,
