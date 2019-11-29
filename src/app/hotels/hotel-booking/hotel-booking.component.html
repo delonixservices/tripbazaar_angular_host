@@ -519,13 +519,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cancellationPolicy of booking_policy?.cancellation_policy.cancellation_policies">
+        <tr *ngFor="let cancellationPolicy of booking_policy?.cancellation_policy?.cancellation_policies">
           <td>{{cancellationPolicy.date_from | date: 'mediumDate'}}</td>
           <td>{{cancellationPolicy.date_to | date: 'mediumDate'}}</td>
           <td>{{cancellationPolicy.penalty_percentage}}</td>
         </tr>
       </tbody>
     </table>
-    <small>{{booking_policy.cancellation_policy.remark}}</small>
+    <small>{{booking_policy?.cancellation_policy?.remark}}</small>
   </div>
 </ng-template>

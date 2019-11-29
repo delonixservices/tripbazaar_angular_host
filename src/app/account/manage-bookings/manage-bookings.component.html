@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row justify-content-between">
-    <div class="col-4">
+    <div class="col-4 py-2">
       <div class="">
         <div class="d-flex align-items-center py-2">
-          <h3 class="font-weight-bold text-info">{{transaction?.hotel.name}}</h3>
-          <div class="pl-2">
-            <div class="rating">
+          <h4 class="font-weight-bold text-info pr-2">{{transaction?.hotel.name}}</h4>
+          <div class="">
+            <div class="d-flex">
               <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 0 ? 'text-warning' : 'text-light'"></i>
               <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 1 ? 'text-warning' : 'text-light'"></i>
               <i class="fa fa-star " [ngClass]="transaction?.hotel.starRating > 2 ? 'text-warning' : 'text-light'"></i>
@@ -15,8 +15,8 @@
           </div>
         </div>
       </div>
-      <div>
-        <img class="img-fluid" [src]="transaction?.hotel.imageDetails.prefix+1+transaction?.hotel.imageDetails.suffix"
+      <div class="hotel_image_container">
+        <img class="" [src]="transaction?.hotel.imageDetails.prefix+0+transaction?.hotel.imageDetails.suffix"
           alt="hotel_image">
       </div>
       <div class="py-3">
@@ -96,16 +96,32 @@
         </div>
       </div>
       <hr>
-      <div class="row">
+      <div class="row payment_details">
         <div class="col">
           Payment Details
         </div>
         <div class="col">
           <div>
-            Amount: {{transaction?.payment_response.amount}}
+            <span class="item_key">Base Amount:</span> {{transaction?.pricing?.currency}}
+            {{transaction?.pricing.base_amount_discount_included}}
           </div>
           <div>
-            Status: {{transaction?.payment_response.order_status}}
+            <span class="item_key">Service Charges:</span> {{transaction?.pricing?.currency}}
+            {{transaction?.pricing.service_charges}}
+          </div>
+          <div>
+            <span class="item_key">Processing Fee:</span> {{transaction?.pricing?.currency}}
+            {{transaction?.pricing.processing_fee}}
+          </div>
+          <div>
+            <span class="item_key">GST:</span> {{transaction?.pricing?.currency}} {{transaction?.pricing.gst}}
+          </div>
+          <div>
+            <span class="item_key">Total:</span> {{transaction?.pricing?.currency}}
+            {{transaction?.pricing.total_chargeable_amount}}
+          </div>
+          <div>
+            <span class="item_key">Payment Status:</span> {{transaction?.payment_response.order_status}}
           </div>
         </div>
       </div>
@@ -154,24 +170,34 @@
           </table>
         </div>
       </div>
-      <hr>
 
-      <div class="row" *ngIf="cancellation">
-        <div class="col">
-          Cancellation Details
+      <div *ngIf="cancellation && cancellation.data">
+        <hr>
+        <div class="row">
+          <div class="col">
+            Cancellation Details
+          </div>
+          <div class="col">
+            <div class="text-danger">
+              Cancelled on: {{cancellation?.data.cancellation_details.cancelled_at | date:'medium'}}
+            </div>
+            <div>
+              Penalty: <strong>{{cancellation?.data.cancellation_details.penalty?.currency}}
+                {{cancellation?.data.cancellation_details.penalty?.value}}</strong>
+            </div>
+            <div>
+              Penalty %: <strong>{{cancellation?.data.cancellation_details.penalty_percentage}}</strong>
+            </div>
+            <div>
+              Cancellation Charge: <strong>INR {{cancellation?.data.cancellation_details.cancellation_charge}}</strong>
+            </div>
+            <div>
+              Refund: <strong>{{cancellation?.data.cancellation_details.refund?.currency}}
+                {{cancellation?.data.cancellation_details.refund?.value}}</strong>
+            </div>
+          </div>
         </div>
-        <div class="col">
-          <div class="text-danger">
-            Cancelled on: {{cancellation?.data.cancellation_details.cancelled_at | date:'mediumDate'}}
-          </div>
-          <div>
-            Penalty: {{cancellation?.data.cancellation_details.api_penalty.currency}}
-            {{cancellation?.data.cancellation_details.api_penalty.value}}
-          </div>
-          <div>
-            Penalty %: {{cancellation?.data.cancellation_details.api_penalty_percentage}}
-          </div>
-        </div>
+
       </div>
       <hr>
       <div *ngIf="transaction.status === 1">

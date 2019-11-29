@@ -186,6 +186,11 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  packageSelectedHandler(hotelPackage) {
+    console.log(1);
+    this.selectPackage(hotelPackage);
+  }
+
   selectPackage(hotelPackage) {
     if (hotelPackage === undefined || hotelPackage == "" || hotelPackage == null) {
       this.alertService.error("Please Select correct hotel package");
