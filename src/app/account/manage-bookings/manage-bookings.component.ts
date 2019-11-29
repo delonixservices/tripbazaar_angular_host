@@ -59,9 +59,10 @@ export class ManageBookingsComponent implements OnInit {
             console.log(response)
             if (response && response.data) {
               this.cancellation = response;
+              this.transaction.status = 2;
               Swal({
                 title: 'Hotel Cancelled!',
-                text: 'Your hotel has been cancelled successfully',
+                text: 'This hotel booking has has been cancelled on your request. Refund will be processed as per the booking Policy.',
                 type: 'success'
               })
               console.log(response);

@@ -45,7 +45,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
   public bookingid: any;
   public transactionid: any;
   public modalRef: any;
-  public userAgree: boolean;
+  public userAgree: boolean = true;
   bookingKey: any;
   hotelId: any;
 
