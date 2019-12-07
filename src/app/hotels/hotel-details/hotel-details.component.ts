@@ -76,6 +76,9 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.hoteldetailkeys.hotelId = params.hotelId;
       this.hoteldetailkeys.details = JSON.parse(params.details);
       this.hoteldetailkeys.transaction_identifier = params.transaction_identifier;
+
+      this.hoteldetailkeys.referenceId = params.referenceId;
+
       console.log(this.hoteldetailkeys);
 
       this.loadHotelDetails();
