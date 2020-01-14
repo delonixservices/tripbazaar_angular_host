@@ -1,0 +1,73 @@
+<div ngbDropdown container="body" class="card card-body">
+  <!-- **here** -->
+  <div class="" id="dropdownBasic" ngbDropdownToggle>{{total_passengers}} <span
+      *ngIf="total_passengers > 1">travellers</span><span *ngIf="total_passengers <= 1">traveller</span>, Economy
+    Class</div>
+  <div class="menu" ngbDropdownMenu aria-labelledby="dropdownBasic">
+    <div class="passenger_details">
+      <div class="adult_counter">
+        <div class="header">
+          Adult
+        </div>
+        <div class="body">
+          <div class="input-group-button">
+            <button (click)="adultMinusClicked()" type="button" class="btn hollow circle" data-quantity="minus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','minus']"></fa-icon>
+            </button>
+          </div>
+          <input [(ngModel)]="adult_count" class="input-group-field" type="number" name="quantity" readonly
+            aria-readonly="true">
+          <div class="input-group-button">
+            <button (click)="adultPlusClicked()" type="button" class="btn hollow circle" data-quantity="plus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','plus']"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="child_counter">
+        <div class="header">
+          Child
+        </div>
+        <div class="body">
+          <div class="input-group-button">
+            <button (click)="childMinusClicked()" type="button" class="btn hollow circle" data-quantity="minus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','minus']"></fa-icon>
+            </button>
+          </div>
+          <input [(ngModel)]="child_count" class="input-group-field" type="number" name="quantity" value="0" readonly
+            aria-readonly="true">
+          <div class="input-group-button">
+            <button (click)="childPlusClicked()" type="button" class="btn hollow circle" data-quantity="plus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','plus']"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="infant_counter">
+        <div class="header">
+          Infant
+        </div>
+        <div class="body">
+          <div class="input-group-button">
+            <button (click)="infantMinusClicked()" type="button" class="btn hollow circle" data-quantity="minus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','minus']"></fa-icon>
+            </button>
+          </div>
+          <input [(ngModel)]="infant_count" class="input-group-field" type="number" name="quantity" value="0" readonly
+            aria-readonly="true">
+          <div class="input-group-button">
+            <button (click)="infantPlusClicked()" type="button" class="btn hollow circle" data-quantity="plus"
+              data-field="quantity">
+              <fa-icon [icon]="['fas','plus']"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

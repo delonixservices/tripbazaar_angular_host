@@ -122,7 +122,7 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     queryParams.filters = filters;
 
     this.api.post("/hotels/search", queryParams)
-      // this.api.load("/hotelSearch.json")
+      // this.api.loadData("/hotelSearch.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))

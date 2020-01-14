@@ -1,0 +1,271 @@
+$boxShadow : 0 0 4px 2px rgba(0, 0, 0, 0.25);
+$colorWhite: #fff;
+$colorPrimary:#4a90e2;
+
+.flight_review-container {
+  margin: 2rem 0rem;
+}
+
+.ticket_details {
+  box-shadow: $boxShadow;
+  background-color: $colorWhite;
+}
+
+.ticket_details .header {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $colorPrimary;
+}
+
+.summary {
+  display: flex;
+  background-color: $colorPrimary;
+  padding: 5px 10px;
+  margin-top: 1rem;
+  font-size: 15px;
+  font-family: helvetica;
+  font-weight: bold;
+  color: #fff;
+}
+
+.airline {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.airline-name {
+  font-weight: bold;
+}
+
+.departure {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.departure_time,
+.arrival_time,
+.fare {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.departure_arp-name,
+.arrival_arp-name,
+.airline-no {
+  font-size: 13px;
+  color: #454545;
+}
+
+.duration {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.total_duration {
+  font-weight: bold;
+}
+
+.duration_separator {
+  width: 65px;
+  height: 3px;
+  margin: 4px 0;
+  border-radius: 5px;
+  background-color: #888;
+  position: relative;
+}
+
+.duration .flight_stop {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  border: 1px solid #222;
+  position: absolute;
+  top: -2.2px;
+  left: 45%;
+  cursor: pointer;
+}
+
+.non_stop {
+  color: #008cff;
+}
+
+.arrival {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+// .book_flight-btn {
+//   padding: 10px 0 0;
+// }
+
+// .book_flight-btn button {
+//   border: none;
+//   outline: none;
+//   cursor: pointer;
+//   background-color: #3f51b5;
+//   color: #fff;
+//   width: 120px;
+//   height: 33px;
+//   padding: 0 5px;
+//   border-radius: 30px;
+//   font-size: 12px;
+//   font-weight: bold;
+//   text-transform: uppercase;
+//   float: right;
+// }
+
+// .flight_details-btn {
+//   padding: 10px 5%;
+//   display: flex;
+//   justify-content: flex-end;
+// }
+
+// .flight_details-btn span {
+//   text-decoration: none;
+//   color: #008cff;
+//   text-transform: uppercase;
+//   cursor: pointer;
+//   position: relative;
+// }
+
+// .flight_details-btn span:hover {
+//   color: #ff5700;
+// }
+
+// .flight_details-container {
+//   // padding: 2rem 0;
+// }
+
+.flight_details {
+  // display: flex;
+  padding: 0 0 20px;
+  text-align: center;
+}
+
+.flight_info {
+  display: flex;
+  // width: 70%;
+  // height: 100px;
+  margin: 1.5rem 0 0;
+  justify-content: space-between;
+}
+
+.airline_info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+// .airline_info .airline-name,
+// .airline_info .airline-no,
+// .airline_info #dummy {
+//   // flex: 1;
+// }
+
+.flight_timings {
+  display: flex;
+}
+
+.baggage_info {
+  display: flex;
+  justify-content: space-between;
+  // width: 40%;
+}
+
+.baggage_info div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.flight_separator {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  margin: 20px 0;
+}
+
+.flight_separator div {
+  background-color: #878787;
+  color: #fff;
+  width: 50%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  z-index: 10;
+}
+
+.flight_separator::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-top: 1px solid #9b9b9b;
+  border-radius: 5px;
+  width: 70%;
+}
+
+.fare_details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  // height: 120px;
+  padding: 10px 0;
+  background-color: $colorWhite;
+}
+
+.fare_details:first-child {
+  font-size: 17px;
+}
+
+.fare_details-row {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #e7e7e7;
+  padding: 8px 5%;
+  font-size: 14px;
+}
+
+.fare_details .top_rw {
+  border: none;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+// =================================
+// ======= TRAVELERS DETAILS =======
+// =================================
+
+.traveller_details {
+  box-shadow: $boxShadow;
+  margin: 2rem 0;
+  padding: 2rem 1.5rem;
+  background-color: $colorWhite;
+}
+
+// =================================
+// ========== FARE DETAILS =========
+// =================================
+
+.fare_details {
+  box-shadow: $boxShadow;
+  margin: 0 0 2rem;
+  padding: .5rem 1.5rem;
+}

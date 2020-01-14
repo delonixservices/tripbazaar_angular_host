@@ -1,0 +1,16 @@
+.flight-searchbar-container {
+  overflow: hidden;
+  // height: 30rem;
+  height: 73.5vh;
+  background-image: url(https://cdn.pixabay.com/photo/2018/03/16/20/13/sea-3232350_1280.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.flight-searchbar {
+  background-color: #f4f4f4;
+  padding: .5rem 2rem;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
