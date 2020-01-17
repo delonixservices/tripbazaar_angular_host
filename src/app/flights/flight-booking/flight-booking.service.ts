@@ -35,7 +35,7 @@ export class FlightBookingService {
         }
       };
 
-      this.api.post('/orderRetrive', reqBody).subscribe((response) => {
+      this.api.post('/flights/order-retrieve', reqBody).subscribe((response) => {
         // this.api.loadData('/orderRetrive.json').subscribe((response) => {
         console.log(response);
         console.log(JSON.stringify(response));
@@ -74,7 +74,7 @@ export class FlightBookingService {
         }
       }
 
-      this.api.post('/cancelOrder', reqBody).subscribe((response) => {
+      this.api.post('/flights/order-cancel', reqBody).subscribe((response) => {
         // this.api.loadData('/cancelOrder.json').subscribe((response) => {
         console.log(response);
         console.log(JSON.stringify(response));

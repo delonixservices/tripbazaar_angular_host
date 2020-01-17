@@ -335,9 +335,9 @@
                                     class="btn btn-secondary btn-sm">Cancellation
                                     Charges</a></div> -->
               <div class="col-md-4 text-center"><a [ngClass]="{'disabled': !transaction?.book_response}"
-                  (click)="hotelInvoice(transaction._id)" class="btn btn-info btn-sm">View Invoice</a></div>
+                  (click)="hotelInvoice(transaction.bookingId)" class="btn btn-info btn-sm">View Invoice</a></div>
               <div class="col-md-4 text-center"><a [ngClass]="{'disabled': !transaction?.book_response}"
-                  (click)="hotelVoucher(transaction._id)" class="btn btn-success btn-sm">View Voucher</a></div>
+                  (click)="hotelVoucher(transaction.bookingId)" class="btn btn-success btn-sm">View Voucher</a></div>
             </div>
             <hr>
             <div class="row mx-3">

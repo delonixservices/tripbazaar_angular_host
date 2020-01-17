@@ -17,7 +17,7 @@ export class FlightSearchService {
 
   getFlights(departureAirport, arrivalAirport, departureDate, returnDate, passengers): Observable<any> {
     return new Observable((observer) => {
-      const reqUrl = '/flightSearch/';
+      const reqUrl = '/flights/flight-search/';
 
       let isTwoWayJourney: boolean = false;
 
@@ -63,6 +63,7 @@ export class FlightSearchService {
       for (let i = 0; i < adult_count; i++) {
         const traveler = {
           "anonymous": true,
+          "id": "T1",
           "type": "ADT"
         }
         travelers.push(traveler);
@@ -90,7 +91,7 @@ export class FlightSearchService {
           "airLine": {
             "email": "string",
             "iataNumber": "string",
-            "id": "",
+            "id": "UK",
             "name": "string",
             "type": ""
           },
@@ -106,86 +107,86 @@ export class FlightSearchService {
         "travelers": travelers
       }
 
-      // this.api.post(reqUrl, reqBody)
-      //   .pipe(takeUntil(this.ngUnsubscribe))
-      //   .subscribe((response) => {
-      // load static data
-      this.api.loadData('/flightSearch.json').subscribe((response) => {
-        // this.api.loadData('/flightSearchReturn.json').subscribe((response) => {
-        console.log(response);
-        console.log(JSON.stringify(response));
+      this.api.post(reqUrl, reqBody)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe((response) => {
+          // load static data
+          // this.api.loadData('/flightSearch.json').subscribe((response) => {
+          // this.api.loadData('/flightSearchReturn.json').subscribe((response) => {
+          console.log(response);
+          console.log(JSON.stringify(response));
 
-        const data = response['DelonixShoppingRes'];
-        if (data.Errors) {
-          console.log('Sorry no flights found.');
-          return observer.error(data.Errors.Error);
-        }
-
-        const shoppingResponseID = data.ShoppingResponseID;
-
-        const originDestination = data.DataLists.OriginDestinationList.OriginDestination;
-
-        // string of flight keys seprated by space
-        let oneWayFlightStr: string;
-        if (Array.isArray(originDestination)) {
-          console.log(arrivalAirport, departureAirport)
-          const orgDes = originDestination.filter((el) => el.ArrivalCode === arrivalAirport && el.DepartureCode === departureAirport)[0];
-          if (orgDes) {
-            oneWayFlightStr = orgDes.FlightReferences.content;
-          } else {
-            return observer.error('Origin Destination not found');
+          const data = response['DelonixShoppingRes'];
+          if (data.Errors) {
+            console.log('Sorry no flights found.');
+            return observer.error(data.Errors.Error);
           }
-        } else {
-          oneWayFlightStr = originDestination.FlightReferences.content;
-        }
 
-        const oneWayFlightList = data.DataLists.FlightList.Flight.filter((el => oneWayFlightStr.includes(el.FlightKey)));
+          const shoppingResponseID = data.ShoppingResponseID;
 
-        // for return flight arrivalAirport will be departureAirport  and departureAirport will be arrivalAirport
-        let returnFlightList: [];
-        if (isTwoWayJourney) {
+          const originDestination = data.DataLists.OriginDestinationList.OriginDestination;
+
           // string of flight keys seprated by space
-          const returnFlightStr = originDestination.filter((el) => el.ArrivalCode === departureAirport && el.DepartureCode === arrivalAirport)[0].FlightReferences.content;
+          let oneWayFlightStr: string;
+          if (Array.isArray(originDestination)) {
+            console.log(arrivalAirport, departureAirport)
+            const orgDes = originDestination.filter((el) => el.ArrivalCode === arrivalAirport && el.DepartureCode === departureAirport)[0];
+            if (orgDes) {
+              oneWayFlightStr = orgDes.FlightReferences.content;
+            } else {
+              return observer.error('Origin Destination not found');
+            }
+          } else {
+            oneWayFlightStr = originDestination.FlightReferences.content;
+          }
 
-          returnFlightList = data.DataLists.FlightList.Flight.filter((el => returnFlightStr.includes(el.FlightKey)));
-        }
+          const oneWayFlightList = data.DataLists.FlightList.Flight.filter((el => oneWayFlightStr.includes(el.FlightKey)));
 
-        const flightSegmentList = data['DataLists']['FlightSegmentList']['FlightSegment'];
+          // for return flight arrivalAirport will be departureAirport  and departureAirport will be arrivalAirport
+          let returnFlightList: [];
+          if (isTwoWayJourney) {
+            // string of flight keys seprated by space
+            const returnFlightStr = originDestination.filter((el) => el.ArrivalCode === departureAirport && el.DepartureCode === arrivalAirport)[0].FlightReferences.content;
 
-        const offers = data['OffersGroup']['AirlineOffers']['Offer'];
+            returnFlightList = data.DataLists.FlightList.Flight.filter((el => returnFlightStr.includes(el.FlightKey)));
+          }
 
-        let flightTypeId = "SD";
-        let oneWayFlights = this.parseFlights(oneWayFlightList, flightSegmentList, offers, flightTypeId);
-        let returnFlights = [];
-        if (isTwoWayJourney) {
-          flightTypeId = "DS";
-          returnFlights = this.parseFlights(returnFlightList, flightSegmentList, offers, flightTypeId);
-        }
+          const flightSegmentList = data['DataLists']['FlightSegmentList']['FlightSegment'];
 
-        const passengers = data.DataLists.PassengerList.Passenger;
+          const offers = data['OffersGroup']['AirlineOffers']['Offer'];
 
-        let passengerList = [];
+          let flightTypeId = "SD";
+          let oneWayFlights = this.parseFlights(oneWayFlightList, flightSegmentList, offers, flightTypeId);
+          let returnFlights = [];
+          if (isTwoWayJourney) {
+            flightTypeId = "DS";
+            returnFlights = this.parseFlights(returnFlightList, flightSegmentList, offers, flightTypeId);
+          }
 
-        if (!Array.isArray(passengers)) {
-          passengerList[0] = passengers;
-        } else {
-          passengerList = passengers;
-        }
+          const passengers = data.DataLists.PassengerList.Passenger;
 
-        const flights = {
-          'oneWayFlights': oneWayFlights,
-          'returnFlights': returnFlights,
-          'passengers': passengerList,
-          'responseId': shoppingResponseID.ResponseID
-        }
-        // return flights;
-        observer.next(flights);
-        observer.complete();
-      }, err => {
-        console.log(err);
-        return observer.error(err);
-        // this.alert.error(err.message);
-      })
+          let passengerList = [];
+
+          if (!Array.isArray(passengers)) {
+            passengerList[0] = passengers;
+          } else {
+            passengerList = passengers;
+          }
+
+          const flights = {
+            'oneWayFlights': oneWayFlights,
+            'returnFlights': returnFlights,
+            'passengers': passengerList,
+            'responseId': shoppingResponseID.ResponseID
+          }
+          // return flights;
+          observer.next(flights);
+          observer.complete();
+        }, err => {
+          console.log(err);
+          return observer.error(err);
+          // this.alert.error(err.message);
+        })
 
     })
   }

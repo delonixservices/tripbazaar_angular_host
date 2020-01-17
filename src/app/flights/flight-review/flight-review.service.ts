@@ -109,8 +109,8 @@ export class FlightReviewService {
       console.log(reqBody);
 
       // spelling mistake made in backend /priceRequset
-      // this.api.post('/priceRequset', reqBody).subscribe((response) => {
-      this.api.loadData('/priceRequest.json').subscribe((response) => {
+      this.api.post('/flights/flight-price', reqBody).subscribe((response) => {
+        // this.api.loadData('/priceRequest.json').subscribe((response) => {
         // this.api.loadData('/priceRequestReturn.json').subscribe((response) => {
 
         console.log(response);
@@ -404,8 +404,8 @@ export class FlightReviewService {
       // console.log(flight)
       console.log(reqBody);
       // spelling mistake made in backend
-      // this.api.post('/createOrder', reqBody).subscribe((response) => {
-      this.api.loadData('/createOrder.json').subscribe((response) => {
+      this.api.post('/flights/order-create', reqBody).subscribe((response) => {
+        // this.api.loadData('/createOrder.json').subscribe((response) => {
         console.log(response);
         console.log(JSON.stringify(response));
 
