@@ -1,0 +1,135 @@
+.flight-list {
+  margin: 0 1rem;
+}
+
+// selected flight (two way) 
+//  =========================
+//  =========================
+
+.selected_flight {
+  position: sticky;
+  z-index: 500;
+  top: 73px;
+  left: 0;
+  right: 0;
+}
+
+.flight-overview {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+  text-align: center;
+}
+
+.airline {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.airline-name {
+  font-weight: bold;
+}
+
+.departure {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.departure_time,
+.arrival_time,
+.fare {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.departure_arp-name,
+.arrival_arp-name,
+.airline-no {
+  font-size: 13px;
+  color: #454545;
+}
+
+.duration {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.total_duration {
+  font-weight: bold;
+}
+
+.duration_separator {
+  width: 65px;
+  height: 3px;
+  margin: 4px 0;
+  border-radius: 5px;
+  background-color: #888;
+  position: relative;
+}
+
+.duration .flight_stop {
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  border: 1px solid #222;
+  position: absolute;
+  top: -2.2px;
+  left: 45%;
+  cursor: pointer;
+}
+
+.non_stop {
+  color: #008cff;
+}
+
+.arrival {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.fare_details-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px 20px;
+  text-align: center;
+}
+
+
+.book_flight-btn {
+  padding: 10px 0 0;
+}
+
+.book_flight-btn button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: #3f51b5;
+  color: #fff;
+  width: 120px;
+  height: 33px;
+  padding: 0 5px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  float: right;
+}
+
+
+// ==========================
+// ==========================

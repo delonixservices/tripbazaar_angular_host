@@ -1,0 +1,142 @@
+<div class="container">
+  <div class="flight_review-container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="ticket_details p-2 p-md-3">
+          <div class="header">
+            Ticket Details
+          </div>
+          <div *ngFor="let flight of flights" class="py-2">
+            <div class="summary">
+              <div><span>{{flight.departure.airportName}} to {{flight.arrival.airportName}},
+                  {{flight.departure.date}}</span>
+                <span> &nbsp;{{flight.totalDuration}}</span></div>
+            </div>
+            <div class="flights">
+              <div *ngFor="let fl of flight.flightSegments; let i = index;" class="flight_details-container">
+                <div class="flight_details">
+                  <div class="flight_info">
+                    <div class="airline_info">
+                      <div class="airline-name">{{fl.airlineName}}</div>
+                      <div class="airline-no">
+                        Airbus {{fl.airlineID}}-{{fl.flightNo}}
+                      </div>
+                    </div>
+                    <div class="departure">
+                      <div class="departure_time">{{fl.departure.time}}</div>
+                      <div class="departure_arp-name">{{fl.departure.airportName}},{{fl.departure.airportCode}}</div>
+                    </div>
+                    <div class="duration">
+                      <div class="total_duration">{{fl.duration}}</div>
+                      <div class="duration_separator">
+                      </div>
+                      <div class="non_stop">Non stop</div>
+                    </div>
+                    <div class="arrival">
+                      <div class="arrival_time">{{fl.arrival.time}}</div>
+                      <div class="arrival_arp-name">{{fl.arrival.airportName}},{{fl.arrival.airportCode}}</div>
+                    </div>
+                  </div>
+                  <!-- <div class="baggage_info">
+              <div>
+                <div>Baggage:</div>
+                <div>Adult</div>
+              </div>
+              <div>
+                <div>Check-In</div>
+                <div>{{flight.baggageAllowance.checkIn}}</div>
+              </div>
+              <div>
+                <div>Cabin</div>
+                <div>{{flight.baggageAllowance.cabin}}</div>
+              </div>
+            </div> -->
+                </div>
+
+                <div *ngIf="flight.flightSegments.length > 1 && i < flight.flightSegments.length-1"
+                  class="flight_separator">
+                  <div>
+                    <div>Change of Planes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="traveller_details">
+          <form>
+            <div class="form-group">
+              <div class="font-weight-bold">Contact Details</div>
+              <small>Your booking details will be sent to this email address and mobile number.</small>
+              <div class="input-group">
+                <div class="p-2">
+                  <input [(ngModel)]="contactDetails.email" type="text" name="email" id="email" class="form-control"
+                    placeholder="Email ID" aria-describedby="helpId">
+                  <small id="helpId" class="text-muted"></small>
+                </div>
+                <div class="p-2">
+                  <input [(ngModel)]="contactDetails.phone" type="number" name="mobile" id="mobile" class="form-control"
+                    placeholder="Mobile Number" aria-describedby="helpId">
+                  <small id="helpId" class="text-muted"></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="font-weight-bold">Traveller Information</div>
+              <small>Note: The names of the passengers on the travel documents should be same
+                as on their
+                government issued identity proof.</small>
+              <div *ngFor="let passenger of passengers; let i = index;">
+                <div class="py-2">Passenger {{i+1}} ({{passenger.type}})</div>
+                <div class="input-group">
+                  <div class="p-2">
+                    <input [(ngModel)]="passenger.first_name" type="text" name="first_name{{i}}" id="first_name"
+                      class="form-control" placeholder="First Name" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                  </div>
+                  <div class="p-2">
+                    <input [(ngModel)]="passenger.last_name" type="text" name="last_name{{i}}" id="last_name"
+                      class="form-control" placeholder="Last Name" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                  </div>
+                  <div class="p-2">
+                    <input ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()"
+                      (dateSelect)="onDateSelect($event,passenger.id)" autocomplete="off" name="date_of_birth"
+                      id="date_of_birth" class="form-control" placeholder="Date of Birth" aria-describedby="helpId">
+                    <small id="helpId" class="text-muted"></small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div class="pt-2 text-danger">{{contactDetailsValidation}}</div>
+        </div>
+        <div>
+          <button class="btn btn-primary" [disabled]="!allowProcessPayment" (click)="createOrder()">Proceed To
+            Payment</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="fare_details">
+          <div class="fare_details-row top_rw">
+            <div>Fare Breakup</div>
+            <div></div>
+          </div>
+          <div class="fare_details-row">
+            <div>Base Fare</div>
+            <div>&#8377; {{fareDetails?.baseAmount}}</div>
+          </div>
+          <div class="fare_details-row">
+            <div>Taxes</div>
+            <div>&#8377; {{fareDetails?.taxes || 1.0-0}}</div>
+          </div>
+          <div class="fare_details-row">
+            <div>TOTAL</div>
+            <div>&#8377; {{fareDetails?.totalAmount}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

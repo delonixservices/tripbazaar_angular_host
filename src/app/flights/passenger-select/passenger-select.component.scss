@@ -1,0 +1,39 @@
+.passenger_details {
+  display: flex;
+  padding: .5rem;
+
+  .body {
+    display: flex;
+  }
+
+  .adult_counter,
+  .child_counter,
+  .infant_counter {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-group-field {
+    text-align: center;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    padding: .5rem;
+    width: 5rem;
+
+    &::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      appearance: none;
+    }
+  }
+
+  .input-group-button {
+    .circle {
+      // border-radius: 50%;
+      padding: 0.25em 0.8em;
+    }
+  }
+}
+
+.menu {
+  z-index: 100;
+}

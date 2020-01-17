@@ -1,0 +1,53 @@
+<div class="flight-searchbar-container">
+  <div class="row h-100 align-items-center justify-content-center">
+    <div class="col-md-10 col-lg-10">
+      <div class="flight-searchbar py-5">
+        <div class="form-row pb-3">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="tripCode">
+            <label ngbButtonLabel class="btn-primary">
+              <input ngbButton type="radio" [value]="1"> One Way
+            </label>
+            <label ngbButtonLabel class="btn-primary">
+              <input ngbButton type="radio" [value]="2"> Round Trip
+            </label>
+            <!-- <label ngbButtonLabel class="btn-primary">
+              <input ngbButton type="radio" [value]="3"> Multicity
+            </label> -->
+          </div>
+        </div>
+        <div class="form-row justify-content-between">
+          <div class="form-group">
+            <input [(ngModel)]="departureAirport" id="flight_origin" class="form-control" type="text"
+              placeholder="Origin" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <input [(ngModel)]="arrivalAirport" id="flight_destination" class="form-control" type="text"
+              placeholder="Destination" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <input id="flight_departure" class="form-control" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()"
+              (dateSelect)="onDepartureDateSelect($event)" placeholder="Departure Date" autocomplete="off">
+          </div>
+          <div *ngIf="tripCode===2" class="form-group">
+            <input id="flight_return" class="form-control" ngbDatepicker #d2="ngbDatepicker" (click)="d2.toggle()"
+              (dateSelect)="onReturnDateSelect($event)" placeholder="Return Date" autocomplete="off">
+          </div>
+          <!-- <input [(ngModel)]="travellers" id="flight_travellers" class="form-control" type="text"
+              placeholder="travellers" autocomplete="off"> -->
+          <!-- <div class="card card-body" ngbDropdownToggle>
+              1 traveller, Economy Class
+            </div> -->
+          <!-- <div ngbDropdownMenu>
+
+            </div> -->
+          <div>
+            <app-passenger-select (valueChange)="onChange($event)"></app-passenger-select>
+          </div>
+          <div>
+            <button class="btn btn-secondary" (click)="searchFlights()">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

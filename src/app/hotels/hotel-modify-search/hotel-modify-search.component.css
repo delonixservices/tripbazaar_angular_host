@@ -58,11 +58,14 @@
 #checkindate:hover,
 #checkoutdate:hover,
 .hotel-modify_search .customDropdown:hover {
-  background-color: #a8d0ff;
+  /* background-color: #a8d0ff; */
+  background-color: #e8f0fd;
 }
 
 .bg-blue {
-  background-color: #a8d0ff;
+  /* background-color: #a8d0ff; */
+  background-color: #e8f0fd;
+
 }
 
 #checkindate,

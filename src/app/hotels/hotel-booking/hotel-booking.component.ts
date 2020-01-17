@@ -224,7 +224,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 
   loadBookingPolicy() {
     this.api.post("/hotels/bookingpolicy", { "hotelId": this.hotelId, "bookingKey": this.bookingKey, "search": this.searchObj, "transaction_id": this.transaction_identifier })
-      // this.api.load("/hotelBookingpolicy.json")
+      // this.api.loadData("/hotelBookingpolicy.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))
