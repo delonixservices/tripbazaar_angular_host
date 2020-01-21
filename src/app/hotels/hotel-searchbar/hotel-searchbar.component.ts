@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbAccordion, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject, concat, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
@@ -11,7 +11,6 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-hotel-searchbar',
   templateUrl: './hotel-searchbar.component.html',
   styleUrls: ['./hotel-searchbar.component.css'],
-  encapsulation: ViewEncapsulation.None,
   host: {
     '(document:click)': 'hostClick($event)',
   }
