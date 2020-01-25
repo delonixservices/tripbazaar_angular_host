@@ -1,0 +1,27 @@
+.amenities ul.list {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+
+.amenities ul.list {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+
+.amenities ul.list li {
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.amenities ul.list li:before {
+  content: "\f046";
+  font-family: fontAwesome;
+  padding-right: 8px;
+}
+
+.amenities ul.list li:after {
+  content: "|";
+  margin: 0 15px;
+}

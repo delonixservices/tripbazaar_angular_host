@@ -15,6 +15,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryModule } from '@ngx-gallery/core';
 import { HotelsRoutingModule } from './hotels-routing.module';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 
 import { HotelSearchbarComponent } from './hotel-searchbar/hotel-searchbar.component';
 import { HotelHomeComponent } from './hotel-home/hotel-home.component';
@@ -56,7 +58,8 @@ import { HotelRoomSelectComponent } from './hotel-details/hotel-room-select/hote
     NgSelectModule,
     HotelsRoutingModule,
     ImgFallbackModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    InfiniteScrollModule
   ]
 })
 

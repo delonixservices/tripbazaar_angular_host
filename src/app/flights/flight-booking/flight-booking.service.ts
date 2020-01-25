@@ -38,7 +38,7 @@ export class FlightBookingService {
       this.api.post('/flights/order-retrieve', reqBody).subscribe((response) => {
         // this.api.loadData('/orderRetrive.json').subscribe((response) => {
         console.log(response);
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
 
         const data = response.OrderViewRS;
 

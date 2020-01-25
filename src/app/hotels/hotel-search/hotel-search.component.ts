@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from "@angular/common/http";
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators'
 import { ApiService, JwtService, AlertService, GoogleAnalyticsService } from '../../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -38,6 +38,8 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
   public filteredHotels = [];
   public copyFilteredHotels = [];
 
+  public appliedFilters: any;
+
   public validation: any;
   public modalRef: any;
 
@@ -45,7 +47,16 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
   minHotelPrice: number;
   maxHotelPrice: number;
 
-  totalHotelsCount: any;
+  totalHotelsCount: number;
+  currentHotelsCount: number;
+  page: number;
+  // hotels per page
+  perPage: number = 15;
+  totalPages: number;
+
+  // next hotels polling toggler
+  allowNextIteration: boolean;
+  pollingStatus: string;
 
   constructor(public route: ActivatedRoute,
     private router: Router,
@@ -112,17 +123,19 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     console.log(filters);
     // cancel previous search request
     this.ngUnsubscribe.next();
+    this.appliedFilters = filters;
     this.searchResult(this.hotelsearchkeys, filters);
   }
 
   searchResult(hotelsearchkeys, filters = {}) {
     // this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
 
-    const queryParams = Object.assign({}, hotelsearchkeys);
+    const queryParams = Object.assign({
+      'perPage': this.perPage
+    }, hotelsearchkeys);
     queryParams.filters = filters;
 
-    this.api.post("/hotels/search", queryParams)
-      // this.api.loadData("/hotelSearch.json")
+    this.searchHotels(queryParams)
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -137,6 +150,11 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
           }
           this.allHotel = response.data;
           this.totalHotelsCount = response.data.totalHotelsCount;
+          this.currentHotelsCount = response.data.currentHotelsCount;
+          this.page = response.data.page;
+          // this.perPage = response.data.perPage;
+          this.totalPages = response.data.totalPages;
+          this.pollingStatus = response.data.status;
 
           if (response.data.price) {
             this.minHotelPrice = response.data.price.minPrice;
@@ -146,8 +164,13 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
           this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
           // localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
           this.transaction_identifier = response.data.transaction_identifier;
+
+          if (this.pollingStatus !== "complete")
+            this.allowNextIteration = true;
+
           localStorage.setItem('searchObj', JSON.stringify(response.data.search));
           this.norecordfoundtitle = "";
+
         } else {
           // this.norecordfoundmsg = "oops";
           this.filteredHotels = [];
@@ -161,7 +184,58 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
         this.filteredHotels = [];
         this.copyFilteredHotels = [];
       });
+
+
+
+    // code before pagination
+
+    // this.api.post("/hotels/search", queryParams)
+    // // this.api.loadData("/hotelSearch.json")
+    // // Added Ankit	
+    // // emit values until provided observable i.e ngUnsubscribe emits
+    // .pipe(takeUntil(this.ngUnsubscribe))
+    // .subscribe((response) => {
+    //   if (response && response.data != undefined) {
+    //     console.log('Search res ', response.data);
+    //     if (response.data.totalHotelsCount == 0) {
+    //       this.norecordfoundtitle = "There is no hotel available currently. Please search for other hotels";
+    //       this.filteredHotels = [];
+    //       this.copyFilteredHotels = [];
+    //       return;
+    //     }
+    //     this.allHotel = response.data;
+    //     this.totalHotelsCount = response.data.totalHotelsCount;
+
+    //     if (response.data.price) {
+    //       this.minHotelPrice = response.data.price.minPrice;
+    //       this.maxHotelPrice = response.data.price.maxPrice;
+    //     }
+    //     this.filteredHotels = response.data.hotels;
+    //     this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
+    //     // localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
+    //     this.transaction_identifier = response.data.transaction_identifier;
+    //     localStorage.setItem('searchObj', JSON.stringify(response.data.search));
+    //     this.norecordfoundtitle = "";
+    //   } else {
+    //     // this.norecordfoundmsg = "oops";
+    //     this.filteredHotels = [];
+    //     this.copyFilteredHotels = [];
+    //     this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+    //   }
+    // }, (err) => {
+    //   this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+    //   this.alertService.error("No hotels available for this checkin date. Please select another checkin date.");
+    //   console.log(err);
+    //   this.filteredHotels = [];
+    //   this.copyFilteredHotels = [];
+    // });
+
   }
+
+  searchHotels(queryParams): Observable<any> {
+    return this.api.post("/hotels/search", queryParams);
+  }
+
 
   // Load hoteldetails component
   hoteldetails(hotel) {
@@ -199,261 +273,71 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  // priceFilter() {
-  //   this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
-
-  //   this.filteredHotels = this.filteredHotels.filter((hotel) => {
-  //     const chargeable_rate = hotel.rates.packages[0].chargeable_rate;
-  //     return chargeable_rate >= this.minHotelPrice && chargeable_rate <= this.maxHotelPrice;
-  //   });
-  //   // console.log(this.filteredHotels);
-  //   if (this.filteredHotels.length <= 0) {
-  //     this.norecordfoundtitle = "There is no Hotel available currently. Please search for other hotels";
-  //   } else {
-  //     this.norecordfoundtitle = "";
-  //   }
-  // }
-
-
-  // sideBarFilter() {
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.non_refundable
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.food
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.room_type
-  //   // data.hotels[""0""].rates.packages[""0""].chargeable_rate
-  //   // this.filteredHotels
-
-  //   this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
-  //   setTimeout(() => {
-  //     const roomTypeFilter = [];
-  //     for (let index = 0; index < this.RootTypeFilters.length; index++) {
-  //       const element = this.RootTypeFilters[index];
-  //       if (element.name === 'All') {
-  //         continue;
-  //       }
-  //       if (element.selected === true) {
-  //         roomTypeFilter.push(element.value);
-  //       }
-  //     }
-
-  //     if (roomTypeFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return roomTypeFilter.includes(hotel.rates.packages[0].room_details.room_type);
-  //       });
-  //     }
-
-  //     const refundableFilter = [];
-  //     for (let index = 0; index < this.Refundable.length; index++) {
-  //       const element = this.Refundable[index];
-  //       if (element.name === 'All') {
-  //         continue;
-  //       }
-  //       if (element.selected === true) {
-  //         refundableFilter.push(element.value);
-  //       }
-  //     }
-
-  //     if (refundableFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return refundableFilter.includes(hotel.rates.packages[0].room_details.non_refundable);
-  //       });
-  //     }
-
-  //     const foodServerdFilter = [];
-  //     for (let index = 0; index < this.FoodServerd.length; index++) {
-  //       const element = this.FoodServerd[index];
-  //       if (element.name === 'All') {
-  //         continue;
-  //       }
-  //       if (element.selected === true) {
-  //         foodServerdFilter.push(element.value);
-  //       }
-  //     }
-
-  //     if (foodServerdFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return foodServerdFilter.includes(hotel.rates.packages[0].room_details.food);
-  //       });
-  //     }
-
-  //     if (this.searchText) {
-  //       this.filteredHotels = this.filteredHotels.filter(hotel => {
-  //         return hotel && hotel.originalName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1;
-  //       });
-  //     }
-  //   }, 0);
-  // }
-
-  // FilterHotels() {
-  //   var refund;
-  //   var roomtype;
-  //   var foodserve;
-  //   var i = 0;
-  //   setTimeout(() => {
-  //     for (let refundtype of this.Refundable) {
-  //       if (i == 0) {
-  //         if (refundtype.selected === true) {
-  //           refund = refundtype.value;
-  //           break;
-  //         }
-  //       } else {
-  //         if (refundtype.selected === true) {
-  //           refund.push(refundtype.value);
-  //         }
-  //       }
-  //       i++;
-  //     }
-
-  //     i = 0;
-  //     this.RootTypeFilters.map((type, index) => {
-  //       console.log(index);
-  //       console.log(type);
-  //       if (index == 0) {
-  //         if (type.selected == true) {
-  //           roomtype = type.value;
-  //           return true;
-  //         }
-  //       } else {
-  //         if (type.selected == true) {
-  //           roomtype.push(type.value);
-  //         }
-  //         this.norecordfoundtitle = "Opps";
-  //         this.norecordfoundmsg = "No Room available currently, Please look for some other option";
-  //       }
-
-  //     });
-  //     // for(let type of this.RootTypeFilters; let){
-  //     // 	if(i == 0){
-  //     // 		if(type.selected == true){
-  //     // 			roomtype = type.value;
-  //     // 			break;
-  //     // 		}
-
-  //     // 	}else{
-  //     // 		if(type.selected == true){
-  //     // 			roomtype.push(type.value);	
-  //     // 		}
-  //     // 	}
-  //     // 	i++;
-  //     // }
-
-  //     i = 0;
-  //     for (let food of this.FoodServerd) {
-  //       if (i == 0) {
-  //         if (food.selected === true) {
-  //           foodserve = food.value;
-  //           break;
-  //         }
-  //       } else {
-  //         if (food.selected === true) {
-  //           foodserve.push(food.value);
-  //         }
-  //       }
-  //       i++;
-  //     }
-
-  //     // this.filteredHotels =  this.allHotel.hotels.filter(function(hotel) {
-  //     this.filteredHotels = this.allHotel.filter(function (hotel) {
-  //       // return true;
-  //       return (roomtype.indexOf(hotel.rates.packages[0].room_details.room_type) > -1) && (foodserve.indexOf(hotel.rates.packages[0].room_details.food) > -1);
-  //     });
-  //   }, 200)
-  // }
-
-  // SearchFilter() {
-  //   this.FilterHotels();
-  // }
-
-  SearchFood() {
-    // console.log(this.FoodServerd[0]);
-    // console.log(this.FoodServerd[1]); 
-    // console.log(this.FoodServerd[2]);
-    // if((this.FoodServerd[1].selected == true && this.FoodServerd[2].selected == true) || (this.FoodServerd[1].selected == false && this.FoodServerd[2].selected == false)){
-    // 	this.FoodServerd[0].selected = true;
-    // 	this.FoodServerd[1].selected = false;
-    // 	this.FoodServerd[2].selected = false;
-    // 	console.log("yes");
-    // }else{
-    // 	this.FoodServerd[0].selected = false;
-    // 	console.log("no");
-    // }
-    // console.log(this.FoodServerd);
-    // this.FilterHotels();
-  }
-
   // MODIFY SEARCH
   openModal(modifySearchModal) {
     this.modalRef = this.modalService.open(modifySearchModal);
   }
 
-  // addRoomInSearch() {
-  //   this.roomdetail.push({
-  //     "room": String((this.roomdetail.length) + 1),
-  //     "adult_count": "1",
-  //     "child_count": "0",
-  //     "children": []
-  //   });
-  // }
+  onScroll() {
+    console.log("onScroll called...");
 
-  // removeRoomFromSearch() {
-  //   console.log(this.roomdetail.length);
-  //   if (this.roomdetail.length > 1) {
-  //     this.roomdetail.pop();
-  //   }
-  // }
+    // controll hotel polling
+    // fetching next hotels is not allowed because current iteration is currently running
+    if (!this.allowNextIteration) {
+      return;
+    }
 
-  // CHANGES ANKIT
-  // checkChildren(index) {
-  //   if (this.roomdetail[index].children.length > Number(this.roomdetail[index].child_count)) {
-  //     this.roomdetail[index].children.splice(Number(this.roomdetail[index].child_count), this.roomdetail[index].children.length + 1);
-  //   } else {
-  //     for (let i = 0; i < Number(this.roomdetail[index].child_count); i++) {
-  //       console.log(this.roomdetail[index].children[i] === undefined);
-  //       if (this.roomdetail[index].children[i] === undefined) {
-  //         this.roomdetail[index].children[i] = { age: "1" };
-  //       }
-  //     }
-  //   }
-  //   console.log(this.roomdetail[index]);
-  // }
+    const requestParams = Object.assign({
+      'page': this.page + 1,
+      'perPage': this.perPage,
+      'currentHotelsCount': this.currentHotelsCount,
+      'filters': this.appliedFilters
+    }, this.hotelsearchkeys);
 
-  // checkChildren(index) {
-  // if(this.roomdetail[index].children.length > this.roomdetail[index].child_count){
-  // 	this.roomdetail[index].children.splice(-1, this.roomdetail[index].children.length - this.roomdetail[index].child_count);
-  // }else{
-  // 	for (var i=this.roomdetail[index].children.length; i<this.roomdetail[index].child_count; i++) {
-  //       this.roomdetail[index].children.push({"child":i+1,"age":"1"});
-  //     }
+    this.allowNextIteration = false;
 
-  // }
-  // }
+    console.log(`Fetch next ${this.perPage} hotels...`);
 
-  // searchAgain() {
+    this.searchHotels(requestParams)
+      // Added Ankit	
+      // emit values until provided observable i.e ngUnsubscribe emits
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe((response) => {
+        if (response && response.data != undefined) {
+          console.log('Search res on scroll ', response.data);
+          if (response.data.totalHotelsCount == 0) {
+            // this.norecordfoundtitle = "There is no hotel available currently. Please search for other hotels";
+            // this.filteredHotels = [];
+            // this.copyFilteredHotels = [];
+            // return;
+          }
 
-  //   if (this.selectedArea !== undefined && this.checkInDate !== undefined && this.checkOutDate !== undefined && this.roomdetail !== undefined) {
-  //     var flag = true;
-  //     loop1:
-  //     for (let o of this.roomdetail) {
-  //       for (let child of o.children) {
-  //         if (child.age === undefined || child.age == "" || child.age > 11 || child.age < 0) {
-  //           this.alertService.error("select correct age of child " + child.child + " in room " + o.room);
-  //           flag = false;
-  //           break loop1;
-  //         }
-  //       }
-  //     }
-  //     if (flag) {
-  //       // this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
-  //       // localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
-  //       this.hotelsearchkeys = { "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "name": this.selectedArea.name, "type": this.selectedArea.type, "id": this.selectedArea.id, "transaction_identifier": this.selectedArea.transaction_identifier, "details": JSON.stringify(this.roomdetail) };
+          this.filteredHotels = this.filteredHotels.concat(response.data.hotels);
+          console.log(this.filteredHotels);
+          this.totalHotelsCount = response.data.totalHotelsCount;
+          this.currentHotelsCount = response.data.currentHotelsCount;
+          this.page = response.data.page;
+          // this.perPage = response.data.perPage;
+          this.totalPages = response.data.totalPages;
+          this.pollingStatus = response.data.status;
 
-  //       this.modalRef.close();
-  //       this.searchResult();
-  //     }
+          if (this.pollingStatus !== "complete")
+            this.allowNextIteration = true;
 
-  //   } else {
-  //     this.alertService.error("All fields are required!");
-  //   }
-  // }
+        } else {
+          // // this.norecordfoundmsg = "oops";
+          // this.filteredHotels = [];
+          // this.copyFilteredHotels = [];
+          // this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+        }
+      }, (err) => {
+        // this.norecordfoundtitle = "There is no result available currently. Please search for other hotel";
+        // this.alertService.error("No hotels available for this checkin date. Please select another checkin date.");
+        console.log(err);
+        // this.filteredHotels = [];
+        // this.copyFilteredHotels = [];
+      });
+  }
 
   showSearchLoader() {
     return (!this.allHotel || !this.allHotel.search) && (!this.norecordfoundtitle);

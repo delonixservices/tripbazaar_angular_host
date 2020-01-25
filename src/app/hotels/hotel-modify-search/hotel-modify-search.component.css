@@ -8,22 +8,22 @@
   /* min-width: 1000px; */
 }
 
-.accordion div.card-header {
+::ng-deep .accordion div.card-header {
   background-color: #fff;
 }
 
-.accordion div.card-header .btn-link:hover,
-.accordion div.card-header .btn-link:active,
-.accordion div.card-header .btn-link:focus {
+::ng-deep .accordion div.card-header .btn-link:hover,
+::ng-deep .accordion div.card-header .btn-link:active,
+::ng-deep .accordion div.card-header .btn-link:focus {
   text-decoration: none !important;
 }
 
-.accordion div.card-header button {
+::ng-deep .accordion div.card-header button {
   /* border-bottom: 0; */
   width: 100%;
 }
 
-.accordion>.card {
+::ng-deep .accordion>.card {
   border: 1px solid rgba(0, 0, 0, .125);
 }
 
@@ -65,7 +65,6 @@
 .bg-blue {
   /* background-color: #a8d0ff; */
   background-color: #e8f0fd;
-
 }
 
 #checkindate,
@@ -134,7 +133,7 @@
   user-select: none;
 }
 
-ngb-datepicker {
+::ng-deep ngb-datepicker {
   position: absolute;
   z-index: 100;
   background-color: white;

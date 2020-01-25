@@ -1,3 +1,69 @@
+/* .room-type {} */
+
+.room-type_left-sec {
+  padding: 0 20px;
+}
+
+.room-type_description {
+  padding: 5px 0 10px;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.room-type_left-sec img {
+  height: 225px;
+  border-radius: 5px;
+  max-width: 100%;
+  min-width: 340px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.room-type_benefits ul {
+  padding: 0 20px;
+}
+
+.room-type_info h4,
+.room-type_aminities h4 {
+  padding-left: 20px;
+  font-size: 1.2rem;
+}
+
+.room-type_info p {
+  padding-top: 2px;
+  padding-left: 10px;
+}
+
+.room-type_info {
+  display: flex;
+}
+
+.room-type_aminities ul {
+  padding: 0 20px;
+}
+
+.room-type_aminities ul i {
+  margin-right: 20px;
+}
+
+.room-type_aminities ul li {
+  margin: 10px 0;
+}
+
+.room-type_benefits ul i {
+  margin-right: 20px;
+}
+
+.room-type_benefits ul li {
+  margin: 20px 0;
+
+}
+
+.room-type_body tr td:last-child {
+  min-width: 12rem;
+}
+
+
 /* for mobile */
 
 .hotel_packages .hotel_package-item {

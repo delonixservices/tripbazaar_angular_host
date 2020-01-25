@@ -11,7 +11,7 @@ import { ImageItem, GalleryComponent } from '@ngx-gallery/core';
   selector: 'app-hoteldetails-page',
   templateUrl: './hotel-details.component.html',
   styleUrls: ['./hotel-details.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
 })
 
 export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {

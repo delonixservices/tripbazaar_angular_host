@@ -104,10 +104,20 @@ export class FlightBookingComponent implements OnInit {
         orders.push(keys);
       });
 
+      console.log(orders);
+
       // retrieve each orders
       orders.forEach((order, i) => {
-        this.orderRetrive(order, i);
+        // this.orderRetrive(order, i);
+
+        // ATFlight throwing bad request if making two request simultaneously
+
+        setTimeout(() => {
+          this.orderRetrive(order, i);
+        }, i * 10000);
       })
+
+      // this.orderRetrive(orders[0], 0);
     }, (err) => {
       console.log(err);
     });
@@ -168,7 +178,9 @@ export class FlightBookingComponent implements OnInit {
 
         flightSegments.push(flightSegmentsObj);
       })
+
       console.log(this.retrievedOrders[i], i)
+
       this.retrievedOrders[i].flightSegments = flightSegments;
 
       const passengerRef = data.DataLists.PassengerList.Passenger;
@@ -246,6 +258,8 @@ export class FlightBookingComponent implements OnInit {
       this.retrievedOrders[i].contactInfo.email = contactInfo.ContactProvided[0].EmailAddress.EmailAddressValue;
 
       this.retrievedOrders[i].contactInfo.phone = contactInfo.ContactProvided[1].Phone.PhoneNumber;
+
+      console.log(this.retrievedOrders);
 
     }, (err) => {
       this.alert.error(err);

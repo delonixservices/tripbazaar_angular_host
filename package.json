@@ -43,6 +43,7 @@
     "ng5-slider": "^1.2.4",
     "ngx-drag-scroll": "^2.0.2",
     "ngx-img-fallback": "^1.3.4",
+    "ngx-infinite-scroll": "^8.0.1",
     "ngx-skeleton-loader": "^1.2.2",
     "owl.carousel": "^2.3.4",
     "rxjs": "^6.5.3",
@@ -52,7 +53,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.4",
+    "@angular-devkit/build-angular": "^0.803.23",
     "@angular/cli": "^8.3.4",
     "@angular/compiler-cli": "8.2.6",
     "@angular/language-service": "8.2.6",

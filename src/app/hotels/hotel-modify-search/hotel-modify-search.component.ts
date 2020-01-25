@@ -11,7 +11,7 @@ import { NgSelectComponent } from '@ng-select/ng-select';
   selector: 'app-hotel-modify-search',
   templateUrl: './hotel-modify-search.component.html',
   styleUrls: ['./hotel-modify-search.component.css'],
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   host: {
     '(document:click)': 'hostClick($event)',
   }
@@ -161,7 +161,7 @@ export class HotelModifySearchComponent implements OnInit {
       this.selectedArea = {};
     }
   }
-  
+
   selectDate() {
     this.showDatePicker = !this.showDatePicker;
   }
