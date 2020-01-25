@@ -27,141 +27,149 @@
           (filtersChange)="onFiltersChange($event)"></app-hotel-search-filters>
       </div>
       <div *ngIf="allHotel && allHotel.search" class="col">
-        <div class="movies content" id="movies" fjs-items="template=#hotel-template"
-          *ngFor="let hotel of filteredHotels; let i = index ">
-          <div class="hotel_search-item">
-            <div class="row">
-              <div class="col-4 col-md-5 d-flex align-items-center d-md-block">
-                <div class="">
-                  <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false">
-                    <ng-template ngbSlide *ngFor="let item of [].constructor(hotel.imageDetails.count); let i = index ">
-                      <div class="search_item_img-wrapper">
-                        <img class="img-fluid" src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}"
-                          src-fallback="/assets/images/hotel_placeholder.jpg" alt="hotelSlide">
-                      </div>
-                    </ng-template>
-                  </ngb-carousel>
 
-                </div>
-                <div *ngIf="hotel.imageDetails.count ===0" class="search_item_img-wrapper">
-                  <img class="img-fluid" src="/assets/images/hotel_placeholder.jpg" alt="hotelSlide"
-                    style="width:100%;">
-                </div>
-              </div>
+        <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="150"
+          (scrolled)="onScroll()" [scrollWindow]="true">
 
-              <div class="col-8 col-md-7">
-                <div class="hotel-details">
-                  <div class="row">
-                    <div class="col-md-7 py-md-3">
-                      <div class="hotel_name mb-md-2">{{hotel?.name}}</div>
-                      <div class=""><i class="fa fa-map-marker"></i>
-                        &nbsp;<span>{{hotel.location.address}},
-                          {{allHotel.region?.city}} {{allHotel.region?.country}}</span>
-                      </div>
-                      <div class="mb-2 star_rating">
-                        <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 0 }"></i>
-                        <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 1 }"></i>
-                        <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 2 }"></i>
-                        <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 3 }"></i>
-                        <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 4 }"></i>
-                      </div>
-                      <p class="d-none d-md-block"><i class="fa fa-bed"></i>
-                        {{hotel.rates.packages[0].room_details.description}} </p>
-
-                      <p class="d-none d-md-block facility">
-                        <i class="fa fa-wifi" title="WIFI" *ngIf="hotel.amenities.dataPorts"></i>
-                        <i class="fa fa-tv" title="TV" *ngIf="hotel.amenities.tVInRoom"></i>
-                        <i class="fa fa-snowflake-o" title="AC" *ngIf="hotel.amenities.airConditioning"></i>
-                        <i class="fa fa-bath" title="Private Washroom"></i>
-                        <i class="fa fa-car" title="Free parking"></i>
-                        <i class="fa fa-cutlery" title="Food"></i>
-                        <i class="fa fa-coffee" title="Breakfast"></i>
-                        <i class="fa fa-glass" title="Bar" *ngIf="hotel.amenities.miniBarInRoom"></i>
-                      </p>
-                      <hr class="d-none d-md-block">
-
-                    </div>
-
-                    <div class="col-md-5 d-none d-md-block">
-                      <div class="text-md-right ">
-                        <div class="rating text-success">
-                          <i class="fa fa-tripadvisor"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                          <i class="fa fa-star"></i>
-                        </div>
-                        <div class="text-md-right">
-                          <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
-                            {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
-                        </div>
-
-                        <h4 class="text-md-right price">
-
-                          <span class="small"
-                            *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].indicative_market_rates">
-                            <s *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
-                              {{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].base_amount)+ hotel.rates.packages[0].base_amount | number: '1.0-0'}}</s></span>
-
-                          <span class="badge badge-success text-light small"
-                            *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
-                            {{hotel.rates.packages[0].guest_discount_percentage}} % </span>
-                          <br>
-
-                          {{hotel.rates.packages[0].chargeable_rate_currency}}.
-                          <span>{{hotel.rates.packages[0].base_amount | number: '1.0-0'}}</span>
-                        </h4>
-                        <hr class="d-none d-md-block">
-                        <div class="btn btn-danger" (click)="hoteldetails(hotel)">Book Room <i class="fa fa-check"></i>
-                        </div>
-                        <!-- <div class="pt-1"><a (click)="hoteldetails(hotel)" class="">View Details <i
-                                  class="fa fa-eye"></i></a></div> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- for mobile -->
-            <div class="row d-md-none">
-              <div class="col">
-                <div class="">
-                  <div class="rating text-success">
-                    <i class="fa fa-tripadvisor"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
+          <div class="" id="movies" fjs-items="template=#hotel-template"
+            *ngFor="let hotel of filteredHotels; let i = index ">
+            <div class="hotel_search-item">
+              <div class="row">
+                <div class="col-4 col-md-5 d-flex align-items-center d-md-block">
                   <div class="">
-                    <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
-                      {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
+                    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false">
+                      <ng-template ngbSlide
+                        *ngFor="let item of [].constructor(hotel.imageDetails?.count || 0); let i = index ">
+                        <div class="search_item_img-wrapper">
+                          <img class="img-fluid" src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}"
+                            src-fallback="/assets/images/hotel_placeholder.jpg" alt="hotelSlide">
+                        </div>
+                      </ng-template>
+                    </ngb-carousel>
+
+                  </div>
+                  <div *ngIf="hotel.imageDetails?.count === 0" class="search_item_img-wrapper">
+                    <img class="img-fluid" src="/assets/images/hotel_placeholder.jpg" alt="hotelSlide"
+                      style="width:100%;">
+                  </div>
+                </div>
+
+                <div class="col-8 col-md-7">
+                  <div class="hotel-details">
+                    <div class="row">
+                      <div class="col-md-7 py-md-3">
+                        <div class="hotel_name mb-md-2">{{hotel?.name}}</div>
+                        <div class=""><i class="fa fa-map-marker"></i>
+                          &nbsp;<span>{{hotel.location.address}},
+                            {{allHotel.region?.city}} {{allHotel.region?.country}}</span>
+                        </div>
+                        <div class="mb-2 star_rating">
+                          <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 0 }"></i>
+                          <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 1 }"></i>
+                          <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 2 }"></i>
+                          <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 3 }"></i>
+                          <i class="fa fa-star " [ngClass]="{'text-warning' : hotel.starRating > 4 }"></i>
+                        </div>
+                        <p class="d-none d-md-block"><i class="fa fa-bed"></i>
+                          {{hotel.rates.packages[0].room_details.description}} </p>
+
+                        <p class="d-none d-md-block facility">
+                          <i class="fa fa-wifi" title="WIFI" *ngIf="hotel.amenities.dataPorts"></i>
+                          <i class="fa fa-tv" title="TV" *ngIf="hotel.amenities.tVInRoom"></i>
+                          <i class="fa fa-snowflake-o" title="AC" *ngIf="hotel.amenities.airConditioning"></i>
+                          <i class="fa fa-bath" title="Private Washroom"></i>
+                          <i class="fa fa-car" title="Free parking"></i>
+                          <i class="fa fa-cutlery" title="Food"></i>
+                          <i class="fa fa-coffee" title="Breakfast"></i>
+                          <i class="fa fa-glass" title="Bar" *ngIf="hotel.amenities.miniBarInRoom"></i>
+                        </p>
+                        <hr class="d-none d-md-block">
+
+                      </div>
+
+                      <div class="col-md-5 d-none d-md-block">
+                        <div class="text-md-right ">
+                          <div class="rating text-success">
+                            <i class="fa fa-tripadvisor"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                          </div>
+                          <div class="text-md-right">
+                            <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
+                              {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
+                          </div>
+
+                          <h4 class="text-md-right price">
+
+                            <span class="small"
+                              *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].indicative_market_rates">
+                              <s *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
+                                {{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].base_amount)+ hotel.rates.packages[0].base_amount | number: '1.0-0'}}</s></span>
+
+                            <span class="badge badge-success text-light small"
+                              *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
+                              {{hotel.rates.packages[0].guest_discount_percentage}} % </span>
+                            <br>
+
+                            {{hotel.rates.packages[0].chargeable_rate_currency}}.
+                            <span>{{hotel.rates.packages[0].base_amount | number: '1.0-0'}}</span>
+                          </h4>
+                          <hr class="d-none d-md-block">
+                          <div class="btn btn-danger" (click)="hoteldetails(hotel)">Book Room <i
+                              class="fa fa-check"></i>
+                          </div>
+                          <!-- <div class="pt-1"><a (click)="hoteldetails(hotel)" class="">View Details <i
+                                class="fa fa-eye"></i></a></div> -->
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <h4 class="price">
-                  <span class="small discounted_price"
-                    *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].indicative_market_rates">
-                    <s *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
-                      {{hotel.rates.packages[0].chargeable_rate_currency}}.
-                      {{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].base_amount)+ hotel.rates.packages[0].base_amount | number: '1.0-0'}}</s></span>
 
-                  <span class="discount_percent badge badge-success text-light small"
-                    *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
-                    {{hotel.rates.packages[0].guest_discount_percentage}} % </span>
-                  <!-- <br> -->
-                  <div class="hotel_rate">
-                    {{hotel.rates.packages[0].chargeable_rate_currency}}.
-                    <span>{{hotel.rates.packages[0].base_amount | number: '1.0-0'}}</span>
+              <!-- for mobile -->
+              <div class="row d-md-none">
+                <div class="col">
+                  <div class="">
+                    <div class="rating text-success">
+                      <i class="fa fa-tripadvisor"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="">
+                      <span class="small">{{hotel.moreRatings?.tripAdvisor.rating}} / 5 Excellent |
+                        {{hotel.moreRatings?.tripAdvisor.reviewCount}} Reviews</span>
+                    </div>
                   </div>
-                </h4>
-                <div class="btn btn-danger btn-sm" (click)="hoteldetails(hotel)">Book Room <i class="fa fa-check"></i>
+                </div>
+                <div class="col">
+                  <h4 class="price">
+                    <span class="small discounted_price"
+                      *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].indicative_market_rates">
+                      <s *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
+                        {{hotel.rates.packages[0].chargeable_rate_currency}}.
+                        {{(((-1*hotel.rates.packages[0].guest_discount_percentage)/100) * hotel.rates.packages[0].base_amount)+ hotel.rates.packages[0].base_amount | number: '1.0-0'}}</s></span>
+
+                    <span class="discount_percent badge badge-success text-light small"
+                      *ngIf="hotel.rates.packages[0] && hotel.rates.packages[0].guest_discount_percentage">
+                      {{hotel.rates.packages[0].guest_discount_percentage}} % </span>
+                    <!-- <br> -->
+                    <div class="hotel_rate">
+                      {{hotel.rates.packages[0].chargeable_rate_currency}}.
+                      <span>{{hotel.rates.packages[0].base_amount | number: '1.0-0'}}</span>
+                    </div>
+                  </h4>
+                  <div class="btn btn-danger btn-sm" (click)="hoteldetails(hotel)">Book Room <i class="fa fa-check"></i>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
 
         <div *ngIf="norecordfoundtitle" class="no-rooms-available">

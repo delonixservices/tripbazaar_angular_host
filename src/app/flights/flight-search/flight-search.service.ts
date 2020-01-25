@@ -59,27 +59,32 @@ export class FlightSearchService {
       const infant_count = passengers.infant_count;
 
       // const totalTravelers = adult_count + child_count + infant_count;
-
+      let travelerCount = 0;
       for (let i = 0; i < adult_count; i++) {
+        travelerCount++;
         const traveler = {
           "anonymous": true,
-          "id": "T1",
+          "id": `T${travelerCount}`,
           "type": "ADT"
         }
         travelers.push(traveler);
       }
 
       for (let i = 0; i < child_count; i++) {
+        travelerCount++;
         const traveler = {
           "anonymous": true,
+          "id": `T${travelerCount}`,
           "type": "CHD"
         }
         travelers.push(traveler);
       }
 
       for (let i = 0; i < infant_count; i++) {
+        travelerCount++;
         const traveler = {
           "anonymous": true,
+          "id": `T${travelerCount}`,
           "type": "INF"
         }
         travelers.push(traveler);
@@ -91,7 +96,8 @@ export class FlightSearchService {
           "airLine": {
             "email": "string",
             "iataNumber": "string",
-            "id": "UK",
+            // "id": "UK",
+            "id": "6E",
             "name": "string",
             "type": ""
           },
