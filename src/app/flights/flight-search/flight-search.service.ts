@@ -11,7 +11,7 @@ export class FlightSearchService {
 
   private ngUnsubscribe = new Subject();
 
-  constructor(
+  constructor (
     public api: ApiService
   ) { }
 
@@ -125,7 +125,7 @@ export class FlightSearchService {
           const data = response['DelonixShoppingRes'];
           if (data.Errors) {
             console.log('Sorry no flights found.');
-            return observer.error(data.Errors.Error);
+            return observer.error(data.Errors.Error.content);
           }
 
           const shoppingResponseID = data.ShoppingResponseID;

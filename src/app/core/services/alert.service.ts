@@ -5,7 +5,7 @@ import swal from 'sweetalert2'
 export class AlertService {
 	error(msg) {
 		swal({
-				title: 'Oops...',
+				title: 'Something went wrong...',
 				text: msg,
 				type: 'error',
 				confirmButtonText: 'Cool'

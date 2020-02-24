@@ -7,7 +7,7 @@ import { ApiService } from '../../core/services/api.service';
 })
 export class FlightBookingService {
 
-  constructor(
+  constructor (
     public api: ApiService
   ) { }
 
@@ -88,122 +88,6 @@ export class FlightBookingService {
           } else {
             return observer.error(data.Errors.Error);
           }
-        }
-
-        observer.next(response);
-        observer.complete();
-      }, (err) => {
-        console.log(err);
-        observer.error(err);
-      });
-    });
-  }
-
-
-  orderDocIssue(ticketDocObj) {
-    return new Observable((observer) => {
-      const reqBody = {
-        "contactContactInformation": [
-          {
-            "countryDailingCode": "91",
-            "email": {
-              "email": "ankit@gmail.com",
-              "lable": "Personal"
-            },
-            "id": "CID1",
-            "phone": {
-              "countryDialingCode": "91",
-              "lable": "Personal",
-              "phone": "9999999999"
-            },
-            "postalInfo": {
-              "cityName": "Delhi",
-              "countryCode": "IND",
-              "countrySubdivisionName": "Delhi",
-              "label": "Home",
-              "postalCode": "110019",
-              "street": "Nehru Place"
-            }
-          }
-        ],
-        "ticketDocInfo": {
-          "bookingRef": {
-            "airLineId": ticketDocObj.airLineId,
-            "id": ticketDocObj.bookingRefId
-          },
-          "cardPayment": {
-            "amount": "string", "approvalType": "string",
-            "cardCode": "string",
-            "cardHolderBillingAddress": {
-              "cityName": "string",
-              "countryCode": "string",
-              "postalCode": "string",
-              "stateProv": "string",
-              "street": "string"
-            },
-            "cardHolderName": "string",
-            "cardNumber": "string",
-            "contactInfoRefs": "string",
-            "expiration": "string",
-            "orderId": "string",
-            "orderItemId": "string",
-            "owner": "string",
-            "seriesCode": "string",
-            "type": "string"
-          },
-          "cashPayment": {
-            "amount": "string",
-            "contactInfoRefs": "CID1",
-            "orderId": "string",
-            "orderItemId": "string",
-            "owner": "string",
-            "type": "string"
-          },
-          "orderRef": {
-            "orderId": ticketDocObj.orderId,
-            "owner": ticketDocObj.owner
-          },
-          "passengerRef": ticketDocObj.passengerRef
-        },
-        "ticketDocQuantity": 0,
-        "travelAgency": {
-          "agencyID": "string",
-          "email": "string",
-          "iata_Number": "string",
-          "name": "string",
-          "pseudoCity": "string"
-        },
-        "travelers": [
-          {
-            "contactReff": "CID1",
-            "dob": "1999-10-16",
-            "email": "ankit@gmail.com",
-            "gender": "Male",
-            "id": "T1",
-            "middle": "Prasad",
-            "name": "Ankit",
-            "nameTitle": "Mr",
-            "phone": "9999999999",
-            "residenceCountryCode": "IND",
-            "surname": "Phondani",
-            "type": "ADT"
-          }
-        ]
-      }
-
-      // console.log(flight)
-      console.log(reqBody);
-      // spelling mistake made in backend
-      this.api.post('/orderDocIssue', reqBody).subscribe((response) => {
-        // this.api.loadData('/orderDocIssue.json').subscribe((response) => {
-        // console.log(response);
-        console.log(JSON.stringify(response));
-
-        const data = response.OrderViewRS;
-
-        if (data.Errors) {
-          console.log('Cannot get order view.');
-          return observer.error(data.Errors.ErrorMessage);
         }
 
         observer.next(response);

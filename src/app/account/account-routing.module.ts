@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from '@angular/core';
 
-import { AuthService } from '../core';
+import { AuthService } from '../core/services';
 
 import { AccountComponent } from './account.component';
 import { LoginComponent } from './login/login.component';
@@ -13,6 +13,7 @@ import { ResetpasswordComponent } from './resetpassword/resetpassword.component'
 import { VerifyotpComponent } from './verifyotp/verifyotp.component';
 import { VerifyuserComponent } from './verifyuser/verifyuser.component';
 import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
+import { ManageFlightBookingsComponent } from './manage-flight-bookings/manage-flight-bookings.component';
 
 const routes: Routes = [{
   path: "", component: AccountComponent, children: [
@@ -25,6 +26,7 @@ const routes: Routes = [{
     { path: "resetpassword/:id", component: ResetpasswordComponent },
     { path: "verifyotp/:id", component: VerifyotpComponent },
     { path: "verifyuser/:id", component: VerifyuserComponent },
+    { path: "manage-flight-booking", component: ManageFlightBookingsComponent, canActivate: [AuthService] },
   ]
 }];
 

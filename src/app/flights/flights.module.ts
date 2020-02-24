@@ -21,6 +21,7 @@ import { FlightBookingComponent } from './flight-booking/flight-booking.componen
 import { PassengerSelectComponent } from './passenger-select/passenger-select.component';
 
 import { faMinus, faPlus, fas } from '@fortawesome/free-solid-svg-icons';
+import { FlightVoucherComponent } from './flight-voucher/flight-voucher.component';
 
 
 
@@ -35,6 +36,7 @@ import { faMinus, faPlus, fas } from '@fortawesome/free-solid-svg-icons';
     FlightReviewComponent,
     FlightBookingComponent,
     PassengerSelectComponent,
+    FlightVoucherComponent,
   ],
   imports: [
     FlightsRoutingModule,

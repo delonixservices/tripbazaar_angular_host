@@ -4,6 +4,10 @@
   overflow-y: auto;
 }
 
+.table thead th {
+  border-top: none !important;
+}
+
 
 @media only screen and (max-width: 767px) {
   .upcoming-trip {

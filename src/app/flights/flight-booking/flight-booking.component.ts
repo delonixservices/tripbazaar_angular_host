@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './flight-booking.component.html',
   styleUrls: ['./flight-booking.component.scss']
 })
+
 export class FlightBookingComponent implements OnInit {
 
   bookedFlight: any;
@@ -70,8 +71,9 @@ export class FlightBookingComponent implements OnInit {
       phone: ''
     }
   }];
+  bookingId: any;
 
-  constructor(
+  constructor (
     public router: Router,
     public route: ActivatedRoute,
     public alert: AlertService,
@@ -93,6 +95,8 @@ export class FlightBookingComponent implements OnInit {
           this.alert.error('Invalid Booking Id');
           return this.router.navigate(['']);
         }
+        console.log(bookingKey.bookingId);
+        this.bookingId = bookingKey.bookingId;
         const keys = {
           'bookingRefId': bookingKey.bookingRefId,
           'otherId': bookingKey.otherId,
@@ -266,14 +270,6 @@ export class FlightBookingComponent implements OnInit {
     });
   }
 
-  orderDocIssue() {
-    this.flightBookingService.orderDocIssue(this.ticketDocObj).subscribe((response) => {
-      console.log(response);
-    }, (err) => {
-      console.log(err);
-    })
-  }
-
   orderCancelClicked(order) {
     console.log(order);
     this.flightBookingService.orderCancel(order.ticketDocObj.orderId, order.ticketDocObj.owner).subscribe((response) => {
@@ -321,5 +317,10 @@ export class FlightBookingComponent implements OnInit {
     // console.log(`${hrs}hrs ${mins}mins`);
     return `${hrs}hrs ${mins}mins`;
   }
+
+  flightVoucher() {
+    this.router.navigate(['/flights/flight-voucher'], { queryParams: { id: this.bookingId } });
+  }
+
 
 }
