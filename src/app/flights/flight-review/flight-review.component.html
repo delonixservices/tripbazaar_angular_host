@@ -125,7 +125,7 @@
           </div>
           <div class="fare_details-row">
             <div>Base Fare</div>
-            <div>&#8377; {{fareDetails?.baseAmount}}</div>
+            <div>&#8377; {{fareDetails?.baseAmount || 1.0-0}}</div>
           </div>
           <div class="fare_details-row">
             <div>Taxes</div>
@@ -133,7 +133,7 @@
           </div>
           <div class="fare_details-row">
             <div>TOTAL</div>
-            <div>&#8377; {{fareDetails?.totalAmount}}</div>
+            <div>&#8377; {{fareDetails?.totalAmount || 1.0-0}}</div>
           </div>
         </div>
       </div>
