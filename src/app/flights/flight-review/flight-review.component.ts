@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FlightReviewService } from './flight-review.service';
 import { NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { AlertService } from '../../core/services';
+import { AlertService, ApiService } from '../../core/services';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,6 +9,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './flight-review.component.html',
   styleUrls: ['./flight-review.component.scss']
 })
+
 export class FlightReviewComponent implements OnInit {
 
   @ViewChild('d1', { static: true }) datepicker: ElementRef;
@@ -36,12 +37,15 @@ export class FlightReviewComponent implements OnInit {
 
   passengersList;
 
-  constructor(
+  transactionIdentifier: string;
+
+  constructor (
     public flightReviewService: FlightReviewService,
     public dateFormatter: NgbDateParserFormatter,
     public datePickerConfig: NgbDatepickerConfig,
     public calander: NgbCalendar,
     public alert: AlertService,
+    public api: ApiService,
     public router: Router,
     public route: ActivatedRoute,
   ) {
@@ -108,6 +112,8 @@ export class FlightReviewComponent implements OnInit {
 
       this.responseId = response.responseId;
 
+      this.transactionIdentifier = response.transactionIdentifier;
+
       // updatedFlights.baggageAllowance = this.flight.baggageAllowance;
       this.flights = updatedFlights;
 
@@ -138,54 +144,35 @@ export class FlightReviewComponent implements OnInit {
 
     // if (!this.contactDetails.firstName || !this.contactDetails.lastName || !this.contactDetails.phone || !this.contactDetails.email || !this.contactDetails.dob) {
     //   this.contactDetailsValidation = "Required fields are empty";
+    //   console.log(this.contactDetails);
     //   return;
     // }
+
     console.log('create order');
-    this.flightReviewService.createOrder(this.flights, this.contactDetails, this.passengers, this.responseId).subscribe((response) => {
-      // console.log(response);
+    this.flightReviewService.processOrder(this.flights, this.contactDetails, this.passengers, this.responseId, this.transactionIdentifier).subscribe((response: any) => {
 
-      localStorage.setItem('bookedOrder', JSON.stringify(response));
+      console.log(response);
 
-      const order = response['OrderViewRS'].Response.Order;
+      // const order = response['OrderViewRS'];
+      // console.log(order && order.Response && response._id)
+      // if (order && order.Response && response._id) {
+      //   let url = this.api.baseUrl + "api/flights/process-payment/" + response._id;
+      //   window.location.assign(url);
+      // } else {
+      //   const errMsg = "Unable to create order. No response from supplier."
+      //   this.alert.error(errMsg);
+      // }
 
-      let orders = [];
-
-      if (!Array.isArray(order)) {
-        orders[0] = order;
+      if (response.bookingId) {
+        let url = this.api.baseUrl + "api/flights/process-payment/" + response.bookingId;
+        window.location.assign(url);
       } else {
-        orders = order;
+        const errMsg = "Unable to process order. No response from supplier."
+        this.alert.error(errMsg);
       }
 
-      let bookingKeys = [];
-
-      orders.forEach((order) => {
-        const orderId = order.OrderID;
-        const owner = order.Owner;
-        const bookingRefId = order.BookingReferences.BookingReference[0].ID;
-        const otherId = order.BookingReferences.BookingReference[0].OtherID;
-        const airlineName = order.BookingReferences.BookingReference[1].AirlineID.Name;
-        const airlineCode = order.BookingReferences.BookingReference[1].AirlineID.content;
-
-        const bookingKeyObj = {
-          'bookingRefId': bookingRefId,
-          'otherId': otherId,
-          'airlineName': airlineName,
-          'airlineCode': airlineCode,
-          'orderId': orderId,
-          'owner': owner,
-        }
-
-        bookingKeys.push(bookingKeyObj);
-      })
-
-      const flightBookingKeys = JSON.stringify(bookingKeys);
-
-      this.router.navigate(['/flights', 'flight-booking'], { queryParams: { 'flightBookingKeys': flightBookingKeys } });
-
-      // this.orderRetrive();
-
     }, (err) => {
-      this.alert.error(err);
+      this.alert.error(err.message);
     });
   }
 }

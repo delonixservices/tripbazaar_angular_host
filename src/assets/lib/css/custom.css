@@ -1604,3 +1604,19 @@ footer a {
     font-size: 18px;
   }
 }
+
+
+@media only screen and (max-width:500px) {
+
+  a.back-to-top {
+    width: 35px;
+    height: 35px;
+    bottom: 84px;
+    right: 48px;
+    background: none;
+    border-radius: 0px;
+    border-left: 9px solid #e73f50b2;
+    border-top: 9px solid #e73f50b2;
+    transform: rotate(45deg);
+  }
+}

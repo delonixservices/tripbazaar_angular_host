@@ -37,7 +37,7 @@ export class FlightSearchComponent implements OnInit, OnDestroy {
   responseId: any;
   passengersList: any;
 
-  constructor(
+  constructor (
     public router: Router,
     public route: ActivatedRoute,
     public alert: AlertService,

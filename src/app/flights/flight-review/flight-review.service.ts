@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 
 export class FlightReviewService {
 
-  constructor(
+  constructor (
     public api: ApiService
   ) { }
 
@@ -125,6 +125,8 @@ export class FlightReviewService {
 
         const responseId = data.ShoppingResponseID.ResponseID;
 
+        const transactionIdentifier = response.transaction_identifier;
+
         const flight = data.DataLists.FlightList.Flight;
 
         let flightList = [];
@@ -187,7 +189,6 @@ export class FlightReviewService {
           }
         }
 
-
         const passengers = data.DataLists.PassengerList.Passenger;
 
         let passengerList = [];
@@ -203,7 +204,8 @@ export class FlightReviewService {
           fareDetails: fareDetails,
           timeLimits: timeLimits,
           responseId: responseId,
-          passengerList: passengerList
+          passengerList: passengerList,
+          transactionIdentifier: transactionIdentifier
         }
 
         observer.next(resObj);
@@ -331,7 +333,7 @@ export class FlightReviewService {
   }
 
 
-  createOrder(flights, contactdetails, passengers, responseId) {
+  processOrder(flights, contactdetails, passengers, responseId, transactionIdentifier) {
     return new Observable((observer) => {
 
       const contactInfo = [{
@@ -398,26 +400,31 @@ export class FlightReviewService {
           "name": "string",
           "pseudoCity": "string"
         },
-        "travelers": travelers
+        "travelers": travelers,
+        "transactionIdentifier": transactionIdentifier
       }
 
       // console.log(flight)
       console.log(reqBody);
       // spelling mistake made in backend
-      this.api.post('/flights/order-create', reqBody).subscribe((response) => {
+      this.api.post('/flights/order-process', reqBody).subscribe((response) => {
         // this.api.loadData('/createOrder.json').subscribe((response) => {
         console.log(response);
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
 
-        const data = response.OrderViewRS;
+        // const data = response.OrderViewRS;
 
-        if (data.Errors) {
-          console.log('Cannot get order view.');
-          if (data.Errors.ErrorMessage) {
-            return observer.error(data.Errors.ErrorMessage);
-          } else {
-            return observer.error(data.Errors.Error);
-          }
+        // if (data.Errors) {
+        //   console.log('Cannot get order view.');
+        //   if (data.Errors.ErrorMessage) {
+        //     return observer.error(data.Errors.ErrorMessage);
+        //   } else {
+        //     return observer.error(data.Errors.Error);
+        //   }
+        // }
+
+        if (!response.bookingId) {
+          return observer.error('Invalid booking Id');
         }
 
         observer.next(response);

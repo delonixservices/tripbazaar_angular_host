@@ -9,6 +9,7 @@ import { FlightHomeComponent } from './flight-home/flight-home.component';
 import { FlightSearchComponent } from './flight-search/flight-search.component';
 import { FlightReviewComponent } from './flight-review/flight-review.component';
 import { FlightBookingComponent } from './flight-booking/flight-booking.component';
+import { FlightVoucherComponent } from './flight-voucher/flight-voucher.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: "flight-search", component: FlightSearchComponent },
       { path: "flight-review", component: FlightReviewComponent },
       { path: "flight-booking", component: FlightBookingComponent },
+      { path: "flight-voucher", component: FlightVoucherComponent },
     ]
   }
 ]
