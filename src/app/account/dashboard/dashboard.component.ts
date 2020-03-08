@@ -82,9 +82,22 @@ export class DashboardComponent implements OnInit {
         transactions.forEach((trans) => {
           const dataLists = trans.order_create_response.Response.DataLists;
           const originDest = dataLists.OriginDestinationList.OriginDestination;
-          const tripDetails = `${originDest.DepartureCode}-${originDest.ArrivalCode}`;
 
-          const flightSegment = trans.order_create_response.Response.DataLists.FlightSegmentList.FlightSegment;
+          let tripDetails;
+          if (Array.isArray(originDest)) {
+            tripDetails = `${originDest[0].DepartureCode}-${originDest[0].ArrivalCode}`;
+          } else {
+            tripDetails = `${originDest.DepartureCode}-${originDest.ArrivalCode}`;
+          }
+
+          const flightSegmentRef = trans.order_create_response.Response.DataLists.FlightSegmentList.FlightSegment;
+          let flightSegment;
+          if (Array.isArray(flightSegmentRef)) {
+            flightSegment = flightSegmentRef[0];
+          } else {
+            flightSegment = flightSegmentRef;
+          }
+
           const journeyDate = `${flightSegment.Departure.Date} ${flightSegment.Departure.Time}`;
 
           let airline;
