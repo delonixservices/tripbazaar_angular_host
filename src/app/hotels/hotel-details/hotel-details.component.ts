@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart, ActivatedRoute } from '@angular/router';
-import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators'
+import { distinctUntilChanged, debounceTime, switchMap, tap, catchError, takeUntil } from 'rxjs/operators';
 import { HttpParams } from "@angular/common/http";
 import { Subject, of, concat } from 'rxjs';
 import { ApiService, JwtService, AlertService } from '../../core/services';
@@ -46,7 +46,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   searchObj: any;
   searchresultkeys: any;
 
-  constructor(private route: ActivatedRoute,
+  constructor (private route: ActivatedRoute,
     private router: Router,
     public api: ApiService,
     public jwt: JwtService,

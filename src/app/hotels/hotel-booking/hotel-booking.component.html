@@ -1,5 +1,5 @@
 <div class="container pt-3">
-  <div class="main-heading">
+  <div class="main-heading mb-3">
     <h3 class="heading"><i class="fa fa-flights"></i> Review Your Booking</h3>
   </div>
   <div class="row">
@@ -41,7 +41,7 @@
             {{hotelObj.location.postalCode}}</p>
           <div class="row">
             <div class="col">
-              <div class="checkin-out img-thumbnail bg-dark text-light pt-3 pb-1 text-center">
+              <div class="bg-main-2 text-light pt-3 pb-1 text-center">
                 <div class="text-center">
                   <div><i class="fa fa-clock-o"></i>&nbsp;Check In</div>
                   <p class="my-2">{{checkInDate}}</p>
@@ -50,7 +50,7 @@
               </div>
             </div>
             <div class="col">
-              <div class="checkin-out bg-dark img-thumbnail text-light pt-3 pb-1 text-center">
+              <div class="bg-main-2 text-light pt-3 pb-1 text-center">
                 <div class="text-center">
                   <div><i class="fa fa-clock-o"></i>&nbsp;Check Out</div>
                   <p class="my-2">{{checkOutDate}}</p>
@@ -212,8 +212,8 @@
       <!-- Traveller Details  -->
       <!-- Added Ankit -->
       <div #hotelPolicy class="container card">
-        <div class="hotel-policy py-3">
-          <h4 class="mb-2" style="color:#f80759;">Hotel Policies you should know</h4>
+        <div class="hotel-policy py-3 main-heading">
+          <h4 class="heading mb-2">Hotel Policies you should know</h4>
           <hr>
           <div [innerHTML]="hotelObj.policy"></div>
         </div>
@@ -346,8 +346,8 @@
           </div>
           <hr>
           <div class="form-group mt-2">
-            <button [disabled]="!booking_policy" class="btn btn-danger btn-block" (click)="hotelPreBook()">Book Hotel <i
-                class="fa fa-plane"></i></button>
+            <button [disabled]="!booking_policy" class="btn button_primary btn-block" (click)="hotelPreBook()">Book
+              Hotel <i class="fa fa-plane"></i></button>
             <div class="text-danger small pt-2">{{validation}}</div>
             <!-- <p class="text-right mt-2"><a href="#" class="text-primary"> Book Hotel Via Online Payment <i
 									class="fa fa-paypal"></i></a></p> -->

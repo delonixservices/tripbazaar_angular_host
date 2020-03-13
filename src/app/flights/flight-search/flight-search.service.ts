@@ -97,7 +97,7 @@ export class FlightSearchService {
             "email": "string",
             "iataNumber": "string",
             // "id": "UK",
-            "id": "6E",
+            // "id": "6E",
             "name": "string",
             "type": ""
           },

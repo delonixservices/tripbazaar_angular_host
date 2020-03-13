@@ -31,7 +31,8 @@
             <div ngbDropdownMenu aria-labelledby="myaccount">
               <a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/account/login">Login</a>
               <a *ngIf="isLoggedIn!==true" class="dropdown-item" routerLink="/account/register">Signup</a>
-              <a *ngIf="isLoggedIn===true" class="dropdown-item" (click)="logout()">Logout</a>
+              <a class="dropdown-item" *ngIf="isLoggedIn===true" routerLink="/account/dashboard">Dashboard</a>
+              <a class="dropdown-item" *ngIf="isLoggedIn===true" (click)="logout()">Logout</a>
             </div>
           </li>
 
@@ -43,7 +44,8 @@
             </div>
           </li>
           <li *ngIf="isLoggedIn===true" class="nav-item">
-            <a class="nav-link" routerLink="/account/dashboard">{{user.name}}</a>
+            <!-- <a class="nav-link" routerLink="/account/dashboard">{{user.name}}</a> -->
+            <a class="nav-link active">{{user.name}}</a>
           </li>
         </ul>
       </div>

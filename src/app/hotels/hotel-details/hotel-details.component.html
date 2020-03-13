@@ -56,7 +56,7 @@
 
             <div class="col-md-6 d-md-flex align-items-md-center mt-2 text-right">
               <div class="pr-md-3">
-                <button type="button" class="btn-danger btn btn-sm"
+                <button type="button" class="btn btn-sm button_primary"
                   (click)="selectPackage(hotelObj.rates.packages[0])"><i class="fa fa-thumb-up"></i> Book Room</button>
               </div>
             </div>
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-
+  <!-- 
   <div class="pt-2 container mb-1">
     <nav class="navbar navbar-expand-md navbar-danger bg-danger">
 
@@ -91,12 +91,19 @@
           <li class="nav-item">
             <a class="nav-link" (click)="scroll(amenities)">Amenities</a>
           </li>
-          <!-- <li class="nav-item">
-						<a class="nav-link" (click)="scroll(hotelPolicy)">Hotel Policy</a>
-					</li> -->
         </ul>
       </div>
     </nav>
+  </div> -->
+
+  <div class="container">
+    <div class="page_toggle_navigation">
+      <a class="" (click)="scroll(photos)">Photos</a>
+      <a class="" (click)="scroll(rooms)">Rooms</a>
+      <a class="" (click)="scroll(review)">Reviews</a>
+      <a class="" (click)="scroll(map)">Map</a>
+      <a class="" (click)="scroll(amenities)">Amenities</a>
+    </div>
   </div>
 
   <div class="container">
@@ -116,7 +123,7 @@
       <div class="col-md-4 mt-3 mt-md-0">
         <div class="row">
           <div class="col">
-            <div class="checkin-out img-thumbnail bg-dark text-light pt-3 pb-1 text-center">
+            <div class="bg-main-2 text-light pt-3 pb-1 text-center">
               <div class="text-center">
                 <div><i class="fa fa-clock-o fa-2x"></i> Check In</div>
                 <p class="my-2">{{checkInDate}}</p>
@@ -125,7 +132,7 @@
             </div>
           </div>
           <div class="col">
-            <div class="checkin-out bg-dark img-thumbnail text-light pt-3 pb-1 text-center">
+            <div class="bg-main-2 text-light pt-3 pb-1 text-center">
               <div class="text-center">
                 <div><i class="fa fa-clock-o fa-2x"></i> Check Out</div>
                 <p class="my-2">{{checkOutDate}}</p>

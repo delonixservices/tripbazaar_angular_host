@@ -98,7 +98,7 @@ a:not([href]):not([tabindex]) {
 .hotel-policy h4,
 .hotel_overview h4,
 .choose_room {
-  color: #f80758;
+  /* color: #f80758; */
   margin-bottom: 0px;
 }
 
@@ -136,7 +136,18 @@ a:not([href]):not([tabindex]) {
   font-size: 1.2rem;
 }
 
+.page_toggle_navigation {
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 1.2rem 1rem;
+  background-color: #3b317c;
+  color: #fff;
+}
 
+.page_toggle_navigation a {
+  color: #fff;
+  margin: .2rem .8rem;
+}
 
 @media only screen and (max-width: 767px) {
   ::ng-deep gallery {
