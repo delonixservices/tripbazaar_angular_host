@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
 
           const travellers = dataLists.PassengerList.Passenger.length | 1;
 
-          const getStatus = ["failed", "success", "cancelled", "payment_pending", "payment_success", "booking_failed", "payment_failed", "refunded"];
+          const getStatus = ["failed", "success", "cancelled", "payment_pending", "payment_success", "booking_failed", "payment_failed", "refunded", "booking_hold"];
 
           const newTrans = {
             'bookingRefNo': trans._id,

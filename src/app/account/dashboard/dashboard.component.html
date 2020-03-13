@@ -1,10 +1,10 @@
-<div class="container my-5">
+<div class="container my-4">
   <div class="main-heading">
     <h3 class=""><i class="fa fa-dashboard"></i> My Dashboard</h3>
   </div>
-  <div class="alert alert-success" role="alert" *ngIf="loginUser">Welcome : {{loginUser.name}}</div>
+  <!-- <div class="alert alert-success" role="alert" *ngIf="loginUser">Welcome : {{loginUser.name}}</div> -->
 
-  <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" (activeIdChange)="activeIdChange($event)" class="nav-tabs">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" (activeIdChange)="activeIdChange($event)" class="nav-tabs mt-4">
     <li [ngbNavItem]="1">
       <a ngbNavLink>Hotels</a>
       <ng-template ngbNavContent>
@@ -13,10 +13,11 @@
           <div class="col-md-12">
             <div class="card mt-4 bg-dark text-white">
               <div class="card-header">
-                <div class="row">
+                <div class="">Transactions</div>
+                <!-- <div class="row">
                   <div class="col">Transactions</div>
                   <div class="col text-right"><a class="text-danger">View All Transactions</a></div>
-                </div>
+                </div> -->
               </div>
               <div class="upcoming-trip">
                 <div class="card-body border border-left-0 border-right-0" *ngFor="let transaction of transactions">
@@ -107,7 +108,7 @@
     <li [ngbNavItem]="2">
       <a ngbNavLink>Flights</a>
       <ng-template ngbNavContent>
-        <table class="table">
+        <table class="table table-responsive">
           <thead>
             <tr>
               <th>

@@ -27,13 +27,27 @@ h6 {
 
 .main-heading {
   /* color: #f80759; */
-  color: #f64859;
+  /* color: #f64859; */
+  color: #e97e62;
   text-transform: capitalize;
 }
 
 .main-heading .heading {
   font-weight: bold;
   font-size: 22px;
+}
+
+.button_primary {
+  color: #fff !important;
+  background-color: #f35e37 !important;
+}
+
+.bg-main-1 {
+  background-color: #3b317c !important;
+}
+
+.bg-main-2 {
+  background-color: #e97e62 !important;
 }
 
 .header-container {
@@ -1456,7 +1470,7 @@ a.swap1 {
 /*back to top css*/
 
 a.back-to-top {
-  display: inline-block;
+  /* display: inline-block;
   width: 60px;
   height: 60px;
   position: fixed;
@@ -1466,7 +1480,30 @@ a.back-to-top {
   text-indent: -9999px;
   border-radius: 30px;
   z-index: 1000;
-  cursor: pointer;
+  cursor: pointer; */
+  background: #e97e62;
+  width: 70px;
+  height: 70px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  z-index: 10000;
+  display: none;
+}
+
+a.back-to-top div {
+  width: 28px;
+  height: 28px;
+  background: none;
+  border-radius: 0px;
+  border-left: 7px solid #f8f9fa;
+  border-top: 7px solid #f8f9fa;
+  transform: rotate(45deg);
+  position: relative;
+  left: 21px;
+  top: 26px;
+  border-radius: 5px;
 }
 
 a hover.back-to-top {
@@ -1487,10 +1524,10 @@ a hover.back-to-top {
 }
 
 /*Hotel*/
-.hotel-details h4 {
+/* .hotel-details h4 {
   color: #f80758;
   margin-bottom: 0px;
-}
+} */
 
 .hotel-hilights i {
   padding: 8px !important;
@@ -1608,7 +1645,7 @@ footer a {
 
 @media only screen and (max-width:500px) {
 
-  a.back-to-top {
+  /* a.back-to-top {
     width: 35px;
     height: 35px;
     bottom: 84px;
@@ -1618,5 +1655,5 @@ footer a {
     border-left: 9px solid #e73f50b2;
     border-top: 9px solid #e73f50b2;
     transform: rotate(45deg);
-  }
+  } */
 }

@@ -1,11 +1,11 @@
 <div *ngIf="!mobile">
-  <div class="py-3 d-flex align-items-center">
-    <h4 class="choose_room mb-0 ml-0">CHOOSE ROOM</h4>
+  <div class="main-heading py-3 d-flex align-items-center">
+    <h4 class="heading choose_room mb-0 ml-0">CHOOSE ROOM</h4>
   </div>
   <div class="room-type" *ngFor="let package of hotelPackages; let i = index">
     <table class="table table-bordered">
       <thead class="room-type_head">
-        <tr class="bg-danger text-light">
+        <tr class="">
           <th scope="col">Room Type</th>
           <th scope="col">Benefits</th>
           <th scope="col">Price</th>
@@ -95,7 +95,7 @@
               {{hotelPackages[i].chargeable_rate_currency}}.
               <span>{{hotelPackages[i].base_amount  | number: '1.0-0'}}</span>
             </h4>
-            <div class="btn btn-danger my-3" (click)="selectPackage(package)">
+            <div class="btn button_primary my-3" (click)="selectPackage(package)">
               Book Room
               <i class="fa fa-check"></i>
             </div>
@@ -147,7 +147,7 @@
             <i class="fa fa-coffee" title="Breakfast"></i> Free Breakfast
           </div>
           <div *ngIf="package.room_details.food !==1 && package.room_details.food !== 2">
-            <i class="fa fa-cutlery" title="Food"></i>{{foodType[package.room_details.food]}}
+            <i class="fa fa-cutlery" title="Food"></i> &nbsp;{{foodType[package.room_details.food]}}
           </div>
         </div>
       </div>
@@ -176,7 +176,8 @@
               <span>{{hotelPackages[i].base_amount  | number: '1.0-0'}}</span>
             </div>
           </h4>
-          <div class="btn btn-danger btn-sm mb-3" (click)="selectPackage(package)">Book Room <i class="fa fa-check"></i>
+          <div class="btn button_primary btn-sm mb-3" (click)="selectPackage(package)">Book Room <i
+              class="fa fa-check"></i>
           </div>
         </div>
       </div>

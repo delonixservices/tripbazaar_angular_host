@@ -23,3 +23,8 @@
   height: 100%;
   background-color: transparent;
 }
+
+.nav-link:active,
+.dropdown-item:active {
+  color: #fff;
+}
