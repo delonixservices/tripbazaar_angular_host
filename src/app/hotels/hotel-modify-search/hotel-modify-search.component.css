@@ -37,9 +37,8 @@
 
 .suggestions.home-searchbar {
   position: absolute;
-  top: 38%;
+  top: 36%;
   left: 0;
-  /* min-height: 40px; */
   min-height: 2.5rem;
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
@@ -236,4 +235,9 @@
   .select_room-menu {
     width: 100%;
   }
+
+  .suggestions.home-searchbar {
+    top: 35%;
+  }
+
 }
