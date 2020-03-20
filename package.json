@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start2": "ng serve",
+    "start2": "ng serve --host 0.0.0.0   --port 4200 --disable-host-check ",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint --force",
@@ -29,7 +29,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@ng-bootstrap/ng-bootstrap": "^5.3.0",
-    "@ng-select/ng-select": "^3.0.7",
+    "@ng-select/ng-select": "^3.7.3",
     "@ngx-gallery/core": "^4.0.3",
     "@ngx-progressbar/core": "^5.3.1",
     "@ngx-progressbar/http": "^5.3.1",

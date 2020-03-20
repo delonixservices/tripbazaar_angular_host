@@ -29,6 +29,7 @@ import { HotelViewOnMapComponent } from './hotel-details/hotel-view-on-map/hotel
 import { HotelReviewComponent } from './hotel-details/hotel-review/hotel-review.component';
 import { HotelAmenitiesComponent } from './hotel-details/hotel-amenities/hotel-amenities.component';
 import { HotelRoomSelectComponent } from './hotel-details/hotel-room-select/hotel-room-select.component';
+import { HotelAutosuggestComponent } from './hotel-autosuggest/hotel-autosuggest.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { HotelRoomSelectComponent } from './hotel-details/hotel-room-select/hote
     HotelReviewComponent,
     HotelAmenitiesComponent,
     HotelRoomSelectComponent,
+    HotelAutosuggestComponent,
   ],
   imports: [
     CommonModule,

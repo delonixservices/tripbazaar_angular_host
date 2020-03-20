@@ -2,24 +2,7 @@
 <div class="hotel-searchbar">
   <div class="row location">
     <div class="col-md-3 px-0">
-      <div class="">
-        <div #hotelSuggestionsContainer class="hotel-suggestions" (click)="suggestionsClicked($event)">
-          <div class="hotel-suggestions_header">
-            CITY / HOTEL
-          </div>
-          <div class="selected_area">
-            {{selectedArea?.name}}
-            <span class="selected_area-placeholder" *ngIf="!selectedArea || !selectedArea?.name">Select City /
-              Hotel</span>
-          </div>
-          <ng-select #select [ngClass]="{'d-none': !showNgSelect}" name="destination"
-            class="form-control suggestions home-searchbar" [items]="suggestions | async" [hideSelected]="true"
-            [loading]="suggestionsLoading" [typeahead]="suggestionsInput" [(ngModel)]="selectedArea"
-            bindLabel="displayName" [isOpen]="openNgSelect" (change)="onSuggestionAdded($event)"
-            placeholder="Search here">
-          </ng-select>
-        </div>
-      </div>
+      <app-hotel-autosuggest (selectedAreaChange)="selectedAreaChanged($event)"></app-hotel-autosuggest>
     </div>
 
     <div class="col-md-3 pl-0 pr-0">

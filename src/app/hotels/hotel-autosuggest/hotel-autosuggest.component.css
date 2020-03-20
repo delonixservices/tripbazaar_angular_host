@@ -1,0 +1,84 @@
+.hotel-suggestions {
+  height: 5rem;
+  border: 1px solid #ccc;
+  padding: .3rem .9rem 0;
+  position: relative;
+  cursor: pointer;
+}
+
+
+.ng-select.suggestions .ng-dropdown-panel {
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  border-top: none;
+}
+
+.selected_area {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.hotel-suggestions:hover,
+#checkindate:hover,
+#checkoutdate:hover,
+.customDropdown:hover {
+  background-color: #a8d0ff;
+}
+
+.hotel-suggestions_header,
+#checkindate #checkInStatus,
+#checkoutdate #checkOutStatus {
+  font-weight: bold;
+  font-size: .8rem;
+  user-select: none;
+}
+
+
+.suggestions.home-searchbar {
+  position: absolute;
+  top: 36%;
+  left: 0;
+  /* min-height: 40px; */
+  min-height: 2.5rem;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+  .selected_area {
+    font-size: 1em;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  .selected_area {
+    font-size: 1em;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .selected_area {
+    font-size: 1rem;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  .selected_area {
+    font-size: 1em;
+  }
+
+  .select_room-menu {
+    width: 100%;
+  }
+
+  .hotel-searchbar {
+    border-radius: 5px;
+  }
+
+  .suggestions.home-searchbar {
+    top: 35%;
+  }
+}
