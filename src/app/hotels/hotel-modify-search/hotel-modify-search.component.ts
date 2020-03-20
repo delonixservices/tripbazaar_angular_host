@@ -1,10 +1,7 @@
 import { Component, OnInit, Output, ViewChild, ElementRef, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbDateStruct, NgbDateParserFormatter, NgbDatepickerConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subject, concat, of } from 'rxjs';
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router, Event } from '@angular/router';
 import { ApiService, JwtService, AuthService, AlertService } from '../../core';
-import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
 
 @Component({
@@ -21,23 +18,13 @@ export class HotelModifySearchComponent implements OnInit {
 
   @Output() searchClicked = new EventEmitter();
 
-  selectedArea: any = {
-    displayName: "Singapore, Singapore",
-    id: "3168",
-    name: "Singapore, Singapore",
-    transaction_identifier: "",
-    type: "city"
-  };
+  selectedArea: any;
 
-  suggestions: any;
-  showNgSelect: boolean;
-  openNgSelect: boolean;
   checkInDate: any;
   checkOutDate: any;
   checkInMinDate: NgbDateStruct;
   checkOutMinDate: NgbDateStruct;
 
-  suggestionsLoading = false;
   hotelsearchkeys: any;
 
   guests: number = 2;
@@ -50,12 +37,6 @@ export class HotelModifySearchComponent implements OnInit {
 
   @ViewChild('checkInContainer', { static: false }) checkInContainer: ElementRef;
   @ViewChild('checkOutContainer', { static: false }) checkOutContainer: ElementRef;
-  @ViewChild('hotelSuggestionsContainer', { static: false }) hotelSuggestionsContainer: ElementRef;
-
-  @ViewChild('select', { static: true }) ngSelect: NgSelectComponent;
-
-  suggestionsInput = new Subject<HttpParams>();
-
 
   hoveredDate: NgbDate;
 
@@ -66,11 +47,10 @@ export class HotelModifySearchComponent implements OnInit {
   toDay: string;
   weekdays = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-  constructor(public route: ActivatedRoute,
+  constructor (public route: ActivatedRoute,
     public router: Router,
     public api: ApiService,
     public jwt: JwtService,
-    private authService: AuthService,
     public alertService: AlertService,
     public ngbDateParserFormatter: NgbDateParserFormatter,
     public dpConfig: NgbDatepickerConfig,
@@ -124,41 +104,19 @@ export class HotelModifySearchComponent implements OnInit {
     this.fromDay = this.weekdays[this.calendar.getWeekday(this.fromDate)];
     this.toDay = this.weekdays[this.calendar.getWeekday(this.toDate)];
 
-    this.loadDestination();
-
     this.router.onSameUrlNavigation = 'reload';
   }
 
+  selectedAreaChanged(selectedArea) {
+    console.log(selectedArea);
+    this.selectedArea = selectedArea;
+  }
 
   hostClick(event: MouseEvent) {
     if (this.showDatePicker) {
       if (this.checkInContainer && this.checkInContainer.nativeElement && !this.checkInContainer.nativeElement.contains(event.target) && !this.checkOutContainer.nativeElement.contains(event.target)) {
         this.showDatePicker = false;
       }
-    }
-
-    if (this.showNgSelect) {
-      if (this.hotelSuggestionsContainer && this.hotelSuggestionsContainer.nativeElement && !this.hotelSuggestionsContainer.nativeElement.contains(event.target)) {
-        this.showNgSelect = false;
-      }
-    }
-  }
-
-
-  suggestionsClicked(event: MouseEvent) {
-    console.log(event);
-    // if .hotel-suggestions is clicked
-    const target = (event.target || event.srcElement || event.currentTarget) as any;
-
-    // ng-dropdown-panel
-    this.showNgSelect = true;
-    // focus on ng-select input
-    // The timeout is required because you can't focus() an element that is still hidden. Until Angular change detection has a chance to run (which will be after method suggestionsClicked() finishes executing), the showNgSelect property in the DOM will not be updated, even though you set showNgSelect to true in your method.
-    setTimeout(() => this.ngSelect.searchInput.nativeElement.focus(), 0);
-
-    // reset selected area
-    if (target.classList.contains('hotel-suggestions') || target.classList.contains('hotel-suggestions_header') || target.classList.contains('selected_area') || target.classList.contains('selected_area-placeholder')) {
-      this.selectedArea = {};
     }
   }
 
@@ -280,49 +238,6 @@ export class HotelModifySearchComponent implements OnInit {
     } else {
       this.alertService.error("All fields are required!");
     }
-  }
-
-  loadDestination() {
-    // console.log("loadDestination called1");
-    this.openNgSelect = true;
-
-    this.suggestions = concat(
-      of([{
-        displayName: "Singapore, Singapore",
-        id: "3168",
-        name: "Singapore, Singapore",
-        transaction_identifier: "",
-        type: "city"
-      }]),
-      this.suggestionsInput.pipe(
-        debounceTime(800),
-        distinctUntilChanged(),
-        tap(() => this.suggestionsLoading = true),
-        switchMap(term => this.api.get("/hotels/suggest", term).pipe(
-          catchError(() => of([])), // empty list on error
-          tap(() => {
-            this.suggestionsLoading = false
-            this.openNgSelect = true;
-          })
-        ))
-      )
-    );
-
-    // this.suggestions = concat(
-    //   of([]),
-    //   this.suggestionsInput.pipe(
-    //     debounceTime(800),
-    //     distinctUntilChanged(),
-    //     tap(() => this.suggestionsLoading = true),
-    //     switchMap(term => this.api.get("/hotels/suggest", term).pipe(
-    //       catchError(() => of([])), // empty list on error
-    //       tap(() => {
-    //         this.suggestionsLoading = false
-    //         this.openNgSelect = true;
-    //       })
-    //     ))
-    //   )
-    // );
   }
 }
 

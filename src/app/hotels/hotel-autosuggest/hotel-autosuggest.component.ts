@@ -168,9 +168,11 @@ export class HotelAutosuggestComponent implements OnInit, OnDestroy {
         debounceTime(800),
         distinctUntilChanged(),
         tap(() => {
+          console.log('first req');
           this.suggestionsLoading = true;
           this.page = 0;
           this.currentItemsCount = 0;
+          this.items = [];
         }),
         switchMap(term => {
           this.suggestReqQuery = term;
