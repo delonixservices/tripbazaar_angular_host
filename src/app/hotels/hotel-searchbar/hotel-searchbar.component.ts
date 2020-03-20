@@ -311,22 +311,5 @@ export class HotelSearchbarComponent implements OnInit {
       this.alertService.error("All fields are required!");
     }
   }
-
-
-  // this.suggestions = concat(
-  //   of([]),
-  //   this.suggestionsInput.pipe(
-  //     debounceTime(800),
-  //     distinctUntilChanged(),
-  //     tap(() => this.suggestionsLoading = true),
-  //     switchMap(term => this.api.get("/hotels/suggest", term).pipe(
-  //       catchError(() => of([])), // empty list on error
-  //       tap(() => {
-  //         this.suggestionsLoading = false
-  //         this.openNgSelect = true;
-  //       })
-  //     ))
-  //   )
-  // );
 }
 
