@@ -22,9 +22,9 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
 
   public filters = {
     roomType: [],
+    foodType: [],
     refundable: [],
     starRating: [],
-    freeBreakfast: [],
     price: {
       min: 0,
       max: 100000
@@ -53,6 +53,17 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
     { name: "Triple", selected: false, value: "Triple" },
   ]
 
+  public FoodTypeFilters = [
+    { name: "All", selected: true, value: ["Room Only", "Breakfast", "Lunch", "Dinner", "Half board", "Full board", "All inclusive"] },
+    { name: "Room Only", selected: false, value: 1 },
+    { name: "Breakfast", selected: false, value: 2 },
+    { name: "Lunch", selected: false, value: 3 },
+    { name: "Dinner", selected: false, value: 4 },
+    { name: "Half board", selected: false, value: 5 },
+    { name: "Full board", selected: false, value: 6 },
+    { name: "All inclusive", selected: false, value: 7 },
+  ]
+
   public Refundable = [
     { name: "All", selected: true, value: [true, false] },
     { name: "Yes", selected: false, value: true },
@@ -72,7 +83,7 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
 
   options: Options;
 
-  constructor() { }
+  constructor () { }
 
   ngOnInit() {
     if (!this.minHotelPrice) {
@@ -211,7 +222,6 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
         if (element.selected === true) {
           roomTypeFilter.push(element.value);
         }
-
       }
 
       if (roomTypeFilter.length > 0) {
@@ -219,6 +229,24 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
         console.log(this.filters);
       } else {
         this.filters.roomType = [];
+      }
+
+      let foodTypeFilter = [];
+      for (let index = 0; index < this.FoodTypeFilters.length; index++) {
+        const element = this.FoodTypeFilters[index];
+        if (element.name === 'All') {
+          continue;
+        }
+        if (element.selected === true) {
+          foodTypeFilter.push(element.value);
+        }
+      }
+
+      if (foodTypeFilter.length > 0) {
+        this.filters.foodType = foodTypeFilter;
+        console.log(this.filters);
+      } else {
+        this.filters.foodType = [];
       }
 
       const refundableFilter = [];
@@ -262,153 +290,86 @@ export class HotelSearchFiltersComponent implements OnInit, OnDestroy, OnChanges
     }, 0);
   }
 
-  // sideBarFilter() {
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.non_refundable
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.food
-  //   // data.hotels[""0""].rates.packages[""0""].room_details.room_type
-  //   // data.hotels[""0""].rates.packages[""0""].chargeable_rate
-  //   // this.filteredHotels
 
-  //   this.filteredHotels = JSON.parse(JSON.stringify(this.copyFilteredHotels));
+  // FilterHotels() {
+  //   var refund;
+  //   var roomtype;
+  //   var foodserve;
+  //   var i = 0;
   //   setTimeout(() => {
-  //     const roomTypeFilter = [];
-  //     for (let index = 0; index < this.RoomTypeFilters.length; index++) {
-  //       const element = this.RoomTypeFilters[index];
-  //       if (element.name === 'All') {
-  //         continue;
+  //     for (let refundtype of this.Refundable) {
+  //       if (i == 0) {
+  //         if (refundtype.selected === true) {
+  //           refund = refundtype.value;
+  //           break;
+  //         }
+  //       } else {
+  //         if (refundtype.selected === true) {
+  //           refund.push(refundtype.value);
+  //         }
   //       }
-  //       if (element.selected === true) {
-  //         roomTypeFilter.push(element.value);
-  //       }
+  //       i++;
   //     }
 
-  //     if (roomTypeFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return roomTypeFilter.includes(hotel.rates.packages[0].room_details.room_type);
-  //       });
-  //     }
-
-  //     const refundableFilter = [];
-  //     for (let index = 0; index < this.Refundable.length; index++) {
-  //       const element = this.Refundable[index];
-  //       if (element.name === 'All') {
-  //         continue;
+  //     i = 0;
+  //     this.RoomTypeFilters.map((type, index) => {
+  //       console.log(index);
+  //       console.log(type);
+  //       if (index == 0) {
+  //         if (type.selected == true) {
+  //           roomtype = type.value;
+  //           return true;
+  //         }
+  //       } else {
+  //         if (type.selected == true) {
+  //           roomtype.push(type.value);
+  //         }
+  //         this.norecordfoundtitle = "Opps";
+  //         this.norecordfoundmsg = "No Room available currently, Please look for some other option";
   //       }
-  //       if (element.selected === true) {
-  //         refundableFilter.push(element.value);
-  //       }
-  //     }
 
-  //     if (refundableFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return refundableFilter.includes(hotel.rates.packages[0].room_details.non_refundable);
-  //       });
-  //     }
+  //     });
+  //     // for(let type of this.RoomTypeFilters; let){
+  //     // 	if(i == 0){
+  //     // 		if(type.selected == true){
+  //     // 			roomtype = type.value;
+  //     // 			break;
+  //     // 		}
 
-  //     const foodServerdFilter = [];
-  //     for (let index = 0; index < this.FoodServerd.length; index++) {
-  //       const element = this.FoodServerd[index];
-  //       if (element.name === 'All') {
-  //         continue;
-  //       }
-  //       if (element.selected === true) {
-  //         foodServerdFilter.push(element.value);
-  //       }
-  //     }
+  //     // 	}else{
+  //     // 		if(type.selected == true){
+  //     // 			roomtype.push(type.value);	
+  //     // 		}
+  //     // 	}
+  //     // 	i++;
+  //     // }
 
-  //     if (foodServerdFilter.length > 0) {
-  //       this.filteredHotels = this.filteredHotels.filter(function (hotel) {
-  //         return foodServerdFilter.includes(hotel.rates.packages[0].room_details.food);
-  //       });
-  //     }
+  //     // i = 0;
+  //     // for (let food of this.FoodServerd) {
+  //     //   if (i == 0) {
+  //     //     if (food.selected === true) {
+  //     //       foodserve = food.value;
+  //     //       break;
+  //     //     }
+  //     //   } else {
+  //     //     if (food.selected === true) {
+  //     //       foodserve.push(food.value);
+  //     //     }
+  //     //   }
+  //     //   i++;
+  //     // }
 
-  //     if (this.searchText) {
-  //       this.filteredHotels = this.filteredHotels.filter(hotel => {
-  //         return hotel && hotel.originalName.toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1;
-  //       });
-  //     }
-  //   }, 0);
+  //     // this.filteredHotels =  this.allHotel.hotels.filter(function(hotel) {
+  //     this.filteredHotels = this.allHotel.filter(function (hotel) {
+  //       // return true;
+  //       return (roomtype.indexOf(hotel.rates.packages[0].room_details.room_type) > -1) && (foodserve.indexOf(hotel.rates.packages[0].room_details.food) > -1);
+  //     });
+  //   }, 200)
   // }
 
-  FilterHotels() {
-    var refund;
-    var roomtype;
-    var foodserve;
-    var i = 0;
-    setTimeout(() => {
-      for (let refundtype of this.Refundable) {
-        if (i == 0) {
-          if (refundtype.selected === true) {
-            refund = refundtype.value;
-            break;
-          }
-        } else {
-          if (refundtype.selected === true) {
-            refund.push(refundtype.value);
-          }
-        }
-        i++;
-      }
-
-      i = 0;
-      this.RoomTypeFilters.map((type, index) => {
-        console.log(index);
-        console.log(type);
-        if (index == 0) {
-          if (type.selected == true) {
-            roomtype = type.value;
-            return true;
-          }
-        } else {
-          if (type.selected == true) {
-            roomtype.push(type.value);
-          }
-          this.norecordfoundtitle = "Opps";
-          this.norecordfoundmsg = "No Room available currently, Please look for some other option";
-        }
-
-      });
-      // for(let type of this.RoomTypeFilters; let){
-      // 	if(i == 0){
-      // 		if(type.selected == true){
-      // 			roomtype = type.value;
-      // 			break;
-      // 		}
-
-      // 	}else{
-      // 		if(type.selected == true){
-      // 			roomtype.push(type.value);	
-      // 		}
-      // 	}
-      // 	i++;
-      // }
-
-      // i = 0;
-      // for (let food of this.FoodServerd) {
-      //   if (i == 0) {
-      //     if (food.selected === true) {
-      //       foodserve = food.value;
-      //       break;
-      //     }
-      //   } else {
-      //     if (food.selected === true) {
-      //       foodserve.push(food.value);
-      //     }
-      //   }
-      //   i++;
-      // }
-
-      // this.filteredHotels =  this.allHotel.hotels.filter(function(hotel) {
-      this.filteredHotels = this.allHotel.filter(function (hotel) {
-        // return true;
-        return (roomtype.indexOf(hotel.rates.packages[0].room_details.room_type) > -1) && (foodserve.indexOf(hotel.rates.packages[0].room_details.food) > -1);
-      });
-    }, 200)
-  }
-
-  SearchFilter() {
-    this.FilterHotels();
-  }
+  // SearchFilter() {
+  //   this.FilterHotels();
+  // }
 
   ngOnDestroy() {
     this.onChanges.complete();
