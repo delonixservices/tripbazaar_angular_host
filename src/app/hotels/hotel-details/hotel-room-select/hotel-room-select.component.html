@@ -16,7 +16,7 @@
           <td>
             <div class="room-type_left-sec">
               <h3 class="room-type_description">{{package.room_details.description}}</h3>
-              <img src="{{imageDetails.prefix+i+imageDetails.suffix}}"
+              <img src="{{imageDetails?.prefix+i+imageDetails?.suffix}}"
                 src-fallback="/assets/images/hotel_placeholder.jpg">
               <div class="room-type_info">
                 <h4>Room Type:</h4>
@@ -24,18 +24,18 @@
               </div>
               <div class="room-type_info">
                 <h4>Bed Type:</h4>
-                <p *ngIf="package.room_details.beds.hasOwnProperty('single')">single -
+                <p *ngIf="package.room_details?.beds?.hasOwnProperty('single')">single -
                   {{package.room_details.beds.single}}</p>
-                <p *ngIf="package.room_details.beds.hasOwnProperty('double')">double -
+                <p *ngIf="package.room_details?.beds?.hasOwnProperty('double')">double -
                   {{package.room_details.beds.double}}</p>
-                <p *ngIf="package.room_details.beds.hasOwnProperty('double or twin')">double or
+                <p *ngIf="package.room_details?.beds?.hasOwnProperty('double or twin')">double or
                   twin
                   -
                   {{package.room_details.beds['double or twin']}}</p>
-                <p *ngIf="package.room_details.beds.hasOwnProperty('king')">King
+                <p *ngIf="package.room_details?.beds?.hasOwnProperty('king')">King
                   -
                   {{package.room_details.beds['king']}}</p>
-                <p *ngIf="package.room_details.beds.hasOwnProperty('queen')">Queen
+                <p *ngIf="package.room_details?.beds?.hasOwnProperty('queen')">Queen
                   -
                   {{package.room_details.beds['queen']}}</p>
               </div>

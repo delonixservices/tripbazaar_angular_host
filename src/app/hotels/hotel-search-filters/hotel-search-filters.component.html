@@ -34,6 +34,17 @@
       </div>
     </div>
 
+    <div class=" filter-body" id="food_type_criteria">
+      <h5 class="headers">Food Types</h5>
+      <div class="checkbox" *ngFor="let type of FoodTypeFilters">
+        <label class="checkcontainer">
+          <input type="checkbox" [(ngModel)]="type.selected" value="All" id="all_options_food_type"
+            (click)="sideBarFilter()">
+          <span class="checkmark"></span><span> {{type.name}}</span>
+        </label>
+      </div>
+    </div>
+
     <div class="filter-body" id="refundable_criteria">
       <h5 class="headers">Refundable</h5>
       <div class="checkbox" *ngFor="let refund of Refundable">
@@ -44,7 +55,6 @@
         </label>
       </div>
     </div>
-
 
     <div class="filter-body" id="rating_criteria">
       <h5 class="headers">Star Rating</h5>
