@@ -137,13 +137,23 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     let imageItems = [];
-    for (let i = 0; i < this.hotelObj.imageDetails.count; i++) {
-      const image: ImageItem = new ImageItem({
-        src: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`, thumb: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`
-      });
 
-      imageItems.push(image);
+    if (this.hotelObj.imageDetails.images && this.hotelObj.imageDetails.images.length > 0) {
+      this.hotelObj.imageDetails.images.forEach((img) => {
+        const image: ImageItem = new ImageItem({
+          src: `${img}`, thumb: `${img}`
+        });
+        imageItems.push(image);
+      });
+    } else {
+      for (let i = 0; i < this.hotelObj.imageDetails.count; i++) {
+        const image: ImageItem = new ImageItem({
+          src: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`, thumb: `${this.hotelObj.imageDetails.prefix}${i}${this.hotelObj.imageDetails.suffix}`
+        });
+        imageItems.push(image);
+      }
     }
+    console.log(imageItems);
     if (imageItems.length > 0)
       this.gallery.load(imageItems);
   }

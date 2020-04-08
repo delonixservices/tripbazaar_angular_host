@@ -5,6 +5,7 @@ import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators'
 import { ApiService, JwtService, AlertService, GoogleAnalyticsService } from '../../core/services';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-searchresult-page',
@@ -58,7 +59,7 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
   allowNextIteration: boolean;
   pollingStatus: string;
 
-  constructor(public route: ActivatedRoute,
+  constructor (public route: ActivatedRoute,
     private router: Router,
     public api: ApiService,
     public jwt: JwtService,
@@ -67,20 +68,6 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     public modalService: NgbModal
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-
-    // commented Ankit
-    // => creating problems when user is navigating from previous page to same page again
-    // localStorage.removeItem('transaction_identifier');
-    // localStorage.removeItem('searchObj');
-    // localStorage.removeItem('packageObj');
-    // localStorage.removeItem('hotelObj');
-
-    // this.searchResult();
-    // this.loadDestination();
-    // this.selectedArea = this.hotelsearchkeys.area;
-    // this.checkInDate = this.hotelsearchkeys.checkindate;
-    // this.checkOutDate = this.hotelsearchkeys.checkoutdate;
-    // this.roomdetail = this.hotelsearchkeys.details;
   }
 
   ngOnInit() {
@@ -89,15 +76,49 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
     this.maxHotelPrice = 100000;
 
     this.route.queryParams.subscribe((params) => {
-      this.hotelsearchkeys.checkindate = params.checkindate;
-      this.hotelsearchkeys.checkoutdate = params.checkoutdate;
+      let checkInDate = params.checkindate;
+      let checkOutDate = params.checkoutdate;
+
+      const checkInTime = new Date(checkInDate).getTime();
+      const today = new Date();
+      if (isNaN(checkInTime) || checkInTime < today.getTime()) {
+        checkInDate = formatDate(today, "yyyy-MM-dd", "en-US");
+      }
+
+      const checkOutTime = new Date(checkOutDate).getTime();
+
+      if (isNaN(checkOutTime) || checkOutTime < today.setDate(today.getDate() + 1)) {
+        checkOutDate = formatDate(new Date(today.setDate(today.getDate() + 1)), "yyyy-MM-dd", "en-US");
+      }
+
+      console.log(checkInDate, checkOutDate);
+
+      this.hotelsearchkeys.checkindate = checkInDate;
+      this.hotelsearchkeys.checkoutdate = checkOutDate;
       this.hotelsearchkeys.area = {
         'id': params.id,
         'name': params.name,
         'type': params.type
       }
-      this.hotelsearchkeys.details = JSON.parse(params.details);
-      this.hotelsearchkeys.transaction_identifier = params.transaction_identifier;
+
+      if (params.details && params.details.room) {
+        this.hotelsearchkeys.details = JSON.parse(params.details);
+      } else {
+        this.hotelsearchkeys.details = [{
+          room: "1",
+          adult_count: "1",
+          child_count: "0",
+          children: []
+        }]
+      }
+
+      if (params.transaction_identifier) {
+        this.hotelsearchkeys.transaction_identifier = params.transaction_identifier;
+      } else {
+        // temp solution until delonix transaction_id issue is fixed 
+        this.hotelsearchkeys.transaction_identifier = "720c67927c8340cfbbc3c336e2d734"
+      }
+
       console.log(this.hotelsearchkeys);
 
       this.searchResult(this.hotelsearchkeys);

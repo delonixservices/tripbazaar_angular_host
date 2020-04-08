@@ -141,11 +141,12 @@
             </div>
           </div>
         </div>
-        <hr>
+
+        <!-- <hr> 
         <div class="main-heading">
           <h5 class="heading text-uppercase ">Highlights</h5>
         </div>
-        <div class="hotel-highlights">
+         <div class="hotel-highlights">
           <i class="fa fa-wifi text-muted"></i>
           <i class="fa fa-cutlery text-muted"></i>
           <i class="fa fa-bed text-muted"></i>
@@ -153,29 +154,38 @@
           <i class="fa fa-s15 text-muted"></i>
           <i class="fa fa-heartbeat text-muted"></i>
           <a herf="#highlights">View All</a>
-        </div>
+        </div> -->
 
         <hr>
         <div class="main-heading">
           <h5 class="heading text-uppercase ">Amenities</h5>
         </div>
+        <br>
         <div class="hotel-highlights">
-          <!-- changes Ankit -->
-          <i class="fa fa-wifi  text-muted" title="WIFI" *ngIf="hotelObj.amenities.includes('dataPorts')"></i>
-          <i class="fa fa-tv text-muted" title="TV" *ngIf="hotelObj.amenities.includes('tVInRoom')"></i>
-          <i class="fa fa-snowflake-o text-muted" title="AC" *ngIf="hotelObj.amenities.includes('airConditioning')"></i>
-          <!-- <i class="fa fa-wifi  text-muted" title="WIFI" *ngIf="hotelObj.amenities.dataPorts"></i> -->
-          <!-- <i class="fa fa-tv text-muted" title="TV" *ngIf="hotelObj.amenities.tVInRoom"></i> -->
-          <!-- <i class="fa fa-snowflake-o text-muted" title="AC" *ngIf="hotelObj.amenities.airConditioning"></i> -->
-          <i class="fa fa-bath text-muted" title="Private Washroom"></i>
-          <i class="fa fa-car text-muted" title="Free parking"></i>
-          <i class="fa fa-cutlery text-muted" title="Food"></i>
-          <i class="fa fa-coffee text-muted" title="Breakfast"></i>
-          <i class="fa fa-glass text-muted" title="Bar" *ngIf="hotelObj.amenities.includes('miniBarInRoom')"></i>
-          <!-- <i class="fa fa-glass text-muted" title="Bar" *ngIf="hotelObj.amenities.miniBarInRoom"></i> -->
+          <i class="fa fa-wifi  text-muted" placement="bottom" ngbTooltip="WIFI"
+            *ngIf="hotelObj.amenities.includes('dataPorts') || hotelObj.amenities.includes('Free Wifi')"></i>
+          <i class="fa fa-tv text-muted" placement="bottom" ngbTooltip="TV"
+            *ngIf="hotelObj.amenities.includes('tVInRoom')"></i>
+          <i class="fa fa-snowflake-o text-muted" placement="bottom" ngbTooltip="AC"
+            *ngIf="hotelObj.amenities.includes('airConditioning')"></i>
+          <i class="fa fa-check-circle text-muted" placement="bottom" ngbTooltip="24/7 Checkin"
+            *ngIf="hotelObj.amenities.includes('24/7 Checkin')"></i>
+          <i class="fa fa-glass text-muted" placement="bottom" ngbTooltip="MiniBarInRoom"
+            *ngIf="hotelObj.amenities.includes('miniBarInRoom'); else inHouseBar"></i>
+          <ng-template #inHouseBar>
+            <i class="fa fa-glass text-muted" placement="bottom" ngbTooltip="InHouseBar"
+              *ngIf="hotelObj.amenities.includes('inHouseBar')"></i>
+          </ng-template>
+          <i class="fa fa-bath text-muted" *ngIf="hotelObj.amenities.includes('outdoorPool')" placement="bottom"
+            ngbTooltip="Outdoor Pool"></i>
+          <i class="fa fa-car text-muted"
+            *ngIf="hotelObj.amenities.includes('parkingGarage')|| hotelObj.amenities.includes('Parking Facility')"
+            placement="bottom" ngbTooltip="ParkingGarage"></i>
+          <!-- <i class="fa fa-cutlery text-muted" placement="bottom" ngbTooltip="Food"></i> -->
+          <!-- <i class="fa fa-coffee text-muted" placement="bottom" ngbTooltip="Breakfast"></i> -->
+          <a class="ml-3" (click)="scroll(amenities)">View All</a>
         </div>
       </div>
-
     </div>
     <hr>
   </div>
