@@ -267,6 +267,8 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 
     if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined || !isMobileValid) {
       this.contactDetailsValidation = "All the fields are required";
+      this.contactDetail.name = "";
+      console.log(this.contactDetail);
       return;
     }
 
