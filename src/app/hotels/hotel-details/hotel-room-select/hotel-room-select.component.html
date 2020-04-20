@@ -16,8 +16,13 @@
           <td>
             <div class="room-type_left-sec">
               <h3 class="room-type_description">{{package.room_details.description}}</h3>
-              <img src="{{imageDetails?.prefix+i+imageDetails?.suffix}}"
-                src-fallback="/assets/images/hotel_placeholder.jpg">
+              <div *ngIf="imageDetails?.images?.length > 0; else otherImage">
+                <img src="{{imageDetails?.images[i]}}" src-fallback="/assets/images/hotel_placeholder.jpg">
+              </div>
+              <ng-template #otherImage>
+                <img src="{{imageDetails?.prefix+i+imageDetails?.suffix}}"
+                  src-fallback="/assets/images/hotel_placeholder.jpg">
+              </ng-template>
               <div class="room-type_info">
                 <h4>Room Type:</h4>
                 <p>{{package.room_details.room_type}} Room</p>
@@ -68,7 +73,8 @@
                 <li *ngIf="package.room_details.food === 2">
                   <i class="fa fa-coffee" title="Breakfast"></i> Free Breakfast
                 </li>
-                <li *ngIf="package.room_details.food !==1 && package.room_details.food !== 2">
+                <li
+                  *ngIf="package.room_details.food && package.room_details.food !==1 && package.room_details.food !== 2">
                   <i class="fa fa-cutlery" title="Food"></i>{{foodType[package.room_details.food]}}
                 </li>
                 <!-- <li class="text-success"><i class="fa fa-check-circle-o"
@@ -114,8 +120,15 @@
   <div class="hotel_package-item" *ngFor="let package of hotelPackages; let i = index;">
     <div class="row justify-content-between">
       <div class="col-5">
+
         <div class="hotel_preview_img-container">
-          <img src="{{imageDetails.prefix+i+imageDetails.suffix}}" src-fallback="/assets/images/hotel_placeholder.jpg">
+          <div *ngIf="imageDetails?.images?.length > 0; else otherImage">
+            <img src="{{imageDetails?.images[i]}}" src-fallback="/assets/images/hotel_placeholder.jpg">
+          </div>
+          <ng-template #otherImage>
+            <img src="{{imageDetails?.prefix+i+imageDetails?.suffix}}"
+              src-fallback="/assets/images/hotel_placeholder.jpg">
+          </ng-template>
         </div>
       </div>
       <div class="col-7">
@@ -123,18 +136,18 @@
           <div>{{package.room_details.room_type}} Room</div>
         </div>
         <div class="bed_type">
-          <p class="mb-1" *ngIf="package.room_details.beds.hasOwnProperty('single')">single -
+          <p class="mb-1" *ngIf="package.room_details?.beds?.hasOwnProperty('single')">single -
             {{package.room_details.beds.single}}</p>
-          <p class="mb-1" *ngIf="package.room_details.beds.hasOwnProperty('double')">double -
+          <p class="mb-1" *ngIf="package.room_details?.beds?.hasOwnProperty('double')">double -
             {{package.room_details.beds.double}}</p>
-          <p class="mb-1" *ngIf="package.room_details.beds.hasOwnProperty('double or twin')">double or
+          <p class="mb-1" *ngIf="package.room_details?.beds?.hasOwnProperty('double or twin')">double or
             twin
             -
             {{package.room_details.beds['double or twin']}}</p>
-          <p class="mb-1" *ngIf="package.room_details.beds.hasOwnProperty('king')">King
+          <p class="mb-1" *ngIf="package.room_details.beds?.hasOwnProperty('king')">King
             -
             {{package.room_details.beds['king']}}</p>
-          <p class="mb-1" *ngIf="package.room_details.beds.hasOwnProperty('queen')">Queen
+          <p class="mb-1" *ngIf="package.room_details.beds?.hasOwnProperty('queen')">Queen
             -
             {{package.room_details.beds['queen']}}</p>
         </div>
@@ -143,10 +156,10 @@
           <div>
             <i class="fa fa-check" title="Accommodation"></i> Accommodation
           </div>
-          <div *ngIf="package.room_details.food === 2">
+          <div *ngIf="package.room_details?.food === 2">
             <i class="fa fa-coffee" title="Breakfast"></i> Free Breakfast
           </div>
-          <div *ngIf="package.room_details.food !==1 && package.room_details.food !== 2">
+          <div *ngIf="package.room_details.food  && package.room_details.food !==1 && package.room_details.food !== 2">
             <i class="fa fa-cutlery" title="Food"></i> &nbsp;{{foodType[package.room_details.food]}}
           </div>
         </div>

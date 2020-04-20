@@ -54,7 +54,10 @@ export class HotelAutosuggestComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadDestination();
-
+    const selectedArea = JSON.parse(localStorage.getItem('selected_area'));
+    if (selectedArea && selectedArea.displayName) {
+      this.selectedArea = selectedArea;
+    }
   }
 
   suggestionsClicked(event: MouseEvent) {
@@ -137,6 +140,9 @@ export class HotelAutosuggestComponent implements OnInit, OnDestroy {
           obsever.next(response.data);
           this.suggestionsLoading = false;
 
+        }, (err) => {
+          console.log(err);
+          this.suggestionsLoading = false;
         });
     });
   };
@@ -152,6 +158,8 @@ export class HotelAutosuggestComponent implements OnInit, OnDestroy {
     console.log(suggest);
 
     this.selectedArea = suggest;
+
+    localStorage.setItem('selected_area', JSON.stringify(suggest));
 
     this.selectedAreaChange.emit(suggest);
 
@@ -187,7 +195,10 @@ export class HotelAutosuggestComponent implements OnInit, OnDestroy {
       )
     );
 
-    data.subscribe((res) => this.suggestions = res);
+    data.subscribe((res) => {
+      this.suggestions = res
+      console.log(res);
+    });
   }
 
   ngOnDestroy() {

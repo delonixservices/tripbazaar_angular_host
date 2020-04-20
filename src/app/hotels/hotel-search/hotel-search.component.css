@@ -17,6 +17,8 @@ h1 {
   width: 100%;
   margin-bottom: 10px;
   border: 1px solid #eee;
+  overflow-x: hidden;
+  word-break: break-word;
 }
 
 .search_item_img-wrapper {

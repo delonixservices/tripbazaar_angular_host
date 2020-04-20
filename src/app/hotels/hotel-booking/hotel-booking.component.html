@@ -8,11 +8,19 @@
       <div class="row">
 
         <div class="col-md-5">
-          <div>
-            <img src="{{hotelObj.imageDetails.prefix+0+hotelObj.imageDetails.suffix}}" class="img-fluid"
-              alt="First slide" src-fallback="/assets/images/hotel_placeholder.jpg"
-              style=" height: 255px;width: 100%;object-fit: cover;">
+          <div *ngIf="hotelObj.imageDetails?.images?.length > 0; else otherImage">
+            <!-- when images are in images array -->
+            <img src="{{hotelObj.imageDetails.images[0]}}" class="img-fluid" alt="First slide"
+              src-fallback="/assets/images/hotel_placeholder.jpg" style=" height: 255px;width: 100%;object-fit: cover;">
           </div>
+          <ng-template #otherImage>
+            <div>
+              <img src="{{hotelObj.imageDetails.prefix+0+hotelObj.imageDetails.suffix}}" class="img-fluid"
+                alt="First slide" src-fallback="/assets/images/hotel_placeholder.jpg"
+                style=" height: 255px;width: 100%;object-fit: cover;">
+            </div>
+          </ng-template>
+
           <!--					<div class="row">-->
           <!--						<div class="carousel slide">-->
           <!--							<div class="carousel-inner">-->
@@ -29,7 +37,7 @@
           <!--					</div>-->
         </div>
         <div class="col-md-7">
-          <h3>{{hotelObj.name}}</h3>
+          <h3 class="mt-3 mt-md-0">{{hotelObj.name}}</h3>
           <div class="rating">
             <i class="fa fa-star " [ngClass]="hotelObj.starRating > 0 ? 'text-warning' : 'text-light'"></i>
             <i class="fa fa-star " [ngClass]="hotelObj.starRating > 1 ? 'text-warning' : 'text-light'"></i>

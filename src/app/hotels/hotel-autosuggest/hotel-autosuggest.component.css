@@ -32,7 +32,6 @@
   user-select: none;
 }
 
-
 .suggestions.home-searchbar {
   position: absolute;
   top: 36%;
@@ -42,6 +41,34 @@
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
 }
 
+.suggest_text_container {
+  display: flex;
+}
+
+.suggest_details {
+  width: 78%;
+  word-break: break-word;
+}
+
+.suggest_name {
+  color: #4a4a4a;
+}
+
+.suggest_type {
+  width: 22%;
+  align-self: center;
+  font-weight: bold;
+  color: #9b9b9b;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 15px;
+}
+
+.suggest_count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #9b9b9b;
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {

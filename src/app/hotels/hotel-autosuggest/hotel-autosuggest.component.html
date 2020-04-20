@@ -10,9 +10,21 @@
     </div>
     <ng-select #select [ngClass]="{'d-none': !showNgSelect}" name="destination"
       class="form-control suggestions home-searchbar" [items]="suggestions" [hideSelected]="true"
-      [loading]="suggestionsLoading" [typeahead]="suggestionsInput" [(ngModel)]="selectedArea" bindLabel="displayName"
-      [isOpen]="openNgSelect" (change)="onSuggestionAdded($event)" (scrollToEnd)="scrollToEnd()"
-      placeholder="Search here">
+      [loading]="suggestionsLoading" [typeahead]="suggestionsInput" [(ngModel)]="selectedArea" [isOpen]="openNgSelect"
+      (change)="onSuggestionAdded($event)" (scrollToEnd)="scrollToEnd()" placeholder="Search here">
+      <ng-template ng-option-tmp let-item="item">
+        <div class="suggest_text_container">
+          <div class="suggest_details">
+            <div class="suggest_name">{{item.name}}</div>
+            <div *ngIf="item.type !== 'hotel'" class="suggest_count">
+              {{item.hotelCount}}
+              <span *ngIf="item.hotelCount <= 1">Property</span>
+              <span *ngIf="item.hotelCount > 1">Properties</span>
+            </div>
+          </div>
+          <div class="suggest_type">{{item.type}}</div>
+        </div>
+      </ng-template>
     </ng-select>
 
   </div>

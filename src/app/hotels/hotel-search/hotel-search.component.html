@@ -36,22 +36,38 @@
             <div class="hotel_search-item">
               <div class="row">
                 <div class="col-4 col-md-5 d-flex align-items-center d-md-block">
-                  <div class="">
-                    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false">
-                      <ng-template ngbSlide
-                        *ngFor="let item of [].constructor(hotel.imageDetails?.count || 0); let i = index ">
-                        <div class="search_item_img-wrapper">
-                          <img class="img-fluid" src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}"
-                            src-fallback="/assets/images/hotel_placeholder.jpg" alt="hotelSlide">
-                        </div>
-                      </ng-template>
-                    </ngb-carousel>
+
+                  <div
+                    *ngIf="hotel.imageDetails?.count > 0 || hotel.imageDetails?.images?.length > 0; else imagesFallback"
+                    class="">
+                    <div *ngIf="hotel.imageDetails?.images?.length > 0; else otherImages">
+                      <!-- when images are in images array -->
+                      <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false">
+                        <ng-template ngbSlide *ngFor="let item of hotel.imageDetails.images">
+                          <div class="search_item_img-wrapper">
+                            <img class="img-fluid" src="{{item}}" src-fallback="/assets/images/hotel_placeholder.jpg"
+                              alt="hotelSlide">
+                          </div>
+                        </ng-template>
+                      </ngb-carousel>
+                    </div>
+                    <ng-template #otherImages>
+                      <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="false">
+                        <ng-template ngbSlide
+                          *ngFor="let item of [].constructor(hotel.imageDetails?.count || 0); let i = index ">
+                          <div class="search_item_img-wrapper">
+                            <img class="img-fluid" src="{{hotel.imageDetails.prefix+i+hotel.imageDetails.suffix}}"
+                              src-fallback="/assets/images/hotel_placeholder.jpg" alt="hotelSlide">
+                          </div>
+                        </ng-template>
+                      </ngb-carousel>
+                    </ng-template>
 
                   </div>
-                  <div *ngIf="hotel.imageDetails?.count === 0" class="search_item_img-wrapper">
+                  <ng-template #imagesFallback class="search_item_img-wrapper">
                     <img class="img-fluid" src="/assets/images/hotel_placeholder.jpg" alt="hotelSlide"
                       style="width:100%;">
-                  </div>
+                  </ng-template>
                 </div>
 
                 <div class="col-8 col-md-7">
@@ -74,14 +90,20 @@
                           {{hotel.rates.packages[0].room_details.description}} </p>
 
                         <p class="d-none d-md-block facility">
-                          <i class="fa fa-wifi" title="WIFI" *ngIf="hotel.amenities.dataPorts"></i>
-                          <i class="fa fa-tv" title="TV" *ngIf="hotel.amenities.tVInRoom"></i>
-                          <i class="fa fa-snowflake-o" title="AC" *ngIf="hotel.amenities.airConditioning"></i>
-                          <i class="fa fa-bath" title="Private Washroom"></i>
-                          <i class="fa fa-car" title="Free parking"></i>
-                          <i class="fa fa-cutlery" title="Food"></i>
-                          <i class="fa fa-coffee" title="Breakfast"></i>
-                          <i class="fa fa-glass" title="Bar" *ngIf="hotel.amenities.miniBarInRoom"></i>
+                          <i class="fa fa-wifi" *ngIf="hotel.amenities.dataPorts" placement="bottom"
+                            ngbTooltip="WIFI"></i>
+                          <i class="fa fa-tv" placement="bottom" ngbTooltip="TV" *ngIf="hotel.amenities.tVInRoom"></i>
+                          <i class="fa fa-snowflake-o" placement="bottom" ngbTooltip="AC"
+                            *ngIf="hotel.amenities.airConditioning"></i>
+                          <i class="fa fa-bath" placement="bottom" ngbTooltip="outdoorPool"
+                            *ngIf="hotel.amenities.outdoorPool"></i>
+                          <i class="fa fa-glass" placement="bottom" ngbTooltip="inHouseBar"
+                            *ngIf="hotel.amenities.inHouseBar"></i>
+                          <!-- <i class="fa fa-bath" placement="bottom" ngbTooltip="Private Washroom"></i> -->
+                          <!-- <i class="fa fa-car" title="Free parking"></i> -->
+                          <!-- <i class="fa fa-cutlery" title="Food"></i> -->
+                          <!-- <i class="fa fa-coffee" title="Breakfast"></i> -->
+                          <!-- <i class="fa fa-glass" title="Bar" *ngIf="hotel.amenities.miniBarInRoom"></i> -->
                         </p>
                         <hr class="d-none d-md-block">
 

@@ -59,7 +59,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
   public hoteldetailparams: any;
 
 
-  constructor(private route: ActivatedRoute,
+  constructor (private route: ActivatedRoute,
     private router: Router,
     public api: ApiService,
     public jwt: JwtService,
@@ -120,7 +120,21 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       this.bookingKey = params.bookingKey;
       this.hotelId = params.hotelId;
       this.transaction_identifier = params.transaction_identifier;
-      this.hotelsearchkeys.details = JSON.parse(params.details);
+
+      // currently not using ==>
+      if (params.details && params.details.room) {
+        this.hotelsearchkeys.details = JSON.parse(params.details);
+        this.hotelsearchkeys.details.map((room, index) => {
+          var roomGuest = [];
+          for (let i = 1; i <= room.adult_count; i++) {
+            roomGuest.push({ "firstname": "", "lastname": "", "mobile": "" });
+          }
+          var roomObj = { "room_guest": roomGuest };
+          this.guest.push(roomObj);
+        });
+      }
+      // <==
+
       console.log(this.hotelObj);
 
       this.loadBookingPolicy();
@@ -128,14 +142,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       this.checkInDate = this.searchObj.check_in_date;
       this.checkOutDate = this.searchObj.check_out_date;
 
-      this.hotelsearchkeys.details.map((room, index) => {
-        var roomGuest = [];
-        for (let i = 1; i <= room.adult_count; i++) {
-          roomGuest.push({ "firstname": "", "lastname": "", "mobile": "" });
-        }
-        var roomObj = { "room_guest": roomGuest };
-        this.guest.push(roomObj);
-      });
+
     }, (err) => {
       console.log(err);
     });
@@ -243,7 +250,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
         } else {
           this.alertService.error("Something Went Wrong Try again.");
           console.log(response)
-          // this.router.navigate(['/hotels/searchresult']);
+          this.router.navigate(['/hotels/searchresult']);
         }
       }, (err) => {
         if (err.message !== undefined) {
@@ -260,6 +267,8 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
 
     if (this.contactDetail.last_name == undefined || this.contactDetail.name == undefined || !isMobileValid) {
       this.contactDetailsValidation = "All the fields are required";
+      this.contactDetail.name = "";
+      console.log(this.contactDetail);
       return;
     }
 
@@ -294,7 +303,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       }, (err) => {
         this.alertService.error("Booking session expired! Please try again.");
         console.log(err);
-        this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
+        // this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
       });
   }
 
