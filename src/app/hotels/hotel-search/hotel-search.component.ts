@@ -112,11 +112,10 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
         }]
       }
 
-      if (params.transaction_identifier) {
-        this.hotelsearchkeys.transaction_identifier = params.transaction_identifier;
-      } else {
-        // temp solution until delonix transaction_id issue is fixed 
-        this.hotelsearchkeys.transaction_identifier = "720c67927c8340cfbbc3c336e2d734"
+      const transaction_identifier = localStorage.getItem('transaction_identifier');
+
+      if (transaction_identifier) {
+        this.hotelsearchkeys.transaction_identifier = transaction_identifier;
       }
 
       console.log(this.hotelsearchkeys);
@@ -183,9 +182,10 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
           }
           this.filteredHotels = response.data.hotels;
           this.copyFilteredHotels = JSON.parse(JSON.stringify(this.filteredHotels))
-          // localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
-          this.transaction_identifier = response.data.transaction_identifier;
-
+          if (response.data.transaction_identifier) {
+            localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
+            this.transaction_identifier = response.data.transaction_identifier;
+          }
           if (this.pollingStatus !== "complete")
             this.allowNextIteration = true;
 
@@ -283,7 +283,7 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
         "name": hotel.name,
         "type": hotel.type,
         "hotelId": hotel.hotelId,
-        "transaction_identifier": this.transaction_identifier,
+        // "transaction_identifier": this.transaction_identifier,
         "details": JSON.stringify(this.hotelsearchkeys.details)
       };
       console.log(queryParams);

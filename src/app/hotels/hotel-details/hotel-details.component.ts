@@ -75,7 +75,11 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
       // }
       this.hoteldetailkeys.hotelId = params.hotelId;
       this.hoteldetailkeys.details = JSON.parse(params.details);
-      this.hoteldetailkeys.transaction_identifier = params.transaction_identifier;
+      // this.hoteldetailkeys.transaction_identifier = params.transaction_identifier;
+
+      const transaction_identifier = localStorage.getItem('transaction_identifier');
+      if (transaction_identifier)
+        this.hoteldetailkeys.transaction_identifier = transaction_identifier;
 
       this.hoteldetailkeys.referenceId = params.referenceId;
 
@@ -184,7 +188,8 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
           this.hotelObj.searchkey = this.hoteldetailkeys;
           this.searchObj = response.data.search;
           localStorage.setItem('hotelObj', JSON.stringify(response.data.hotel));
-          localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
+          if (response.data.transaction_identifier)
+            localStorage.setItem('transaction_identifier', response.data.transaction_identifier);
           localStorage.setItem('searchObj', JSON.stringify(response.data.search));
         }
       }, (err) => {
@@ -215,7 +220,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
         details: JSON.stringify(this.hoteldetailkeys.details),
         hotelId: this.hotelObj.hotelId,
         bookingKey: hotelPackage.booking_key,
-        transaction_identifier: this.hoteldetailkeys.transaction_identifier
+        // transaction_identifier: this.hoteldetailkeys.transaction_identifier
       };
       console.log(queryParams)
 

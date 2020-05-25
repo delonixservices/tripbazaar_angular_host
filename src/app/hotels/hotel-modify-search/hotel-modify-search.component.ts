@@ -217,6 +217,8 @@ export class HotelModifySearchComponent implements OnInit {
         this.hotelsearchkeys = { "area": this.selectedArea, "checkindate": this.checkInDate, "checkoutdate": this.checkOutDate, "details": this.roomdetail };
 
         localStorage.setItem('hotelsearchkeys', JSON.stringify(this.hotelsearchkeys));
+        if (this.selectedArea.transaction_identifier)
+          localStorage.setItem('transaction_identifier', this.selectedArea.transaction_identifier);
 
         const queryParams = {
           "checkindate": this.checkInDate,
@@ -224,7 +226,7 @@ export class HotelModifySearchComponent implements OnInit {
           "name": this.selectedArea.name,
           "type": this.selectedArea.type,
           "id": this.selectedArea.id,
-          "transaction_identifier": this.selectedArea.transaction_identifier,
+          // "transaction_identifier": this.selectedArea.transaction_identifier,
           "details": JSON.stringify(this.roomdetail)
         };
 

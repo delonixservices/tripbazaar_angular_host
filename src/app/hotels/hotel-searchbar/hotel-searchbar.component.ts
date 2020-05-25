@@ -296,13 +296,14 @@ export class HotelSearchbarComponent implements OnInit {
           "name": this.selectedArea.name,
           "type": this.selectedArea.type,
           "id": this.selectedArea.id,
-          "transaction_identifier": this.selectedArea.transaction_identifier,
+          // "transaction_identifier": this.selectedArea.transaction_identifier,
           "details": JSON.stringify(this.roomdetail)
         };
 
         // saving query params in local storage, for navigating to the searchresult component again
         localStorage.setItem('searchresultkeys', JSON.stringify(queryParams));
-
+        if (this.selectedArea.transaction_identifier)
+          localStorage.setItem('transaction_identifier', this.selectedArea.transaction_identifier);
         this.router.navigate(['/hotels', 'searchresult'], { 'queryParams': queryParams });
 
         console.log(this.hotelsearchkeys);
