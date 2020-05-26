@@ -298,16 +298,18 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         if (response && response.data && response.data.booking_id !== undefined) {
           let url = this.api.baseUrl + "api/hotels/process-payment/" + response.data.booking_id;
-          // remove transaction identifier after one transaction is completed
-          localStorage.removeItem('transaction_identifier');
           window.location.assign(url);
         } else {
           this.alertService.error("Something Went Wrong Try again");
+          this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
         }
+        // remove transaction identifier after one transaction is completed
+        localStorage.removeItem('transaction_identifier');
       }, (err) => {
+        localStorage.removeItem('transaction_identifier');
         this.alertService.error("Booking session expired! Please try again.");
         console.log(err);
-        // this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
+        this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
       });
   }
 
