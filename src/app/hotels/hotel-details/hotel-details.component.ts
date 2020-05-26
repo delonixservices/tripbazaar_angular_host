@@ -174,7 +174,7 @@ export class HoteldetailsComponent implements OnInit, AfterViewInit, OnDestroy {
   loadHotelDetails() {
     // this.hoteldetailkeys = JSON.parse(localStorage.getItem('hoteldetailkeys'));
     console.log(this.hoteldetailkeys)
-    this.api.post("/hotels/packages", this.hoteldetailkeys)
+    this.api.post("/hotels/packages", this.hoteldetailkeys, { "reset-cache": true })
       // this.api.loadData("/hotelPackages.json")
       // Added Ankit	
       // emit values until provided observable i.e ngUnsubscribe emits

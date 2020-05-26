@@ -254,10 +254,12 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
           console.log(response)
           this.router.navigate(['/hotels/searchresult']);
         }
+        localStorage.removeItem('transaction_identifier');
       }, (err) => {
         if (err.message !== undefined) {
           this.validation = err.message;
         }
+        localStorage.removeItem('transaction_identifier');
         this.alertService.error("Selected hotel package booked! Please select another package.");
         this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
 
