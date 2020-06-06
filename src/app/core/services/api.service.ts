@@ -12,7 +12,7 @@ import { catchError } from 'rxjs/operators';
 export class ApiService {
 
   public baseUrl: any;
-  constructor(private http: HttpClient, private jwtService: JwtService) {
+  constructor (private http: HttpClient, private jwtService: JwtService) {
     this.baseUrl = environment.asset_url;
   }
 
@@ -32,11 +32,16 @@ export class ApiService {
     ).pipe(catchError(this.formatErrors));
   }
 
-  post(path: string, body: Object = {}): Observable<any> {
-    return this.http.post(
-      `${environment.api_url}${path}`,
-      JSON.stringify(body)
-    ).pipe(catchError(this.formatErrors));
+  post(path: string, body: Object = {}, headers = {}): Observable<any> {
+    const httpHeaders = new HttpHeaders();
+
+    for (let i in headers) {
+      console.log(i, headers, headers[i])
+      httpHeaders.set(i, headers[i]);
+    }
+    console.log(httpHeaders)
+    return this.http.post(`${environment.api_url}${path}`, JSON.stringify(body), { headers: httpHeaders })
+      .pipe(catchError(this.formatErrors));
   }
 
   delete(path): Observable<any> {

@@ -99,7 +99,9 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
     this.packageObj = JSON.parse(localStorage.getItem('packageObj'));
     this.hotelObj = JSON.parse(localStorage.getItem('hotelObj'));
     // // this.hotelsearchkeys = JSON.parse(localStorage.getItem('hotelsearchkeys'));
-    // this.transaction_identifier = localStorage.getItem('transaction_identifier')
+    const transaction_identifier = localStorage.getItem('transaction_identifier');
+    if (transaction_identifier)
+      this.transaction_identifier = transaction_identifier;
 
     if (this.packageObj === undefined || this.packageObj == "" || this.packageObj == null || this.searchObj === undefined || this.searchObj == "" || this.searchObj == null || this.hotelObj === undefined || this.hotelObj == "" || this.hotelObj == null || this.hotelsearchkeys === undefined || this.hotelsearchkeys == "" || this.hotelsearchkeys == null || this.transaction_identifier === undefined || this.transaction_identifier == "" || this.transaction_identifier == null) {
       // this.alertService.error("Something went wrong! Please search Again");
@@ -119,7 +121,7 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
         this.searchObj = JSON.parse(params.search);
       this.bookingKey = params.bookingKey;
       this.hotelId = params.hotelId;
-      this.transaction_identifier = params.transaction_identifier;
+      // this.transaction_identifier = params.transaction_identifier;
 
       // currently not using ==>
       if (params.details && params.details.room) {
@@ -252,10 +254,12 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
           console.log(response)
           this.router.navigate(['/hotels/searchresult']);
         }
+        localStorage.removeItem('transaction_identifier');
       }, (err) => {
         if (err.message !== undefined) {
           this.validation = err.message;
         }
+        localStorage.removeItem('transaction_identifier');
         this.alertService.error("Selected hotel package booked! Please select another package.");
         this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
 
@@ -299,31 +303,17 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
           window.location.assign(url);
         } else {
           this.alertService.error("Something Went Wrong Try again");
+          this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
         }
+        // remove transaction identifier after one transaction is completed
+        localStorage.removeItem('transaction_identifier');
       }, (err) => {
+        localStorage.removeItem('transaction_identifier');
         this.alertService.error("Booking session expired! Please try again.");
         console.log(err);
-        // this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
+        this.router.navigate(['/hotels/hoteldetails'], { queryParams: this.hoteldetailparams });
       });
   }
-
-  // hotelBook() {
-  // 	this.api.post("/book", { "bookingid": this.bookingid, "transactionid": this.transactionid })
-  // 		.subscribe((response) => {
-  // 			if (response.data != undefined) {
-  // 				localStorage.removeItem('transaction_identifier');
-  // 				localStorage.removeItem('searchObj');
-  // 				localStorage.removeItem('packageObj');
-  // 				localStorage.removeItem('hotelObj');
-  // 				localStorage.removeItem('hotelsearchkeys');
-  // 				this.router.navigate(['/']);
-  // 			}
-  // 		}, (err) => {
-  // 			if (err.message !== undefined) {
-  // 				this.validation = err.message
-  // 			}
-  // 		});
-  // }
 
   checkCopuonCode() {
     if (this.coupon.code == undefined) {

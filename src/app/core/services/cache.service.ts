@@ -10,7 +10,7 @@ export class CacheService {
   // cache will expire after 15 min = 15*60*1000 ms
   private maxAge = 900000;
 
-  constructor() { }
+  constructor () { }
 
   put(req: HttpRequest<any>, response: HttpResponse<any>) {
     // key for setting and getting cached data
@@ -29,10 +29,18 @@ export class CacheService {
         console.log('expiredEntry', expiredEntry.key);
       }
     });
+
     // reset cache for the uri if reset-cache header is provided
+    console.log(req.headers)
     if (req.headers.get("reset-cache")) {
       this.cache.delete(key);
     }
+
+    // disabled temprarorly
+    if (true) {
+      this.cache.delete(key);
+    }
+
     // Checked if there is cached data for this URI
     const cached = this.cache.get(key);
     if (!cached) return null;
