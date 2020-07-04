@@ -77,7 +77,7 @@
       </div>
       <hr>
       <!-- Traveller Details  -->
-      <div class="flightdetail">
+      <div class="">
         <div class="row">
           <div class="col-md-6">
             <div class="main-heading pt-4">
@@ -86,7 +86,8 @@
           </div>
 
           <div class="col-md-6" *ngIf="!jwt.isAuth()">
-            <h5 class="mt-4"><a class="text-primary" (click)="openModal(logInModal)">Log In</a> to book
+            <h5 class="mt-4">
+              <a class="text-primary" (click)="openModal(logInModal)">Log In</a> to book
               faster</h5>
           </div>
 
@@ -165,57 +166,56 @@
         </form>
         <hr>
 
-        <!-- <h5>Member Details</h5>
-				<div class="row" *ngFor="let room of guest; let i = index;">
-					<div class="col-md-12 text-primary">
-						<h6>ROOM {{i+1}}</h6>
-					</div>
-					<div class="col-md-12">
-						<div *ngFor="let guestDetail of room.room_guest; let j = index;">
-							<div class="pb-2">Guest {{j+1}} details</div>
-							<div class="row">
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" name="firstname{{j+1}}" class="form-control"
-											placeholder=" First Name" [(ngModel)]="guestDetail.firstname" required>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" name="lastname{{j+1}}" class="form-control"
-											placeholder="Last Name" [(ngModel)]="guestDetail.lastname" required>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" name="mobile{{j+1}}" class="form-control"
-											placeholder="mobile" [(ngModel)]="guestDetail.mobile" required>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>openModal
-					<div copenModal
-						{{openModal
-					</div>openModal
-					<div class="clearfix"></div>
-				</div> -->
+        <h5>Member Details</h5>
+        <div class="row" *ngFor="let room of guest; let i = index;">
+          <div class="col-md-12 text-primary">
+            <h6>ROOM {{i+1}}</h6>
+          </div>
+          <div class="col-md-12">
+            <div *ngFor="let guestDetail of room.room_guest; let j = index;">
+              <div class="pb-2">Guest {{j+1}} details</div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="firstname{{j+1}}" class="form-control" placeholder=" First Name"
+                      [(ngModel)]="guestDetail.firstname" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="lastname{{j+1}}" class="form-control" placeholder="Last Name"
+                      [(ngModel)]="guestDetail.lastname" required>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="mobile{{j+1}}" class="form-control" placeholder="mobile"
+                      [(ngModel)]="guestDetail.mobile" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <!-- <div class="row">
-						<div class="clearfix"></div> 
-						<div class="col-md-12 text-primary"> <h6>Room 2</h6></div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder=" First Name">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Last Name">
-							</div>
-						</div> 
-						<div class="clearfix"></div> 
-					</div> -->
+          <div class="clearfix"></div>
+          <div class="col-md-12 text-primary">
+            <h6>Room 2</h6>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder=" First Name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div> -->
       </div>
       <!-- Traveller Details  -->
       <!-- Added Ankit -->
@@ -255,10 +255,8 @@
             <div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
                 class="fa fa-inr"></i>
               <span *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
-              {{baseAmount |number:'1.0-0'}}
-            </div>
+              {{baseAmount |number:'1.0-0'}} </div>
           </div>
-
           <div class="row mb-2" *ngIf="couponCode.value != 0">
             <div class="col-md-7">Discount</div>
             <div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i class="fa fa-inr"></i>

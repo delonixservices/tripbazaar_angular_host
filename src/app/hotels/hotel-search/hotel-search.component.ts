@@ -101,7 +101,8 @@ export class HotelSearchComponent implements OnInit, OnDestroy {
         'type': params.type
       }
 
-      if (params.details && params.details.room) {
+      console.log(JSON.parse(params.details))
+      if (typeof (params.details) === "string") {
         this.hotelsearchkeys.details = JSON.parse(params.details);
       } else {
         this.hotelsearchkeys.details = [{

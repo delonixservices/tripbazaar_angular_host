@@ -124,20 +124,23 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       // this.transaction_identifier = params.transaction_identifier;
 
       // currently not using ==>
-      if (params.details && params.details.room) {
+      if (typeof (params.details) === "string") {
         this.hotelsearchkeys.details = JSON.parse(params.details);
-        this.hotelsearchkeys.details.map((room, index) => {
-          var roomGuest = [];
-          for (let i = 1; i <= room.adult_count; i++) {
-            roomGuest.push({ "firstname": "", "lastname": "", "mobile": "" });
+        console.log(this.hotelsearchkeys.details)
+        this.hotelsearchkeys.details.forEach((room, index) => {
+          console.log(room)
+          let roomGuest = [];
+          for (let i = 0; i < parseInt(room.adult_count); i++) {
+            roomGuest.push({ "firstname": "", "lastname": "", "mobile": "", "nationality": "IN" });
           }
-          var roomObj = { "room_guest": roomGuest };
+          let roomObj = { "room_guest": roomGuest };
           this.guest.push(roomObj);
         });
       }
       // <==
 
       console.log(this.hotelObj);
+      console.log(this.guest);
 
       this.loadBookingPolicy();
 
@@ -289,7 +292,8 @@ export class HotelbookingComponent implements OnInit, OnDestroy {
       "transaction_id": this.transaction_identifier,
       "contactDetail": this.contactDetail,
       "coupon": this.couponCode,
-      "gstDetail": this.gstDetail
+      "gstDetail": this.gstDetail,
+      "guest": this.guest
     }
     console.log('prebookParams', prebookParams);
 
