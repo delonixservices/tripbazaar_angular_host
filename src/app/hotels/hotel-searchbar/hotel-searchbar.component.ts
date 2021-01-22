@@ -250,7 +250,7 @@ export class HotelSearchbarComponent implements OnInit {
       guests += Number(room.adult_count) + Number(room.child_count);
     });
     this.guests = guests;
-    // console.log('guests =' + this.guests);
+    console.log('guests =' + this.guests);
   }
 
   onGuestsChange(guests) {
@@ -263,7 +263,7 @@ export class HotelSearchbarComponent implements OnInit {
   onRoomdetailChange(roomdetail) {
     console.log(roomdetail)
     if (roomdetail) {
-      // this.roomdetail = roomdetail;
+      this.roomdetail = roomdetail;
     }
   }
 
@@ -306,7 +306,7 @@ export class HotelSearchbarComponent implements OnInit {
           localStorage.setItem('transaction_identifier', this.selectedArea.transaction_identifier);
         this.router.navigate(['/hotels', 'searchresult'], { 'queryParams': queryParams });
 
-        console.log(this.hotelsearchkeys);
+        console.log(queryParams);
       }
     } else {
       this.alertService.error("All fields are required!");
