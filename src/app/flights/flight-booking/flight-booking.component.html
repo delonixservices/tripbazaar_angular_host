@@ -1,0 +1,96 @@
+<div class="container">
+  <div *ngFor="let order of retrievedOrders;">
+    <div *ngIf="order?.ticketPnr" class="itenary my-3 py-3 card card-body">
+      <div class="header">
+        <div class="row">
+          <div class="col">
+            <div class="font-weight-bold h3">Delonix Travel Services</div>
+          </div>
+          <div class="col">
+            <div class="text-info">PNR: <span class="font-weight-bold">{{order?.ticketPnr}}</span></div>
+            <div>Ticket Doc No: <span class="font-weight-bold">{{order?.ticketDocNo}}</span></div>
+            <div>Issue Time: <span class="font-weight-bold">{{order?.ticketIssueTime}}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="booking_details">
+        <div class="h3">Booking Details</div>
+        <div class="flight_info">
+          <div>Flight Information</div>
+          <div class="row">
+            <div class="col">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Flight No</th>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Dep Date Time</th>
+                    <th scope="col">Arr Date Time</th>
+                    <th scope="col">Class</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let segment of order?.flightSegments">
+                    <th scope="row">{{segment.airlineId}}-{{segment.flightNo}}</th>
+                    <td>{{segment.departure.airportCode}}</td>
+                    <td>{{segment.arrival.airportCode}}</td>
+                    <td>{{segment.departure.date}} {{segment.departure.time}}</td>
+                    <td>{{segment.arrival.date}} {{segment.arrival.time}}</td>
+                    <td>{{segment.priceClass}}</td>
+                    <td class="font-weight-bold">Confirmed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="fare_rule">
+
+        </div>
+      </div>
+      <div class="passenger_details">
+        <div class="h4">Passenger Details</div>
+        <div *ngFor="let passenger of order?.passengerList; let i = index" class="passenger card p-3 my-2">
+          <div class="passenger_header">
+            Passenger {{i+1}} ({{passenger.type}})
+          </div>
+          <div class="details">
+            <div class="row">
+              <div class="col">
+                Name : {{passenger.firstName}} {{passenger.middleName}} {{passenger.lastName}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                Gender : Male
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact_details pt-2">
+        <div class="h4">Contact Details</div>
+        <div class="row">
+          <div class="col">
+            Email : {{order?.contactInfo.email}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            Mobile No. {{order?.contactInfo.phone}}
+          </div>
+        </div>
+      </div>
+      <div class="row pt-2">
+        <div class="col">
+          <button class="btn btn-danger" (click)="orderCancelClicked(order)">Cancel Order</button>
+        </div>
+        <div class="col text-white"><a (click)="flightVoucher()" class="btn btn-success btn-sm">Download
+            Voucher</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

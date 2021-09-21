@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, } from '@angular/common/http';
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
-import { JwtService, ApiService, AuthService, AlertService } from './services';
+import { HttpCacheInterceptor } from './interceptors/http.cache.interceptor';
 
 @NgModule({
   imports: [
@@ -10,10 +10,7 @@ import { JwtService, ApiService, AuthService, AlertService } from './services';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
-    JwtService,
-    ApiService,
-    AuthService,
-    AlertService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true }
   ],
   declarations: []
 })

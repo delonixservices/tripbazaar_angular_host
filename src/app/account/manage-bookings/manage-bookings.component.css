@@ -1,0 +1,10 @@
+.payment_details .item_key {
+  font-weight: bold;
+  margin-right: .3rem;
+}
+
+.hotel_image_container img {
+  max-height: 210px;
+  width: 100%;
+  object-fit: cover;
+}

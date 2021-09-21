@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "Delonix",
   "projects": {
-    "ang6-delonix": {
+    "b2cfrontend": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -22,21 +22,14 @@
             ],
             "styles": [
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/animate.css/animate.min.css",
               "./node_modules/owl.carousel/dist/assets/owl.carousel.min.css",
-    		  "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
-			  "./src/assets/lib/css/bootstrap-datepicker.min.css",
-			  "./src/styles.css"
+              "./node_modules/owl.carousel/dist/assets/owl.theme.default.min.css",
+              "./src/styles.css"
             ],
             "scripts": [
-	            "./node_modules/jquery/dist/jquery.js",
-    			"./node_modules/owl.carousel/dist/owl.carousel.min.js",
-				"./node_modules/bootstrap/dist/js/bootstrap.min.js",
-				"./src/assets/lib/js/bootstrap-datepicker.min.js",
-				"./src/assets/lib/js/filter.js",
-				"./src/assets/lib/js/popper.min.js",
-				"./src/assets/lib/js/popper.js",
-				"./src/assets/lib/js/app.js"
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/owl.carousel/dist/owl.carousel.min.js",
+              "./src/assets/lib/js/app.js"
             ]
           },
           "configurations": {
@@ -50,30 +43,28 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "fileReplacements": [{
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.prod.ts"
+              }]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ang6-delonix:build"
+            "browserTarget": "b2cfrontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ang6-delonix:build:production"
+              "browserTarget": "b2cfrontend:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ang6-delonix:build"
+            "browserTarget": "b2cfrontend:build"
           }
         },
         "test": {
@@ -104,7 +95,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "ang6-delonix:serve"
+            "devServerTarget": "b2cfrontend:serve"
           }
         },
         "lint": {
@@ -121,7 +112,7 @@
       }
     }
   },
-  "defaultProject": "ang6-delonix",
+  "defaultProject": "b2cfrontend",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

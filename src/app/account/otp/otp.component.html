@@ -1,0 +1,29 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-sm-5 col-md-6 col-lg-5 col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="text-danger"> Please Enter OTP</h5>
+        </div>
+
+        <div class="card-body">
+
+          <div class="form-group">
+            <input type="email" required="" class="form-control" [(ngModel)]="otpObj.otp" placeholder="Enter OTP">
+          </div>
+
+          <div class="form-group">
+            <input type="button" class="btn-block btn-danger btn" (click)="otpsubmit()" value="Submit">
+          </div>
+
+          <div *ngIf="validation" class="msg alert alert-success" role="alert">
+            {{validation}}
+          </div>
+
+          <div class="text-center">Resent otp <a (click)="resentotp()" style="color: blue;">Click Here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

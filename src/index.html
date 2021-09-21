@@ -1,30 +1,73 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <title>Trip Bazaar - Trip Bazaar- Flights, Hotels & Packages Flights, Hotels, Visa Tour Packages..</title>
+  <title>TripBazaar - Flights, Hotels & Holiday Packages...</title>
   <base href="/">
-   
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:400,600" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-	<link href="assets/lib/css/font-awesome.min.css" rel="stylesheet">
-	<!-- <link rel="stylesheet" href="assets/lib/css/bootstrap-datepicker.min.css" > -->
-	<link rel="stylesheet" href="assets/lib/css/custom.css" >
-	
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- agoda -->
+  <meta name="agd-partner-manual-verification" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137598713-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    // add this to the app.component.ts for all routes
+    // gtag('config', 'UA-137598713-1');
+  </script>
+  <!-- google analytics end -->
+
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 4.7.0 -->
+  <link href="assets/lib/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/lib/css/custom.css">
 
 </head>
+
 <body>
   <app-root>
-  	<!-- loader -->
-  	<div class="spinner">
-	  <div class="rect1"></div>
-	  <div class="rect2"></div>
-	  <div class="rect3"></div>
-	  <div class="rect4"></div>
-	  <div class="rect5"></div>
-	</div>
-  	
+    <!-- loader -->
+    <!-- <div class="spinner_container">
+      <div class="spinner">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+      </div>
+    </div> -->
+
+    <!-- inline style will load before gif -->
+    <div style="position: absolute; top:0;left:0;right:0;bottom:0; background-color: #fff">
+      <div
+        style="width: 100%;  height: 100vh; display: flex; justify-content: center; align-items:center;position: relative;top: -70px;">
+        <img src="/assets/loader.gif" alt="">
+      </div>
+    </div>
   </app-root>
+  <!--Start of Tawk.to Script-->
+  <!-- temporaly removed -->
+  <!-- <script type="text/javascript">
+    var Tawk_API = Tawk_API || {},
+      Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"),
+        s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/5ae09f91227d3d7edc24bb4e/default';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script> -->
+  <!--End of Tawk.to Script-->
 </body>
+
 </html>

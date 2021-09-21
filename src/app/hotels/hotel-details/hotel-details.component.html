@@ -1,0 +1,232 @@
+<div class="main" *ngIf="hotelObj">
+  <div class="container">
+    <!-- <div class="pt-2 mt-1 bg-light" *ngIf="hotelObj != ''"> -->
+    <div class="pt-2 mt-1 bg-light">
+      <div class="row">
+        <!-- <div class="col-md-6 text-light">
+					<p><a class="btn-outline-dark btn" routerLink="/hotels/searchresult">Go Back</a></p>
+				</div> -->
+
+        <div class="col-md-6 text-right">
+          <!-- <button type="button" data-toggle="modal" data-target="#exampleModal"
+						class="btn-outline-danger btn btn-sm"><i class="fa fa-search"></i> Modify Search</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container pt-2">
+    <div class="pb-3 py-md-3 ">
+      <div class="row " style="padding-left: 10px;">
+
+        <div class="col-8 col-md-6 mt-2">
+          <div class="d-flex align-items-center">
+            <div class="hotel_name"><i class="fa fa-building"></i> {{hotelObj.name}}
+            </div>
+            <div class="d-flex rating px-3">
+              <i class="fa fa-star " [ngClass]="{'text-warning' : hotelObj.starRating > 0 }"></i>
+              <i class="fa fa-star " [ngClass]="{'text-warning' : hotelObj.starRating > 1 }"></i>
+              <i class="fa fa-star " [ngClass]="{'text-warning' : hotelObj.starRating > 2 }"></i>
+              <i class="fa fa-star " [ngClass]="{'text-warning' : hotelObj.starRating > 3 }"></i>
+              <i class="fa fa-star " [ngClass]="{'text-warning' : hotelObj.starRating > 4 }"></i>
+            </div>
+          </div>
+          <p class="small" style="margin:0px;"><i class="fa fa-map-marker"></i> {{hotelObj.location.address}}
+            |
+            {{hotelObj.location.postalCode}}</p>
+        </div>
+
+        <div class="col-4 col-md-6">
+          <div class="row">
+            <div class="col-md-6 d-flex flex-column justify-content-center mt-2 text-center">
+              <span class="small" *ngIf="hotelObj.rates.packages[0]?.guest_discount_percentage">
+                <s>
+                  {{(((-1*hotelObj.rates.packages[0].guest_discount_percentage)/100) * hotelObj.rates.packages[0].base_amount)+ hotelObj.rates.packages[0].base_amount | number: '1.0-0'}}</s>
+                &nbsp;
+              </span>
+              <span class="badge badge-success small" *ngIf="hotelObj.rates.packages[0].guest_discount_percentage">
+                {{hotelObj.rates.packages[0].guest_discount_percentage}} % </span>
+              <div class="mb-0 hotel-price">
+                {{hotelObj.rates.packages[0].chargeable_rate_currency}}.
+                <span>{{hotelObj.rates.packages[0].base_amount | number: '1.0-0'}}</span>
+                <!-- <i class="fa fa-inr"></i> {{hotelObj.rates.packages[0].base_amount}} -->
+              </div>
+              <span class="small">For {{getNoOfNights()}} night, {{getNoOfNights()+1}} days</span>
+            </div>
+
+            <div class="col-md-6 d-md-flex align-items-md-center mt-2 text-right">
+              <div class="pr-md-3">
+                <button type="button" class="btn btn-sm button_primary"
+                  (click)="selectPackage(hotelObj.rates.packages[0])"><i class="fa fa-thumb-up"></i> Book Room</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+  <div class="pt-2 container mb-1">
+    <nav class="navbar navbar-expand-md navbar-danger bg-danger">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#subnav" aria-controls="subnav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse pb-3 text-white" id="subnav">
+        <ul class="navbar-nav mr-auto menu">
+          <li class="nav-item active">
+            <a class="nav-link" (click)="scroll(photos)">Photos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="scroll(rooms)">Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="scroll(review)">Reviews</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="scroll(map)">Map</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="scroll(amenities)">Amenities</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div> -->
+
+  <div class="container">
+    <div class="page_toggle_navigation">
+      <a class="" (click)="scroll(photos)">Photos</a>
+      <a class="" (click)="scroll(rooms)">Rooms</a>
+      <a class="" (click)="scroll(review)">Reviews</a>
+      <a class="" (click)="scroll(map)">Map</a>
+      <a class="" (click)="scroll(amenities)">Amenities</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <hr>
+      <div #photos class="col-md-8">
+        <!-- ngx gallery -->
+        <!-- <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery> -->
+        <div *ngIf="hotelObj.imageDetails.count !== 0">
+          <gallery [loadingMode]="false" [counter]="false">
+          </gallery>
+        </div>
+        <div *ngIf="hotelObj.imageDetails.count === 0">
+          <img class="img-fluid" src="/assets/images/hotel_placeholder.jpg" alt="hotelSlide">
+        </div>
+      </div>
+      <div class="col-md-4 mt-3 mt-md-0">
+        <div class="row">
+          <div class="col">
+            <div class="bg-main-2 text-light pt-3 pb-1 text-center">
+              <div class="text-center">
+                <div><i class="fa fa-clock-o fa-2x"></i> Check In</div>
+                <p class="my-2">{{checkInDate}}</p>
+                <p>{{hotelObj.moreDetails.checkInTime}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="bg-main-2 text-light pt-3 pb-1 text-center">
+              <div class="text-center">
+                <div><i class="fa fa-clock-o fa-2x"></i> Check Out</div>
+                <p class="my-2">{{checkOutDate}}</p>
+                <p>{{hotelObj.moreDetails.checkOutTime}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <hr> 
+        <div class="main-heading">
+          <h5 class="heading text-uppercase ">Highlights</h5>
+        </div>
+         <div class="hotel-highlights">
+          <i class="fa fa-wifi text-muted"></i>
+          <i class="fa fa-cutlery text-muted"></i>
+          <i class="fa fa-bed text-muted"></i>
+          <i class="fa fa-shopping-basket text-muted"></i>
+          <i class="fa fa-s15 text-muted"></i>
+          <i class="fa fa-heartbeat text-muted"></i>
+          <a herf="#highlights">View All</a>
+        </div> -->
+
+        <hr>
+        <div class="main-heading">
+          <h5 class="heading text-uppercase ">Amenities</h5>
+        </div>
+        <br>
+        <div class="hotel-highlights">
+          <i class="fa fa-wifi  text-muted" placement="bottom" ngbTooltip="WIFI"
+            *ngIf="hotelObj.amenities.includes('dataPorts') || hotelObj.amenities.includes('Free Wifi')"></i>
+          <i class="fa fa-tv text-muted" placement="bottom" ngbTooltip="TV"
+            *ngIf="hotelObj.amenities.includes('tVInRoom')"></i>
+          <i class="fa fa-snowflake-o text-muted" placement="bottom" ngbTooltip="AC"
+            *ngIf="hotelObj.amenities.includes('airConditioning')"></i>
+          <i class="fa fa-check-circle text-muted" placement="bottom" ngbTooltip="24/7 Checkin"
+            *ngIf="hotelObj.amenities.includes('24/7 Checkin')"></i>
+          <i class="fa fa-glass text-muted" placement="bottom" ngbTooltip="MiniBarInRoom"
+            *ngIf="hotelObj.amenities.includes('miniBarInRoom'); else inHouseBar"></i>
+          <ng-template #inHouseBar>
+            <i class="fa fa-glass text-muted" placement="bottom" ngbTooltip="InHouseBar"
+              *ngIf="hotelObj.amenities.includes('inHouseBar')"></i>
+          </ng-template>
+          <i class="fa fa-bath text-muted" *ngIf="hotelObj.amenities.includes('outdoorPool')" placement="bottom"
+            ngbTooltip="Outdoor Pool"></i>
+          <i class="fa fa-car text-muted"
+            *ngIf="hotelObj.amenities.includes('parkingGarage')|| hotelObj.amenities.includes('Parking Facility')"
+            placement="bottom" ngbTooltip="ParkingGarage"></i>
+          <!-- <i class="fa fa-cutlery text-muted" placement="bottom" ngbTooltip="Food"></i> -->
+          <!-- <i class="fa fa-coffee text-muted" placement="bottom" ngbTooltip="Breakfast"></i> -->
+          <a class="ml-3" (click)="scroll(amenities)">View All</a>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+  <div class="container">
+    <div class="hotel_overview">
+      <div class="main-heading">
+        <h4 class="heading pb-3">OVERVIEW</h4>
+      </div>
+      <div class="overview_body" [innerHtml]="hotelObj.moreDetails.description"></div>
+    </div>
+  </div>
+
+  <!-- ADDED ANKIT -->
+  <!-- CHOOSE ROOMS  -->
+  <section #rooms id="choose-rooms">
+    <div class="container d-none d-md-block">
+      <app-hotel-room-select (packageSelected)="packageSelectedHandler($event)"
+        [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
+        [amenities]="hotelObj.amenities">
+      </app-hotel-room-select>
+    </div>
+
+    <div class="container d-md-none sticky-top">
+      <app-hotel-room-select (packageSelected)="packageSelectedHandler($event)"
+        [hotelPackages]="hotelObj.rates.packages" [imageDetails]="hotelObj.imageDetails"
+        [amenities]="hotelObj.amenities" [mobile]="true">
+      </app-hotel-room-select>
+    </div>
+  </section>
+
+  <div #amenities class="container hotel-details">
+    <app-hotel-amenities [amenities]="hotelObj.amenities"></app-hotel-amenities>
+  </div>
+
+  <!-- REVIEW -->
+  <div #review class="container hotel-details">
+    <app-hotel-review></app-hotel-review>
+  </div>
+
+  <div #map class="container hotel-details py-3">
+    <app-hotel-view-on-map></app-hotel-view-on-map>
+  </div>
+</div>

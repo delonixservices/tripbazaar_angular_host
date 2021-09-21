@@ -1,0 +1,118 @@
+<div class="flights-container">
+  <div class="flight-overview">
+    <input (click)="handleFlightSelect()" type="radio" name="flight_{{flight.flightTypeId}}">
+    <div class="airline">
+      <div class="airline-name">{{flight.flightSegments[0].airlineName}}</div>
+      <div class="airline-no">
+        <span *ngFor="let segment of flight.flightSegments let i = index">
+          <span *ngIf="i !== 0">|</span> {{segment.airlineID}}-{{segment.flightNo}}
+        </span>
+      </div>
+    </div>
+    <div class="departure">
+      <div class="departure_time">{{flight.departure.time}}</div>
+      <div class="departure_arp-name">{{flight.departure.airportName}},{{flight.departure.airportCode}}</div>
+    </div>
+    <div class="duration">
+      <div class="total_duration">{{flight.totalDuration}}</div>
+      <div class="duration_separator">
+        <span *ngIf="flight.nonStop !== true;" class="flight_stop"></span>
+      </div>
+      <div *ngIf="flight.nonStop === true;" class="non_stop">Non stop</div>
+      <div *ngIf="flight.nonStop !== true;" class="non_stop">{{flight.flightSegments.length - 1}} stops <span
+          *ngFor="let segment of flight.flightSegments let i = index">
+          <span *ngIf="i === 0"> - </span>
+          <span *ngIf="i !== 0"><span *ngIf="i !== 1">,</span> {{segment.departure.airportName}}</span></span>
+      </div>
+    </div>
+    <div class="arrival">
+      <div class="arrival_time">{{flight.arrival.time}}</div>
+      <div class="arrival_arp-name">{{flight.arrival.airportName}},{{flight.arrival.airportCode}}</div>
+    </div>
+    <div class="fare_container">
+      <div class="fare">&#8377;{{flight.fareDetails[0]?.totalAmount}}</div>
+      <div class="book_flight-btn">
+        <button (click)="bookClickHandler()">Book Now</button>
+      </div>
+    </div>
+  </div>
+  <div class="hr"></div>
+  <div class="flight_details-btn">
+    <span (click)="onClick()">Flight Details <span class="arrow"></span></span>
+  </div>
+
+  <!-- Flight details -->
+  <div *ngIf="showFlightDetails === true">
+    <div *ngFor="let fl of flight.flightSegments; let i = index;" class="flight_details-container">
+      <div class="flight_details-header">
+        <div>{{fl.departure.airportName}} to {{fl.arrival.airportName}}, {{flight.departure.date}}</div>
+        <div>{{flight.totalDuration}}</div>
+      </div>
+      <div class="flight_details">
+        <div class="flight_info">
+          <div class="airline_info">
+            <div class="airline-name">{{fl.airlineName}}</div>
+            <div class="airline-no">
+              Airbus {{fl.airlineID}}-{{fl.flightNo}}
+            </div>
+            <div id="dummy"></div>
+          </div>
+          <div class="flight_timings">
+            <div class="departure">
+              <div class="departure_time">{{fl.departure.time}}</div>
+              <div class="departure_arp-name">{{fl.departure.airportName}},{{fl.departure.airportCode}}</div>
+            </div>
+            <div class="duration">
+              <div class="total_duration">{{fl.duration}}</div>
+              <div class="duration_separator">
+              </div>
+              <div class="non_stop">Non stop</div>
+            </div>
+            <div class="arrival">
+              <div class="arrival_time">{{fl.arrival.time}}</div>
+              <div class="arrival_arp-name">{{fl.arrival.airportName}},{{fl.arrival.airportCode}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="baggage_info">
+          <div>
+            <div>Baggage:</div>
+            <div>Adult</div>
+          </div>
+          <div>
+            <div>Check-In</div>
+            <div>{{flight.baggageAllowance.checkIn}}</div>
+          </div>
+          <div>
+            <div>Cabin</div>
+            <div>{{flight.baggageAllowance.cabin}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="fare_details">
+        <div class="fare_details-row top_rw">
+          <div>Fare Breakup</div>
+          <div></div>
+        </div>
+        <div class="fare_details-row">
+          <div>TOTAL</div>
+          <div>&#8377;{{flight.fareDetails[0]?.totalAmount}}</div>
+        </div>
+        <div class="fare_details-row">
+          <div>Base Fare</div>
+          <div>&#8377;{{flight.fareDetails[0]?.baseAmount}}</div>
+        </div>
+        <div class="fare_details-row">
+          <div>Taxes</div>
+          <div>&#8377;{{flight.fareDetails[0]?.taxes}}</div>
+        </div>
+      </div>
+      <div *ngIf="flight.flightSegments.length > 1 && i < flight.flightSegments.length-1" class="flight_separator">
+        <div>
+          <div>Change of Planes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

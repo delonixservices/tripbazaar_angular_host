@@ -1,0 +1,106 @@
+<app-flight-modifysearch [departureAirport]="departureAirport" [arrivalAirport]="arrivalAirport"
+  [departureDate]="departureDate" [passengers]="passengers" [twoWayJourney]="isTwoWayJourney"></app-flight-modifysearch>
+
+<div *ngIf="!isTwoWayJourney" class="flight-list">
+  <app-flight-item *ngFor="let flight of oneWayFlights" (bookFlight)="onBookFlight($event)" [flight]="flight">
+  </app-flight-item>
+</div>
+
+<div *ngIf="isTwoWayJourney && selectedOneWayFlight && selectedReturnFlight" class="flight-list">
+  <div class="selected_flight card mt-3">
+    <div class="row">
+      <div class="col-5">
+        <div class="flight-overview">
+          <div class="airline">
+            <div class="airline-name">{{selectedOneWayFlight?.flightSegments[0].airlineName}}</div>
+            <div class="airline-no">
+              <span *ngFor="let segment of selectedOneWayFlight?.flightSegments let i = index">
+                <span *ngIf="i !== 0">|</span> {{segment.airlineID}}-{{segment.flightNo}}
+              </span>
+            </div>
+          </div>
+          <div class="departure">
+            <div class="departure_time">{{selectedOneWayFlight?.departure.time}}</div>
+            <div class="departure_arp-name">
+              {{selectedOneWayFlight?.departure.airportName}},{{selectedOneWayFlight?.departure.airportCode}}</div>
+          </div>
+          <div class="duration">
+            <div class="total_duration">{{selectedOneWayFlight?.totalDuration}}</div>
+            <div class="duration_separator">
+              <span *ngIf="selectedOneWayFlight?.nonStop !== true;" class="flight_stop"></span>
+            </div>
+            <div *ngIf="selectedOneWayFlight?.nonStop === true;" class="non_stop">Non stop</div>
+            <div *ngIf="selectedOneWayFlight?.nonStop !== true;" class="non_stop">
+              {{selectedOneWayFlight?.flightSegments.length - 1}} stops <span
+                *ngFor="let segment of selectedOneWayFlight?.flightSegments let i = index">
+                <span *ngIf="i === 0"> - </span>
+                <span *ngIf="i !== 0"><span *ngIf="i !== 1">,</span> {{segment.departure.airportName}}</span></span>
+            </div>
+          </div>
+          <div class="arrival">
+            <div class="arrival_time">{{selectedOneWayFlight?.arrival.time}}</div>
+            <div class="arrival_arp-name">
+              {{selectedOneWayFlight?.arrival.airportName}},{{selectedOneWayFlight?.arrival.airportCode}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="flight-overview">
+          <div class="airline">
+            <div class="airline-name">{{selectedReturnFlight?.flightSegments[0].airlineName}}</div>
+            <div class="airline-no">
+              <span *ngFor="let segment of selectedReturnFlight?.flightSegments let i = index">
+                <span *ngIf="i !== 0">|</span> {{segment.airlineID}}-{{segment.flightNo}}
+              </span>
+            </div>
+          </div>
+          <div class="departure">
+            <div class="departure_time">{{selectedReturnFlight?.departure.time}}</div>
+            <div class="departure_arp-name">
+              {{selectedReturnFlight?.departure.airportName}},{{selectedReturnFlight?.departure.airportCode}}</div>
+          </div>
+          <div class="duration">
+            <div class="total_duration">{{selectedReturnFlight?.totalDuration}}</div>
+            <div class="duration_separator">
+              <span *ngIf="selectedReturnFlight?.nonStop !== true;" class="flight_stop"></span>
+            </div>
+            <div *ngIf="selectedReturnFlight?.nonStop === true;" class="non_stop">Non stop</div>
+            <div *ngIf="selectedReturnFlight?.nonStop !== true;" class="non_stop">
+              {{selectedReturnFlight?.flightSegments.length - 1}} stops <span
+                *ngFor="let segment of selectedReturnFlight?.flightSegments let i = index">
+                <span *ngIf="i === 0"> - </span>
+                <span *ngIf="i !== 0"><span *ngIf="i !== 1">,</span> {{segment.departure.airportName}}</span></span>
+            </div>
+          </div>
+          <div class="arrival">
+            <div class="arrival_time">{{selectedReturnFlight?.arrival.time}}</div>
+            <div class="arrival_arp-name">
+              {{selectedReturnFlight?.arrival.airportName}},{{selectedReturnFlight?.arrival.airportCode}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="fare_details-container">
+          <div class="fare">
+            &#8377;{{selectedOneWayFlight?.fareDetails[0].totalAmount + selectedReturnFlight?.fareDetails[0].totalAmount}}
+          </div>
+          <div class="book_flight-btn">
+            <button (click)="bookSelectedPackage()">Book Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-around">
+    <div class="col">
+      <app-flight-item (selectedFlight)="onOneWayFlightSelect($event)" *ngFor="let flight of oneWayFlights"
+        [flight]="flight">
+      </app-flight-item>
+    </div>
+    <div class="col">
+      <app-flight-item (selectedFlight)="onReturnFlightSelect($event)" *ngFor="let flight of returnFlights"
+        [flight]="flight">
+      </app-flight-item>
+    </div>
+  </div>
+</div>

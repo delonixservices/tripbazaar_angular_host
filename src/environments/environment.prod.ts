@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  // api_url: 'https://conduit.productionready.io/api',
-  api_url: 'http://13.234.60.25:3334/api',
-  asset_url: 'http://13.234.60.25:3334/'
+  // api_url: 'https://tripbazaar.co/api',
+  // asset_url: 'https://tripbazaar.co/',
+  api_url: 'https://b2cqa.delonixtravel.in/api',
+  asset_url: 'https://b2cqa.delonixtravel.in/',
 };

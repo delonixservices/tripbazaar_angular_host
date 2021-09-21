@@ -1,0 +1,184 @@
+<div class="container my-4">
+  <div class="main-heading">
+    <h3 class=""><i class="fa fa-dashboard"></i> My Dashboard</h3>
+  </div>
+  <!-- <div class="alert alert-success" role="alert" *ngIf="loginUser">Welcome : {{loginUser.name}}</div> -->
+
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeId" (activeIdChange)="activeIdChange($event)" class="nav-tabs mt-4">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Hotels</a>
+      <ng-template ngbNavContent>
+        <div class="row mt-3">
+          <!-- user transaction -->
+          <div class="col-md-12">
+            <div class="card mt-4 bg-dark text-white">
+              <div class="card-header">
+                <div class="">Transactions</div>
+                <!-- <div class="row">
+                  <div class="col">Transactions</div>
+                  <div class="col text-right"><a class="text-danger">View All Transactions</a></div>
+                </div> -->
+              </div>
+              <div class="upcoming-trip">
+                <div class="card-body border border-left-0 border-right-0" *ngFor="let transaction of transactions">
+                  <div class="row">
+                    <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
+                      <div class="mb-3"><i class="fa fa-bed"></i>&nbsp;{{transaction.hotel?.name}}</div>
+                      <div class="text-success"
+                        *ngIf="transaction.prebook_response?.data.package.room_details.non_refundable === false">
+                        <i class="fa fa-check-circle"></i> Refundable</div>
+                    </div>
+
+                    <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
+                      <p class="text-muted">CheckIn</p>
+                      <div>
+                        <span>{{transaction.prebook_response?.data.package.check_in_date | date:'mediumDate'}}</span>
+                        <span>{{transaction.hotel?.moreDetails.checkInTime}}</span>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col col-md-1 pt-3 pb-2 text-center ">
+                      <i class="fa fa-long-arrow-right fa-2x"></i> </div> -->
+
+                    <div class="col col-md-2 pt-2 pb-2 d-flex flex-column text-center">
+                      <p class="text-muted">CheckOut</p>
+                      <div>
+                        <span>{{transaction.prebook_response?.data.package.check_out_date | date:'mediumDate'}}</span>
+                        <span>{{transaction.hotel?.moreDetails.checkOutTime}}</span>
+                      </div>
+                    </div>
+                    <div class="col col-md-2 pt-2 pb-2 text-center d-flex flex-column">
+                      <p class="text-muted">Rooms</p>
+                      <div>
+                        <span>{{transaction.prebook_response?.data.package.room_count}}</span>
+                      </div>
+                    </div>
+                    <div class="col col-md-2 pt-2 pb-2 text-center">
+                      <p class="text-muted">Guest</p>
+                      <div>
+                        <span>Adult - {{transaction.prebook_response?.data.package.adult_count}}</span>
+                        <br>
+                        <span *ngIf="transaction.prebook_response?.data.package.child_count>0">Child -
+                          {{transaction.prebook_response?.data.package.child_count}}</span>
+                      </div>
+                    </div>
+
+                    <div class="col col-md-2 pt-2 pb-2">
+                      <div class="d-flex flex-column justify-content-between h-100">
+                        <div class="text-center">
+                          <div class="text-danger" *ngIf="transaction.status !== 1 && transaction.status !== 2"> Failed
+                          </div>
+                          <div class="text-success" *ngIf="transaction.status == 1"> Booked</div>
+                          <div class="text-warning" *ngIf="transaction.status == 2"> Cancelled</div>
+                        </div>
+                        <div class="text-center">
+                          <a class="text-info font-weight-bold" [routerLink]=""
+                            (click)="viewDetailsClickHandler(transaction)">view details</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <hr>
+                  <div class="row" *ngIf="transaction.status == 1 && transaction?.book_response">
+                    <!-- <div class="col-md-4 text-center"><button *ngIf="isCancelAllowed(transaction.search.check_in_date)"
+                        class="btn btn-danger btn-sm" (click)="cancelHotelBooking(transaction._id)">Cancel
+                        Booking</button></div> -->
+                    <!-- <div class="col-md-3 text-center"><a
+                                          *ngIf="isCancelAllowed(transaction.search.check_in_date)" [routerLink]=""
+                                          class="btn btn-secondary btn-sm">Cancellation
+                                          Charges</a></div> -->
+                    <div class="col col-md-4 text-center"><a [ngClass]="{'disabled': !transaction?.book_response}"
+                        (click)="hotelInvoice(transaction.bookingId)" class="btn btn-info btn-sm">View Invoice</a></div>
+                    <div class="col col-md-4 text-center"><a [ngClass]="{'disabled': !transaction?.book_response}"
+                        (click)="hotelVoucher(transaction.bookingId)" class="btn btn-success btn-sm">View Voucher</a>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row mx-3">
+                    <p><span class="font-weight-bold">Created At:&nbsp;</span>
+                      {{transaction.created_at | date:'medium' }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Flights</a>
+      <ng-template ngbNavContent>
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>
+                Booking Ref No
+              </th>
+              <th>
+                Trip Details
+              </th>
+              <th>
+                Journey Date
+              </th>
+              <th>
+                Airline
+              </th>
+              <th>
+                No of travellers
+              </th>
+              <th>
+                Status
+              </th>
+              <th>
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let flightTrans of parsedTransactions; let i=index">
+              <td>
+                {{flightTrans.bookingRefNo}}
+              </td>
+              <td>
+                {{flightTrans.tripDetails}}
+              </td>
+              <td>
+                {{flightTrans.journeyDate}}
+              </td>
+              <td>
+                {{flightTrans.airline}}
+              </td>
+              <td>
+                {{flightTrans.travellers}}
+              </td>
+              <td>
+                <h6 style="text-decoration: underline;
+                color: #2664d3;">
+                  {{flightTrans.status}}</h6>
+              </td>
+              <td>
+                <div *ngIf="flightTrans.status === 'payment_pending'">
+                  <button class="btn btn-info btn-sm" (click)="processPaymentClickHandler(flightTrans.bookingRefNo)">
+                    Process Payment
+                  </button>
+                </div>
+                <div *ngIf="flightTrans.status === 'success'">
+                  <button class="btn btn-success btn-sm" (click)="bookingDetailsClickHandler(flightTrans.bookingRefNo)">
+                    Booking Details
+                  </button>
+                </div>
+                <div *ngIf="flightTrans.status !== 'success' && flightTrans.status !== 'payment_pending'">
+                  -
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </li>
+  </ul>
+
+  <!-- container for nav-content -->
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

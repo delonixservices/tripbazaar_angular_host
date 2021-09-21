@@ -1,0 +1,243 @@
+.hotel-modify_search {
+  /* background-color: #9a8be4; */
+  background-color: #3b3a7f;
+  color: #fafafa;
+  padding: .5rem 2rem 0.4rem;
+  /* box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0 5px 5px -4px rgba(0, 0, 0, 0.3);
+  /* min-width: 1000px; */
+}
+
+::ng-deep .accordion div.card-header {
+  background-color: #fff;
+}
+
+::ng-deep .accordion div.card-header .btn-link:hover,
+::ng-deep .accordion div.card-header .btn-link:active,
+::ng-deep .accordion div.card-header .btn-link:focus {
+  text-decoration: none !important;
+}
+
+::ng-deep .accordion div.card-header button {
+  /* border-bottom: 0; */
+  width: 100%;
+}
+
+::ng-deep .accordion>.card {
+  border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.hotel-suggestions {
+  height: 5rem;
+  border: 1px solid #ccc;
+  padding: .3rem .9rem 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.suggestions.home-searchbar {
+  position: absolute;
+  top: 36%;
+  left: 0;
+  min-height: 2.5rem;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.ng-select.suggestions .ng-dropdown-panel {
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  border-top: none;
+}
+
+.selected_area {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.hotel-suggestions:hover,
+#checkindate:hover,
+#checkoutdate:hover,
+.hotel-modify_search .customDropdown:hover {
+  background-color: #a8d0ff;
+  /* background-color: #e8f0fd; */
+}
+
+.bg-blue {
+  background-color: #a8d0ff;
+  /* background-color: #e8f0fd; */
+}
+
+#checkindate,
+#checkoutdate {
+  height: 5rem;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  padding: .3rem .9rem 0;
+}
+
+.hotel-suggestions_header,
+#checkindate #checkInStatus,
+#checkoutdate #checkOutStatus {
+  font-weight: bold;
+  font-size: .8rem;
+  user-select: none;
+}
+
+#checkindate #checkInDate,
+#checkoutdate #checkOutDate {
+  font-size: 1rem;
+}
+
+#checkindate #checkInDay,
+#checkoutdate #checkOutDay {
+  font-weight: 400;
+  font-size: .7rem;
+}
+
+.hotel-modify_search .customDropdown {
+  height: 5rem;
+  border-radius: 0.1px;
+  /* border: 1px solid #ccc; */
+  background-color: inherit;
+  color: inherit;
+}
+
+.customDropdownToggle {
+  position: absolute;
+  top: 0;
+  right: 0 !important;
+  bottom: 0;
+  left: 0;
+  padding: .3rem .9rem 0;
+}
+
+.customDropdownToggle::after {
+  display: none !important;
+}
+
+.dropdown-menu {
+  right: 0 !important;
+  /*select guest's dropdown menu will not go off to the right of the screen */
+}
+
+#done.dropdown-toggle::after {
+  display: none;
+}
+
+.dropdown_header {
+  font-weight: bold;
+  font-size: .8rem;
+  /* color: #212529; */
+  color: inherit;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+::ng-deep ngb-datepicker {
+  position: absolute;
+  z-index: 100;
+  background-color: white;
+  color: #212529;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+.ngb-dp-day.disabled .custom-day:hover {
+  background-color: #ccc;
+
+  color: #ccc !important;
+}
+
+.hotel_search-btn {
+  width: 10rem;
+  border-radius: 1.8rem;
+  height: 3.1rem;
+  background-image: linear-gradient(45deg, #ff00e0, #0008ff);
+  color: #fff;
+}
+
+.hotel_search-btn:hover {
+  color: #fff;
+}
+
+/* #total-adult-hotel .value,
+#total-child-hotel .value {
+  height: 25px;
+  width: 25px !important;
+  line-height: 25px;
+  text-align: center;
+  background: #ccc;
+  border-radius: 100px;
+  float: left;
+  margin-right: 7px;
+}
+
+#total-adult-hotel>div,
+#total-child-hotel>div {
+  min-width: 130px;
+} */
+
+.select_room-menu {
+  width: 28rem;
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+  .selected_area {
+    font-size: 1em;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  .selected_area {
+    font-size: 1em;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .selected_area {
+    font-size: 1em;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  .hotel-modify_search {
+    padding: 1rem 2rem 0.4rem;
+  }
+
+  .selected_area {
+    font-size: 1em;
+  }
+
+  .select_room-menu {
+    width: 100%;
+  }
+
+  .suggestions.home-searchbar {
+    top: 35%;
+  }
+
+}

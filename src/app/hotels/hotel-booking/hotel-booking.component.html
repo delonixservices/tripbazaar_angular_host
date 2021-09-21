@@ -1,0 +1,537 @@
+<div class="container pt-3">
+  <div class="main-heading mb-3">
+    <h3 class="heading"><i class="fa fa-flights"></i> Review Your Booking</h3>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <!-- Hotel Details -->
+      <div class="row">
+
+        <div class="col-md-5">
+          <div *ngIf="hotelObj.imageDetails?.images?.length > 0; else otherImage">
+            <!-- when images are in images array -->
+            <img src="{{hotelObj.imageDetails.images[0]}}" class="img-fluid" alt="First slide"
+              src-fallback="/assets/images/hotel_placeholder.jpg" style=" height: 255px;width: 100%;object-fit: cover;">
+          </div>
+          <ng-template #otherImage>
+            <div>
+              <img src="{{hotelObj.imageDetails.prefix+0+hotelObj.imageDetails.suffix}}" class="img-fluid"
+                alt="First slide" src-fallback="/assets/images/hotel_placeholder.jpg"
+                style=" height: 255px;width: 100%;object-fit: cover;">
+            </div>
+          </ng-template>
+
+          <!--					<div class="row">-->
+          <!--						<div class="carousel slide">-->
+          <!--							<div class="carousel-inner">-->
+          <!--								<div class="carousel-item "-->
+          <!--									*ngFor="let item of [].constructor(hotelObj.imageDetails.count); let i = index "-->
+          <!--									[ngClass]="{'active' : i == 0}">-->
+          <!--									<img src="{{hotelObj.imageDetails.prefix+i+hotelObj.imageDetails.suffix}}"-->
+          <!--										class="img-fluid" alt="First slide"-->
+          <!--										style=" height: 255px;width: 100%;object-fit: cover;">-->
+          <!--								</div>-->
+          <!--							</div>-->
+
+          <!--						</div>-->
+          <!--					</div>-->
+        </div>
+        <div class="col-md-7">
+          <h3 class="mt-3 mt-md-0">{{hotelObj.name}}</h3>
+          <div class="rating">
+            <i class="fa fa-star " [ngClass]="hotelObj.starRating > 0 ? 'text-warning' : 'text-light'"></i>
+            <i class="fa fa-star " [ngClass]="hotelObj.starRating > 1 ? 'text-warning' : 'text-light'"></i>
+            <i class="fa fa-star " [ngClass]="hotelObj.starRating > 2 ? 'text-warning' : 'text-light'"></i>
+            <i class="fa fa-star " [ngClass]="hotelObj.starRating > 3 ? 'text-warning' : 'text-light'"></i>
+            <i class="fa fa-star " [ngClass]="hotelObj.starRating > 4 ? 'text-warning' : 'text-light'"></i>
+          </div>
+          <p class="text-muted"><i class="fa fa-map-marker"></i>&nbsp;{{hotelObj.location.address}} |
+            {{hotelObj.location.postalCode}}</p>
+          <div class="row">
+            <div class="col">
+              <div class="bg-main-2 text-light pt-3 pb-1 text-center">
+                <div class="text-center">
+                  <div><i class="fa fa-clock-o"></i>&nbsp;Check In</div>
+                  <p class="my-2">{{checkInDate}}</p>
+                  <p>{{hotelObj.moreDetails.checkInTime}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="bg-main-2 text-light pt-3 pb-1 text-center">
+                <div class="text-center">
+                  <div><i class="fa fa-clock-o"></i>&nbsp;Check Out</div>
+                  <p class="my-2">{{checkOutDate}}</p>
+                  <p>{{hotelObj.moreDetails.checkOutTime}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-center">{{getNoOfNights()+1}} Days &amp; {{getNoOfNights()}} Night<span
+              *ngIf="getNoOfNights() > 1">s</span> | {{searchObj.room_count}} Room<span
+              *ngIf="searchObj.room_count > 1">s</span>, {{searchObj.adult_count}} Adult<span
+              *ngIf="searchObj.adult_count > 1">s</span>, {{searchObj.child_count}} <span
+              *ngIf="searchObj.child_count <= 1">Child</span><span *ngIf="searchObj.child_count > 1">Children</span>
+          </p>
+        </div>
+      </div>
+      <hr>
+      <!-- Traveller Details  -->
+      <div class="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="main-heading pt-4">
+              <h4 class="heading"><i class="fa fa-users"></i> Enter Guest Details </h4>
+            </div>
+          </div>
+
+          <div class="col-md-6" *ngIf="!jwt.isAuth()">
+            <h5 class="mt-4">
+              <a class="text-primary" (click)="openModal(logInModal)">Log In</a> to book
+              faster</h5>
+          </div>
+
+          <!-- Replaced with ng-bootstrap modal -->
+          <!-- <div class="modal fade bd-example-modal-sm sign-in" tabindex="-1" role="dialog"
+						aria-labelledby="mySmallModalLabel" aria-hidden="true" *ngIf="!jwt.isAuth()">
+						<div class="modal-dialog modal-sm">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<form class="px-2 py-1">
+										<div class="form-group">
+											<label for="exampleDropdownFormEmail1">Mobile Number</label>
+											<input type="number" required class="form-control"
+												id="exampleDropdownFormEmail1" [(ngModel)]="paramsObj.mobile"
+												name="mobile" placeholder="Enter Your Mobile Number">
+										</div>
+										<div class="form-group">
+											<label for="exampleDropdownFormPassword1">Password</label>
+											<input type="password" class="form-control"
+												id="exampleDropdownFormPassword1" [(ngModel)]="paramsObj.password"
+												name="password" placeholder="Enter Your Password">
+										</div>
+										<button type="submit" class="btn btn-danger btn-block gstform"
+											(click)="login()">log In</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div> -->
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="main-heading">
+                <div class="heading">
+                  <h5>Guest's Information</h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" name="contactName" required class="form-control" placeholder="First Name"
+                  [(ngModel)]="contactDetail.name">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" name="contactlastname" required class="form-control" placeholder="Last Name"
+                  [(ngModel)]="contactDetail.last_name">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" name="contactMobile" required class="form-control" placeholder="Phone" minlength="10"
+                  maxlength="10" [(ngModel)]="contactDetail.mobile">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="email" name="contactEmail" required class="form-control" placeholder="Email"
+                  [(ngModel)]="contactDetail.email">
+              </div>
+            </div>
+            <div class="col-12 text-danger">
+              {{contactDetailsValidation}}
+            </div>
+          </div>
+        </form>
+        <hr>
+
+        <h5>Member Details</h5>
+        <div class="row" *ngFor="let room of guest; let i = index;">
+          <div class="col-md-12 text-primary">
+            <h6>ROOM {{i+1}}</h6>
+          </div>
+          <div class="col-md-12">
+            <div *ngFor="let guestDetail of room.room_guest; let j = index;">
+              <div class="pb-2">Guest {{j+1}} details</div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="firstname{{j+1}}" class="form-control" placeholder=" First Name"
+                      [(ngModel)]="guestDetail.firstname" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="lastname{{j+1}}" class="form-control" placeholder="Last Name"
+                      [(ngModel)]="guestDetail.lastname" required>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="text" name="mobile{{j+1}}" class="form-control" placeholder="mobile"
+                      [(ngModel)]="guestDetail.mobile" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="row">
+          <div class="clearfix"></div>
+          <div class="col-md-12 text-primary">
+            <h6>Room 2</h6>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder=" First Name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div> -->
+      </div>
+      <!-- Traveller Details  -->
+      <!-- Added Ankit -->
+      <div #hotelPolicy class="container card">
+        <div class="hotel-policy py-3 main-heading">
+          <h4 class="heading mb-2">Hotel Policies you should know</h4>
+          <hr>
+          <div [innerHTML]="hotelObj.policy"></div>
+        </div>
+      </div>
+
+      <div class="my-4">
+        <span>
+          <label>
+            <input style="width:18px; height:18px;vertical-align: middle;" id="agree" type="checkbox"
+              [checked]="userAgree" (change)="checkUserAgree()">&nbsp;I agree to the
+          </label>
+          <a [routerLink]="" (click)="openBkgPolicyModal(bgkPolicyModal)">
+            Hotel Booking Policy
+          </a>,
+          <a [routerLink]="" (click)="openCancellationPolicyModal(cancellationPolicyModal)">Hotel
+            Cancellation Policy
+          </a>,
+          <a routerLink="/policy">Privacy Policy</a>,&nbsp;
+          <a routerLink="/agreement">User Agreement</a>&nbsp;&amp;
+          <a routerLink="/term">Terms of Service</a>&nbsp;of
+          TripBazaar
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="filter-data">
+        <div class="flight-booking-cart">
+          <h6>Tariff Details</h6>
+          <div class="row mb-2">
+            <div class="col-md-7">Base Amount</div>
+            <div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                class="fa fa-inr"></i>
+              <span *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+              {{baseAmount |number:'1.0-0'}} </div>
+          </div>
+          <div class="row mb-2" *ngIf="couponCode.value != 0">
+            <div class="col-md-7">Discount</div>
+            <div class="col-md-5 text-right" *ngIf="couponCode.type =='Percentage'"><i class="fa fa-inr"></i>
+              {{(this.baseAmount / 100 * this.couponCode.value) | number:'1.0-0'}}
+            </div>
+            <div class="col-md-5 text-right" *ngIf="couponCode.type =='fixed'"><i
+                *ngIf="packageObj.chargeable_rate_currency === 'INR'" class="fa fa-inr"></i> <span
+                *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+              {{(this.couponCode.value) | number:'1.0-0'}}</div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-7">Service Charges</div>
+            <div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                class="fa fa-inr"></i> <span
+                *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+              {{serviceCharge | number:'1.0-0'}}
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-7">Processing Fee</div>
+            <div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                class="fa fa-inr"></i> <span
+                *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+              {{processingFee | number:'1.0-0'}}
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-7">GST</div>
+            <div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                class="fa fa-inr"></i> <span
+                *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+              {{gst | number:'1.0-0'}}
+            </div>
+          </div>
+          <!-- <div class="row mb-2">
+							<div class="col-md-7">Hotel GST</div>
+							<div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'" 								class="fa fa-inr"></i> 							<span 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span> 649.00</div>
+						</div> -->
+          <!-- <div class="row mb-2">
+							<div class="col-md-8 fair-fee" data-toggle="popover" data-html="true" title="" data-placement="bottom" data-content="" data-original-title="Fee &amp; Surcharges Details">Convenience Fee &amp; Taxes 
+								<a href="javascript:void();"><i class="fa fa-question-circle-o"></i></a>
+							</div>
+							<div class="col-md-4 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'" 								class="fa fa-inr"></i> 							<span 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>  600.00</div>
+							<div class="popover-content" style="display:none;">
+								<div class="row">
+									<div class="col-md-8">Convenience Fee &amp; Taxes </div>
+									<div class="col-md-4 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'" 								class="fa fa-inr"></i> 							<span 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>350</div>
+									<div class="col-md-8">GST</div>
+									<div class="col-md-4 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'" 								class="fa fa-inr"></i> 							<span 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>350</div>
+								</div>
+							</div>
+						</div> -->
+          <!-- <div class="row mb-2 coupon-discount">
+							<div class="col-md-7"><i class="fa fa-tag"></i> Discount <i class="fa fa-close remove-discount"></i> </div> 
+							<div class="col-md-5 text-right"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'" 								class="fa fa-inr"></i> 							<span 								*ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span> 99.00</div>
+						</div> -->
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <h5>You Pay:</h5>
+            </div>
+            <div class="col-md-6 text-right">
+              <h5 class="mb-0" *ngIf="couponCode.value == 0"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                  class="fa fa-inr"></i> <span
+                  *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+                {{chargeableRate | number:'1.0-0'}}
+              </h5>
+              <h5 class="mb-0" *ngIf="discountedPrice"><i *ngIf="packageObj.chargeable_rate_currency === 'INR'"
+                  class="fa fa-inr"></i> <span
+                  *ngIf="packageObj.chargeable_rate_currency != 'INR'">{{packageObj.chargeable_rate_currency}}</span>
+                {{discountedPrice | number:'1.0-0'}}
+              </h5>
+            </div>
+            <div class="col-md-12 text-right">
+              <a class="gst" style="color:#0062cc; cursor: pointer;">Add your GST Details </a> <span
+                class="text-muted">(Optional)</span>
+            </div>
+          </div>
+          <hr>
+          <h6>Have a Promo Code?</h6>
+          <div class="input-group">
+            <input type="text" class="form-control" name="code" placeholder="Coupon Code" [(ngModel)]="coupon.code"
+              aria-label="Enter Coupon Code">
+            <p class="input-group-btn">
+              <button class="btn btn-secondary" (click)="checkCopuonCode()" type="button">Apply</button>
+            </p>
+          </div>
+          <p class="text-danger small pt-2">{{couponValidation}}</p>
+
+          <div class="bbl" *ngIf="couponCode.name">
+            <div class="cuponCode">{{couponCode.name}}</div>
+            <span class="fa fa-times deleteCoupon" (click)="deleteCoupon()"></span>
+          </div>
+          <hr>
+          <div class="form-group mt-2">
+            <button [disabled]="!booking_policy" class="btn button_primary btn-block" (click)="hotelPreBook()">Book
+              Hotel </button>
+            <div class="text-danger small pt-2">{{validation}}</div>
+            <!-- <p class="text-right mt-2"><a href="#" class="text-primary"> Book Hotel Via Online Payment <i
+									class="fa fa-paypal"></i></a></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--GST Side Bar Panel-->
+<div class="side-panel-holder gst-holder ">
+  <div class="side-panel animated slideInRight">
+    <button type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="heading">Featured</h4>
+    <div class="side-panel-body">
+      <form>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="gstnumber[]" class="form-control" placeholder="GST Number"
+                [(ngModel)]="gstDetail.gstnumber">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="name[]" class="form-control" placeholder="Name" [(ngModel)]="gstDetail.name">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="email[]" class="form-control" placeholder="Email" [(ngModel)]="gstDetail.email">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="address[]" class="form-control" placeholder="Address"
+                [(ngModel)]="gstDetail.address">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="city[]" class="form-control" placeholder="City" [(ngModel)]="gstDetail.city">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="pincode[]" class="form-control" placeholder="Pincode"
+                [(ngModel)]="gstDetail.pincode">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <select id="gst" name="state[]" class="form-control" [(ngModel)]="gstDetail.state">
+                <option value="" selected="selected">Select State</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Andhra Pradesh (New)">Andhra Pradesh (New)</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Chattisgarh">Chhattisgarh</option>
+                <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                <option value="Daman and Diu">Daman and Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Lakshadweep Islands">Lakshadweep Islands</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Pondicherry">Pondicherry</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="form-group">
+              <input type="text" name="mobile[]" class="form-control" placeholder="Phone number"
+                [(ngModel)]="gstDetail.mobile">
+            </div>
+          </div>
+        </div>
+        <div class="form-group text-center">
+          <input type="submit" class="btn btn-danger btn-lg" value="Add GST Details" (click)="gstSubmit()">
+        </div>
+        <p><b>Please Note:</b> Your taxes may get updated post submitting your GST details. Please review the
+          final
+          amount in Fare Details.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Log In Modal -->
+<ng-template #logInModal let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title">Log In</h5>
+    <button type="button" class="close" (click)="d()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="px-2 py-1">
+      <div class="form-group">
+        <label for="mobileNo">Mobile Number</label>
+        <input type="number" required class="form-control" id="mobileNo" [(ngModel)]="paramsObj.mobile" name="mobile"
+          placeholder="Enter Your Mobile Number">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="paramsObj.password" name="password"
+          placeholder="Enter Your Password">
+      </div>
+      <button type="button" class="btn btn-danger btn-block gstform" (click)="login()">log
+        In</button>
+    </form>
+    <div class="text-danger px-2 pt-2">{{loginValidation}}</div>
+  </div>
+</ng-template>
+
+<ng-template #bgkPolicyModal let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title">Hotel Booking Policy</h5>
+    <button type="button" class="close" (click)="d()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div [innerHTML]="hotelObj.policy"></div>
+  </div>
+</ng-template>
+
+<ng-template #cancellationPolicyModal let-d="dismiss">
+  <div class="modal-header">
+    <h5 class="modal-title">Hotel Cancellation Policy</h5>
+    <button type="button" class="close" (click)="d()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table" width="100%">
+      <thead>
+        <tr>
+          <th>Date From</th>
+          <th>Date To</th>
+          <th>Penalty %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cancellationPolicy of booking_policy?.cancellation_policy?.cancellation_policies">
+          <td>{{cancellationPolicy.date_from | date: 'mediumDate'}}</td>
+          <td>{{cancellationPolicy.date_to | date: 'mediumDate'}}</td>
+          <td>{{cancellationPolicy.penalty_percentage}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <small>{{booking_policy?.cancellation_policy?.remark}}</small>
+  </div>
+</ng-template>
